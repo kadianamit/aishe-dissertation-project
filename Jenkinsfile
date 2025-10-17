@@ -7,9 +7,9 @@ pipeline {
                 dir('aishe_backend/AisheMasterService') {
                     script {
                         if (isUnix()) {
-                            sh './mvnw clean install'
+                            sh 'mvn clean install'
                         } else {
-                            bat 'mvnw.cmd clean install'
+                            bat 'mvn clean install'
                         }
                     }
                 }
@@ -20,9 +20,9 @@ pipeline {
                 dir('aishe_backend/UserMgtService') {
                     script {
                         if (isUnix()) {
-                            sh './mvnw clean install'
+                            sh 'mvn clean install'
                         } else {
-                            bat 'mvnw.cmd clean install'
+                            bat 'mvn clean install'
                         }
                     }
                 }
