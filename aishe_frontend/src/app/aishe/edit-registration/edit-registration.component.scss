@@ -1,0 +1,38 @@
+.heading{
+  background: #337ab7;
+  color: #fff !important;
+  font-size: 90% !important;
+font-weight: 500;
+  padding: 10px;
+}
+.label{
+    line-height: normal;
+  color: black;
+  font-size: 14px;
+  font-weight: 650;
+  padding-right: 36px;
+  }
+  .captcha{
+    width:100px;
+     height:40px
+  }
+  .verify{
+    margin-top: 5px;
+    color: green;
+    float: left;
+  }
+  .resend{
+    text-align: end;
+    color: blueviolet;
+    font-size: small;
+    cursor: pointer;
+  }
+  .timer{
+    text-align: end;
+    color: red;
+    font-size: small
+  }
+  /* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

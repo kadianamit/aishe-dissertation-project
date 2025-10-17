@@ -1,0 +1,135 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+  <div class="form-group">
+    <div class="form-row mr-0 ml-0">
+      <div class="col-md-12 mt-0 badges p-2 mt-3">
+        <div class="float-left">
+          <span class="font-weight-bold text-lg">State Wise Progress Monitoring</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="animated fadeInDown card mb-2 pt-2 pb-1 bg-light overflow-hidden">
+    <div class="row col-md-12 overflow-hidden">
+      <div class="col-md-2">
+        <mat-form-field class="d-block">
+          <mat-label>Survey Year:</mat-label>
+          <mat-select
+            [(ngModel)]="surveyYear"
+            (selectionChange)="getStateMoniter($event.value)"
+          >
+            <mat-option
+              *ngFor="let item of surveyYearList"
+              [value]="item.surveyYear"
+              >{{ item.surveyYearValue }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-10 excel">
+        <a mat-button (click)="excelDownload()">
+          <i
+            class="fa fa-file-excel-o"
+            matTooltip="Download as Excel"
+            matTooltipPosition="above"
+            matTooltipClass="blackTooltip"
+            style="font-size: 24px"
+          ></i>
+          <mat-icon style="color: green">
+            vertical_align_bottom
+          </mat-icon>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-12 table-responsive">
+      <table class="table table-bordered table-sm">
+        <tr>
+          <th rowspan="2" class="textcenter">State</th>
+          <th colspan="4" class="textcenter">University</th>
+          <th colspan="4" class="textcenter">College</th>
+          <th colspan="4" class="textcenter">Standalone</th>
+        </tr>
+        <tr>
+          <th>Forms Expected</th>
+          <th>Forms Submitted</th>
+          <th>(%)</th>
+          <th>Not Submitted</th>
+          <th>Forms Expected</th>
+          <th>Forms Submitted</th>
+          <th>(%)</th>
+          <th>Not Submitted</th>
+          <th>Forms Expected</th>
+          <th>Forms Submitted</th>
+          <th>(%)</th>
+          <th>Not Submitted</th>
+        </tr>
+        <ng-container
+          *ngFor="
+            let item of stateWiseMoniterList;
+            let i = index;
+            let first = first;
+            let last = last
+          "
+        >
+          <tr>
+            <td>{{ item.stateName }}</td>
+            <td> <a [ngClass]="item.universityExpectedForm ? 'ta' : ''" (click)="openPop(item,'EXPECTED_UNIVERSITY_FORM','expected','University')" > {{ item.universityExpectedForm }}</a></td>
+            <td> <a [ngClass]="item.universitySubmitForm ? 'ta' : ''" (click)="openPop(item,'SUBMITED_UNIVERSITY_FORM','submitted','University')" >
+              {{ item.universitySubmitForm }} </a>
+            </td>
+
+            <td>
+              {{ item.percentageU }}
+            </td>
+            <td>  <a [ngClass]="item.pendingFormU ? 'ta' : ''" (click)="openPop(item,'PENDING_UNIVERSITY_FORM','pending','University')" > {{ item.pendingFormU }}</a></td>
+
+            <td>
+              <a [ngClass]="item.collegeExpectedForm ? 'ta' : ''" (click)="openPop(item,'EXPECTED_COLLEGE_FORM','expected','College')" >   {{ item.collegeExpectedForm }}</a>
+            </td>
+            <td>
+              <a [ngClass]="item.collegeSubmitForm ? 'ta' : ''" (click)="openPop(item,'SUBMITED_COLLEGE_FORM','submitted','College')" >   {{ item.collegeSubmitForm }}</a>
+            </td>
+            <td>
+              {{ item.pencentageFormCollege }}
+            </td>
+            <td>
+              <a [ngClass]="item.pendingFormCo ? 'ta' : ''" (click)="openPop(item,'PENDING_COLLEGE_FORM','pending','College')" >    {{ item.pendingFormCo }}</a>
+            </td>
+
+            <td>
+              <a [ngClass]="item.standaloneExpectedForm ? 'ta' : ''" (click)="openPop(item,'EXPECTED_STANDALONE_FORM','expected','Standalone')" >   {{ item.standaloneExpectedForm }}</a>
+            </td>
+            <td>
+              <a [ngClass]="item.standaloneSubmitForm ? 'ta' : ''" (click)="openPop(item,'SUBMITED_STANDALONE_FORM','submitted','Standalone')" >     {{ item.standaloneSubmitForm }}</a>
+            </td>
+            <td>
+              {{ item.percentageFormStandalone }}
+            </td>
+            <td>
+              <a [ngClass]="item.pendingFormStandalone ? 'ta' : ''" (click)="openPop(item,'PENDING_STANDALONE_FORM','pending','Standalone')" >   {{ item.pendingFormStandalone }}</a>
+            </td>
+          </tr>
+
+        </ng-container>
+        <tr style="background-color:rgba(209, 205, 205, 0.815);font-weight: 700" >
+          <td class="bold">Total</td>
+          <td>{{universityExpectedForm1}}</td>
+          <td>{{universitySubmitForm1}}</td>
+           <td>{{percentageU1}}</td>
+          <td>{{pendingFormU1}}</td>
+
+          <td>{{collegeExpectedForm1}}</td>
+          <td>{{collegeSubmitForm1}}</td>
+          <td>{{pencentageFormCollege1}}</td>
+          <td>{{pendingFormCo1}}</td>
+
+          <td>{{standaloneExpectedForm1}}</td>
+          <td>{{standaloneSubmitForm1}}</td>
+          <td>{{percentageFormStandalone1}}</td>
+          <td>{{pendingFormStandalone1}}</td>
+
+
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

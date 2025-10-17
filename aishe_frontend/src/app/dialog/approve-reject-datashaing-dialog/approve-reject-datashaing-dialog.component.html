@@ -1,0 +1,200 @@
+
+    <h1 class="text-center" style="font-weight: 500;font-size: 20px;">Approve/Reject Data Sharing</h1>
+    <hr>
+
+    <div class="container">
+      <div class="row">
+         <div class="col-md-4 heading">
+           <p>Request Id <span style="float: right;">:</span></p>
+         </div>
+         <div class="col-md-8 heading2">
+           <p> {{data.data.requestId}}</p>
+         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 heading">
+           <p>Organization Category <span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.orgCategoryName}}</p>  
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+           <p>Ministry <span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+         <p>{{data.data.ministryName}}</p> 
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+          <p>Agency Name <span style="float: right;">:</span></p>  
+        </div>
+        <div class="col-md-8 heading2">
+         <p>{{data.data.nameOfAgency}}</p> 
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+           <p>Nodal Person <span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.nameOfNodalPerson}}</p>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+           <p>State <span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.stateName}}</p> 
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+          <p>Date Time <span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.submittedOn}}</p>
+        </div>
+     </div>
+
+     <div class="row">
+        <div class="col-md-4 heading">
+          <p>Complete Address<span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.completeAddress}}</p>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+          <p>Department Name<span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.departmentName}}</p>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+          <p>EmailId<span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.emailId}}</p>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+          <p>Gender Name<span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.genderName}}</p>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+          <p>MobileNo<span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.mobileNo}}</p>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+          <p>Purpose<span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.purpose}}</p>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+          <p>Info Data Type<span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.requiredDataTypeName}}</p>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+          <p>Status Name<span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.statusName==null?'Pending':data.data.statusName}}</p>
+        </div>
+     </div>
+     <div class="row" *ngIf="data.data.statusName!=null">
+        <div class="col-md-4 heading">
+          <p>Action Date Time<span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p>{{data.data.actionDateTime}}</p>
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-4 heading">
+          <p> Uploaded Document<span style="float: right;">:</span></p> 
+        </div>
+        <div class="col-md-8 heading2">
+          <p><a (click)="downloadPdf(requestLetter)" style="cursor: pointer; color: blue">
+            {{requestLetterName}}
+        </a></p>
+        </div>
+     </div>
+    </div>
+    <hr *ngIf="showHide">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" *ngIf="showHide">
+
+       
+        <div class="row">
+            <div class="col-md-6">
+           
+                    <mat-label class="heading">Action :</mat-label>
+                    <mat-radio-group formControlName="action" required class="ml-2">
+                        <mat-radio-button class="heading2" [value]="2">Accept</mat-radio-button>&nbsp;&nbsp;
+                        <mat-radio-button class="heading2" [value]="3">Reject</mat-radio-button>
+                    </mat-radio-group>
+                     <mat-error *ngIf="errorHandling('action','required') && isSubmitted">
+                        Action is required.
+                      </mat-error>
+        
+                <!-- <mat-radio-group formControlName="action" >
+                    &nbsp;
+                    <mat-radio-button [value]="1">Yes</mat-radio-button>
+                    &nbsp;
+                    <mat-radio-button [value]="-1" >No</mat-radio-button>
+                </mat-radio-group> -->
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 my-auto">
+                <mat-label class="heading">Remarks :</mat-label>
+            </div>
+            <div class="col-md-8">
+             
+                <mat-form-field class="example-full-width">
+                    <textarea matInput formControlName="remarks" required></textarea>
+                    <mat-error
+                        *ngIf="errorHandling('remarks','required') && isSubmitted">
+                         Remark is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row text-center mt-3">
+            <div class="col-md-12">
+            <button type="submit" class="btn btn-success" mat-raised-button>Submit</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-warning" mat-raised-button (click)="cancel()">Cancel</button>
+            </div>
+        </div>
+
+     </form>
+     <div class="text-center mt-3" *ngIf="!showHide">
+        <button type="button" class="btn btn-warning"  (click)="cancel()">close</button>
+     </div>
+
+
+

@@ -1,0 +1,178 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html, body { height: 100%; }
+body {
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+    background: linear-gradient(to top left, #99ffcc 25%, #7bcbf9 75%);
+    background-attachment:fixed;
+}
+
+.mat-raised-button.mat-primary{
+    background-color: #3e6b85 !important;
+    color: #f9f9f9 !important;
+}
+
+.btn-secondry{
+    background-color: gray;
+    color: white !important;
+}
+
+.mat-card{
+    background-image: linear-gradient(to right, #e5ecf691,#88dbe996,#87e59040)!important;
+}
+// .reportTableData td{
+//     border: #fff solid 1px !important;
+// }
+
+/*hide default password eye from edge browser*/
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+    display: none;
+}
+
+.cdk-overlay-pane{
+    max-width: 90vw !important;
+    /* width: 90% !important */
+}
+
+.cdk-overlay-pane .mat-autocomplete-panel{
+    min-width: 15vw;
+}
+
+.cdk-overlay-pane .mat-autocomplete-panel .mat-option{
+    line-height: normal;
+    white-space: normal;
+    height: unset;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+
+    .cdk-overlay-pane .mat-autocomplete-panel{
+        min-width: 70vw;
+    }
+
+    /*below style for report dialog and table design*/
+        // .reportTableData th h1{
+        //     font-size: 25px !important;
+        // }
+        .showReportDataChild{
+            height: 70vh !important;
+        }
+
+        .showReportDataChild table thead{
+            top:0 !important;
+        }
+
+}
+
+
+/* to remove little gap  in header while scrolling */
+.showReportDataChild thead th {
+    border-bottom-width: 0px;
+}
+.showReportDataChild > :not(:first-child){
+    border-top: #fff solid 0px;
+}
+.mat-elevation-z8{
+    width: 100%;
+}
+.close-button{
+    float: right;
+    top:-30px;
+    right:-20px;
+  }
+
+// .reportTableData td{
+//     border: #fff solid 1px !important;
+// }
+
+// .reportTableData th{
+//     vertical-align: top !important;
+// }
+// .reportTableData table th{
+//     border-bottom-width: 0px !important ;
+// }
+
+/* // overwrite the checkbox background */
+ .mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: black !important;
+}
+
+/* // overwrite the ripple overlay on hover and click */
+ .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color: #fff !important;
+}
+
+mat-checkbox{
+    padding-right: 10px;
+}
+.childTableStickyHeader{
+    position: sticky;
+    top: 0px
+}
+.table-tertiary{
+    background-color: #d7dce1 !important;
+}
+
+.mat-card-header {
+    background-color: #3e6b85;
+    color: white;
+}
+
+
+.mat-row:nth-child(even){
+    background-color: #f4f2d2;
+}
+
+.mat-row:nth-child(odd){
+    background-color: #b0ddf7;
+}
+
+.mat-form-field{
+    display: block;
+}
+
+.basicReport thead{
+position: sticky;
+top: -25px;
+}
+
+.mat-card-actions{
+margin-left: -8px !important;
+margin-right: -8px !important;
+padding: 8px 0 !important;
+}
+
+.mat-card-actions, .mat-card-subtitle, .mat-card-content {
+display: block !important;
+margin-bottom: 16px !important;
+}
+
+
+
+.mat-raised-button{
+    position: relative;
+    outline: none;
+    line-height: 36px;
+    padding: 0 10px;
+    border-radius: 4px;
+    overflow: visible;
+}
+h4.text-center {
+    color: black !important;
+    text-align: center !important;
+    font: 400 15px/24px Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    margin: 0 0 16px;
+  }
+//   .example-full-width {
+//     display: contents !important;
+// }
+.datePicker input{
+    display: contents !important;
+}

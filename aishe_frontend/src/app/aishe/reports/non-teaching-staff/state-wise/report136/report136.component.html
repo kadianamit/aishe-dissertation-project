@@ -1,0 +1,119 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div
+class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+*ngIf="Showdata12"
+
+>
+<table
+class="table  showReportDataChild" >
+<thead class="childTableStickyHeader">
+  <tr>
+        <th rowspan="1" class="text-center table-success">
+          Institute Name
+        </th>
+        <th colspan="2" class="text-center table-light">
+          Group-A
+        </th>
+        <th colspan="2" class="text-center table-secondary">
+          Group-B
+        </th>
+        <th colspan="2" class="text-center table-tertiary">
+          Group-C
+        </th>
+        <th colspan="2" class="text-center table-light">
+          Group-D
+        </th>
+        <th colspan="2" class="text-center table-secondary">
+          Total
+        </th>
+      </tr>
+<tr>
+        <th
+          *ngFor="let col of tableColumns; let i = index"
+          [attr.style]="
+            // eslint-disable-next-line @angular-eslint/template/eqeqeq
+            i == 1 && col.trim() == 'State Name'
+              ? 'display:none'
+              : ''
+          "
+          [ngClass]="
+
+                              [i==0?'table-success':'',
+                              i>0 && i<3 ?'table-light':'',
+                              i>=3 && i<5 ? 'table-secondary': '',
+                              i>=5 && i<7 ? 'table-tertiary': '',
+                              i>=7 && i<9 ? 'table-light': '',
+                              i>=9 && i<11 ? 'table-secondary': '',
+                              i>=11 && i<13 ? 'table-tertiary': '',
+                              i>=13 && i<15 ? 'table-light': '',
+
+
+                              ]"
+          class="text-center"
+        >
+          {{
+            col
+              .trim()
+              .replace('Institute Name','')
+              .replace('ss', 'SS')
+              .replace('ip', 'IP')
+              .replace('GROUP A', '')
+              .replace('GROUP B', '')
+              .replace('GROUP C', '')
+              .replace('GROUP D', '')
+              .replace('Grand', '')
+              .replace('Total', '')
+              .replace('State', '')
+          }}
+        </th>
+      </tr>
+
+
+
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of reportTableData | paginate
+      : {
+          itemsPerPage: pageSize,
+          currentPage: page
+        }">
+        <td
+          *ngFor="let col of tableColumns; let i = index"
+          class="text-center"
+          [ngClass]="
+                          [i==0?'table-success':'',
+                              i>0 && i<3 ?'table-light':'',
+                              i>=3 && i<5 ? 'table-secondary': '',
+                              i>=5 && i<7 ? 'table-tertiary': '',
+                              i>=7 && i<9 ? 'table-light': '',
+                              i>=9 && i<11 ? 'table-secondary': '',
+                              i>=11 && i<13 ? 'table-tertiary': '',
+                              i>=13 && i<15 ? 'table-light': '',
+
+                              ]"
+        >
+          {{ row[col] }}
+        </td>
+      </tr>
+
+
+      <tr>
+        <td colspan="1" class="text-center table-success">
+          All India
+        </td>
+        <td
+          *ngFor="let summary of summaryColumns; let i = index"
+          class="text-center table-secondary"
+        >
+          {{ summaryData[summary] ? summaryData[summary] : 0 }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+  </div>

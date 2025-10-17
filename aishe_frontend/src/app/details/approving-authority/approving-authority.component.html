@@ -1,0 +1,219 @@
+<!-- <div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">Know Your Approving Authority</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="animated fadeInDown card bg-light mb-2 pb-1">
+        <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-2">
+                <mat-form-field class="d-block">
+                    <mat-label>Institution Type</mat-label>
+                    <mat-select placeholder="Institution Type" [(ngModel)]="institutionType"
+                        (selectionChange)="showType($event.value)">
+                        <mat-option value="C">COLLEGE</mat-option>
+                        <mat-option value="S">STAND-ALONE</mat-option>
+                        <mat-option value="U">UNIVERSITY</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="d-block">
+                    <mat-label>User Role</mat-label>
+                    <mat-select placeholder="User Role" [(ngModel)]="roleId"
+                        (selectionChange)="showUniversity($event.value)">
+                        <mat-option *ngFor="let item of authorityList" [value]="item.roleId">{{item.roleName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2" *ngIf="roleId !== sharedService.role['Standalone Institution Under Ministry']">
+                <mat-form-field class="d-block">
+                    <mat-label>State</mat-label>
+                    <mat-select placeholder="--Select State--" [(ngModel)]="stateCode"
+                        (selectionChange)="getUniversity($event.value)">
+                        <mat-select-filter [array]="stateListArray" [displayMember]="'name'"
+                            (filteredReturn)="stateList = $event">
+                        </mat-select-filter>
+                        <mat-option *ngFor="let data of stateList" [value]="data.stateCode">{{data.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3" *ngIf="institutionType === 'C'">
+                <mat-form-field class="d-block">
+                    <mat-label>University</mat-label>
+                    <mat-select placeholder="--Select University--" [(ngModel)]="universityId">
+                        <mat-select-filter [array]="universityListArray" [displayMember]="'name'"
+                            (filteredReturn)="universityList = $event">
+                        </mat-select-filter>
+                        <mat-option *ngFor="let data of universityList" [value]="data.id">{{data.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2 pt-3">
+                <button type="submit" class="btn btn-warning btn-sm" (click)="getData()" matTooltip="Get Details">Get
+                    Details</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 offset-md-2" *ngIf="approvingAuthList && approvingAuthList.length">
+
+        <table class="table table-bordered table-sm">
+            <tr>
+                <th>Approving Authority</th>
+                <th>Role Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Phone-Landline</th>
+            </tr>
+            <ng-container *ngFor="let item of approvingAuthList">
+                <tr>
+                    <td>{{item.fullName}}</td>
+                    <td>{{item.roleName}}</td>
+                    <td>{{item.emailId}}</td>
+                    <td>{{item.mobile}}</td>
+                    <td>{{item.phoneLandline}}</td>
+                </tr>
+            </ng-container>
+          
+        </table>
+
+
+    </div>
+</div>  -->
+<section class="p-3 bg-gray-400">
+  <div class="container">
+    <mat-card class="border-radius: 10px shadow bg-white border">
+        <div class="border-bottom-dark col-md-12 mb-2 text-center">
+            <h5 style="font-weight: 500; font-size: 18px;">Know Your Approving Authority</h5>
+        </div>
+        <!-- <div class="row col-md-12 overflow-hidden"> -->
+        <div class="col-md-12">
+            <mat-form-field class="d-block">
+                <mat-label>Institution Type</mat-label>
+                <mat-select placeholder="Institution Type" [(ngModel)]="institutionType"
+                    (selectionChange)="showType($event.value)">
+                    <mat-option value="C">COLLEGE</mat-option>
+                    <mat-option value="S">STAND-ALONE</mat-option>
+                    <mat-option value="U">UNIVERSITY</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+        <div class="col-md-12" *ngIf="institutionType === 'S'">
+            <mat-form-field class="d-block">
+                <mat-label>Sub-Type</mat-label>
+                <mat-select placeholder="Sub-Type" [(ngModel)]="roleId"
+                    (selectionChange)="showUniversity($event.value)">
+                    <mat-option *ngFor="let item of authorityList" [value]="item.roleId">{{item.roleName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-12" *ngIf="roleId !== 20">
+            <mat-form-field class="d-block">
+                <mat-label>State</mat-label>
+                <mat-select placeholder="--Select State--" [(ngModel)]="stateCode"
+                    (selectionChange)="getUniversity($event.value)">
+                    <mat-select-filter [array]="stateListArray" [displayMember]="'name'"
+                        (filteredReturn)="stateList = $event">
+                    </mat-select-filter>
+                    <mat-option *ngFor="let data of stateList" [value]="data.stateCode">{{data.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-12" *ngIf="institutionType === 'C'">
+            <mat-form-field class="d-block">
+                <mat-label>University</mat-label>
+                <mat-select placeholder="--Select University--" [(ngModel)]="universityId">
+                    <mat-select-filter [array]="universityListArray" [displayMember]="'name'"
+                        (filteredReturn)="universityList = $event">
+                    </mat-select-filter>
+                    <mat-option *ngFor="let data of universityList" [value]="data.id">{{data.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-group pt-3">
+            <button type="submit" class="btn btn-primary btn-sm" (click)="getData()" matTooltip="Get Details">Get
+                Details</button>
+                <button type="submit" class="btn btn-danger btn-sm ml-2" (click)="reset()" matTooltip="Clear">
+                    Clear
+                 </button>  
+        </div>
+        <!-- <div class="form-group mt-3 text-center">
+            <div class="col-md-12">
+                <button class="btn btn-primary btn-sm mr-2" (click)="verifyCaptcha(forgotPass.value)"
+                    type="submit">Verify User</button>
+                    <a routerLink="/institutionallogin"  class="btn btn-danger btn-sm mr-2">Back</a>
+            </div>
+        </div> -->
+        
+    </mat-card>
+    
+</div>
+
+
+</section>
+<section class="p-3" *ngIf="isAuthority">
+    <div class="container-fluid">
+        <div class="animated fadeInDown card mb-2 pt-2 pb-1 bg-light overflow-hidden">
+            <div class="row col-md-12 overflow-hidden">
+                <!-- <div class="col-md-2 pt-4"> -->
+                    <!-- <label>Show</label>&nbsp; -->
+                    <!-- <select [(ngModel)]="pageSize" (ngModelChange)="onChange($event)">
+                        <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+                    </select> -->
+                    <!-- entries -->
+                <!-- </div> -->
+                <div class="col-md-5"></div>
+                <!-- <div class="col-md-5 pt-4"> -->
+                    <!-- <label>Search:</label>&nbsp; -->
+                    <!-- <input type="text" size="40" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+                        [(ngModel)]="searchText"> -->
+                <!-- </div> -->
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+                <div class="col-md-8 offset-md-2 table-responsive" *ngIf="approvingAuthList && approvingAuthList.length">
+
+                    <table class="table table-bordered table-sm">
+                        <tr>
+                            <th>Approving Authority</th>
+                            <th>Role Name</th>
+                            <th>Email</th>
+                            <!-- <th>Mobile</th> -->
+                            <th>Phone-Landline</th>
+                        </tr>
+                        <ng-container *ngFor="let item of approvingAuthList">
+                            <tr>
+                                <td>{{item.fullName}}</td>
+                                <td>{{item.roleName}}</td>
+                                <td>{{item.emailId}}</td>
+                                <!-- <td></td> -->
+                                <td>{{item.phoneLandline}}</td>
+                            </tr>
+                        </ng-container>
+                      
+                    </table>
+                </div>
+
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+                <!-- <div class="col-md-3">
+                    Showing {{StartLimit + 1}} to {{pageData === -1?0:pageData}} Of {{list.length}}
+                    entries
+                </div> -->
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <!-- <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+                        screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                        screenReaderCurrentLabel="You're on page"></pagination-controls> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

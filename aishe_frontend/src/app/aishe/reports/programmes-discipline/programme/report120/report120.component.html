@@ -1,0 +1,92 @@
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"    *ngIf="Showdata12"
+>
+    <table class="table  showReportDataChild">
+        <thead class="childTableStickyHeader">
+            <tr>
+                <th rowspan="2"  class="text-center table-success">Country</th>
+                <th rowspan="1"  class="text-center table-light">Programme</th>
+                <th colspan="2" class="text-center table-tertiary">UNIVERSITY</th>
+                <th colspan="2" class="text-center table-secondary">COLLEGE</th>
+                <th colspan="2" class="text-center table-light">STANDALONE Polytechnic</th>
+                <th colspan="2" class="text-center table-secondary">STANDALONE Nursing</th>
+                <th colspan="2" class="text-center table-tertiary">STANDALONE Teacher Training</th>
+                <th colspan="2" class="text-center table-light">STANDALONE Institute under Ministry</th>
+                <th colspan="2" class="text-center table-tertiary">STANDALONE PGDM</th>
+                <th colspan="2" class="text-center table-secondary">STANDALONE Total</th>
+                <th colspan="1" class="text-center table-light">Grand Total</th>
+
+              </tr>
+              <tr>
+                <th
+                    *ngFor="let col of tableColumns; let i = index"
+                    [attr.style]=" (i ===0) ? 'display:none': ''
+                    "
+                     [ngClass]="[i==0?'table-success': i==1? 'table-light':'',
+                            i>1 && i<=3? 'table-tertiary': '',i>3 && i<=5 ? 'table-secondary': '',
+                            i>5 && i<=7? 'table-light': '',i>7 && i<=9 ? 'table-secondary': '',
+                            i>9 && i<=11? 'table-tertiary': '',i>11 && i<=13 ? 'table-light': '',
+                            i>13 && i<=15? 'table-tertiary': '',i>15 && i<=17 ? 'table-secondary': '',
+                            i>17 && i<=19? 'table-light': '',i>19 && i<=21 ? 'table-secondary': '',
+
+                        ]"
+                    class="text-center"
+                  >
+
+                      {{col
+                      .trim()
+                      .replace('Programme','')
+                      .replace('University','')
+                      .replace('College','')
+                      .replace('StandAlone Polytechnique','')
+                      .replace('StandAlone TT','')
+                      .replace('StandAlone Nursing','')
+                      .replace('StandAlone PGDBM','')
+                      .replace('StandAlone','')
+                      .replace('Grand','')
+                      .replace('Ministry','')
+                      .replace('Total','')
+                      .replace('Teacher Training','')
+                      }}
+                  </th>
+               </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of reportTableData | paginate
+            : {
+                itemsPerPage: pageSize,
+                currentPage: page
+              };">
+          <td
+              *ngFor="let col of tableColumns; let i = index"
+              class="text-center"
+              [ngClass]="[i==0?'table-success': i==1? 'table-light':'',
+                            i>1 && i<=3? 'table-tertiary': '',i>3 && i<=5 ? 'table-secondary': '',
+                            i>5 && i<=7? 'table-light': '',i>7 && i<=9 ? 'table-secondary': '',
+                            i>9 && i<=11? 'table-tertiary': '',i>11 && i<=13 ? 'table-light': '',
+                            i>13 && i<=15? 'table-tertiary': '',i>15 && i<=17 ? 'table-secondary': '',
+                            i>17 && i<=19? 'table-light': '',i>19 && i<=21 ? 'table-secondary': '',
+
+                        ]"
+            >
+              {{ row[col] }}
+            </td>
+          </tr>
+          <tr>
+            
+            <td
+              *ngFor="let summary of summaryColumns; let i = index" 
+              class="text-center table-secondary" [ngClass]="[i==0?'table-success': i==1? 'table-success':'']"
+            >
+              {{ summaryData[summary] }}
+            </td>
+          </tr>
+          </tbody>
+    </table>
+    <pagination-controls
+    previousLabel="Prev"
+    nextLabel="Next"
+    (pageChange)="handlePageChange($event)"
+    >
+    </pagination-controls>
+        </div>

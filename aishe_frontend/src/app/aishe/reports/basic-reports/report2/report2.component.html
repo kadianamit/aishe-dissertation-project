@@ -1,0 +1,24 @@
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto"    *ngIf="tableColumns.length>0"
+    >
+    <table class="table table-bordered reportTableData basicReport">
+        <tbody>
+            <tr>
+                <td class="table-info" colspan="4">
+                  Survey Year
+                </td>
+                <td class="table-success" colspan="8">
+                  {{surveyYear}}
+                </td>
+              </tr>
+              <tr *ngFor="let col of tableColumns">
+                <td class="table-info" colspan="4">
+                  {{ col.replaceAll('_', ' ') | titlecase }}
+                </td>
+                <td class="table-success" colspan="8">
+                  {{ reportTableData[col] | titlecase }}
+                </td>
+              </tr>
+        </tbody>
+      </table>
+            </div>
+        

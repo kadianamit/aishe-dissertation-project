@@ -1,0 +1,218 @@
+<div class="container-fluid">
+    <h2 class="custom-header header-top">Common Data For One Nation One Data</h2>
+    <div class="form-group">
+      <div class="form-row mr-0 ml-0">
+        <div class="col-md-12 mt-0 badges p-2 mt-3">
+          <div class="float-left">
+            <span class="font-weight-bold text-lg font1">Teaching Staff Information</span>
+          </div>
+          <div class="float-right" *ngIf="instituteName">
+            <span class="font-weight-bold text-lg font1">{{instituteName}} ({{aisheCode}})</span>
+          </div>
+        </div>
+      </div>
+    </div>
+          <div class="animated fadeInDown card mb-2 pt-2 pb-1 bg-light overflow-hidden">
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-2 pt-4">
+                <label>Show</label>&nbsp;
+                <select [(ngModel)]="pageSize" (ngModelChange)="onChange($event)">
+                <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+              </select>
+                entries
+              </div>
+              <div class="col-md-4 pt-2">
+                <!-- <mat-form-field class="d-block">
+                  <mat-label>Enter AISHE CODE</mat-label>
+                  <input type="text" matInput autocomplete="off"  [(ngModel)]="aisheCode" placeholder="Enter AISHE CODE" style="text-transform: uppercase;">
+                </mat-form-field> -->
+              </div>
+              <!-- <div class="col-md-2"> -->
+                  <!-- <button mat-button class="btn btn-success btn-sm  mt-4" matTooltip="Search" (click)="getTeashingStaff()">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </button> -->
+                <!-- </div> -->
+              <div class="col-md-6 pt-4">
+                <label>Search:</label>&nbsp;
+                <input type="text" size="35" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+                [(ngModel)]="searchText">
+              </div>
+              
+            </div>
+             <div class="row col-md-12 overflow-hidden">
+              <!-- <div class="col-md-2">
+                <mat-form-field class="d-block">
+                  <mat-label>Name</mat-label>
+                  <mat-select (selectionChange)="allFilter($event.value)" [(ngModel)]="employeeName"
+                    [ngModelOptions]="{standalone: true}" placeholder="Name">
+                    <mat-select-filter [array]="variables3" [displayMember]="'name'"
+                      (filteredReturn)="filterEmployeeList = $event"></mat-select-filter>
+                    <mat-option *ngFor="let x of filterEmployeeList" [value]=x.name>
+                      {{x.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div> -->
+
+              <div class="col-md-3" *ngIf="showInUniv">
+                <mat-form-field class="d-block">
+                  <mat-label>Faculty/School:</mat-label>
+                  <mat-select (selectionChange)="allFilter($event)" [(ngModel)]="facultyName"
+                    [ngModelOptions]="{standalone: true}" placeholder="Faculty/School">
+                    <mat-select-filter [array]="variables4" [displayMember]="'facultyName'"
+                      (filteredReturn)="filterFacultyList = $event"></mat-select-filter>
+                    <mat-option *ngFor="let x of filterFacultyList" [value]=x.facultyName>
+                      {{x.facultyName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+    
+              <div class="col-md-3">
+                <mat-form-field class="d-block">
+                  <mat-label>Department/Centre:</mat-label>
+                  <mat-select (selectionChange)="allFilter($event)" [(ngModel)]="departmentName"
+                    [ngModelOptions]="{standalone: true}" placeholder="Department/Centre">
+                    <mat-select-filter [array]="variables5" [displayMember]="'departmentName'"
+                      (filteredReturn)="filterDepartmentList = $event"></mat-select-filter>
+                    <mat-option *ngFor="let x of filterDepartmentList" [value]=x.departmentName>
+                      {{x.departmentName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="d-block">
+                  <mat-label>Designation:</mat-label>
+                  <mat-select (selectionChange)="allFilter($event.value)" [(ngModel)]="dropdownDsg"
+                    [ngModelOptions]="{standalone: true}" placeholder="Designation">
+                    <mat-select-filter [array]="variables6" [displayMember]="'designationName'"
+                      (filteredReturn)="filterDesignation = $event"></mat-select-filter>
+                    <mat-option *ngFor="let x of filterDesignation" [value]=x.designationName>
+                      {{x.designationName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="d-block">
+                  <mat-label>Nature of Appointment:</mat-label>
+                  <mat-select (selectionChange)="allFilter($event.value)" [(ngModel)]="dropdownAppointment"
+                    [ngModelOptions]="{standalone: true}" placeholder="Nature of Appointment">
+                    <mat-select-filter [array]="variables7" [displayMember]="'appointmentName'"
+                    (filteredReturn)="natureAppointmentListFilter = $event"></mat-select-filter>
+                    <mat-option *ngFor="let x of natureAppointmentListFilter" [value]=x.appointmentName>
+                      {{x.appointmentName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="d-block">
+                  <mat-label>Broad Discipline Group Category:</mat-label>
+                  <mat-select (selectionChange)="allFilter($event.value)" [(ngModel)]="dropdownBoardCategory"
+                    [ngModelOptions]="{standalone: true}" placeholder="Broad Discipline Group Category">
+                    <mat-select-filter [array]="variables8" [displayMember]="'boardCategory'"
+                    (filteredReturn)="boardCatorgryFilter = $event"></mat-select-filter>
+                    <mat-option *ngFor="let x of boardCatorgryFilter" [value]=x.boardCategory>
+                      {{x.boardCategory}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="d-block">
+                  <mat-label>Broad Discipline Group Name:</mat-label>
+                  <mat-select (selectionChange)="allFilter($event.value)" [(ngModel)]="dropdownBoardName"
+                    [ngModelOptions]="{standalone: true}" placeholder="Broad Discipline Group Name">
+                    <mat-select-filter [array]="variables9" [displayMember]="'boardName'"
+                    (filteredReturn)="boardNameFilter = $event"></mat-select-filter>
+                    <mat-option *ngFor="let x of boardNameFilter" [value]=x.boardName>
+                      {{x.boardName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field class="d-block">
+                  <mat-label>NIRF Category:</mat-label>
+                  <mat-select (selectionChange)="allFilter($event.value)" [(ngModel)]="nirfCat"
+                    [ngModelOptions]="{standalone: true}" placeholder="NIRF Category">
+                    <mat-select-filter [array]="nirfCategoryArray" [displayMember]="'name'"
+                    (filteredReturn)="nirfCategoryList = $event"></mat-select-filter>
+                    <mat-option *ngFor="let x of nirfCategoryList" [value]=x.name>
+                      {{x.name}}
+                    </mat-option>
+                    <mat-option value='Other'>
+                      Other
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+    
+              <div class="col-md-1">
+                <button mat-button class="btn btn-sm btn-primary d-block mt-3" (click)="reload()" matTooltip="Refresh">
+                  <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col-md-12 table-responsive">
+              <table class="table table-bordered table-sm table-hover staff">
+                <tr>
+                  <th>S No.</th>
+                  <th>Name of the Employee</th>
+                  <th>Designation</th>
+                  <th *ngIf="showInUniv">Faculty/School</th>
+                  <th>Department/Centre</th>
+                  <th>Nature of Appointment</th>
+                  <th>Broad Discipline Group Category</th>
+                  <th>Broad Discipline Group Name</th>
+                  <th>NIRF Category</th>
+                  
+                  <th>Action</th>
+                </tr>
+                <ng-container *ngFor="let data of teachingStaffs | paginate : {
+                          itemsPerPage: pageSize,
+                          currentPage: page
+                        };
+                  let i = index
+                ">
+                  <tr>
+                    <td>{{i+StartLimit+1}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.designationName}}</td>
+                    <td *ngIf="showInUniv">{{data.facultyName === null || data.facultyName === 0?'No
+                      Faculty':data.facultyName }}</td>
+                    <td>{{data.departmentName === null || data.departmentName === 0?'No Department':data.departmentName}}
+                    </td>
+                    <td>{{data.appointmentNature}}</td>
+                    <td>{{data.broadCategoryName}}</td>
+                    <td>{{data.broadDisciplineGroupName}}</td>
+                    <td>{{data.nirfCategoryName === 'Other'?'':data.nirfCategoryName}}</td>
+                    <td class="actionHeader">
+                    <mat-icon class="view_icon" matTooltip="View" (click)="viewStaff(data)">
+                      remove_red_eye</mat-icon>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+              <div class="table-norecord" *ngIf="teachingStaffs.length === 0">No Record Found.</div>
+            </div>
+            <div class="row col-md-12 overflow-hidden" *ngIf="teachingStaffs.length !== 0">
+              <div class="col-md-3">
+                Showing {{StartLimit + 1}} to {{pageData === -1?0:pageData}} Of {{teachingStaffs.length}}
+                entries
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-7">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+                screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                screenReaderCurrentLabel="You're on page"></pagination-controls>
+              </div>
+            </div>
+            
+          
+          </div>
+    
+                </div>

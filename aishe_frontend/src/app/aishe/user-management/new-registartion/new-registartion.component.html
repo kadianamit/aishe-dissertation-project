@@ -1,0 +1,417 @@
+<div class="container-fluid">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">New User Registration</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="animated fadeInDown card mb-4 pt-1 pb-2 pr-4 pl-4 bg-light overflow-hidden">
+        <form [formGroup]="registation">
+            <div class="row col-md-12 overflow-hidden pt-2">
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <mat-select placeholder="User Type" (selectionChange)="getUserRole($event.value)"
+                            formControlName="userTypeId">
+                            <mat-option value="1">National Level Officer</mat-option>
+                            <mat-option value="2">State Level Officer</mat-option>
+                            <mat-option value="3">Institute Level</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <mat-select placeholder="Role" formControlName="roleId" required
+                            (selectionChange)="clearState()">
+                            <mat-option *ngFor="let item of userRoleList"
+                                [value]="item.roleId">{{item.roleName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['roleId'].dirty ||registation.controls['roleId'].value || registation.controls['roleId'].touched || isFormInvalid">
+                        <span *ngIf="
+                        registation.controls['roleId'].hasError(
+                          'required'
+                        )
+                      " class="errorMessage">Please select.</span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-4"
+                    *ngIf="registation.controls['userTypeId'].value === '2' && registation.controls['roleId'].value === '6'">
+                    <mat-form-field class="d-block">
+                        <mat-select placeholder="State" required formControlName="stateCode"
+                            [errorStateMatcher]="errorMatcher"
+                            (selectionChange)="registation.controls['roleId'].value === '6'?getExistSNO():''">
+                            <mat-select-filter [array]="variables" [displayMember]="'name'"
+                                (filteredReturn)="stateList = $event">
+                            </mat-select-filter>
+                            <mat-option *ngFor="let data of stateList"
+                                [value]="data.stateCode">{{data.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['stateCode'].dirty ||registation.controls['stateCode'].value || registation.controls['stateCode'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['stateCode'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please select.</span>
+                    </mat-hint>
+                </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden" *ngIf="registation.controls['userTypeId'].value === '3'">
+                <div class="col-md-2">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput formControlName="aisheCode" placeholder="AISHE Code"
+                            autocomplete="off" style="text-transform: uppercase;">
+                    </mat-form-field>
+
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['aisheCode'].dirty ||registation.controls['aisheCode'].value || registation.controls['aisheCode'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['aisheCode'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-2 mt-3">
+                    <button type="submit" class="btn btn-warning btn-sm" (click)="getUserByAISHE()"
+                        matTooltip="Get Details">Get Details</button>
+                </div>
+            </div>
+            <mat-hint *ngIf="inValidAishe" style="color: red;font-size: medium;">Please enter valid AISHE
+                Code</mat-hint>
+            <!-- <mat-hint *ngIf="userActive" style="color: black;font-size: medium;">User already exists for this institute and status is <span style="color: red;">Active</span>. Before creating new user credential, Please <span style="color: red;">inactivate </span> this existing user</mat-hint> -->
+            <mat-hint *ngIf="userActive" style="color: black;font-size: medium;">A user already exists in this
+                organization and their status is <span style="color: red;font-weight: 500;">Active.</span> Before
+                activating this user, please <span style="color: red;font-weight: 500;">deactivate </span>the existing
+                user. At any given time, only one user will be active. </mat-hint>
+            <h3 class="heading" *ngIf="showDetails">University Detail & Address
+            </h3>
+
+            <div class="row col-md-12 overflow-hidden" *ngIf="showDetails">
+                <div class="col-md-2">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput formControlName="aisheCode1" placeholder="AISHE Code"
+                            autocomplete="off">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-10">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="University Name" formControlName="universityName">
+
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="Address Line 1" formControlName="addressLine1">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="Address Line 2" formControlName="addressLine2">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="City" formControlName="cityName">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="State" formControlName="stateName">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="District" formControlName="districtName">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <h3 class="heading" *ngIf="showOtherDetails">Personal Detail</h3>
+            <div class="row col-md-12 overflow-hidden" *ngIf="showOtherDetails">
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="Full Name" formControlName="firstNameUser" required
+                            autocomplete="off" [errorStateMatcher]="errorMatcher">
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['firstNameUser'].dirty ||registation.controls['firstNameUser'].value || registation.controls['firstNameUser'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['firstNameUser'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </div>
+                <label class="col-md-1 col-form-label mt-3" style="text-align: end;">Gender<span>*</span></label>
+                <div class="col-md-4 mt-4">
+                    <mat-radio-group aria-label="Select an option" required formControlName="genderId">
+                        <mat-radio-button value="1">Male</mat-radio-button>&nbsp;&nbsp;
+                        <mat-radio-button value="2">Female</mat-radio-button>&nbsp;&nbsp;
+                        <mat-radio-button value="3">Transgender</mat-radio-button>
+                        <mat-hint class="err-msgs"
+                            *ngIf="registation.controls['genderId'].dirty ||registation.controls['genderId'].value || registation.controls['genderId'].touched || isFormInvalid">
+                            <span *ngIf="
+                        registation.controls['genderId'].hasError(
+                          'required'
+                        )
+                      " class="errorMessage">Please select.</span>
+                        </mat-hint>
+                    </mat-radio-group>
+
+                </div>
+            </div>
+            <h3 class="heading" *ngIf="registation.controls['userTypeId'].value !== '3' && showOtherDetails">Address
+            </h3>
+            <div class="row col-md-12 overflow-hidden"
+                *ngIf="registation.controls['userTypeId'].value !== '3' && showOtherDetails">
+                <div class="col-md-6">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="Address Line 1" autocomplete="off"
+                            formControlName="addressLine1" [errorStateMatcher]="errorMatcher">
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['addressLine1'].dirty ||registation.controls['addressLine1'].value || registation.controls['addressLine1'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['addressLine1'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="Address Line 2" autocomplete="off"
+                            formControlName="addressLine2" [errorStateMatcher]="errorMatcher">
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['addressLine2'].dirty ||registation.controls['addressLine2'].value || registation.controls['addressLine2'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['addressLine2'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="City" autocomplete="off" formControlName="cityName"
+                            required [errorStateMatcher]="errorMatcher">
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['cityName'].dirty ||registation.controls['cityName'].value || registation.controls['cityName'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['cityName'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-4" *ngIf="registation.controls['roleId'].value !== '6'">
+                    <mat-form-field class="d-block">
+                        <mat-select placeholder="State" required formControlName="stateCode"
+                            (selectionChange)="getDistrict($event.value)" [errorStateMatcher]="errorMatcher">
+                            <mat-select-filter [array]="variables" [displayMember]="'name'"
+                                (filteredReturn)="stateList = $event">
+                            </mat-select-filter>
+                            <mat-option *ngFor="let data of stateList"
+                                [value]="data.stateCode">{{data.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['stateCode'].dirty ||registation.controls['stateCode'].value || registation.controls['stateCode'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['stateCode'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please select.</span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-4" *ngIf="registation.controls['userTypeId'].value === '3'">
+                    <mat-form-field class="d-block">
+                        <mat-select placeholder="District" required formControlName="districtCode"
+                            [errorStateMatcher]="errorMatcher">
+                            <mat-select-filter [array]="variables1" [displayMember]="'name'"
+                                (filteredReturn)="districtList = $event"></mat-select-filter>
+                            <mat-option *ngFor="let data of districtList"
+                                [value]="data.distCode">{{data.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['districtCode'].dirty || registation.controls['districtCode'].value || registation.controls['districtCode'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['districtCode'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please select.</span>
+                    </mat-hint>
+                </div>
+            </div>
+            <h3 class="heading" *ngIf="showOtherDetails">Contact Details</h3>
+            <div class="row col-md-12 overflow-hidden" *ngIf="showOtherDetails">
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="Email" required autocomplete="off"
+                            formControlName="emailId" [errorStateMatcher]="errorMatcher">
+                    </mat-form-field>
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="registation.controls['emailId'].dirty ||registation.controls['emailId'].value || registation.controls['emailId'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['emailId'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                        <span *ngIf="
+                            registation.controls['emailId'].hasError(
+                              'pattern'
+                            )
+                          " class="errorMessage">Invalid Email.</span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="Alternate Email" autocomplete="off"
+                            formControlName="alternateEmail">
+                    </mat-form-field>
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="registation.controls['alternateEmail'].dirty ||registation.controls['alternateEmail'].value || registation.controls['alternateEmail'].touched || isFormInvalid">
+
+                        <span *ngIf="
+                        registation.controls['alternateEmail'].hasError(
+                          'pattern'
+                        )
+                      " class="errorMessage">Invalid Email.</span>
+                    </mat-hint>
+                </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden" *ngIf="showOtherDetails">
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="Mobile" (keypress)="onKeypressEvent($event,10)"
+                            required autocomplete="off" formControlName="mobileNo" [errorStateMatcher]="errorMatcher">
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['mobileNo'].dirty ||registation.controls['mobileNo'].value || registation.controls['mobileNo'].touched || isFormInvalid">
+                        <span *ngIf="
+                                registation.controls['mobileNo'].hasError(
+                                  'required'
+                                )
+                              " class="errorMessage">Please enter.</span>
+                        <span *ngIf="
+                              registation.controls['mobileNo'].hasError(
+                                'pattern'
+                              )
+                            " class="errorMessage">Invalid.</span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="Alternate Mobile"
+                            (keypress)="onKeypressEvent($event,10)" autocomplete="off"
+                            formControlName="alternateMobile">
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['alternateMobile'].dirty ||registation.controls['alternateMobile'].value || registation.controls['alternateMobile'].touched || isFormInvalid">
+
+                        <span *ngIf="
+                              registation.controls['alternateMobile'].hasError(
+                                'pattern'
+                              )
+                            " class="errorMessage">Invalid.</span>
+                    </mat-hint>
+                </div>
+            </div>
+
+        </form>
+        <h3 class="heading" *ngIf="showOtherDetails">Please Choose Login Credential</h3>
+        <form [formGroup]="loginForm" *ngIf="showOtherDetails">
+            <div class="row col-md-12 overflow-hidden">
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput placeholder="User Id" formControlName="userId" autocomplete="u"
+                            [matTooltip]="userMsg" matTooltipPosition="right" matTooltipClass="blackTooltip" required
+                            style="text-transform: lowercase;">
+
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="loginForm.controls['userId'].dirty || loginForm.controls['userId'].value || loginForm.controls['userId'].touched || isFormInvalid ">
+                        <span *ngIf="loginForm.controls['userId'].hasError('required')">Please enter
+                        </span>
+                        <span *ngIf="loginForm.controls['userId'].hasError('pattern')">Invalid UserId
+                        </span>
+                    </mat-hint>
+                </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="password" matInput placeholder="Password" formControlName="password"
+                            (paste)="false" (draggable)="false" (drop)="false" (dragover)="false"
+                            [matTooltip]="passwordMessage" matTooltipPosition="right" matTooltipClass="blackTooltip"
+                            autocomplete="new-auto">
+                        <!-- <span class="loginshoweyecls">
+                            <i (click)="password()" class="fa" [ngClass]="{'fa-eye-slash': !show, 'fa-eye': show}"
+                                aria-hidden="true"></i></span> -->
+
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="loginForm.controls['password'].dirty || loginForm.controls['password'].value || loginForm.controls['password'].touched || isFormInvalid ">
+                        <span *ngIf="loginForm.controls['password'].hasError('required')">Please enter
+                        </span>
+                        <span *ngIf="loginForm.controls['password'].hasError('pattern')">Invalid Password
+                        </span>
+                    </mat-hint>
+                </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <input type="password" matInput placeholder="Confirm Password" formControlName="confirmPassword"
+                            required (paste)="false" (draggable)="false" (drop)="false" (dragover)="false"
+                            autocomplete="off">
+
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="loginForm.controls['confirmPassword'].dirty || loginForm.controls['confirmPassword'].value || loginForm.controls['confirmPassword'].touched || isFormInvalid ">
+                        <span *ngIf="loginForm.controls['confirmPassword'].hasError('required')">Please enter
+                        </span>
+                        <span *ngIf="loginForm.controls['confirmPassword'].hasError('mustMatch')">Passwords do not
+                            match
+                        </span>
+                    </mat-hint>
+                </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+                <div class="col-md-2">
+                    <mat-form-field class="d-block">
+                        <input type="text" matInput formControlName="captcha" (paste)="false" (draggable)="false"
+                            (drop)="false" (dragover)="false" required autocomplete="off" required
+                            placeholder="Verification">
+                    </mat-form-field>
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="loginForm.controls['captcha'].dirty || loginForm.controls['captcha'].value || loginForm.controls['captcha'].touched || isFormInvalid ">
+                        <span *ngIf="loginForm.controls['captcha'].hasError('required')">Please enter
+                        </span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-3">
+                    <img [src]="captchaText" alt="" class="captcha">
+                    <a class="btn btn-link" (click)="getCaptcha()">
+                        <i tabindex="0" class="fa fa-refresh captcha-refresh ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="form-group text-center mt-2" *ngIf="showOtherDetails">
+        <button class="btn btn-success btn-sm" type="button" (click)="verifyCaptcha()">Submit</button>
+    </div>
+</div>

@@ -1,0 +1,558 @@
+    <!-- ----------------Approved/reject Action--------------------------- -->
+    <div class="container-fluid reg-page-bg pl-4 pr-4" *ngIf="showTablesApproveReject">
+        <div>
+          <div class="row" style="margin-bottom: -2%; margin-top: 5%;">
+            <!-- <mat-card-title>Edit College</mat-card-title> -->
+            <div class="col-10 d-flex justify-content-between align-items-center">
+              <h1 class="insthead position-relative mb-md-4"><span>Rejected Standalone</span></h1>
+
+
+            </div>
+            <div class="col-2 d-flex justify-content-end mt-2 ml-auto">
+              <a (click)="viewDetailOnly==false?backToSummaryReport():back()" matTooltip="Back" style="cursor: pointer;" class="text-uppercase"><img src="assets/img/table-back.svg"
+                class="table-back me-2" />
+                Back
+              </a>
+            </div>
+          </div>
+
+          <!-- address for correspondence are below -->
+          <div class="row d-flex justify-content-between">
+            <!-- head of institution details are below-->
+            <div class="table-responsive-sm mt-2 col-lg-9">
+              <table class="table collegeDetails">
+                <thead>
+                  <tr>
+                    <th colspan="4">
+                      <h3 class="text-center"><b>Institute Details</b></h3>
+                    </th>
+                  </tr>
+                </thead>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Request Id
+                  </td>
+                  <td class="text-center col-md-2">{{ obj?.requestId }}</td>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Institute Name
+                  </td>
+                  <td class="text-center col-md-3">{{ obj?.collegeName }}</td>
+                </tr>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    State
+                  </td>
+                  <td class="text-center col-md-2">{{ obj?.collegeState }}</td>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    District
+                  </td>
+                  <td class="text-center col-md-3">{{ obj?.collegeDistrict }}</td>
+                </tr>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Location
+                  </td>
+                  <!-- <td *ngIf=" obj?.collegeLocation==='U'">Urban</td>
+              <td *ngIf=" obj?.collegeLocation==='R'"> Rural</td> -->
+                  <td class="text-center">
+                    {{
+                      obj?.collegeLocation === "U"
+                        ? "Urban"
+                        : obj?.collegeLocation === "R"
+                        ? "Rural"
+                        : ""
+                    }}
+                  </td>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                  Institute Type
+                  </td>
+                  <td class="text-center col-md-3">{{ obj?.collegeType }} <span *ngIf="obj.stateBodyTypeName">({{obj.stateBodyTypeName}})</span></td>
+                </tr>
+
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Management Type
+                  </td>
+                  
+                  <td class="text-center">{{ obj?.collegeManagementType }}</td>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Year from Which Admission Started
+                  </td>
+                  <td class="text-center col-md-3">
+                    {{ obj?.yearOfStartOfAffiliation }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                  Year of Establishment
+                  </td>
+                  
+                  <td class="text-center">{{ obj?.yearOfEstablishment }}</td>
+                  
+                  <td class="text-center col-md-2 tableheading" style="background-color: #f5efef">
+                    Is the institution affiliated with any other University/Statutory body?
+                </td>
+
+                <td class="text-center col-md-3">{{
+                    obj.isOtherAffiliatingUniversityStatuatoryBody?'YES':'NO' }}</td>
+                </tr>
+                <tr>
+                  <td
+                  class="text-center col-md-2 tableheading"
+                  style="background-color: #f5efef"
+                >
+                  Website
+                </td>
+
+                <td class="text-center col-md-3">{{ obj?.website }}</td>
+                </tr>
+
+              </table>
+            </div>
+
+            <div class="table-responsive-sm mt-2 col-lg-3">
+              <table class="table collegeDetails">
+                <thead>
+                  <tr>
+                    <th colspan="4">
+                      <h3 class="text-center h3heading">
+                        <b>Address for Correspondence</b>
+                      </h3>
+                    </th>
+                  </tr>
+                </thead>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Line1
+                  </td>
+                  <td class="text-center col-md-2">{{ obj?.addressLine1 }}</td>
+                </tr>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Line2
+                  </td>
+                  <td class="text-center col-md-3">{{ obj?.addressLine2 }}</td>
+                </tr>
+                <!-- <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    State
+                  </td>
+                  <td class="text-center col-md-2">{{ obj?.addressState }}</td>
+                </tr>
+
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    District
+                  </td>
+
+                  <td class="text-center col-md-3">{{ obj?.addressDistrict }}</td>
+                </tr> -->
+
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    City
+                  </td>
+
+                  <td class="text-center col-md-3">{{ obj?.city }}</td>
+                </tr>
+
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Pincode
+                  </td>
+                  <td class="text-center col-md-2">{{ obj?.addressPincode }}</td>
+                </tr>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Latitude
+                  </td>
+
+                  <td class="text-center col-md-3">{{ obj?.latitude }}</td>
+                </tr>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Longitude
+                  </td>
+
+                  <td class="text-center col-md-3">{{ obj?.longitude }}</td>
+                </tr>
+
+               
+              </table>
+            </div>
+          </div>
+
+          <div class="table-responsive-sm mt-2" *ngIf="obj?.isOtherAffiliatingUniversityStatuatoryBody">
+            <table class="table" *ngIf="obj?.otherAffiliatingUniversity && obj?.otherAffiliatingUniversity.length">
+              <tr>
+                <th>S.No</th>
+                <th>University</th>
+                <th>AISHE Code</th>
+              </tr>
+              <tr *ngFor="let item of obj?.otherAffiliatingUniversity;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{item.affiliatingUniv}}</td>
+                <td>{{item.affiliatingUnivId}}</td>
+              </tr>
+            </table>
+      
+            <table class="table" *ngIf="obj?.statuatoryBody && obj?.statuatoryBody.length">
+              <tr>
+                <th>S.No</th>
+                <th>Affiliating/Regulatory/Statutory Body</th>
+              </tr>
+              <tr *ngFor="let item of obj.statuatoryBody;let j=index">
+                <td>{{j+1}}</td>
+                <td>{{item.statuatoryBody}}</td>
+              </tr>
+            </table>
+      
+          </div>
+
+          <div class="row d-flex justify-content-between mt-2">
+            <!-- nodal officer details are below -->
+            <div class="table-responsive-sm col-lg-6">
+              <table class="table collegeDetails">
+                <thead>
+                  <tr>
+                    <th colspan="4">
+                      <h3 class="text-center h3heading"><b>Nodal Officer Details</b></h3>
+                    </th>
+                  </tr>
+                </thead>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Officer Name
+                  </td>
+                  <td class="text-center col-md-2">{{ obj?.nodalOfficesName }}</td>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Gender
+                  </td>
+                  <td class="text-center col-md-3">
+                    {{ obj?.nodalOfficesGenderName }}
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Designation
+                  </td>
+                  <td class="text-center col-md-3">
+                    {{ obj?.nodalOfficesDesignation }}
+                  </td>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Email
+                  </td>
+                  <td class="text-center col-md-2">{{ obj?.nodalOfficesEmail }}</td>
+                  
+                </tr>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Mobile
+                  </td>
+                  <td class="text-center col-md-3">
+                    {{ obj?.nodalOfficesMobile }}
+                  </td>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Phone Landline
+                  </td>
+                  <td class="text-center col-md-2">
+                    {{ obj?.nodalOfficesPhoneLandLine }}
+                  </td>
+                 
+                </tr>
+              </table>
+            </div>
+
+            <div class="table-responsive-sm col-lg-6">
+              <table class="table collegeDetails">
+                <thead>
+                  <tr>
+                    <th colspan="4">
+                      <h3 class="text-center h3heading">
+                        <b>Head of Institution Details</b>
+                      </h3>
+                    </th>
+                  </tr>
+                </thead>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Officer Name
+                  </td>
+                  <td class="text-center col-md-2">{{ obj?.hodname }}</td>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Gender
+                  </td>
+                  <td class="text-center col-md-3">{{ obj?.hodgenderName }}</td>
+                </tr>
+                <tr>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Designation
+                  </td>
+                  <td class="text-center col-md-3">{{ obj?.hoddesignation }}</td>
+                  <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Email
+                  </td>
+                  <td class="text-center col-md-2">{{ obj?.hodemail }}</td>
+                 
+                </tr>
+                <tr>
+                  <td
+                  class="text-center col-md-2 tableheading"
+                  style="background-color: #f5efef"
+                >
+                  Mobile
+                </td>
+                <td class="text-center col-md-3">{{ obj?.hodmobile }}</td>
+
+                  <!-- <td
+                    class="text-center col-md-2 tableheading"
+                    style="background-color: #f5efef"
+                  >
+                    Phone Landline
+                  </td>
+                  <td class="text-center col-md-2">{{ obj?.hodphoneLandLine }}</td> -->
+                
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- similar institutions are below -->
+          <!-- <div class="table-responsive-sm mt-2" *ngIf="showSimilarDataTable">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th colspan="6">
+                    <h3 class="text-center h3heading">
+                      <b>Similar institutions already existing in AISHE</b>
+                    </h3>
+                  </th>
+                </tr>
+              </thead>
+              <tr>
+                <th>AISHE Code</th>
+                <th>Category</th>
+                <th>Body</th>
+                <th>Institution Name</th>
+                <th>State</th>
+                <th>District</th>
+                <th>Status</th>
+              </tr>
+              <tbody id="myTable">  
+                <tr
+                  *ngFor="
+                    let data of SimilarDataTableDataTable
+                      | searchFilter : searchText
+                      | paginate
+                        : {
+                            itemsPerPage: pageSize,
+                            currentPage: page
+                          };
+                    let i = index
+                  "
+                >
+                  <td>S-{{ data.id }}</td>
+                  <td>{{ data.category }}</td>
+                  <td style="width: 26%;">{{ data.collegeName }}</td>
+                  <td>{{ data.type }}</td>
+                  <td>{{data.state}}</td>
+                  <td>{{data.district}}</td>
+                <td>{{ data.status }}</td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div> -->
+
+<!-- **************** -->
+          <!-- <div *ngIf="approvalResponse?.SNO" class="mt-2"><h3 style="font-weight: 500;border-radius: 7px; background-color: #aae2ed;" class="text-center">State Nodal Officer Action</h3></div>
+          <div class="mt-2 row" *ngIf="approvalResponse?.SNO">
+           <div class="col-md-3">
+               <div class="row">
+                 <div class="col-md-4" style="font-weight: 500;">Action :</div>
+                 <div class="col-md-8">{{approvalResponse?.SNO}} </div>
+               </div>
+           </div>
+           <div class="col-md-3">
+            <div class="row">
+              <div class="col-md-4" style="font-weight: 500;">Date :</div>
+              <div class="col-md-8">{{approvalResponse?.approvalDateSNO}} </div>
+            </div>
+           </div>
+           <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-3" style="font-weight: 500;">Remark :</div>
+              <div class="col-md-9">{{approvalResponse?.remarksSNO}}</div>
+            </div>
+           </div>
+          </div> -->
+
+          <!-- <div *ngIf="approvalResponse?.DTE" class="mt-2"><h3 style="font-weight: 500;border-radius: 7px; background-color: #aae2ed;" class="text-center">Directorate of Technical Education Action</h3></div>
+          <div class="mt-2 row" *ngIf="approvalResponse?.DTE">
+           <div class="col-md-3">
+               <div class="row">
+                 <div class="col-md-4" style="font-weight: 500;">Action :</div>
+                 <div class="col-md-8">{{approvalResponse?.DTE}} </div>
+               </div>
+           </div>
+           <div class="col-md-3">
+            <div class="row">
+              <div class="col-md-4" style="font-weight: 500;">Date :</div>
+              <div class="col-md-8">{{approvalResponse?.approvalDateDTE}} </div>
+            </div>
+           </div>
+           <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-3" style="font-weight: 500;">Remark :</div>
+              <div class="col-md-9">{{approvalResponse?.remarksDTE}}</div>
+            </div>
+           </div>
+          </div> -->
+
+          <!-- <div *ngIf="approvalResponse?.SNC" class="mt-2"><h3 style="font-weight: 500;border-radius: 7px; background-color: #aae2ed;" class="text-center">State Nursing Body/Council Action</h3></div>
+          <div class="mt-2 row" *ngIf="approvalResponse?.SNC">
+           <div class="col-md-3">
+               <div class="row">
+                 <div class="col-md-4" style="font-weight: 500;">Action :</div>
+                 <div class="col-md-8">{{approvalResponse?.SNC}} </div>
+               </div>
+           </div>
+           <div class="col-md-3">
+            <div class="row">
+              <div class="col-md-4" style="font-weight: 500;">Date :</div>
+              <div class="col-md-8">{{approvalResponse?.approvalDateSNC}} </div>
+            </div>
+           </div>
+           <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-3" style="font-weight: 500;">Remark :</div>
+              <div class="col-md-9">{{approvalResponse?.remarksSNC}}</div>
+            </div>
+           </div>
+          </div> -->
+
+          <!-- <div *ngIf="approvalResponse?.SCERT" class="mt-2"><h3 style="font-weight: 500;border-radius: 7px; background-color: #aae2ed;" class="text-center">State Council of Educational Research and Training
+            Action</h3></div>
+          <div class="mt-2 row" *ngIf="approvalResponse?.SCERT">
+           <div class="col-md-3">
+               <div class="row">
+                 <div class="col-md-4" style="font-weight: 500;">Action :</div>
+                 <div class="col-md-8">{{approvalResponse?.SCERT}} </div>
+               </div>
+           </div>
+           <div class="col-md-3">
+            <div class="row">
+              <div class="col-md-4" style="font-weight: 500;">Date :</div>
+              <div class="col-md-8">{{approvalResponse?.approvalDateSCERT}} </div>
+            </div>
+           </div>
+           <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-3" style="font-weight: 500;">Remark :</div>
+              <div class="col-md-9">{{approvalResponse?.remarksSCERT}}</div>
+            </div>
+           </div>
+          </div> -->
+<!--******************  show request details-->
+<div class="col-md-12 mt-2 mb-2">
+  <app-track-approve-status [requestIdData]="obj?.requestId" [stateBodyTypeName]="obj?.stateBodyTypeName" (statusEvent)="statusReceived($event)" ></app-track-approve-status>
+  </div>
+
+
+
+<!-- **************** -->
+
+          <div class="col-md-12 mt-2 mb-2">
+            Uploaded Document
+            <a
+              (click)="downloadPdf(obj?.document)"
+              style="cursor: pointer; color: blue"
+            >
+              Click here to view</a
+            >
+          </div>
+
+        </div>
+      </div>

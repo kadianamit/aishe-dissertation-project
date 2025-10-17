@@ -1,0 +1,1278 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="container-fluid" *ngIf="!isRegistrationOpen">
+  <div class="card">
+    <div class="card-body">
+      <h2 style="color: red">Sorry , AISHE Registration is now closed.</h2>
+      <button mat-raised-button color="primary" (click)="back()">Back</button>
+      <!-- <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a> -->
+    </div>
+  </div>
+</div>
+<section class="p-3 bg-gray-400" *ngIf="isRegistrationOpen">
+  <div class="container-fluid">
+    <mat-card class="border">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12 mt-0 badges p-2">
+            <div class="text-center">
+              <span class="font-weight-bold text-lg">
+                Request Form for adding Institution
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="border-bottom-dark col-md-12 mb-2 text-center">
+        <h5 style="font-weight: 500; font-size: 18px;">Request Form for adding Institution</h5>
+      </div> -->
+      <br>
+      <div class="text-left font-weight-semibold pb-3">
+        <p><b>Institute that focus exclusively on research and development but
+          are not authorized to grant degrees or
+          diplomas to students can be included in the category of R&D institutes.</b>
+          Others may select College or Standalone as per the <a
+          href='assets/Guidelines for Addition of College Standalone Institution on AISHE Portal.pdf' target="_blank"
+          class="font-weight-semibold" title="Download"> Guidelines for
+          College/Standalone Institutions</a>
+        </p>
+
+      </div>
+
+      <!-- <div class="row col-md-12 overflow-hidden">
+        <label class="font-weight-semibold text-sm text-left">1. Institute that focus exclusively on research and
+          development but are not authorized to grant degrees or
+          diplomas to students can be included in the category of R&D institutes.</label>
+
+        <label class="font-weight-semibold text-sm text-left">2. Others may select College or Standalone as per the <a
+            href='assets/Guidelines for Addition of College Standalone Institution on AISHE Portal.pdf' target="_blank"
+            class="guidelines" title="Download"> Guidelines for
+            College/Standalone Institutions</a></label>
+        <br>
+      </div> -->
+
+
+      <!-- <label class="font-weight-bolder text-sm float-left">Institutes which solely focuses on Research and Development can be added in R & D institutes.</label>
+      <label class="font-weight-bolder text-sm float-left">Others may select College or Standalone as per the
+        <a href='assets/Guidelines for Addition of College Standalone Institution on AISHE Portal.pdf' target="_blank"
+          class="guidelines" title="Download"> Guidelines for
+          College/Standalone Institutions</a>
+      </label>  -->
+
+
+      <mat-tab-group animationDuration="0ms" class="exam-tabing-steps" [(selectedIndex)]="selectedIndex"
+        (selectedTabChange)="tabSelected($event)">
+        <mat-tab label="Institute Basic Info">
+          <form [formGroup]="instituteBasicInfoForm">
+            <div class="row col-md-12 overflow-hidden pt-3">
+              <mat-label class="col-md-3 pt-3" style="font-weight: 500;">Ever Registered with
+                AISHE:<span class="asterisk">*</span></mat-label>
+              <div class="col-md-2 pt-3">
+                <mat-radio-group aria-label="Select an option" formControlName="aisheRadio"
+                  (change)="showFiled($event.value)">
+                  <mat-radio-button [value]=true>YES</mat-radio-button>&nbsp;
+                  <mat-radio-button [value]=false>NO</mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <div class="col-md-1">
+              </div>
+              <div class="col-md-3" *ngIf="showOptionField">
+                <mat-form-field class="d-block">
+                  <mat-label>Previous AISHE Code</mat-label>
+                  <input matInput type="text" placeholder="Previous AISHE Code" autocomplete="off"
+                    formControlName="aisheCode" required>
+                  <mat-hint class="err-msgs"
+                    *ngIf="instituteBasicInfoForm.controls['aisheCode'].dirty || instituteBasicInfoForm.controls['aisheCode'].value || instituteBasicInfoForm.controls['aisheCode'].touched || isFormInvalid ">
+                    <span *ngIf="instituteBasicInfoForm.controls['aisheCode'].hasError('required')">Please enter
+                    </span>
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2 pt-2" *ngIf="showOptionField">
+                <button class="btn btn-success btn-sm mr-2" (click)="getDetails()">
+                  Get Details
+                </button>
+              </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden" *ngIf="showOptionField1">
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>Institution Category</mat-label>
+                  <mat-select placeholder="--Select Institute Type--" required formControlName="instituteType"
+                    (selectionChange)="instituteType($event.value)">
+                    <mat-option value="C">--COLLEGE--</mat-option>
+                    <mat-option value="S">--STAND-ALONE--</mat-option>
+                    <mat-option value="RD">--Research & Development Institute--</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="instituteBasicInfoForm.controls['instituteType'].dirty || instituteBasicInfoForm.controls['instituteType'].value || instituteBasicInfoForm.controls['instituteType'].touched || isFormInvalid ">
+                  <span *ngIf="instituteBasicInfoForm.controls['instituteType'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>State</mat-label>
+                  <mat-select placeholder="--Select State--" required formControlName="stateName"
+                    (selectionChange)="getDistrict($event.value)">
+                    <mat-select-filter [array]="variables" [displayMember]="'name'"
+                      (filteredReturn)="stateList = $event">
+                    </mat-select-filter>
+                    <mat-option *ngFor="let data of stateList" [value]="data">{{data.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="instituteBasicInfoForm.controls['stateName'].dirty || instituteBasicInfoForm.controls['stateName'].value || instituteBasicInfoForm.controls['stateName'].touched || isFormInvalid ">
+                  <span *ngIf="instituteBasicInfoForm.controls['stateName'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>District</mat-label>
+                  <mat-select placeholder="--Select District--" required formControlName="districtName"
+                    (selectionChange)="getDistrictName($event.value)">
+                    <mat-select-filter [array]="variables1" [displayMember]="'name'"
+                      (filteredReturn)="districtList = $event"></mat-select-filter>
+                    <mat-option *ngFor="let data of districtList" [value]="data">{{data.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="instituteBasicInfoForm.controls['districtName'].dirty || instituteBasicInfoForm.controls['districtName'].value || instituteBasicInfoForm.controls['districtName'].touched || isFormInvalid ">
+                  <span *ngIf="instituteBasicInfoForm.controls['districtName'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+            </div>
+
+            <div class="row col-md-12 overflow-hidden pt-3"
+              *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value ==='RD'">
+              <div class="col-md-3">
+                <mat-form-field class="d-block">
+                  <mat-label>Total No. of Student Enrolled:</mat-label>
+                  <input type="number" matInput autocomplete="off" (keyup)="total()" formControlName="totalno">
+
+                </mat-form-field>
+                <mat-hint *ngIf="showErrorMsg" style="color: red;font-size: medium;">{{errorMsg}}</mat-hint>
+              </div>
+
+              <div class="col-md-9" *ngIf="showField">
+                <mat-form-field class="d-block">
+                  <mat-label>Name of the R&D Institute:</mat-label>
+                  <input type="text" matInput autocomplete="off" formControlName="instituteNameRD" required
+                    [errorStateMatcher]="errorMatcher">
+                  <mat-error
+                    *ngIf="instituteBasicInfoForm.controls['instituteNameRD'].hasError('required') || instituteBasicInfoForm.controls['instituteNameRD'].dirty || instituteBasicInfoForm.controls['instituteNameRD'].value || instituteBasicInfoForm.controls['instituteNameRD'].touched ">
+                    Please enter.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4" *ngIf="showField">
+                <mat-form-field class="d-block">
+                  <mat-label>Administrative Ministry:</mat-label>
+                  <mat-select required formControlName="ministryIdRD" [errorStateMatcher]="errorMatcher">
+                    <mat-select-filter [array]="ministryArray" [displayMember]="'name'"
+                      (filteredReturn)="ministryList = $event">
+                    </mat-select-filter>
+                    <mat-option *ngFor="let data of ministryList" [value]="data.id">{{data.name}}</mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="instituteBasicInfoForm.controls['ministryIdRD'].hasError('required') || instituteBasicInfoForm.controls['ministryIdRD'].dirty || instituteBasicInfoForm.controls['ministryIdRD'].value || instituteBasicInfoForm.controls['ministryIdRD'].touched ">
+                    Please select.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden"
+              *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+              <div class="col-md-12">
+                <mat-form-field class="d-block">
+                  <mat-label>Institute Name</mat-label>
+                  <input matInput type="text" placeholder="Institue Name" required autocomplete="off"
+                    formControlName="name" style="text-transform: uppercase;">
+                </mat-form-field>
+                <!-- <mat-hint class="err-msgs"
+                  *ngIf="instituteBasicInfoForm.controls['name'].dirty || instituteBasicInfoForm.controls['name'].value || instituteBasicInfoForm.controls['name'].touched || isFormInvalid ">
+                  <span *ngIf="instituteBasicInfoForm.controls['name'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="instituteBasicInfoForm.controls['name'].hasError('pattern')">Invalid name
+                  </span>
+                </mat-hint> -->
+                <mat-hint class="err-msgs">{{instituteMsg}}</mat-hint>
+              </div>
+            </div>
+            <mat-hint class="errorMsg" *ngIf="institutionList && institutionList.length">Same institution is already
+              existing in AISHE, thus you are not allowed to add this institution. Kindly contact to your UNO/SNO.
+            </mat-hint>
+            <div class="table-responsive" style="height: 15em;" *ngIf="institutionList && institutionList.length">
+              <table class="table table-bordered table-sm table-hover">
+                <thead class="header-fixed">
+                  <tr class="changeBackground">
+                    <th>S.No</th>
+                    <th>AISHE Code/Request Id</th>
+                    <th>Institution Category</th>
+                    <th *ngIf="this.instituteBasicInfoForm.controls['instituteType'].value !== 'RD'">University/State
+                      Body</th>
+                    <th>Institution Name</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <ng-container *ngFor="let element of institutionList;let i = index">
+                  <tbody>
+                    <tr>
+                      <td>{{i+1}}</td>
+                      <td>{{element.requestIdOrAisheCode}}</td>
+                      <td>{{element.categoryName}}</td>
+                      <td *ngIf="this.instituteBasicInfoForm.controls['instituteType'].value !== 'RD'">
+                        {{element.universityOrStateBodyName}}</td>
+                      <td>{{element.instituteName}}</td>
+                      <td>{{element.statusName}}</td>
+                  </tbody>
+                </ng-container>
+
+              </table>
+            </div>
+          </form>
+        </mat-tab>
+        <mat-tab label="Institute Nodal Officer Details"
+          [disabled]="instituteBasicInfoForm.invalid || institutionList.length != 0">
+          <form [formGroup]="nodalOfficerForm">
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>Institution Category</mat-label>
+                  <input matInput type="text" autocomplete="off" formControlName="instituteCategory">
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>State</mat-label>
+                  <input matInput type="text" autocomplete="off" formControlName="state">
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>District</mat-label>
+                  <input matInput type="text" autocomplete="off" formControlName="district">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-12">
+                <mat-form-field class="d-block">
+                  <mat-label>{{instituteBasicInfoForm.controls['instituteType'].value ==='RD'?'Name of the R&D Institute':'Institute Name'}}</mat-label>
+                  <input matInput type="text" formControlName="instituteName" autocomplete="off">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-8">
+                <mat-form-field class="d-block">
+                  <mat-label>Nodal Officer Name</mat-label>
+                  <input matInput type="text" placeholder="Nodal Officer Name" required autocomplete="off"
+                    formControlName="nodalOfficerName">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="nodalOfficerForm.controls['nodalOfficerName'].dirty || nodalOfficerForm.controls['nodalOfficerName'].value || nodalOfficerForm.controls['nodalOfficerName'].touched || isFormInvalid ">
+                  <span *ngIf="nodalOfficerForm.controls['nodalOfficerName'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="nodalOfficerForm.controls['nodalOfficerName'].hasError('pattern')">Alphanumeric and
+                    special
+                    characters not allowed
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-4 mt-4">
+                <mat-label style="line-height: normal;
+                color: black;
+                font-size: 14px;
+                font-weight: 650;float: left;margin-top: 2px;">Gender<span style="color: red;">*</span></mat-label>
+                <mat-radio-group aria-label="Select an option" required formControlName="nodalGender">
+                  <mat-radio-button value="1">Male</mat-radio-button>&nbsp;&nbsp;
+                  <mat-radio-button value="2">Female</mat-radio-button>&nbsp;&nbsp;
+                  <mat-radio-button value="3">Other</mat-radio-button>
+                </mat-radio-group>
+                <mat-hint class="err-msgs"
+                  *ngIf="nodalOfficerForm.controls['nodalGender'].dirty || nodalOfficerForm.controls['nodalGender'].value || nodalOfficerForm.controls['nodalGender'].touched || isFormInvalid ">
+                  <span *ngIf="nodalOfficerForm.controls['nodalGender'].hasError('required')">Please choose.
+                  </span>
+                </mat-hint>
+              </div>
+
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-8">
+                <mat-form-field class="d-block">
+                  <mat-label>Designation</mat-label>
+                  <input matInput type="text" placeholder="Designation" required autocomplete="off"
+                    formControlName="nodalDesignation">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="nodalOfficerForm.controls['nodalDesignation'].dirty || nodalOfficerForm.controls['nodalDesignation'].value || nodalOfficerForm.controls['nodalDesignation'].touched || isFormInvalid ">
+                  <span *ngIf="nodalOfficerForm.controls['nodalDesignation'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="nodalOfficerForm.controls['nodalDesignation'].hasError('pattern')">Alphanumeric and
+                    special
+                    characters not allowed
+                  </span>
+                </mat-hint>
+              </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-5">
+                <mat-form-field class="d-block">
+                  <mat-label>Email</mat-label>
+                  <input matInput type="text" placeholder="Email" required autocomplete="off"
+                    formControlName="nodalOfficerEmail">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="nodalOfficerForm.controls['nodalOfficerEmail'].dirty || nodalOfficerForm.controls['nodalOfficerEmail'].value || nodalOfficerForm.controls['nodalOfficerEmail'].touched || isFormInvalid ">
+                  <span *ngIf="nodalOfficerForm.controls['nodalOfficerEmail'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="nodalOfficerForm.controls['nodalOfficerEmail'].hasError('pattern')">Invalid Email
+                  </span>
+                </mat-hint>
+              </div>
+              <!-- <div class="col-md-1 mt-3" *ngIf="successVerifyOTP">
+                <i class="fa-solid fa-circle-check text-lg" style="margin-top: 5px;
+                color: green;
+                float: left;"></i>
+              </div>
+              <div class="col-md-1 mt-3" *ngIf="emailOtp">
+                <span class="timer" *ngIf="displayE !== '00:00'">{{displayE}}</span>
+                <span class="resend" *ngIf="displayE === '00:00'" (click)="sendEmailOTP()">Resend</span>
+              </div>
+              <div class="col-md-2 mt-3" *ngIf="!emailOtp && hideE">
+                <label class="label">Verify Email Id<span style="color: red;">*</span></label>
+              </div>
+              <div class="col-md-3 mt-3" *ngIf="!emailOtp && hideE" [ngClass]="{disabledDiv:disabledEmail}">
+                <button class="btn btn-danger btn-sm" (click)="sendEmailOTP()">Click here to send Email OTP</button>
+              </div>
+              <div class="col-md-4" *ngIf="emailOtp">
+                <mat-form-field class="d-block">
+                  <mat-label>Email OTP</mat-label>
+                  <input matInput type="text" placeholder="Email OTP" required formControlName="emailOtpNodal"
+                    autocomplete="off">
+                </mat-form-field>
+                <mat-hint>OTP is valid for 15 minutes !</mat-hint>
+              </div>
+
+              <div class="col-md-1 mt-3" *ngIf="emailOtp">
+                <button class="btn btn-success btn-sm" (click)="verifyEmailOTP()">Verify</button>
+              </div> -->
+
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-5">
+                <mat-form-field class="d-block">
+                  <mat-label>Mobile</mat-label>
+                  <input matInput type="number" placeholder="Mobile" required autocomplete="off"
+                    formControlName="nodalOfficerMob" (keypress)="onKeypressEvent($event,10)">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="nodalOfficerForm.controls['nodalOfficerMob'].dirty || nodalOfficerForm.controls['nodalOfficerMob'].value || nodalOfficerForm.controls['nodalOfficerMob'].touched || isFormInvalid ">
+                  <span *ngIf="nodalOfficerForm.controls['nodalOfficerMob'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="nodalOfficerForm.controls['nodalOfficerMob'].hasError('pattern')">Invalid Number.
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-1 mt-3" *ngIf="mobileOtp">
+                <span class="timer" *ngIf="display !== '00:00'">{{display}}</span>
+                <span class="resend" *ngIf="display === '00:00'" (click)="sendMobileOTP()">Resend</span>
+              </div>
+              <div class="col-md-1 mt-3" *ngIf="successVerifyMobileOTP">
+                <i class="fa-solid fa-circle-check text-lg" style="margin-top: 5px;
+                color: green;
+                float: left;"></i>
+              </div>
+              <div class="col-md-2 mt-3" *ngIf="!mobileOtp && hide">
+                <label class="label">Verify Mobile Number<span style="color: red;">*</span></label>
+              </div>
+              <div class="col-md-3 mt-3" *ngIf="!mobileOtp && hide" [ngClass]="{disabledDiv:disabledMobile}">
+                <button class="btn btn-danger btn-sm" (click)="sendMobileOTP()">Click here to send Mobile OTP</button>
+              </div>
+              <div class="col-md-4" *ngIf="mobileOtp">
+                <mat-form-field class="d-block">
+                  <mat-label>Mobile OTP</mat-label>
+                  <input matInput type="text" placeholder="Mobile OTP" required autocomplete="off"
+                    formControlName="mobileOtpNodal" (keypress)="restrictNumeric($event)">
+                </mat-form-field>
+                <mat-hint>OTP is valid for 15 minutes !</mat-hint>
+              </div>
+
+              <div class="col-md-1 mt-3" *ngIf="mobileOtp">
+                <button class="btn btn-success btn-sm" (click)="verifyMobileOTP()">Verify</button>
+              </div>
+
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-2 mt-3">
+                <label class="label" style="float: left;">Phone Landline</label>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field class="d-block">
+                  <mat-label>STD Code</mat-label>
+                  <input matInput type="text" placeholder="STD Code" autocomplete="off"
+                    (keypress)="onKeypressEvent($event,5)" formControlName="stdCode" appInputNumbersOnly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="d-block">
+                  <mat-label>Phone Number</mat-label>
+                  <input matInput type="text" placeholder="Phone Number" autocomplete="off"
+                    (keypress)="onKeypressEvent($event,8)" formControlName="phoneNumber" appInputNumbersOnly>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+          <hr><br><br>
+          <form [formGroup]="loginForm" *ngIf="instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+            <h3 class="heading">Login Details</h3>
+            <div class="row col-md-12 overflow-hidden">
+
+
+
+              <div class="col-md-4" [ngClass]="{disabledDiv:nodalOfficerForm.invalid}">
+                <mat-form-field class="d-block">
+                  <mat-label>UserId</mat-label>
+                  <input matInput type="text" placeholder="UserId" required autocomplete="off" formControlName="userId">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="loginForm.controls['userId'].dirty || loginForm.controls['userId'].value || loginForm.controls['userId'].touched || isFormInvalid ">
+                  <span *ngIf="loginForm.controls['userId'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="loginForm.controls['userId'].hasError('pattern')">Invalid UserId
+                  </span>
+                </mat-hint>
+                <mat-hint class="err-msgs">
+                  The USER ID must contain 8-16 characters.Valid characters are
+                  letters (a-z, A-Z), numbers (0-9) and dot(.)
+                </mat-hint>
+              </div>
+              <div class="col-md-4" [ngClass]="{disabledDiv:nodalOfficerForm.invalid}">
+                <mat-form-field class="d-block">
+                  <mat-label>Password</mat-label>
+                  <input matInput placeholder="Password" required autocomplete="off" formControlName="password"
+                    [type]="show ? 'text' : 'password'">
+                  <span class="loginshoweyecls">
+                    <i (click)="password()" class="fa" [ngClass]="{'fa-eye-slash': !show, 'fa-eye': show}"
+                      aria-hidden="true"></i></span>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="loginForm.controls['password'].dirty || loginForm.controls['password'].value || loginForm.controls['password'].touched || isFormInvalid ">
+                  <span *ngIf="loginForm.controls['password'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="loginForm.controls['password'].hasError('pattern')">Invalid Password
+                  </span>
+                </mat-hint>
+                <mat-hint class="err-msgs">
+                  {{passwordMessage}}
+                </mat-hint>
+              </div>
+              <div class="col-md-4" [ngClass]="{disabledDiv:nodalOfficerForm.invalid}">
+                <mat-form-field class="d-block">
+                  <mat-label>Confirm Password</mat-label>
+                  <input matInput type="password" placeholder="Confirm Password" (paste)="false" (draggable)="false"
+                    (drop)="false" (dragover)="false" required autocomplete="off" formControlName="confirmPassword">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="loginForm.controls['confirmPassword'].dirty || loginForm.controls['confirmPassword'].value || loginForm.controls['confirmPassword'].touched || isFormInvalid ">
+                  <span *ngIf="loginForm.controls['confirmPassword'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="loginForm.controls['confirmPassword'].hasError('mustMatch')">Passwords do not match
+                  </span>
+                </mat-hint>
+              </div>
+            </div>
+          </form>
+        </mat-tab>
+        <mat-tab label="Institutional Head Details"
+          [disabled]="instituteBasicInfoForm.controls['instituteType'].value === 'RD' ? (instituteBasicInfoForm.invalid || nodalOfficerForm.invalid) : (instituteBasicInfoForm.invalid || nodalOfficerForm.invalid || loginForm.invalid)">
+
+
+          <!-- <mat-tab label="Institutional Head Details"
+          [disabled]="instituteBasicInfoForm.invalid || nodalOfficerForm.invalid || loginForm.invalid"> -->
+          <form [formGroup]="institutionHead">
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>Institution Category</mat-label>
+                  <input matInput type="text" autocomplete="off" formControlName="instituteCategory">
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>State</mat-label>
+                  <input matInput type="text" autocomplete="off" formControlName="state">
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>District</mat-label>
+                  <input matInput type="text" autocomplete="off" formControlName="district">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-12">
+                <mat-form-field class="d-block">
+                  <mat-label>{{instituteBasicInfoForm.controls['instituteType'].value ==='RD'?'Name of the R&D Institute':'Institute Name'}}</mat-label>
+                  <input matInput type="text" formControlName="instituteName" autocomplete="off">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-8">
+                <mat-form-field class="d-block">
+                  <mat-label>Institutional Head Name</mat-label>
+                  <input matInput type="text" placeholder="Institutional Head Name" required autocomplete="off"
+                    formControlName="institutionalHeadName">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="institutionHead.controls['institutionalHeadName'].dirty || institutionHead.controls['institutionalHeadName'].value || institutionHead.controls['institutionalHeadName'].touched || isFormInvalid ">
+                  <span *ngIf="institutionHead.controls['institutionalHeadName'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="institutionHead.controls['institutionalHeadName'].hasError('pattern')">Alphanumeric and
+                    special characters not allowed
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-4 mt-4">
+                <mat-label style="line-height: normal;
+                color: black;
+                font-size: 14px;
+                font-weight: 650;float: left;margin-top: 2px;">Gender<span style="color: red;">*</span></mat-label>
+                <mat-radio-group aria-label="Select an option" required formControlName="gender">
+                  <mat-radio-button value="1">Male</mat-radio-button>&nbsp;&nbsp;
+                  <mat-radio-button value="2">Female</mat-radio-button>&nbsp;&nbsp;
+                  <mat-radio-button value="3">Other</mat-radio-button>
+                </mat-radio-group>
+                <mat-hint class="err-msgs"
+                  *ngIf="institutionHead.controls['gender'].dirty || institutionHead.controls['gender'].value || institutionHead.controls['gender'].touched || isFormInvalid ">
+                  <span *ngIf="institutionHead.controls['gender'].hasError('required')">Please choose
+                  </span>
+                </mat-hint>
+              </div>
+            </div>
+
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-6">
+                <mat-form-field class="d-block">
+                  <mat-label>Designation</mat-label>
+                  <input matInput type="text" placeholder="Designation" required autocomplete="off"
+                    formControlName="designation">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="institutionHead.controls['designation'].dirty || institutionHead.controls['designation'].value || institutionHead.controls['designation'].touched || isFormInvalid ">
+                  <span *ngIf="institutionHead.controls['designation'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="institutionHead.controls['designation'].hasError('pattern')">Alphanumeric and special
+                    characters not allowed
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="d-block">
+                  <mat-label>Email</mat-label>
+                  <input matInput type="text" placeholder="Email" required autocomplete="off" formControlName="email">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="institutionHead.controls['email'].dirty || institutionHead.controls['email'].value || institutionHead.controls['email'].touched || isFormInvalid ">
+                  <span *ngIf="institutionHead.controls['email'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="institutionHead.controls['email'].hasError('pattern')">Invalid Email
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="d-block">
+                  <mat-label>Mobile</mat-label>
+                  <input matInput type="number" placeholder="Mobile" required autocomplete="off"
+                    formControlName="mobile" (keypress)="onKeypressEvent($event,10)">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="institutionHead.controls['mobile'].dirty || institutionHead.controls['mobile'].value || institutionHead.controls['mobile'].touched || isFormInvalid ">
+                  <span *ngIf="institutionHead.controls['mobile'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="institutionHead.controls['mobile'].hasError('pattern')">Invalid Number.
+                  </span>
+                </mat-hint>
+              </div>
+            </div>
+          </form>
+        </mat-tab>
+        <!-- <mat-tab label="Contact and Other Details"> -->
+
+        <!-- <mat-tab label="Contact and Other Details"
+        [disabled]="instituteBasicInfoForm.invalid || nodalOfficerForm.invalid || institutionHead.invalid || loginForm.invalid"> -->
+       <mat-tab
+          label="{{instituteBasicInfoForm.controls['instituteType'].value ==='RD'?'Address':'Contact and Other Details'}}"
+          [disabled]="instituteBasicInfoForm.controls['instituteType'].value ==='RD'?instituteBasicInfoForm.invalid || nodalOfficerForm.invalid || institutionHead.invalid:instituteBasicInfoForm.invalid || nodalOfficerForm.invalid || institutionHead.invalid || loginForm.invalid">
+          >
+          <form [formGroup]="contactDetails">
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>Institution Category</mat-label>
+                  <input matInput type="text" autocomplete="off" formControlName="instituteCategory">
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>State</mat-label>
+                  <input matInput type="text" autocomplete="off" formControlName="state">
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>District</mat-label>
+                  <input matInput type="text" autocomplete="off" formControlName="district">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-12">
+                <mat-form-field class="d-block">
+                  <mat-label
+                    *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">Institute
+                    Name</mat-label>
+                  <mat-label
+                    *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value ==='RD'">Name of
+                    the R&D Institute</mat-label>
+                  <input matInput type="text" formControlName="instituteName" autocomplete="off"
+                    style="text-transform: uppercase;">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden"
+              *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+              <div class="col-md-6">
+                <mat-form-field class="d-block">
+                  <mat-label>Year from Which Admission Started</mat-label>
+                  <mat-select placeholder="--Select Survey Year--" required (selectionChange)="admission($event.value)"
+                    formControlName="surveyYearA">
+                    <mat-option *ngFor="let data of admissionYear" [value]="data">{{data.year}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['surveyYearA'].dirty || contactDetails.controls['surveyYearA'].value || contactDetails.controls['surveyYearA'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['surveyYearA'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6 mt-3" *ngIf="admissionStarted">
+                <mat-label style="line-height: normal;
+              color: black;
+              font-size: 14px;
+              font-weight: 650;">Whether admission/enrollment process completed?</mat-label>&nbsp;&nbsp;
+                <mat-radio-group aria-label="Select an option" [required]="admissionStarted"
+                  formControlName="admissionEnrollment">
+                  <mat-radio-button value='YES'>YES</mat-radio-button>&nbsp;&nbsp;
+                  <mat-radio-button value='NO'>NO</mat-radio-button>
+                </mat-radio-group>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['admissionEnrollment'].dirty || contactDetails.controls['admissionEnrollment'].value || contactDetails.controls['admissionEnrollment'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['admissionEnrollment'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field class="d-block">
+                  <mat-label>Year of Establishment</mat-label>
+                  <input matInput type="number" required (keypress)="onKeypressEvent($event,4)"
+                    formControlName="yearOfEstablishment" autocomplete="off"
+                    placeholder="Year of Establishment(Year from which academic course started)">
+
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['yearOfEstablishment'].dirty || contactDetails.controls['yearOfEstablishment'].value || contactDetails.controls['yearOfEstablishment'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['yearOfEstablishment'].hasError('required')">Please enter
+                  </span>
+                </mat-hint>
+              </div>
+
+
+              <div class="col-md-6">
+                <mat-form-field class="d-block">
+                  <mat-label>{{instituteBasicInfoForm.controls['instituteType'].value === 'S'?'Body Type':'College Type'}}
+                  </mat-label>
+                  <mat-select placeholder="--Select College Type--" formControlName="collegeType"
+                    (selectionChange)="getRoleID($event.value)" required>
+                    <mat-option *ngFor="let data of collegeType" [value]="data.id">
+                      {{data.type}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['collegeType'].dirty || contactDetails.controls['collegeType'].value || contactDetails.controls['collegeType'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['collegeType'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+
+              <div class="col-md-6" *ngIf="contactDetails.controls['collegeType'].value === 6">
+                <mat-form-field class="d-block">
+                  <mat-label>Sub-Body Type
+                  </mat-label>
+                  <mat-select placeholder="Sub-Body Type" formControlName="stateBodyTypeId"
+                    [required]="contactDetails.controls['collegeType'].value === 6">
+                    <mat-option *ngFor="let e of subBodyType" [value]="e.id">{{e.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['stateBodyTypeId'].dirty || contactDetails.controls['stateBodyTypeId'].value || contactDetails.controls['stateBodyTypeId'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['stateBodyTypeId'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field class="d-block">
+                  <mat-label>Management Type</mat-label>
+                  <mat-select placeholder="--Select Management Type--" formControlName="managementType" required>
+                    <mat-option *ngFor="let data of managementList" [value]="data.id">{{data.management}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['managementType'].dirty || contactDetails.controls['managementType'].value || contactDetails.controls['managementType'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['managementType'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6" *ngIf="insType">
+                <mat-form-field class="d-block">
+                  <mat-label>Affiliating University State</mat-label>
+                  <mat-select placeholder="--Select Affiliating University State--"
+                    formControlName="affiliatingUniversityState" [required]="insType"
+                    (selectionChange)="getAffiliatingUniv($event.value)">
+                    <mat-select-filter [array]="variables4" [displayMember]="'name'"
+                      (filteredReturn)="affiliatingStateList = $event">
+                    </mat-select-filter>
+                    <mat-option *ngFor="let data of affiliatingStateList" [value]="data.stateCode">{{data.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['affiliatingUniversityState'].dirty || contactDetails.controls['affiliatingUniversityState'].value || contactDetails.controls['affiliatingUniversityState'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['affiliatingUniversityState'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6" *ngIf="insType">
+                <mat-form-field class="d-block">
+                  <mat-label>Affiliating University Name</mat-label>
+                  <mat-select placeholder="--Select Affiliating University Name--"
+                    formControlName="affiliatingUniversityName" (selectionChange)="getAffilatingUniversityName($event.value)">
+                    <mat-select-filter [array]="variables2" [displayMember]="'name'"
+                      (filteredReturn)="affiliatingUniversityList = $event"></mat-select-filter>
+                    <mat-option *ngFor="let data of affiliatingUniversityList" [value]="data.id">{{data.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['affiliatingUniversityName'].dirty || contactDetails.controls['affiliatingUniversityName'].value || contactDetails.controls['affiliatingUniversityName'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['affiliatingUniversityName'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+
+              <div class="col-md-6" *ngIf="insType && (instituteBasicInfoForm.controls['instituteType'].value !=='RD')">
+                <mat-form-field class="d-block">
+                  <mat-label>Is Institution Affiliated earlier to any other University</mat-label>
+                  <mat-select placeholder="--Select--" formControlName="isInstitutionAffiliated" [required]="insType"
+                    (selectionChange)="instituteAff($event.value)">
+                    <mat-option value='YES'>YES</mat-option>
+                    <mat-option value='NO'>NO</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['isInstitutionAffiliated'].dirty || contactDetails.controls['isInstitutionAffiliated'].value || contactDetails.controls['isInstitutionAffiliated'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['isInstitutionAffiliated'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+
+              <div class="col-md-6" *ngIf="insAff && insType">
+                <mat-form-field class="d-block">
+                  <mat-label>Name Of Other Affiliated University</mat-label>
+                  <mat-select placeholder="--Select--" [required]="insAff && insType"
+                    formControlName="otherAffiliatedUniversity"
+                    (selectionChange)="getOtherAffiliatingBody($event.value)">
+                    <mat-select-filter [array]="variables3" [displayMember]="'name'"
+                      (filteredReturn)="otherAffiliatingUniversityList = $event"></mat-select-filter>
+                    <mat-option *ngFor="let data of otherAffiliatingUniversityList" [value]="data.name">{{data.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['otherAffiliatedUniversity'].dirty || contactDetails.controls['otherAffiliatedUniversity'].value || contactDetails.controls['otherAffiliatedUniversity'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['otherAffiliatedUniversity'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+
+
+            </div>
+            <!-- <div class="row col-md-12 overflow-hidden"> -->
+            <!-- <div class="col-md-5" style="padding-top: 40px;">
+                <label class="textareaLabel">Upload document of proof of existence of the institution</label>
+              </div> -->
+            <!-- <div class="col-md-4">
+                <mat-form-field class="upload">
+
+                    <mat-toolbar>
+                      <input matInput placeholder="" readonly name="name" style="font-size: small;"
+                        [value]="myFilesName" accept="application/pdf"/>
+
+                      <mat-icon style="color: forestgreen;"> attach_file</mat-icon>
+                    </mat-toolbar>
+                    <input type="file" #fileInput id="uploadFile" name="uploadFile" multiple (change)="getFileDetails($event)"
+                      accept="application/pdf" />
+
+
+                </mat-form-field>
+                <p style="color: red;font-size: small;">(File should be in pdf format only & less than 2MB.)</p>
+
+              </div> -->
+
+
+            <!-- </div> -->
+
+
+            <div class="row col-md-12 overflow-hidden">
+              <!-- <div class="col-md-4" *ngIf="(roleId === '20') || (roleId === '7' && userTypeId == '01' || userTypeId == '07')"> -->
+              <div class="col-md-6" *ngIf="typeOfInsitute == 'S' && roleId === 5">
+                <mat-form-field class="d-block">
+                  <mat-label>Select Ministry</mat-label>
+                  <mat-select formControlName="ministryId" placeholder="--Select Ministry--" style="margin-left: 30px;"
+                    [required]="contactDetails.controls['ministryId'].value === 5">
+                    <mat-option *ngFor="let data of ministryArr" [value]="data.id">{{data.name}}</mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="contactDetails.controls['ministryId'].hasError('required') || contactDetails.controls['ministryId'].dirty || contactDetails.controls['ministryId'].value || contactDetails.controls['ministryId'].touched">
+                    Please select.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+
+            <div class="row col-md-12 overflow-hidden"
+              *ngIf="(typeOfInsitute == 'S' || typeOfInsitute == 'C') && roleId !== 5 && (instituteBasicInfoForm.controls['instituteType'].value !=='RD')">
+
+              <div class="col-md-12" style="text-align: left;">
+                <label class="font-weight-bolder text-sm">Is the institution affiliated with any other
+                  University/Statutory body?*</label>
+                <mat-radio-group formControlName="isOtherAffiliatingUniversityStatuatoryBody"
+                  (change)="isInstitutionAfilated($event.value)">
+                  &nbsp;
+                  <mat-radio-button [value]=true>Yes
+                  </mat-radio-button>&nbsp;
+                  <mat-radio-button [value]=false>No
+                  </mat-radio-button>
+                </mat-radio-group>
+                <div class="err-msgs mt-2">{{msg}}</div>
+
+
+              </div>
+
+              <div class="col-md-6" *ngIf="isVisible">
+                <mat-form-field class="d-block">
+                  <mat-label>Affiliating University</mat-label>
+                  <mat-select formControlName="otherAffiliatingUniversity" class="hide-selected-value"
+                    (selectionChange)="getAffiliatingBody($event)" placeholder="--Select Affiliating Universities--"
+                    multiple style="margin-left: 30px;">
+                    <mat-select-filter [array]="filterAffVariable" [displayMember]="'universityNameState'"
+                      (filteredReturn)="affilatedUniArr = $event"></mat-select-filter>
+                    <mat-option (onSelectionChange)="toggleAllSegments($event, data)"
+                      *ngFor="let data of affilatedUniArr" [value]="data.id">{{data.universityNameState}}
+                      {{data.id}}</mat-option>
+                  </mat-select>
+
+                </mat-form-field>
+
+
+              </div>
+              <div class="col-md-6" *ngIf="isVisible">
+                <mat-form-field class="d-block ">
+                  <mat-label>Affiliating/Regulatory/Statutory Body</mat-label>
+                  <mat-select formControlName="statuatoryBody" class="hide-selected-value"
+                    (selectionChange)="getStatutoryBody($event)" placeholder="--Select Affiliating Body--" multiple
+                    style="margin-left: 30px;">
+
+                    <mat-option *ngFor="let data of statutoryArr" [value]="data.id">{{data.statutoryBody}}</mat-option>
+                  </mat-select>
+
+                </mat-form-field>
+
+              </div>
+
+            </div>
+            <div class="row" *ngIf="isVisible">
+
+              <div class="col-md-6">
+                <table *ngIf="affListVisibleArray?.length > 0">
+                  <tr>
+                    <th>University (State)</th>
+
+                    <th>Aishe Code</th>
+                  </tr>
+                  <tr *ngFor="let item of affListVisibleArray">
+                    <td>{{item.affiliatingUniv}}</td>
+
+                    <td>{{item.affiliatingUnivId}}</td>
+                  </tr>
+                </table>
+
+              </div>
+              <div class="col-md-6">
+                <table *ngIf="statutoryListVisibleArray?.length > 0">
+                  <tr>
+                    <th>Statutory Body</th>
+                  </tr>
+                  <tr *ngFor="let item of statutoryListVisibleArray">
+                    <td>{{item.statuatoryBody}}</td>
+                  </tr>
+                </table>
+
+              </div>
+            </div>
+
+            <br><br>
+
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-9">
+                <mat-label style="line-height: normal;
+                color: black;
+                font-size: 14px;
+                font-weight: 650;float: left;margin-top: 15px;"
+                  *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+                  Upload document of proof of existence of the institution (Affiliation letter)</mat-label>&nbsp;&nbsp;
+
+                <mat-label style="line-height: normal;
+                color: black;
+                font-size: 14px;
+                font-weight: 650;float: left;margin-top: 15px;"
+                  *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value ==='RD'">
+                  Upload Relevant Documents</mat-label>&nbsp;&nbsp;
+
+
+                <input type="file" id="myfile" name="myfile" class="mt-2" (change)="getFileDetails($event)"
+                  accept="application/pdf">
+                <p style="color: red;font-size: small;">(File should be in pdf format only & less than 2MB.)</p>
+              </div>
+              <div class="col-md-3" style="padding-top: 30px;">
+                <table class="media-upload-table table table-borderless">
+                  <tbody>
+                    <tr *ngFor="let media of uploadedMedia; let i = index">
+                      <td style="vertical-align:middle;">
+                        <div class="d-flex flex-column" style="margin-top: 18px;">
+                          <div>
+                            <div class="first-progress">
+                              <div [ngStyle]="{ 'width.%': media.FileProgress }" class="second-progress"></div>
+                            </div>
+                          </div>
+                          <div class="text-center">
+                            {{ media.FileProgessSize }} of {{ media.FileSize }}
+                          </div>
+                        </div>
+                      </td>
+                      <!-- <td style="vertical-align:middle;text-align: right;">
+                        <div class="media-upload-check">
+
+                          <a class="remove-media-txt" (click)="removeImage(i)"> Remove </a>
+                        </div>
+                      </td> -->
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- <div class="col-md-2"></div> -->
+            </div>
+
+
+
+            <div class="col-md-12" class="badges">
+              <span class="font-weight-bold text-lg"
+                *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">Address for
+                correspondence</span>
+              <span class="font-weight-bold text-lg"
+                *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value ==='RD'">
+                Address</span>
+            </div>
+            <div class="row col-md-12 overflow-hidden"
+              *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+              <div class="col-md-3 mt-4">
+                <mat-label style="line-height: normal;
+                color: black;
+                font-size: 14px;
+                font-weight: 650;float: left;margin-top: 2px;">Location<span style="color: red;">*</span></mat-label>
+                <mat-radio-group aria-label="Select an option" formControlName="location" required
+                  (change)="isLocation($event.value)">
+                  <mat-radio-button value="R">Rural</mat-radio-button>&nbsp;&nbsp;
+                  <mat-radio-button value="U">Urban</mat-radio-button>
+                </mat-radio-group>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['location'].dirty || contactDetails.controls['location'].value || contactDetails.controls['location'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['location'].hasError('required')">Please enter
+                  </span>
+                </mat-hint>
+              </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-6"
+                *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+                <mat-form-field class="d-block">
+                  <mat-label>Line 1</mat-label>
+                  <input type="text" matInput autocomplete="off" required formControlName="addressLine1">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['addressLine1'].dirty || contactDetails.controls['addressLine1'].value || contactDetails.controls['addressLine1'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['addressLine1'].hasError('required')">Please enter
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6"
+                *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+                <mat-form-field class="d-block">
+                  <mat-label>Line 2</mat-label>
+                  <input type="text" matInput autocomplete="off" required formControlName="addressLine2">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['addressLine2'].dirty || contactDetails.controls['addressLine2'].value || contactDetails.controls['addressLine2'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['addressLine2'].hasError('required')">Please enter
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6" *ngIf="instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+                <mat-form-field class="d-block">
+                  <mat-label>City</mat-label>
+                  <input type="text" matInput autocomplete="off" required formControlName="city">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['city'].dirty || contactDetails.controls['city'].value || contactDetails.controls['city'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['city'].hasError('required')">Please enter
+                  </span>
+                  <span *ngIf="contactDetails.controls['city'].hasError('pattern')">Invalid City
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="d-block">
+                  <mat-label>State</mat-label>
+                  <input type="text" matInput autocomplete="off" formControlName="state">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="d-block">
+                  <mat-label>District</mat-label>
+                  <input type="text" matInput autocomplete="off" formControlName="district">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6" *ngIf="instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+                <mat-form-field class="d-block">
+                  <mat-label>Subdistrict (Subdivision/Tehsil/Taluk/Taluka/Mandal/Mandal(Circle) /Circle)</mat-label>
+                  <mat-select formControlName="subDistrictId" required>
+                    <mat-select-filter [array]="variables5" [displayMember]="'name'"
+                      (filteredReturn)="subDistrictList = $event"></mat-select-filter>
+                    <mat-option *ngFor="let e of subDistrictList" [value]=e.id>
+                      {{e.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['subDistrictId'].dirty || contactDetails.controls['subDistrictId'].value || contactDetails.controls['subDistrictId'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['subDistrictId'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6" *ngIf="contactDetails.controls['location'].value === 'R'">
+                <mat-form-field class="d-block">
+                  <mat-label>Block:</mat-label>
+                  <mat-select formControlName="blockId" placeholder="Block"
+                    [required]="contactDetails.controls['location'].value === 'R'?true:false"
+                    (selectionChange)="getBlockLgd($event.value)">
+                    <mat-select-filter [array]="variables6" [displayMember]="'blockName'"
+                      (filteredReturn)="blockList = $event"></mat-select-filter>
+                    <mat-option [value]="99999">Others</mat-option>
+                    <mat-option *ngFor="let x of blockList" [value]=x.id>
+                      {{x.blockName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['blockId'].dirty || contactDetails.controls['blockId'].value || contactDetails.controls['blockId'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['blockId'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+
+
+              </div>
+              <div class="col-md-6" *ngIf="contactDetails.controls['location'].value === 'U'">
+                <mat-form-field class="d-block">
+                  <mat-label>Urban Local Body:</mat-label>
+                  <mat-select formControlName="ulbId"
+                    [required]="contactDetails.controls['location'].value === 'U'?true:false">
+                    <mat-select-filter [array]="variables7" [displayMember]="'ulbName'"
+                      (filteredReturn)="urbanBodyList = $event"></mat-select-filter>
+                    <mat-option [value]="99999">Others</mat-option>
+                    <mat-option *ngFor="let x of urbanBodyList" [value]=x.id>
+                      {{x.ulbName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['ulbId'].dirty || contactDetails.controls['ulbId'].value || contactDetails.controls['ulbId'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['ulbId'].hasError('required')">Please select
+                  </span>
+                </mat-hint>
+
+
+              </div>
+
+              <div class="col-md-12"
+                *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value ==='RD'">
+                <mat-form-field class="d-block">
+                  <mat-label>Complete Address:</mat-label>
+                  <input type="text" matInput autocomplete="off" formControlName="addressLine1"
+                    [errorStateMatcher]="errorMatcher" required>
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['addressLine1'].dirty || contactDetails.controls['addressLine1'].value || contactDetails.controls['addressLine1'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['addressLine1'].hasError('required')">Please enter
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="d-block">
+                  <mat-label>Pin Code</mat-label>
+                  <input type="number" matInput autocomplete="off" formControlName="pinCode"
+                    (keypress)="onKeypressEvent($event,6)">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['pinCode'].dirty || contactDetails.controls['pinCode'].value || contactDetails.controls['pinCode'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['pinCode'].hasError('required')">Please enter
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6"
+                *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+                <mat-form-field class="d-block">
+                  <mat-label>Latitude <span style="color: red;">(Range: 6.00000 - 38.00000 in degree):</span>
+                  </mat-label>
+                  <input matInput type="text" formControlName="latitude" autocomplete="off"
+                    (keypress)="allowOnlyDecimal($event)" placeholder="Latitude (Range: 6.00000 - 38.00000 in degree)"
+                    required  (paste)="false" (draggable)="false" (drop)="false"
+                    (dragover)="false">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['latitude'].dirty || contactDetails.controls['latitude'].value || contactDetails.controls['latitude'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['latitude'].hasError('required')">Please enter
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6"
+                *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+                <mat-form-field class="d-block">
+                  <mat-label>Longitude <span style="color: red;">(Range: 68.00000 - 98.00000 in degree):</span>
+                  </mat-label>
+                  <input matInput type="text" formControlName="longitude" autocomplete="off"
+                    (keypress)="allowOnlyDecimal($event)"
+                    placeholder="Longitude (Range: 68.00000 - 98.00000 in degree)" required maxlength="10"
+                    (paste)="false" (draggable)="false" (drop)="false" (dragover)="false">
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['longitude'].dirty || contactDetails.controls['longitude'].value || contactDetails.controls['longitude'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['longitude'].hasError('required')">Please enter
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-6"
+                *ngIf="showOptionField1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+                <mat-form-field class="d-block">
+                  <mat-label>Website:</mat-label>
+                  <input matInput type="url" formControlName="websiteUrl" autocomplete="off"
+                    (keypress)="onKeypressEvent($event,200)" placeholder="Website">
+
+
+                </mat-form-field>
+                <mat-hint class="err-msgs" *ngIf="contactDetails.controls['websiteUrl'].hasError('pattern')">
+                  Please enter valid website.
+                </mat-hint>
+
+              </div>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-4">
+                <mat-form-field class="d-block">
+                  <mat-label>Verfication Code</mat-label>
+                  <input matInput autocomplete="off" maxlength="15" (paste)="false" (draggable)="false" (drop)="false"
+                    (dragover)="false" placeholder="Enter Verfication Code" class="textTransform"
+                    formControlName="Verfication" required />
+                </mat-form-field>
+                <mat-hint class="err-msgs"
+                  *ngIf="contactDetails.controls['Verfication'].dirty || contactDetails.controls['Verfication'].value || contactDetails.controls['Verfication'].touched || isFormInvalid ">
+                  <span *ngIf="contactDetails.controls['Verfication'].hasError('required')">Please enter
+                  </span>
+                </mat-hint>
+              </div>
+              <div class="col-md-3">
+                <img [src]="captchaText" alt="" class="captcha">
+                <a class="btn btn-link" (click)="getCaptcha()">
+                  <i tabindex="0" class="fa fa-refresh captcha-refresh ml-1"></i>
+                </a>
+              </div>
+            </div>
+
+            <table class="table table-borderless">
+              <tr>
+                <mat-checkbox class="mt-2" formControlName="underTaking"></mat-checkbox>
+                <td style="font-family: initial;
+                    font-weight: bolder;">
+                  <span> {{instituteBasicInfoForm.controls['instituteType'].value !=='RD'?alertMsgCS:alertRD}}</span>
+
+                </td>
+              </tr>
+
+            </table>
+          </form>
+        </mat-tab>
+
+      </mat-tab-group>
+
+      <!-- <div class="form-group text-end">
+        <button mat-flat-button color="primary" class="btn btn-sm"
+        (click)="nextTab()">Next</button>
+      </div> -->
+      <div class="form-group text-end" *ngIf="selectedIndex === 0">
+        <button mat-flat-button color="primary" class="btn btn-sm" (click)="getInstituteNameCheck()"
+          [disabled]="instituteBasicInfoForm.invalid">Next</button>
+      </div>
+      <div class="form-group text-end"
+        *ngIf="selectedIndex === 1 && instituteBasicInfoForm.controls['instituteType'].value !=='RD'">
+        <button mat-flat-button color="primary" class="btn btn-sm" (click)="getExistUser()"
+          [disabled]="loginForm.invalid || nodalOfficerForm.invalid">Next</button>
+      </div>
+      <div class="form-group text-end"
+        *ngIf="selectedIndex === 1 && instituteBasicInfoForm.controls['instituteType'].value ==='RD'">
+        <button mat-flat-button color="primary" class="btn btn-sm" [disabled]="nodalOfficerForm.invalid"
+          (click)="nextTab()">Next</button>
+      </div>
+      <div class="form-group text-end" *ngIf="selectedIndex === 2">
+        <button mat-flat-button color="primary" class="btn btn-sm" (click)="nextTab()"
+          [disabled]="institutionHead.invalid">Next</button>
+      </div>
+      <div class="form-group text-center" *ngIf="selectedIndex === 3">
+        <button class="btn btn-success" type="button" (click)="verifyCaptcha()">Submit</button>
+      </div>
+
+    </mat-card>
+
+  </div>
+</section>

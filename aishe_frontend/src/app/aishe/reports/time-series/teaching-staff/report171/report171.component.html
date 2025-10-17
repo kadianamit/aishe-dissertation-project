@@ -1,0 +1,295 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div
+class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+*ngIf="Showdata12">
+<table
+class="table  showReportDataChild" >
+<thead class="childTableStickyHeader">
+<tr *ngIf="is2020==false">
+   <th rowspan="2" class="text-center table-success">Name of Institution</th>
+  <th rowspan="2" class="text-center table-light">Year</th>
+  <th colspan="2" class="text-center table-secondary">
+    Vice Chancellor
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Director
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Pro - Vice Chancellor
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Principal
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Professor & Equivalent
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Associate Professor
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Additional Professor
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Reader
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Lecturer (Selection Grade)
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Assistant Professor
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Lecturer (Senior Scale)
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Lecturer
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Tutor
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Demonstrator
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Part-Time Teacher
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Ad hoc Teacher
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Temporary Teacher
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Contract Teacher
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Visiting Teacher
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Principal InCharge
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Total
+  </th>
+
+</tr>
+
+<tr *ngIf="is2020">
+  <th rowspan="2" class="text-center table-success">Name of Institution</th>
+  <th rowspan="2" class="text-center table-light">Year</th>
+  <th colspan="2" class="text-center table-secondary">
+    Vice Chancellor
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Director
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Pro - Vice Chancellor
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Principal
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Professor & Equivalent
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Associate Professor
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Additional Professor
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Reader
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Lecturer (Selection Grade)
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Assistant Professor
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Lecturer (Senior Scale)
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Lecturer
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Tutor
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Demonstrator
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Part-Time Teacher
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Ad hoc Teacher
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Temporary Teacher
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Contract Teacher
+  </th>
+  <th colspan="2" class="text-center table-secondary">
+    Visiting Teacher
+  </th>
+  <th colspan="2" class="text-center table-tertiary">
+    Principal InCharge
+  </th>
+  <th colspan="2" class="text-center table-light">
+    Total
+  </th>
+</tr>
+
+<tr *ngIf="is2020==false">
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+</tr>
+<tr *ngIf="is2020">
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+  <th class="text-center table-secondary">SS</th>
+  <th class="text-center table-secondary">IP</th>
+  <th class="text-center table-tertiary">SS</th>
+  <th class="text-center table-tertiary">IP</th>
+  <th class="text-center table-light">SS</th>
+  <th class="text-center table-light">IP</th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let row of reportTableData | paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }" [ngClass]="is2020?'d-none':''">
+  <td
+    *ngFor="let col of tableColumns; let i = index"
+    class="text-center"
+    [ngClass]="[i>=0 && i<1 ?'table-success':'',i>=1 && i<2 ?'table-light':'',i>=2 && i<4 ?'table-secondary':'', i>=4 && i<6 ? 'table-tertiary': '',i>=6 && i<8 ? 'table-light': '',
+      i>=8 && i<10 ? 'table-secondary': '',i>=10 && i<12 ? 'table-tertiary': '',i>=12 && i<14 ? 'table-light': '',
+      i>=14 && i<16 ? 'table-secondary': '',i>=16 && i<18 ? 'table-tertiary': '',i>=18 && i<20 ? 'table-light': '',
+      i>=20 && i<22 ? 'table-secondary': '',i>=22 && i<24 ? 'table-tertiary': '',i>=24 && i<26 ? 'table-light': '',
+        i>=26 && i<28 ? 'table-secondary': '',i>=28 && i<30 ? 'table-tertiary': '',i>=30 && i<32 ? 'table-light': '',
+          i>=32 && i<34 ? 'table-secondary': '',i>=34 && i<36 ? 'table-tertiary': '',i>=36 && i<38 ? 'table-light': '',
+            i>=38 && i<40 ? 'table-secondary': '',i>=40 && i<42 ? 'table-tertiary': '',i>=42 && i<44 ? 'table-light': '',
+      ]"
+  >
+    {{ row[col] }}
+  </td>
+</tr>
+<tr *ngFor="let row of reportTableData | paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }" [ngClass]="is2020?'':'d-none'">
+  <td
+    *ngFor="let col of tableColumns; let i = index"
+    class="text-center"
+    [ngClass]="[i>=0 && i<1 ?'table-success':'',i>=1 && i<2 ?'table-light':'',i>=2 && i<4 ?'table-secondary':'', i>=4 && i<6 ? 'table-tertiary': '',i>=6 && i<8 ? 'table-light': '',
+      i>=8 && i<10 ? 'table-secondary': '',i>=10 && i<12 ? 'table-tertiary': '',i>=12 && i<14 ? 'table-light': '',
+      i>=14 && i<16 ? 'table-secondary': '',i>=16 && i<18 ? 'table-tertiary': '',i>=18 && i<20 ? 'table-light': '',
+      i>=20 && i<22 ? 'table-secondary': '',i>=22 && i<24 ? 'table-tertiary': '',i>=24 && i<26 ? 'table-light': '',
+        i>=26 && i<28 ? 'table-secondary': '',i>=28 && i<30 ? 'table-tertiary': '',i>=30 && i<32 ? 'table-light': '',
+          i>=32 && i<34 ? 'table-secondary': '',i>=34 && i<36 ? 'table-tertiary': '',i>=36 && i<38 ? 'table-light': '',
+            i>=38 && i<40 ? 'table-secondary': '',i>=40 && i<42 ? 'table-tertiary': '',i>=42 && i<44 ? 'table-light': '',
+      ]"
+  >
+    {{ row[col] }}
+  </td>
+</tr>
+
+<tr>
+  <!-- <td colspan="1" class="text-center table-success">
+    All India
+  </td> -->
+  <!-- <td
+    *ngFor="let summary of summaryColumns; let i = index"
+    class="text-center table-secondary"
+  >
+    {{ summaryData[summary] }}
+  </td> -->
+</tr>
+</tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

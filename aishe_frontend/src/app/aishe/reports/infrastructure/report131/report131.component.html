@@ -1,0 +1,114 @@
+
+
+    <div
+    class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+    *ngIf="Showdata12"  >
+<table
+class="table  showReportDataChild" >
+<thead class="childTableStickyHeader">
+
+<!-- <tr>
+    <th rowspan="2" class="text-center table-success">State</th>
+  <th colspan="2" class="text-center table-light">Ph.D</th>
+  <th colspan="2" class="text-center table-secondary">M.Phil</th>
+  <th colspan="2" class="text-center table-tertiary">Post Graduate</th>
+  <th colspan="2" class="text-center table-light">Under Graduate</th>
+  <th colspan="2" class="text-center table-secondary">PG Diploma</th>
+  <th colspan="2" class="text-center table-tertiary">Diploma</th>
+  <th colspan="2" class="text-center table-light">Certificate</th>
+  <th colspan="2" class="text-center table-secondary">Integrated</th>
+  <th colspan="2" class="text-center table-tertiary">Total</th>
+  <th colspan="1" class="text-center table-light">Grand</th>
+</tr> -->
+<tr>
+  <th
+    *ngFor="let col of tableColumns; let i = index"
+
+    [ngClass]="[  i>=0 && i<1 ? 'table-success': '',i>=1 && i<2 ? 'table-light': '', i>=2 && i<3 ? 'table-secondary': '',i>=3 && i<4 ? 'table-tertiary': '',
+      i>=4 && i<5 ? 'table-light': '',i>=5 && i<6 ? 'table-secondary': '',i>=6 && i<7 ? 'table-tertiary': '',
+      i>=7 && i<8 ? 'table-light': '',i>=8 && i<9 ? 'table-secondary': '',i>=9 && i<10 ? 'table-tertiary': '',
+      i>=10 && i<11 ? 'table-light': '',i>=11 && i<12 ? 'table-secondary': '',i>=12 && i<13 ? 'table-tertiary': '',
+        i>=13 && i<14 ? 'table-light': '',i>=14 && i<15 ? 'table-secondary': '',i>=15 && i<16 ? 'table-tertiary': '',
+        i>=16 && i<17 ? 'table-light': '',i>=17 && i<18 ? 'table-secondary': '', i>=18 && i<19 ? 'table-tertiary': '',i>=19 && i<20 ? 'table-light': '',
+            i>=20 && i<21 ? 'table-secondary': '',
+            i>=21 && i<22 ? 'table-tertiary': '',i>=22 && i<23 ? 'table-light': '',i>=23 && i<24 ? 'table-secondary': '',i>=24 && i<25 ? 'table-tertiary': '',
+                i>=25 && i<26 ? 'table-light': '',
+                i>=26 && i<27 ? 'table-secondary': '',
+                i>=27 && i<28 ? 'table-tertiary': '',
+                i>=28 && i<29 ? 'table-light': '',
+                i>=29 && i<30 ? 'table-secondary': '',  i>=30 && i<31 ? 'table-tertiary': '', i>=31 && i<32 ? 'table-light': '',
+                    i>=32 && i<33 ? 'table-secondary': '',
+                    i>=33 && i<34 ? 'table-tertiary': '',i>=34 && i<35 ? 'table-light': '', i>=35 && i<36 ? 'table-secondary': '',i>=36 && i<37 ? 'table-tertiary': '',
+      ]"
+    class="text-center"
+  >
+    {{
+      col
+        .trim()
+        .replace('All', '')
+        .replace('Mphill Total', '')
+        .replace('PG', '')
+        .replace('UG', '')
+        .replace('PG Dip Total', '')
+        .replace('Dip Total', '')
+        .replace('Integrated Total','')
+        .replace('Integrated','')
+        .replace('Total', '')
+        .replace('Cert Total','')
+        .replace('Cert','')
+        .replace('Grand','Total')
+      }}
+      <!-- .replace('Cert Female','Female')  -->
+      <!-- .replace('Total ', 'Female') -->
+  </th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let row of reportTableData| paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }">
+  <td
+    *ngFor="let col of tableColumns; let i = index"
+  
+    [ngClass]="[  i>=0 && i<1 ? 'table-success': '',i>=1 && i<2 ? 'table-light': '', i>=2 && i<3 ? 'table-secondary': '',i>=3 && i<4 ? 'table-tertiary': '',
+      i>=4 && i<5 ? 'table-light': '',i>=5 && i<6 ? 'table-secondary': '',i>=6 && i<7 ? 'table-tertiary': '',
+      i>=7 && i<8 ? 'table-light': '',i>=8 && i<9 ? 'table-secondary': '',i>=9 && i<10 ? 'table-tertiary': '',
+      i>=10 && i<11 ? 'table-light': '',i>=11 && i<12 ? 'table-secondary': '',i>=12 && i<13 ? 'table-tertiary': '',
+        i>=13 && i<14 ? 'table-light': '',i>=14 && i<15 ? 'table-secondary': '',i>=15 && i<16 ? 'table-tertiary': '',
+        i>=16 && i<17 ? 'table-light': '',i>=17 && i<18 ? 'table-secondary': '', i>=18 && i<19 ? 'table-tertiary': '',i>=19 && i<20 ? 'table-light': '',
+            i>=20 && i<21 ? 'table-secondary': '',
+            i>=21 && i<22 ? 'table-tertiary': '',i>=22 && i<23 ? 'table-light': '',i>=23 && i<24 ? 'table-secondary': '',i>=24 && i<25 ? 'table-tertiary': '',
+                i>=25 && i<26 ? 'table-light': '',
+                i>=26 && i<27 ? 'table-secondary': '',
+                i>=27 && i<28 ? 'table-tertiary': '',
+                i>=28 && i<29 ? 'table-light': '',
+                i>=29 && i<30 ? 'table-secondary': '',  i>=30 && i<31 ? 'table-tertiary': '', i>=31 && i<32 ? 'table-light': '',
+                    i>=32 && i<33 ? 'table-secondary': '',
+                    i>=33 && i<34 ? 'table-tertiary': '',i>=34 && i<35 ? 'table-light': '', i>=35 && i<36 ? 'table-secondary': '',i>=36 && i<37 ? 'table-tertiary': '',
+        ]"
+  >
+    {{ row[col] }}
+  </td>
+</tr>
+<tr>
+  <td colspan="1" class=" table-success">
+    All Institution
+  </td>
+  <td
+    *ngFor="let summary of summaryColumns; let i = index"
+    class="text-center table-secondary"
+  >
+    {{ summaryData[summary] }}
+  </td>
+</tr>
+</tbody>
+</table>
+<pagination-controls
+  previousLabel="Prev"
+  nextLabel="Next"
+  (pageChange)="handlePageChange($event)"
+  >
+  </pagination-controls>
+</div>

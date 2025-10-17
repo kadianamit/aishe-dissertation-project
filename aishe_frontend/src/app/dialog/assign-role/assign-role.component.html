@@ -1,0 +1,38 @@
+<mat-dialog-content>
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">Assign Roles</span>
+                </div>
+                <div class="float-right">
+                    <button class="btn btn-success btn-sm" (click)="add()">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="animated fadeInDown card mb-2 pb-1 pt-1 bg-light overflow-hidden">
+        <div class="col-md-12 table-responsive">
+            <table class="table table-sm">
+                <tr>
+                    <th style="width: 315px;">Role's Name</th>
+                    <th></th>
+                </tr>
+                <tr *ngFor="let data of allowedRoles;let i=index">
+                    <td><select class="form-control form-control-sm" [(ngModel)]="data.roleId.roleId" (ngModelChange)="removeElement($event,i)">
+                            <option *ngFor="let item of data?.allowedRolesList" [value]="item.roleId">{{item.roleDescription}}</option>
+                        </select>
+                    </td>
+                    <td><input type="checkbox" [checked]="data.readAccess" [(ngModel)]="data.readAccess">&nbsp;&nbsp;&nbsp;&nbsp;View&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" [checked]="data.createdAccess" [(ngModel)]="data.createdAccess">&nbsp;&nbsp;&nbsp;&nbsp;Create
+                        &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" [checked]="data.updateAccess" [(ngModel)]="data.updateAccess">&nbsp;&nbsp;&nbsp;&nbsp;Update&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" [checked]="data.deleteAccess" [(ngModel)]="data.deleteAccess">&nbsp;&nbsp;&nbsp;&nbsp;Delete</td>
+                </tr>
+            </table> 
+        </div>
+    </div>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <!-- <button mat-raised-button color="primary" tabindex="1">Assign Roles</button> -->
+    <button mat-raised-button mat-dialog-close color="warn" tabindex="-1">{{cancelButtonText}}</button>
+</mat-dialog-actions>

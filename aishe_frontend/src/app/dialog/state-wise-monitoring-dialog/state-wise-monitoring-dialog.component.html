@@ -1,0 +1,83 @@
+<mat-dialog-content>
+  <div class="form-group">
+    <div class="form-row mr-0 ml-0">
+      <div class="col-md-12 mt-0 badges p-2 mt-3">
+        <div class="float-left">
+          <span class="font-weight-bold text-sm">{{stateName}} :- {{element.payload.typeName}} {{element.payload.text}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+
+      <div class="col-md-2">
+        <label>Show</label>&nbsp;
+        <select [(ngModel)]="pageSize" (ngModelChange)="onChange($event)">
+          <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+        </select>
+        entries
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-6">
+          <label>Search:</label>&nbsp;
+          <input type="text" size="40"  (change)="updateResults()" (keyup)="updateResults()"
+          [(ngModel)]="searchText">
+        </div>
+        <div class="col-md-1 excel">
+          <a mat-button (click)="excelDownload()">
+            <i
+              class="fa fa-file-excel-o"
+              matTooltip="Download as Excel"
+              matTooltipPosition="above"
+              matTooltipClass="blackTooltip"
+              style="font-size: 24px"
+            ></i>
+            <mat-icon style="color: green">
+              vertical_align_bottom
+            </mat-icon>
+          </a>
+        </div>
+      </div>
+  <table class="table table-bordered table-sm">
+      <tr>
+          <th>S.No.</th>
+          <th>AISHE Code</th>
+          <th>Institute Name</th>
+          <th>Type</th>
+
+      </tr>
+      <ng-container *ngFor="let item of list | paginate : {
+          itemsPerPage: pageSize,
+          currentPage: page
+        };
+  let i = index
+  ">
+          <tr>
+              <td>{{i+startLimit+1}}</td>
+              <td>{{item.aisheCode}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.type}}</td>
+
+
+          </tr>
+      </ng-container>
+  </table>
+  <div class="row col-md-12 overflow-hidden">
+      <div class="col-md-3">
+        Showing {{startLimit + 1}} to {{endLimit === -1?0:endLimit}} Of {{list.length}} entries
+      </div>
+      <!-- <div class="col-md-3" *ngIf="list.length < 15">
+        Showing {{startLimit + 1}} to {{pageData === -1?0:pageData}} Of {{total}} entries
+      </div> -->
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+          screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+          (pageChange)="page = $event"
+          screenReaderCurrentLabel="You're on page"></pagination-controls>
+      </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-raised-button mat-dialog-close color="warn" tabindex="-1">{{cancelButtonText}}</button>
+</mat-dialog-actions>

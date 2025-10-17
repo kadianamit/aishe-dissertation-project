@@ -1,0 +1,86 @@
+<div
+class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+ *ngIf="Showdata12"
+>
+<table
+class="table  showReportDataChild" >
+<thead class="childTableStickyHeader">
+
+<tr>
+<th rowspan="2" rowspan="2" class="text-center table-success">AISHE Code</th>
+<th rowspan="2" class="text-center table-light">College Name</th>
+<th rowspan="2" class="text-center table-secondary">University Name</th>
+<th rowspan="2" class="text-center table-tertiary">State</th>
+<th rowspan="2" class="text-center table-light">District</th>
+<th rowspan="2" class="text-center table-secondary">Address</th>
+<th rowspan="2" class="text-center table-tertiary">Institution Type</th>
+<th rowspan="2" *ngIf="this.summaryColumns.length>18" class="text-center table-tertiary">Management Type</th>
+<th rowspan="2" class="text-center table-light">Year of Establishment</th>
+<th rowspan="2" class="text-center table-secondary">Total No. of Regular Enrolled Students</th>
+<th rowspan="2" class="text-center table-tertiary">Total No. of Teachers</th>
+<th colspan="5" class="text-center table-secondary">AISHE Nodal Officer</th>
+<!-- <th rowspan="2" class="text-center table-light">Affiliating University</th> -->
+<!-- <th rowspan="2" class="text-center table-secondary">Affiliating University State</th>
+<th rowspan="2" class="text-center table-tertiary">Type of Modification</th>
+<th rowspan="2" class="text-center table-light">Date & Time of Modification</th> -->
+
+<th colspan="3" class="text-center table-tertiary">Head of Institution</th>
+</tr>
+<tr>
+<th colspan="1" class="text-center table-secondary">Name</th>
+<th colspan="1" class="text-center table-secondary">Designation</th>
+<th colspan="1" class="text-center table-secondary">Telephone</th>
+<th colspan="1" class="text-center table-secondary">Mobile Number</th>
+<th colspan="1" class="text-center table-secondary">Email Id</th>
+<th colspan="1" class="text-center table-tertiary">Name</th>
+<th colspan="1" class="text-center table-tertiary">Telephone</th>
+<th colspan="1" class="text-center table-tertiary">Email Id</th>
+</tr>
+
+</thead>
+<tbody>
+<tr *ngFor="let row of reportTableData  | paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }">
+<td
+*ngFor="let col of tableColumns; let i = index"
+class="text-center"
+[ngClass]="[
+          i>=0 && i<1 ?'table-success':'', i>=1 && i<2 ?'table-light':'',i>=2 && i<3 ?'table-secondary':'', i>=3 && i<4 ? 'table-tertiary': '',i>=4 && i<5 ? 'table-light': '',i>=5 && i<6 ? 'table-secondary': '',
+      i>=6 && i<7 ? 'table-tertiary': '',i>=7 && i<8 ? 'table-light': '',i>=8 && i<9 ? 'table-secondary': '',
+      i>=9 && i<10 ? 'table-tertiary': '',i>=10 && i<11 ? 'table-light': '',i>=11 && i<12 ? 'table-secondary': '',i>=12 && i<13 ? 'table-tertiary': '',i>=13 && i<14 ? 'table-light': '',
+        i>=14 && i<19 ? 'table-secondary': '',i>=19 && i<22 ? 'table-tertiary': '',
+      ]"
+>
+{{ row[col] }}
+</td>
+</tr>
+<tr>
+<!-- <td colspan="1" class="text-center table-success">
+All State
+</td> -->
+<td
+*ngFor="let summary of summaryColumns ; let i = index"
+class="text-center" [ngClass]="[
+i>=0 && i<1 ?'table-success':'', i>=1 && i<2 ?'table-light':'',i>=2 && i<3 ?'table-secondary':'', i>=3 && i<4 ? 'table-tertiary': '',i>=4 && i<5 ? 'table-light': '',i>=5 && i<6 ? 'table-secondary': '',
+i>=6 && i<7 ? 'table-tertiary': '',i>=7 && i<8 ? 'table-light': '',i>=8 && i<9 ? 'table-secondary': '',
+i>=9 && i<10 ? 'table-tertiary': '',i>=10 && i<11 ? 'table-light': '',i>=11 && i<12 ? 'table-secondary': '',i>=12 && i<13 ? 'table-tertiary': '',i>=13 && i<14 ? 'table-light': '',
+i>=14 && i<19 ? 'table-secondary': '',i>=19 && i<22 ? 'table-tertiary': '',
+]"
+>
+{{ summaryData[summary] }}
+</td>
+</tr>
+
+
+</tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

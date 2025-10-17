@@ -1,0 +1,13 @@
+.table tr:nth-child(odd) td{
+    background-color: #f5eded
+  }
+  .table tr:nth-child(even) td{
+    background-color: #ffffff;
+  }
+  .note{
+    color: red;
+    padding-left: 15px;
+    font-size: 15px;
+    font-weight: 500;
+    padding-top: 5px;
+  }

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aishmasterservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aishmasterservice
+  template:
+    metadata:
+      labels:
+        app: aishmasterservice
+    spec:
+      containers:
+      - name: aishmasterservice
+        image: aishe-master:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9770

@@ -1,0 +1,280 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"    *ngIf="Showdata12">
+  <table class="table showReportDataChild">
+    <thead class="childTableStickyHeader">
+      <tr *ngIf="is2019">
+        <th rowspan="2" class="table-success text-center">State Name</th>
+        <th colspan="2" class="text-center table-light">
+          Vice-Chancellor
+        </th>
+        <th colspan="2" class="text-center table-secondary">
+          Director
+        </th>
+        <th colspan="2" class="text-center table-tertiary">
+          Pro- Vice-Chancellor
+        </th>
+        <th colspan="2" class="text-center table-light">
+          Principal
+        </th>
+        <th colspan="2" class="text-center table-secondary">
+          Professor & Equivalent
+        </th>
+        <th colspan="2" class="text-center table-tertiary">
+          Associate Professor
+        </th>
+        <th colspan="2" class="text-center table-light">
+          Reader
+        </th>
+        <th colspan="2" class="text-center table-secondary">
+          Lecturer (Selection Grade)
+        </th>
+        <th colspan="2" class="text-center table-tertiary">
+          Assistant Professor
+        </th>
+        <th colspan="2" class="text-center table-light">
+          Lecturer (Senior Scale)
+        </th>
+        <th colspan="2" class="text-center table-secondary">
+          Lecturer
+        </th>
+        <th colspan="2" class="text-center table-tertiary">Tutor</th>
+        <th colspan="2" class="text-center table-light">
+          Demonstrator
+        </th>
+        <th colspan="2" class="text-center table-secondary">
+          Part-Time Teacher
+        </th>
+        <th colspan="2" class="text-center table-tertiary">
+          Ad hoc Teacher
+        </th>
+        <th colspan="2" class="text-center table-light">
+          Temporary Teacher
+        </th>
+        <th colspan="2" class="text-center table-secondary">
+          Contract Teacher
+        </th>
+        <th colspan="2" class="text-center table-tertiary">
+          Visiting Teacher
+        </th>
+        <th colspan="2" class="text-center table-light">Total</th>
+        <th class="text-center table-secondary">Grand </th>
+        <!-- <th colspan="2" class="text-center table-secondary"
+                                            > Total </th> -->
+      </tr>
+      <tr *ngIf="is2020">
+        <th rowspan="2" class="table-success text-center">State Name</th>
+        <th colspan="3" class="text-center table-light">
+          Vice-Chancellor
+        </th>
+        <th colspan="3" class="text-center table-secondary">
+          Director
+        </th>
+        <th colspan="3" class="text-center table-tertiary">
+          Pro- Vice-Chancellor
+        </th>
+        <th colspan="3" class="text-center table-light">
+          Principal
+        </th>
+        <th colspan="3" class="text-center table-secondary">
+          Professor & Equivalent
+        </th>
+        <th colspan="3" class="text-center table-tertiary">
+          Associate Professor
+        </th>
+        <th colspan="3" class="text-center table-light">
+          Reader
+        </th>
+        <th colspan="3" class="text-center table-secondary">
+          Lecturer (Selection Grade)
+        </th>
+        <th colspan="3" class="text-center table-tertiary">
+          Assistant Professor
+        </th>
+        <th colspan="3" class="text-center table-light">
+          Lecturer (Senior Scale)
+        </th>
+        <th colspan="3" class="text-center table-secondary">
+          Lecturer
+        </th>
+        <th colspan="3" class="text-center table-tertiary">
+          Tutor</th>
+        <th colspan="3" class="text-center table-light">
+          Demonstrator
+        </th>
+        <th colspan="3" class="text-center table-secondary">
+          Part-Time Teacher
+        </th>
+        <th colspan="3" class="text-center table-tertiary">
+          Ad hoc Teacher
+        </th>
+        <th colspan="3" class="text-center table-light">
+          Temporary Teacher
+        </th>
+        <th colspan="3" class="text-center table-secondary">
+          Contract Teacher
+        </th>
+        <th colspan="3" class="text-center table-tertiary">
+          Visiting Teacher
+        </th>
+        <th colspan="3" class="text-center table-light">
+          Additional Professor
+        </th>
+        <th colspan="3" class="text-center table-secondary">
+          Principal In-charge
+        </th>
+        <th *ngIf="is2021" colspan="3" class="text-center table-tertiary">
+          Teaching Assistant
+        </th>
+        <th *ngIf="is2021" colspan="3" class="text-center table-light">
+          Guest Lecturer
+        </th>
+        <th colspan="3" class="text-center table-tertiary">Total</th>
+        <th class="text-center table-light">Grand</th>
+        </tr>
+      <tr *ngIf="is2019">
+        <th *ngFor="let col of tableColumns; let i = index" [attr.style]="
+                          i == 0 && col == 'State' ? 'display:none' : ''
+                        " [ngClass]="[i<3 ?'table-light':'', i>=3 && i<5 ? 'table-secondary': '',i>=5 && i<7 ? 'table-tertiary': '',
+                                                i>=7 && i<9 ? 'table-light': '',i>=9 && i<11 ? 'table-secondary': '',i>=11 && i<13 ? 'table-tertiary': '',
+                                                i>=13 && i<15 ? 'table-light': '',i>=15 && i<17 ? 'table-secondary': '',i>=17 && i<19 ? 'table-tertiary': '',
+                                                i>=19 && i<21 ? 'table-light': '',i>=21 && i<23 ? 'table-secondary': '',i>=23 && i<25 ? 'table-tertiary': '',
+                                                i>=25 && i<27 ? 'table-light': '',i>=27 && i<29 ? 'table-secondary': '',i>=29 && i<31 ? 'table-tertiary': '',
+                                                i>=31 && i<33 ? 'table-light': '',i>=33 && i<35 ? 'table-secondary': '',i>=35 && i<37 ? 'table-tertiary': '',
+                                                i>=37 && i<39 ? 'table-light': '',i>=39 && i<40 ? 'table-secondary': '',
+                                                ]" class="text-center">
+          {{
+          col
+          .trim()
+          .replace('Vice Chancellor', '')
+          .replace('Director', '')
+          .replace('Pro', '')
+          .replace('Principal', '')
+          .replace('fessor', '')
+          .replace('Associate', '')
+          .replace('Reader', '')
+          .replace('Lecturer Grade', '')
+          .replace('Assistant', '')
+          .replace('Tutor', '')
+          .replace('Lecturer Scale', '')
+          .replace('Lecturer', '')
+          .replace('Tutor', '')
+          .replace('Demonstrator', '')
+          .replace('Part Time Teacher', '')
+          .replace('Adhoc Teacher', '')
+          .replace('Temporary Teacher', '')
+          .replace('Contract Teacher', '')
+          .replace('Visiting Teacher', '')
+          .replace('Incharge', '')
+          .replace('Total Male', 'Male')
+          .replace('Total Female', 'Female')
+          .replace('Grand Total', 'Total')
+          }}
+        </th>
+      </tr>
+<!-- new header for 2020 -->
+<tr *ngIf="is2020">
+  <th *ngFor="let col of tableColumns; let i = index" [attr.style]="
+                    i == 0 && col == 'State' ? 'display:none' : ''
+                  " [ngClass]="[
+                    i>0   && i<4  ? 'table-light': '', i>=4 && i<7 ? 'table-secondary': '', i>=7 && i<10 ? 'table-tertiary': '',
+                    i>=10 && i<13 ? 'table-light': '', i>=13 && i<16 ? 'table-secondary': '', i>=16 && i<19 ? 'table-tertiary': '',
+                    i>=19 && i<22 ? 'table-light': '', i>=22 && i<25 ? 'table-secondary': '', i>=25 && i<28 ? 'table-tertiary': '',
+                    i>=28 && i<31 ? 'table-light': '', i>=31 && i<34 ? 'table-secondary': '', i>=34 && i<37 ? 'table-tertiary': '',
+                    i>=37 && i<40 ? 'table-light': '', i>=40 && i<43 ? 'table-secondary': '', i>=43 && i<46 ? 'table-tertiary': '',
+                    i>=46 && i<49 ? 'table-light': '', i>=49 && i<52 ? 'table-secondary': '', i>=52 && i<55 ? 'table-tertiary': '',
+                    i>=55 && i<58 ? 'table-light': '', i>=58 && i<61 ? 'table-secondary': '', i>=61 && i<64 ? 'table-tertiary': '',
+                      i>=64 && i<67 ? 'table-light': '', i>=67 && i<70 ? 'table-tertiary': '', i>=70 ? 'table-light': '',
+                                          ]" class="text-center">
+     {{
+    col
+    .trim()
+    .replace('Vice Chancellor', '')
+    .replace('Director', '')
+    .replace('Pro', '')
+    .replace('Principal', '')
+    .replace('fessor', '')
+    .replace('Associate', '')
+    .replace('Reader', '')
+    .replace('Lecturer Grade', '')
+    .replace('Assistant', '')
+    .replace('Tutor', '')
+    .replace('Lecturer Scale', '')
+    .replace('Lecturer', '')
+    .replace('Tutor', '')
+    .replace('Demonstrator', '')
+    .replace('Part Time Teacher', '')
+    .replace('Adhoc Teacher', '')
+    .replace('Temporary Teacher', '')
+    .replace('Contract Teacher', '')
+    .replace('Visiting Teacher', '')
+    .replace('Incharge', '')
+    .replace('TEACHING ASS MALE', 'Male')
+    .replace('TEACHING ASS FEMALE', 'Female')
+    .replace('TEACHING ASS TRANSGENDER,', 'Transgender')
+    .replace('GUEST_LECT_MALE', 'Male')
+    .replace('GUEST_LECT_FEMALE', 'Female')
+    .replace('GUEST_LECT_TRANSGENDER', 'Transgender')
+    .replace('Additional','')
+    .replace('Pricipal','')
+    .replace('Total Transgender','Transgender')
+    .replace('Total Male', 'Male')
+    .replace('Total Female', 'Female')
+    .replace('Grand Total', 'Total')
+    }}
+  </th>
+</tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of reportTableData | paginate
+      : {
+          itemsPerPage: pageSize,
+          currentPage: page
+        }" [ngClass]="is2019?'':'d-none'">
+        <td *ngFor="let col of tableColumns; let i = index" class="text-center" [ngClass]="[i==0?'table-success':  '',
+                                                    i>0 &&i<3 ?'table-light':'', i>=3 && i<5 ? 'table-secondary': '',i>=5 && i<7 ? 'table-tertiary': '',
+                                                    i>=7 && i<9 ? 'table-light': '',i>=9 && i<11 ? 'table-secondary': '',i>=11 && i<13 ? 'table-tertiary': '',
+                                                    i>=13 && i<15 ? 'table-light': '',i>=15 && i<17 ? 'table-secondary': '',i>=17 && i<19 ? 'table-tertiary': '',
+                                                    i>=19 && i<21 ? 'table-light': '',i>=21 && i<23 ? 'table-secondary': '',i>=23 && i<25 ? 'table-tertiary': '',
+                                                    i>=25 && i<27 ? 'table-light': '',i>=27 && i<29 ? 'table-secondary': '',i>=29 && i<31 ? 'table-tertiary': '',
+                                                    i>=31 && i<33 ? 'table-light': '',i>=33 && i<35 ? 'table-secondary': '',i>=35 && i<37 ? 'table-tertiary': '',
+                                                    i>=37 && i<39 ? 'table-light': '',i>=39 && i<40 ? 'table-secondary': '',
+                                                    ]" class="text-center table-secondary">
+          {{ row[col] }}
+        </td>
+      </tr>
+<!-- new table data for 2020 -->
+
+      <tr *ngFor="let row of reportTableData | paginate
+      : {
+          itemsPerPage: pageSize,
+          currentPage: page
+        }" [ngClass]="is2020?'':'d-none'">
+        <td *ngFor="let col of tableColumns; let i = index" class="text-center" [ngClass]="[i==0?'table-success':  '',
+                                                    i>0 &&i<4 ?'table-light':'', i>=4 && i<7 ? 'table-secondary': '',i>=7 && i<10 ? 'table-tertiary': '',
+                                                    i>=10 && i<13 ? 'table-light': '',i>=13 && i<16 ? 'table-secondary': '',i>=16 && i<19 ? 'table-tertiary': '',
+                                                    i>=19 && i<22 ? 'table-light': '',i>=22 && i<25 ? 'table-secondary': '',i>=25 && i<28 ? 'table-tertiary': '',
+                                                    i>=28 && i<31 ? 'table-light': '',i>=31 && i<34 ? 'table-secondary': '',i>=34 && i<37 ? 'table-tertiary': '',
+                                                    i>=37 && i<40 ? 'table-light': '',i>=40 && i<43 ? 'table-secondary': '',i>=43 && i<46 ? 'table-tertiary': '',
+                                                    i>=46 && i<49 ? 'table-light': '',i>=49 && i<52 ? 'table-secondary': '',i>=52 && i<55 ? 'table-tertiary': '',
+                                                    i>=55 && i<58 ? 'table-light': '',i>=58 && i<61 ? 'table-secondary': '', i>=61 && i<64 ? 'table-tertiary': '',
+                                                      i>=64 && i<67 ? 'table-light': '', i>=67 && i<70 ? 'table-tertiary': '', i>=70 ? 'table-light': '',
+                                                    ]" class="text-center table-secondary">
+          {{ row[col] }}
+        </td>
+      </tr>
+
+      <tr>
+        <td class="text-center table-success">All India</td>
+        <td *ngFor="let summary of summaryColumns; let i = index" class="text-center table-secondary">
+          {{ summaryData[summary] }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls
+  previousLabel="Prev"
+  nextLabel="Next"
+  (pageChange)="handlePageChange($event)"
+  >
+  </pagination-controls>
+</div>

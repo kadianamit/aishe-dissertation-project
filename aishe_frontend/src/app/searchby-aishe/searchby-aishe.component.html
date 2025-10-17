@@ -1,0 +1,107 @@
+<section class="p-3 bg-gray-400">
+    <div class="container position-relative mt-4" style="width: 25%;"> 
+        <div class="card animated fadeInDown card mb-2 pb-1 bg-light overflow-hidden">
+            <div class=" col-md-12 text-center topH">
+                <h5 style="font-weight: 500; font-size: 18px;">Know Your Institution Details</h5>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row col-md-12 overflow-hidden mt-3 mb-3 ml-7">
+             
+                <div class="col-md-12">
+                    <label class=" col-form-label">Please Enter AISHE Code:<span class="asterisk">*</span></label>
+                   
+                </div>
+                <div class="col-md-12">
+                    <input type="text" class="form-control" (keypress)="onKeypressEvent($event,8)" [(ngModel)]="aisheCode" style="text-transform: uppercase;" [ngModelOptions]="{standalone: true}">
+                    <p style="text-align: center;color: red;">{{errorMessage}}</p>
+                </div>     
+                <div class="col-md-12 mt-0 text-center">
+                    <button type="submit" class="btn btn-primary btn-sm" (click)="getDetails()">Get
+                       Detail
+                    </button>
+                   
+                </div>
+            </div>
+            <p  style="color: red; text-align: center;" *ngIf="!dataList[0]?.aishecode&&dataList?.length"> No Record</p>
+        </div>
+      
+    </div>
+  
+</section>
+
+<section class="p-3 bg-gray-400" *ngIf="dataList[0]?.aishecode&&dataList?.length>0">
+    <div class="container-fluid">
+        <div class="animated fadeInDown card mb-2 pt-2 pb-1 bg-light overflow-hidden">
+            <!-- <div class="row col-md-12 overflow-hidden">
+                <div class="col-md-2 pt-4">
+                    <label>Show</label>&nbsp;
+                    <select [(ngModel)]="pageSize" (ngModelChange)="onChange($event)">
+                        <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+                    </select>
+                    entries
+                </div>
+                <div class="col-md-5"></div>
+                <div class="col-md-5 pt-4">
+                    <label>Search:</label>&nbsp;
+                    <input type="text" size="40" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+                        [(ngModel)]="searchText">
+                </div>
+            </div> -->
+            <div class="row col-md-12 overflow-hidden">
+                <div class="col-md-12 table-responsive">
+                    <table class="table table-bordered table-sm">
+                        <tr>
+                            <th>S.No</th>
+                            <th>AISHE Code</th>
+                            <th>Institution Name</th>
+                            <th *ngIf="checkInstiteType==='C'">Affiliate University AISHE Code</th>
+                            <th *ngIf="checkInstiteType==='C'">Affiliate University</th>
+                            <th>Nodal officer </th>
+                            <th>Type </th>
+                            <th>Address Line1</th>
+                            <th>Address Line2</th>
+                            <th>State</th>
+                            <th>District</th>
+                            <!-- <th>Status</th> -->
+                        </tr>
+                        <ng-container *ngFor="let item of dataList | paginate : {
+                            itemsPerPage: sharedService.pageSize,
+                            currentPage: sharedService.page
+                          
+                          };
+                    let i = index
+                    ">
+                            <tr>
+                                <td>{{i+sharedService.StartLimit+1}}</td>
+                                <td>{{item.aishecode}}</td>
+                                <td>{{item.institutionName}}</td>
+                                <td *ngIf="checkInstiteType==='C'">{{item.affiliatingUnivId}}</td>
+                                <td *ngIf="checkInstiteType==='C'">{{item.affiliatingUniv}}</td>
+                                <td>{{item.officerName}}</td>
+                                <td>{{item.instType}}</td>
+                                <td>{{item.addressLine1}}</td>
+                                <td>{{item.addressLine2}}</td>
+                                <td>{{item.state}}</td>
+                                <td>{{item.district}}</td>
+                                <!-- <td>{{item.status ==='Eligible'?'Active':'Inactive'}}</td> -->
+                            </tr>
+                        </ng-container>
+                    </table>
+                     <!-- <p *ngIf="list.length === 0" class="noRecord">No Record</p> -->
+                </div>
+            </div>
+            <!-- // <div class="row col-md-12 overflow-hidden">
+            //     <div class="col-md-3">
+            //         Showing {{list.length !== 0?StartLimit + 1:0}} to {{pageData === -1?0:pageData}} Of {{list.length}}
+            //         entries
+            //     </div>
+            //     <div class="col-md-3"></div>
+            //     // <div class="col-md-6">
+            //     //     <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+            //     //         screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+            //     //         screenReaderCurrentLabel="You're on page"></pagination-controls>
+            //     // </div>
+            // </div> -->
+        </div>
+    </div>
+</section>

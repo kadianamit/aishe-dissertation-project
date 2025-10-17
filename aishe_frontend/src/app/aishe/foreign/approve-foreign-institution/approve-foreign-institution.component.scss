@@ -1,0 +1,192 @@
+.matHeading{
+    text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+    
+}
+
+.form-row label{
+    line-height: 3;
+    font-weight: 500;
+}
+
+.form-row1{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    margin-left: -5px;
+}
+
+.form-row1 label{
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+
+.addBtn{
+    display: inline-block;
+    float: right;
+    margin-top: -10px;
+}
+
+.caption{
+    text-align: center;
+    color: green;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.btn-default{
+    border: 1px solid gray;
+    float: right;
+    font-weight: 500;
+}
+
+::ng-deep.mat-form-field .mat-form-field-infix {
+    padding: 0.5rem 0 0.5rem 0;
+}
+
+table > thead{
+    background-color: #12426b !important
+}
+
+.table .thead-dark th{
+    background-color: transparent !important;
+}
+
+table th{
+    // color: black !important;
+    // border-top: #ccc solid 1px !important;
+    // border-bottom: none !important;
+    // border-right: none !important;
+    // border-left: none !important;
+    white-space: nowrap;
+}
+
+.show-button{
+  padding-top: 9px;
+}
+
+tr td{
+  padding:  5px 10px 5px 10px !important;
+  vertical-align: middle;
+}
+
+
+
+.searchContainer {
+  width: 355px;
+  height: auto;
+  background-color: transparent;
+  position: absolute;
+  top: 41%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // border-radius: 0.6rem;
+  border-bottom: 1px solid lightgray;
+
+}
+
+.search__box {
+    float: left;
+    width: 0;
+    height: 2.5rem;
+    background: none;
+    color: gray !important;
+    font-size: 1rem;
+    border-radius: 2rem;
+    outline: none;
+    border: none;
+    position: relative;
+    opacity: 1;
+    transition: all 0.75s ease-in;
+    cursor: pointer;
+  }
+  
+  .search__icon {
+    box-sizing: border-box;
+    float: right;
+    font-size: 1.5rem;
+    display: inline-block;
+    margin-left: 0.4rem;
+    margin-top: 0px;
+    position: absolute;
+    transition: all 0.25s ease-in;
+    padding: 0.6rem;
+    border-radius: 20%;
+  }
+  
+  .searchContainer:hover > .search__box {
+    width: 85%;
+    padding: 0 1rem;
+  }
+  
+  .searchContainer:hover > .search__icon {
+    background-color: #eee;
+  }
+  
+  .show {
+    width: 85%;
+    border: 1px solid red;
+  }
+
+  .err-msgs{
+    color: red !important;
+    // font-size: medium;
+    // float: left;
+  }
+
+  table tr:nth-child(odd) td{
+    background-color: #eee;
+  }
+  
+  .heading{
+    display: inline-block;
+    margin-left: 40%;
+  }
+
+  .edit_icon1 {
+    color: #acb7acd9;
+    font-size: 20px;
+
+  }
+
+  .edit_icon{
+    pointer-events: none; 
+  }
+
+  .add_circle{
+    font-size: 21px;
+    position: relative;
+    top: 4px;
+  }
+
+
+
+/* Remove the up and down arrows (spinners) for WebKit browsers */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* Optional: Adjust as needed */
+}
+
+.refresh{
+  top: 18px;
+    font-size: 12px;
+    font-weight: 500;
+    background: #3781c3;
+    color: white;
+    padding: 8px;
+    vertical-align: middle;
+    line-height: 3;
+    border-radius: 60px;
+    border: 5px solid lightgray;
+    position: relative;
+    cursor: pointer;
+}
+
+.refreshBtn{
+  margin-top: 10px;
+}
+
+

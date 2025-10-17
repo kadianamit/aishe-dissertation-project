@@ -1,0 +1,211 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"   
+    *ngIf="Showdata12">
+
+    <table class="table showReportDataChild">
+    <thead class="childTableStickyHeader">
+      <tr *ngIf="is2020==false">
+
+        <th rowspan="3" class="text-center table-success">State</th>
+        <th rowspan="3" class="text-center table-light">District</th>
+
+        <th colspan="8" class="text-center table-secondary">
+          Caste-Category
+        </th>
+        <th colspan="8" class="text-center table-tertiary">
+          Out of Total
+        </th>
+      </tr>
+      <tr *ngIf="is2020==false">
+        <th colspan="2" class="text-center table-secondary">
+          Total
+        </th>
+        <th colspan="2" class="text-center table-secondary">
+          SC
+        </th>
+        <th colspan="2" class="text-center table-secondary">
+          ST
+        </th>
+        <th colspan="2" class="text-center table-secondary">
+          OBC
+        </th>
+        <th colspan="2" class="text-center table-tertiary">
+          PWD (Person with Disability)
+        </th>
+        <th colspan="2" class="text-center table-tertiary">Muslim</th>
+        <th colspan="2" class="text-center table-tertiary">
+          Other Minority Communities
+        </th>
+        <!-- <th colspan="2" class="text-center table-tertiary">
+          Foreign
+        </th> -->
+      </tr>
+
+      <!-- new data 2020 header -->
+      <tr *ngIf="is2020">
+
+        <th rowspan="3" class="text-center table-success">State</th>
+        <th rowspan="3" class="text-center table-light">District</th>
+
+        <th colspan="12" class="text-center table-secondary">
+          Caste-Category
+        </th>
+        <th colspan="15" class="text-center table-tertiary">
+          Out of Total
+        </th>
+      </tr>
+      <tr *ngIf="is2020">
+        <th colspan="3" class="text-center table-secondary">
+          Total
+        </th>
+        <th colspan="3" class="text-center table-secondary">
+          SC
+        </th>
+        <th colspan="3" class="text-center table-secondary">
+          ST
+        </th>
+        <th colspan="3" class="text-center table-secondary">
+          OBC
+        </th>
+        <th colspan="3" class="text-center table-tertiary">
+          PWD (Person with Disability)
+        </th>
+        <th colspan="3" class="text-center table-tertiary">Muslim</th>
+        <th colspan="3" class="text-center table-tertiary">
+          Other Minority Communities
+        </th>
+        <!-- <th colspan="3" class="text-center table-tertiary">
+          Foreign
+        </th> -->
+      </tr>
+      <tr *ngIf="is2020==false">
+        <th
+          *ngFor="let col of tableColumns; let i = index"
+          [attr.style]="
+            i == 0 && col.trim() == 'State Name'
+              ? 'display:none'
+              : col.trim() == 'District Name'
+              ? 'display:none'
+              : ''
+          "
+          [ngClass]="[i==0?'table-success':  '',
+                                      i>0 && i<10? 'table-secondary': '',i>=10 && i<18 ? 'table-tertiary': '',
+                              ]"
+          class="text-center"
+        >
+          {{
+            col
+              .trim()
+              .replace('Total General', '')
+              .replace('Total SC', '')
+              .replace('Total ST', '')
+              .replace('Total OBC', '')
+              .replace('Total PWD', '')
+              .replace('Muslim Minority Total', '')
+              .replace('Other Minority Total', '')
+              .replace('Total Foreign', '')
+              .replace('Total Male', 'Male')
+              .replace('Total Female', 'Female')
+              .replace('Total Transgender', 'Transgender')
+          }}
+        </th>
+      </tr>
+      <!-- new table-header data 2020 -->
+      <tr *ngIf="is2020">
+        <th
+          *ngFor="let col of tableColumns; let i = index"
+          [attr.style]="
+            i == 0 && col.trim() == 'State Name'
+              ? 'display:none'
+              : col.trim() == 'District Name'
+              ? 'display:none'
+              : ''
+          "
+          [ngClass]="[i==0?'table-success':  '',
+                                      i>0 && i<14? 'table-secondary': '',i>=14 && i<23 ? 'table-tertiary': '',
+                              ]"
+          class="text-center"
+        >
+          {{
+            col
+              .trim()
+              .replace('Total General', '')
+              .replace('Total SC', '')
+              .replace('Total ST', '')
+              .replace('Total OBC', '')
+              .replace('Total PWD', '')
+              .replace('Muslim Minority Total', '')
+              .replace('Other Minority Total', '')
+              .replace('Total Foreign', '')
+              .replace('Total Male', 'Male')
+              .replace('Total Female', 'Female')
+              .replace('Total Transgender', 'Transgender')
+          }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of reportTableData | paginate
+      : {
+          itemsPerPage: pageSize,
+          currentPage: page
+        }" [ngClass]="is2020?'d-none':''">
+        <td
+          *ngFor="let col of tableColumns; let i = index"
+          class="text-center"
+          [ngClass]="[
+            i == 0 ? 'table-success' : '',
+            i == 1 ? 'table-light' : '',
+            i > 1 && i < 10
+              ? 'table-secondary'
+              : i >= 10
+              ? 'table-tertiary'
+              : ''
+          ]"
+        >
+          {{ row[col] }}
+        </td>
+      </tr>
+      <!-- table data 2020 -->
+      <tr *ngFor="let row of reportTableData | paginate
+      : {
+          itemsPerPage: pageSize,
+          currentPage: page
+        }" [ngClass]="is2020?'':'d-none'">
+        <td
+          *ngFor="let col of tableColumns; let i = index"
+          class="text-center"
+          [ngClass]="[
+            i == 0 ? 'table-success' : '',
+            i == 1 ? 'table-light' : '',
+            i > 1 && i < 14
+              ? 'table-secondary'
+              : i >= 14
+              ? 'table-tertiary'
+              : ''
+          ]"
+        >
+          {{ row[col] }}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="text-center table-success">
+          All Districts
+        </td>
+        <td
+          *ngFor="let summary of summaryColumns; let i = index"
+          class="text-center table-secondary"
+
+        >
+          {{ summaryData[summary] }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls
+  previousLabel="Prev"
+  nextLabel="Next"
+  (pageChange)="handlePageChange($event)"
+  >
+  </pagination-controls>
+</div>

@@ -1,0 +1,127 @@
+<div class="card" style="overflow: auto !important;">
+    <div class="text-center mt-2 myfontstyle"><h1>User Email Interface</h1></div>
+    <div class="col-md-12 myfontstyle">User Emails</div>
+     <div class="col-md-12" *ngIf="false">
+        <div class="animated fadeInDown card mb-2 pb-1 pt-1 bg-light ">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-bordered table-sm">
+                    <tr>
+                        <th>S.No.</th>
+                        <th>
+                            Select
+                        </th>
+                        <th>AISHE Code</th>
+                        <!-- <th>Institution Name</th> -->
+                        <th>Nodal Office</th>
+                        <!-- <th>Institution Head</th> -->
+                        <th>Nodal Email</th>
+                        </tr>
+                        <ng-container *ngFor="let opt of selectedList | paginate : {
+                            itemsPerPage: 10,
+                            currentPage: sharedService.page
+                          
+                          };
+                    let i = index
+                    ">
+                            <tr>
+                                <td>{{i+sharedService.StartLimit+1}}</td>
+                                <td><input type="checkbox" [(ngModel)]="opt.selected" [disabled]="true"/></td>
+                                <td>{{opt.aisheCode}}</td>
+                                <!-- <td>{{opt.name}}</td> -->
+                                <td>{{opt.nodalOfficerName}}</td>
+                                <!-- <td>{{opt.institutionHeadName}}</td> -->
+                                <td>{{opt.nodalOfficerEmail}}</td>
+                            </tr>
+                        </ng-container>
+                </table>
+            </div>
+            <div class="row col-md-12 overflow-hidden">
+                <div class="col-md-3">
+                  <!-- Showing {{sharedService.StartLimit + 1}} to {{sharedService.pageData === -1?0:sharedService.pageData}} Of
+                  {{selectedList.length}}
+                  entries -->
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+                    screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                    screenReaderCurrentLabel="You're on page"></pagination-controls>
+                </div>
+              </div>
+        </div>
+     </div>
+     <form [formGroup]="sendEmailForm" (ngSubmit)="submit()">
+      <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-sm-12 col-form-label myfontstyle">To <span class="asterisk">*</span></label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="emails"  placeholder="enter comma seperated email ids">
+                <mat-error
+                *ngIf="errorHandling('emails','required') && isSubmitted">
+                Please Enter To
+              </mat-error>
+            </div>
+            
+        </div>
+     </div>
+     <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-sm-12 col-form-label myfontstyle" >Email Subject<span class="asterisk">*</span></label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="subject" placeholder="enter email subject">
+                <mat-error
+                *ngIf="errorHandling('subject','required') && isSubmitted">
+                Please Enter Email Subject
+              </mat-error>
+            </div>
+            
+        </div>
+     </div>
+     <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-sm-12 col-form-label myfontstyle">Cc <span class="asterisk" *ngIf="ccAllowed">*</span></label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="ccto"  placeholder="enter comma seperated email ids">
+                <mat-error
+                *ngIf="errorHandling('ccto','required') && isSubmitted">
+                Please Enter ccto
+              </mat-error>
+            </div>
+            
+        </div>
+     </div>
+     <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-sm-12 col-form-label myfontstyle">Email Message<span class="asterisk">*</span></label>
+            <div class="col-sm-12">
+                <angular-editor formControlName="message"   [config]="editorConfig"></angular-editor>
+                <mat-error
+                *ngIf="errorHandling('message','required') && isSubmitted">
+                Please Enter message
+              </mat-error>
+            </div>
+            
+        </div>
+     </div>
+     <div class="col-md-12">
+        <div class="form-group row">
+            <label class="col-sm-12 col-form-label myfontstyle">Upload Document</label>
+            <div class="col-sm-12">
+
+                    <div class="file-upload">
+                        <input type="file" id="upload1" class="file-input"  #fileInput (change)="onUpload($event)"  accept="image/*" multiple />
+
+                      <p style="color: red;font-size: small;">(You are only allowed to upload .jpeg, .jpg, .gif & pdf(up to 2 mb))</p>
+
+                      </div>
+                  </div>
+
+            
+        </div>
+     </div>
+     <div class="text-center mb-2">
+        <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+        <button class="btn btn-danger btn-sm ml-2" tabindex="-1" type="button" (click)="closed()">Close</button>
+    </div>
+    </form>
+</div>

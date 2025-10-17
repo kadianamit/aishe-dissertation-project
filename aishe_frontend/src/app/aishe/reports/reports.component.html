@@ -1,0 +1,133 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="container-fluid page">
+  <mat-toolbar class="toolbar">Reports</mat-toolbar>
+  <div class="page __content shadow p-3 position-relative overflow-auto">
+
+    <mat-accordion>
+      <mat-expansion-panel class="expansion" *ngFor="let reportType of reportsData" (opened)="expand(reportType)">
+        <mat-expansion-panel-header class="reportHeaders">
+          <mat-panel-title class="reportTitles">
+            {{reportType.title}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngIf="(reportType.title == 'Teaching Staff' || reportType.title == 'Non Teaching Staff' || reportType.title.trim() ==  'Student Enrolment' || reportType.title.trim() == 'Programmes & Discipline' || reportType.title.trim() == 'Time Series'
+          ) then subReportData else normalReportData"></div>
+        <ng-template #normalReportData>
+
+          <div class="row-expand-area table-responsive-sm">
+            <!-- <div *ngIf="reportType.title.includes('Number Of Institutions') then singleRow else expandRow"></div> -->
+            <table class="table table-borderless reportsList">
+              <tr class="row"
+                *ngFor="let report of (roleId !== sharedservice.role['State Nodal Officer'] ? reportType.reports : reportType.reports);let i=index">
+
+                <td class="col-md-1" *ngIf="this.roleId !== this.sharedservice.role['University'] && this.roleId !== sharedservice.role['State Nodal Officer']">
+                  <mat-label> {{report.id}} </mat-label>
+                </td>
+                <td class="col-md-6">
+                  <mat-label> {{report.name}} </mat-label>
+                </td>
+                <td class="col-md-3 d-flex"
+                  *ngIf="reportType.title ==='Data Sharing' || reportType.title ==='Know Your Institutions(For KYC Portal)' ">
+                  <!-- <select  (change)="option($event)"  class="form-control"  >
+                    <option  *ngFor="let x of ['2020-21','2021-22']" [value]="x">{{x}}</option>
+                  </select> -->
+                  <mat-form-field>
+                    <mat-label>Select Year</mat-label>
+                    <mat-select class="mt-2" (openedChange)="selectSurveyyear($event,reportType.title, report)"
+                      (selectionChange)="optionSelected=$event.value">
+                      <mat-select-filter [placeholder]="'Filter'" [displayMember]="'surveyYearValue'"
+                        [array]="surveyYearOption"
+                        (filteredReturn)="filterSurveyYearOption = $event"></mat-select-filter>
+                      <mat-option (click)="surveyYearCondition(report,item)" *ngFor="let item of filterSurveyYearOption"
+                        [value]="item.surveyYear">
+                        <span>{{ item.surveyYearValue }}</span>
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <!-- State Select for 'Unit Level Data' -->
+                  <!-- <mat-form-field  *ngIf="(report.name === 'Unit Level Data')  &&  (roleId !== sharedservice.role['State Nodal Officer'] )&& (optionSelected === '2023')" > -->
+                  <!-- <mat-form-field
+                    *ngIf="report.showState  && roleId !== sharedservice.role['State Nodal Officer'] && condiArray === '2023'">
+
+                    <mat-label>State </mat-label>
+                    <mat-select [(ngModel)]="stateCode">
+                      <mat-select-filter [placeholder]="'Filter'" [displayMember]="'stateName'"
+                        [array]="filterStatesOption" (filteredReturn)="filterdStates = $event">
+                      </mat-select-filter>
+                      <mat-option value="ALL">ALL</mat-option>
+                      <mat-option *ngFor="let item of filterdStates" [value]="item">
+                        {{ item.stateName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+                  <!-- <mat-form-field *ngIf="roleId === sharedservice.role['State Nodal Officer'] && report.showState">
+
+                    <mat-label>State</mat-label>
+
+                    <mat-select [(ngModel)]="stateName" [disabled]="true">
+                      <mat-option *ngFor="let item of filterdStates" [value]="item">
+                        {{ item.stateName }}
+                      </mat-option>
+                    </mat-select>
+
+
+                  </mat-form-field> -->
+                </td>
+                <!-- <td class="col-md-3" *ngIf="reportType.title ==='Know Your Standalone Institute' ">
+                </td> -->
+                <td class="col-md-3"
+                  *ngIf="reportType.title !='Data Sharing' && reportType.title !='Know Your Institutions(For KYC Portal)' ">
+                  <mat-label>{{report.reportNumber}}</mat-label>
+                </td>
+
+
+                <td class="col-md-2"
+                  *ngIf="reportType.title ==='Data Sharing' || reportType.title ==='Know Your Institutions(For KYC Portal)'">
+
+                  <button mat-raised-button align="top" color="primary"
+                    (click)="showReport(reportType.title,report.reportNumber,'2020',report)" class="dataSharingBtn">
+                    Download</button>
+                </td>
+
+                <td class="col-md-2"
+                  *ngIf="reportType.title !='Data Sharing' && reportType.title !='Know Your Institutions(For KYC Portal)'">
+                  <button mat-raised-button align="top" color="primary"
+                    (click)="showReport(reportType.title,report.name,report.reportNumber,report)">Go </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </ng-template>
+        <ng-template #subReportData>
+          <div class="row-expand-area table-responsive-sm" *ngFor="let subReport of reportType.reports1">
+            <!-- <div *ngIf="reportType.title.includes('Number Of Institutions') then singleRow else expandRow"></div> -->
+            <mat-label style="-webkit-text-stroke-width: thin;">{{subReport.subTitle}}</mat-label>
+            <table class="table table-borderless reportsList">
+              <tr class="row" *ngFor="let report of subReport.subreports">
+                <td class="col-md-1" *ngIf="this.roleId !== this.sharedservice.role['University'] && this.roleId !== sharedservice.role['State Nodal Officer'] ">
+                  <mat-label> {{report.id}} </mat-label>
+                </td>
+                <td class="col-md-6">
+                  <mat-label> {{report.name}} </mat-label>
+                </td>
+                <td class="col-md-3">
+                  <mat-label>{{report.reportNumber}}</mat-label>
+                </td>
+                <td class="col-md-2">
+                  <button mat-raised-button align="top" color="primary"
+                    (click)="(reportType.title.trim() ==  'Student Enrolment' || reportType.title.trim() ==  'Programmes & Discipline'|| reportType.title.trim() == 'Out Turn' || reportType.title.trim()=='List Of Institutions' || reportType.title.trim() == 'Time Series')?showReportNew(reportType.title,report.name,report.reportNumber):showReport(reportType.title,report.name,report.reportNumber,report)">Go
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </ng-template>
+
+      </mat-expansion-panel>
+      <!-- <mat-card style="background: #f0f0f0;" *ngIf="roleId === sharedservice.role['SysAdmin'] && idDNO !=='1'">
+          <mat-card-content class="newList" (click)="openUniversityComponent()">University Wise College Report</mat-card-content>
+        </mat-card> -->
+    </mat-accordion>
+  </div>
+</div>

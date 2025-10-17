@@ -1,0 +1,402 @@
+
+<!-- ----------------college module--------------------------- -->
+<div class="container-fluid reg-page-bg pl-4 pr-4" *ngIf="showTable && !DeAffiliateFormData ">
+
+
+  <div class="">
+    <div class="row justify-content-between">
+      <div class="col-auto show-button" >
+        <label>Show</label>&nbsp;
+        <select (ngModelChange)="onChange($event)" [(ngModel)]="pageSize">
+          <option *ngFor="let data of tableSize" [value]="data">
+            {{ data }}
+          </option>
+        </select>
+        entries
+      </div>
+
+      <div class="col-auto ml-4">
+        <label>Search:</label>&nbsp;
+        <input id="myInput" type="text" [(ngModel)]="searchText" (keyup)="applyFilter($any($event.target).value)" />
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table mt-2 text-left pe-2">
+        <thead>
+          <tr>
+            <th>AISHE Code</th>
+            <th>College Name</th>
+            <th>College Type</th>
+            <th>State</th>
+            <th>District</th>
+            <th>University Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="myTable">
+          <tr
+            *ngFor="
+              let data of userData
+                | searchFilter : searchText
+                | paginate
+                  : {
+                      itemsPerPage: pageSize,
+                      currentPage: page
+                    };
+              let i = index
+            "
+          >
+          <td>C-{{ data.id }}</td>
+          <td style="width: 26%">{{ data.collegeName }}</td>
+          <td>{{ data.collegeType }}</td>
+          <td>{{ data.stateName }}</td>
+          <td>{{ data.districtName }}</td>
+            <td>{{ data.universityName }}</td>
+            <td>
+              <div class="piped d-flex">
+
+                <a   matTooltip="De-Affiliate"
+                 (click)="deAffiliate(data)"
+                >
+                  <img src="assets/img/de-affliate.png"
+                    style="background-color: #acb7acd9; border-radius: 47%; cursor: pointer;"
+                  />
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-3" *ngIf="showTable">
+      Showing {{ StartLimit + 1 }} to {{ pageData }} Of
+      {{ userData.length }} entries
+    </div>
+    <div class="d-flex justify-content-center" *ngIf="showTable">
+      <pagination-controls
+        previousLabel="Prev"
+        nextLabel="Next"
+        (pageChange)="handlePageChange($event)"
+      >
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid reg-page-bg pl-4 pr-4" *ngIf="showTable && DeAffiliateFormData">
+
+
+  <div class="">
+    <div class="row justify-content-between">
+      <div class="col-auto show-button" >
+        <label>Show</label>&nbsp;
+        <select (ngModelChange)="onChange($event)" [(ngModel)]="pageSize">
+          <option *ngFor="let data of tableSize" [value]="data">
+            {{ data }}
+          </option>
+        </select>
+        entries
+      </div>
+
+      <div class="col-auto ml-4">
+        <label>Search:</label>&nbsp;
+        <input id="myInput" type="text" [(ngModel)]="searchText" (keyup)="applyFilter($any($event.target).value)" />
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table mt-2 text-left pe-2">
+        <thead>
+          <tr>
+            <th>AISHE Code</th>
+            <th>College Name</th>
+            <th>College Type</th>
+            <th>State</th>
+            <th>District</th>
+            <th>University Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="myTable">
+          <tr
+            *ngFor="
+              let data of userData
+                | searchFilter : searchText
+                | paginate
+                  : {
+                      itemsPerPage: pageSize,
+                      currentPage: page
+                    };
+              let i = index
+            "
+          >
+          <td>C-{{ data.id }}</td>
+          <td style="width: 26%">{{ data.collegeName }}</td>
+          <td>{{ data.collegeType }}</td>
+          <td>{{ data.stateName }}</td>
+          <td>{{ data.districtName }}</td>
+            <td>{{ data.universityName }}</td>
+            <td>
+              <div class="piped d-flex">
+
+                <a   matTooltip="Shifted to Other University"
+                 (click)="deAffiliate(data)"
+                >
+                  <img src="assets/img/de-affliate.png"
+                    style="background-color: #acb7acd9; border-radius: 47%; cursor: pointer;"
+                  />
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-3" *ngIf="showTable">
+      Showing {{ StartLimit + 1 }} to {{ pageData }} Of
+      {{ userData.length }} entries
+    </div>
+    <div class="d-flex justify-content-center" *ngIf="showTable">
+      <pagination-controls
+        previousLabel="Prev"
+        nextLabel="Next"
+        (pageChange)="handlePageChange($event)"
+      >
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid reg-page-bg pl-4 pr-4" *ngIf="EditData && !DeAffiliateFormData" style="margin-top: 5%;">
+  <mat-card>
+    <div class="row">
+      <div class=" col-10">
+        <h1 class="insthead"><span>De-Affiliation College</span></h1>
+
+      </div>
+      <div class=" col-2 d-flex justify-content-end mt-2 ml-auto">
+        <a (click)="back()" matTooltip="Back" style="cursor: pointer;" class="text-uppercase"><img src="assets/img/table-back.svg"
+          class="table-back me-2" />
+          Back
+        </a>
+      </div>
+    </div>
+    <mat-card-content>
+      <div class="row" style="margin-bottom: 2%; border-bottom: 3px solid #a7a79f;">
+        <div class="col-md-2"><label class="form-label editLabel">Survey Year</label>
+          <p>{{surveyY}}</p></div>
+        <div class="col-md-2"><label class="form-label editLabel">AISHE Code</label>
+       <p>C-{{id}}</p></div>
+        <div class="col-md-4"><label class="form-label editLabel">College Name</label>
+      <p>{{collegeName}}</p></div>
+      <div class="col-md-2"><label class="form-label editLabel">State Name</label>
+        <p>{{stateName}}</p></div>
+        <div class="col-md-2"><label class="form-label editLabel">District Name</label>
+          <p>{{districtName}}</p></div>
+      </div>
+      <form [formGroup]="form" autocomplete="off" (ngSubmit)="update()">
+        <div class="animated fadeIn">
+
+          <div class="row">
+
+
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <mat-select [disableOptionCentering]="true" #select1 placeholder="De-Affiliated Reason"  formControlName="reasonName"   [ngClass]="{ 'is-invalid': submitted && f['reasonName'].errors }">
+                      <mat-select-filter *ngIf="select1.focused" [array]="dataDeaffiliation" (filteredReturn)="filterDeaffiliation =$event" [displayMember]="'name'"></mat-select-filter>
+                      <mat-option *ngFor="let item of filterDeaffiliation" [value]="item.id">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                    <div *ngIf="submitted && f['reasonName'].errors" class="invalid-feedback">
+                      <div *ngIf="f['reasonName'].errors['required']">De-Affiliated Reason is required</div>
+                    </div>
+                  </mat-form-field>
+                  </div>
+                  <div class="col-md-4" *ngIf="DeAffiliateFormData">
+                    <mat-form-field>
+                      <input matInput formControlName="oldAffiliatedUniversity" placeholder="Old Affiliated University"
+                       [disabled]=true [readOnly]="DeAffiliateFormData" />
+                    </mat-form-field>
+                    </div>
+                    <div class="col-md-4" *ngIf="DeAffiliateFormData">
+                      <mat-form-field>
+                        <mat-select [disableOptionCentering]="true" #select1 placeholder="New Affiliated University"  formControlName="newAffiliatedUniversity"   [ngClass]="{ 'is-invalid': submitted && f['reasonName'].errors }">
+                          <mat-select-filter *ngIf="select1.focused" [array]="universityList" (filteredReturn)="filtereduniversityList =$event" [displayMember]="'name'"></mat-select-filter>
+                          <mat-option *ngFor="let item of filtereduniversityList" [value]="item.id">
+                            {{item.name}}
+                          </mat-option>
+                        </mat-select>
+                        <div *ngIf="submitted && f['reasonName'].errors" class="invalid-feedback">
+                          <div *ngIf="f['reasonName'].errors['required']">De-Affiliated Reason is required</div>
+                        </div>
+                      </mat-form-field>
+                      </div>
+                <div class="col-md-8" *ngIf="!DeAffiliateFormData">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Remarks</mat-label>
+                    <textarea matInput placeholder="" rows="5" formControlName="reasonRemarks" [ngClass]="{ 'is-invalid': submitted && f['reasonRemarks'].errors }"></textarea>
+                    <mat-error>
+                      <span *ngIf="(( submitted || f['reasonRemarks'].touched) && f['reasonRemarks'].errors)" >
+                        <span class="validation" *ngIf="f['reasonRemarks'].errors['required']||f['reasonRemarks'].errors['whitespace']" style="color: #d50404;">Remarks is required</span>
+                        <span class="validation" *ngIf="f['reasonRemarks'].errors['maxlength']" style="color: #d50404;">Maximum length is 2000</span>
+                        <!-- <span class="validation" *ngIf="f['reasonRemarks'].errors['minlength']" style="color: #d50404;">Minimum length is 3</span> -->
+                      </span>
+                    </mat-error>
+                  </mat-form-field>
+
+
+                </div>
+          
+                <div class="col-md-5 ml-1">
+                  <label style="font-weight: 500">Do you want to make User ID of this institution, Active or Inactive?</label><br>
+                  <label style="font-weight: 600;padding-left:4px">User ID Status:</label>&nbsp;&nbsp;
+                  <mat-radio-group aria-label="Select an option" required formControlName="isInactiveUser">
+                      <mat-radio-button [value]="false">Active</mat-radio-button>&nbsp;&nbsp;
+                      <mat-radio-button [value]="true">Inactive</mat-radio-button>
+                  </mat-radio-group>
+                  <div class="ml-1" *ngIf="(( submitted || f['isInactiveUser'].touched) && f['isInactiveUser'].errors)" >
+                    <span class="validation" *ngIf="f['isInactiveUser'].errors['required']||f['isInactiveUser'].errors['whitespace']" style="color: #d50404;">User status is required</span>
+                  </div>
+                   </div>
+ 
+   
+
+           
+
+                <!-- <div *ngIf="submitted && f['reasonRemarks'].errors" class="invalid-feedback">
+                  <div *ngIf="f['reasonRemarks'].errors['required']||f['reasonRemarks'].errors['whitespace']">Remarks is required</div>
+                  </div> -->
+              </div>
+        </div>
+
+        <div class="d-flex .justify-content-center" style="margin: 2% 0px;">
+          <button id="save"  type="submit" class="btn1 btn btn-sm btn-success" >
+            SAVE
+          </button>&nbsp;
+          <button id="cancel" type="button" (click)="back()" class="btn1 btn btn-sm btn-danger">Cancel</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+<div class="container-fluid reg-page-bg pl-4 pr-4" *ngIf="EditData && DeAffiliateFormData" style="margin-top: 5%;">
+  <mat-card>
+    <div class="row">
+      <div class=" col-10">
+        <h1 class="insthead"><span>Shifted to Other University </span></h1>
+
+      </div>
+      <div class=" col-2 d-flex justify-content-end mt-2 ml-auto">
+        <a (click)="back()" matTooltip="Back" style="cursor: pointer;" class="text-uppercase"><img src="assets/img/table-back.svg"
+          class="table-back me-2" />
+          Back
+        </a>
+      </div>
+    </div>
+    <mat-card-content>
+      <div class="row" style="margin-bottom: 2%; border-bottom: 3px solid #a7a79f;">
+        <div class="col-md-2"><label class="form-label editLabel">Survey Year</label>
+          <p>{{surveyY}}</p></div>
+        <div class="col-md-2"><label class="form-label editLabel">AISHE Code</label>
+       <p>C-{{id}}</p></div>
+        <div class="col-md-4"><label class="form-label editLabel">College Name</label>
+      <p>{{collegeName}}</p></div>
+      <div class="col-md-2"><label class="form-label editLabel">State Name</label>
+        <p>{{stateName}}</p></div>
+        <div class="col-md-2"><label class="form-label editLabel">District Name</label>
+          <p>{{districtName}}</p></div>
+      </div>
+      <form [formGroup]="form" autocomplete="off" (ngSubmit)="update()">
+        <div class="animated fadeIn">
+
+          <div class="row">
+
+
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <mat-select [disableOptionCentering]="true" #select1 placeholder="De-Affiliated Reason"  formControlName="reasonName"   [ngClass]="{ 'is-invalid': submitted && f['reasonName'].errors }">
+                      <mat-select-filter *ngIf="select1.focused" [array]="dataDeaffiliation" (filteredReturn)="filterDeaffiliation =$event" [displayMember]="'name'"></mat-select-filter>
+                      <mat-option *ngFor="let item of filterDeaffiliation" [value]="item.id">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                    <div *ngIf="submitted && f['reasonName'].errors" class="invalid-feedback">
+                      <div *ngIf="f['reasonName'].errors['required']">De-Affiliated Reason is required</div>
+                    </div>
+                  </mat-form-field>
+                  </div>
+                  <div class="col-md-4" *ngIf="DeAffiliateFormData">
+                    <mat-form-field>
+                      <input matInput formControlName="oldAffiliatedUniversity" placeholder="Old Affiliated University"
+                        [readonly]="this.form.controls['oldAffiliatedUniversity'].value"/>
+                    </mat-form-field>
+                    </div>
+                    <div class="col-md-4" *ngIf="DeAffiliateFormData">
+                      <mat-form-field>
+                        <mat-select [disableOptionCentering]="true" #select1 placeholder="New Affiliated University"  formControlName="newAffiliatedUniversity"   [ngClass]="{ 'is-invalid': submitted && f['reasonName'].errors }">
+                          <mat-select-filter *ngIf="select1.focused" [array]="universityList" (filteredReturn)="filtereduniversityList =$event" [displayMember]="'name'"></mat-select-filter>
+                          <mat-option *ngFor="let item of filtereduniversityList" [value]="item.id">
+                            {{item.name}}
+                          </mat-option>
+                        </mat-select>
+
+                      </mat-form-field>
+
+                      <mat-hint
+                      class="err-msgs"
+                      *ngIf="
+                        this.form.controls['newAffiliatedUniversity'].dirty ||
+                        this.form.controls['newAffiliatedUniversity'].value ||
+                        this.form.controls['newAffiliatedUniversity'].touched ||
+                        submitted
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          this.form.controls['newAffiliatedUniversity'].hasError(
+                            'required'
+                          )
+                        "
+                        >Please select new affiliated university</span
+                      >
+                    </mat-hint>
+                      </div>
+                <!-- <div class="col-md-8" *ngIf="!DeAffiliateFormData">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Remarks</mat-label>
+                    <textarea matInput placeholder="" rows="5" formControlName="reasonRemarks" [ngClass]="{ 'is-invalid': submitted && f['reasonRemarks'].errors }"></textarea>
+                    <mat-error>
+                      <span *ngIf="(( submitted || f['reasonRemarks'].touched) && f['reasonRemarks'].errors)" >
+                        <span class="validation" *ngIf="f['reasonRemarks'].errors['required']||f['reasonRemarks'].errors['whitespace']" style="color: #d50404;">Remarks is required</span>
+                        <span class="validation" *ngIf="f['reasonRemarks'].errors['maxlength']" style="color: #d50404;">Maximum length is 2000</span>
+                         <span class="validation" *ngIf="f['reasonRemarks'].errors['minlength']" style="color: #d50404;">Minimum length is 3</span>
+                      </span>
+                    </mat-error>
+                  </mat-form-field>
+
+
+                </div> -->
+                <!-- <div *ngIf="submitted && f['reasonRemarks'].errors" class="invalid-feedback">
+                  <div *ngIf="f['reasonRemarks'].errors['required']||f['reasonRemarks'].errors['whitespace']">Remarks is required</div>
+                  </div> -->
+              </div>
+        </div>
+
+        <div class="d-flex .justify-content-center" style="margin: 2% 0px;">
+          <button id="save"  type="submit" class="btn1 btn btn-sm btn-success" >
+            SAVE
+          </button>&nbsp;
+          <button id="cancel" type="button" (click)="back()" class="btn1 btn btn-sm btn-danger">Cancel</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+

@@ -1,0 +1,50 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">Summary</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="animated fadeInDown card mb-2 pt-2 pb-1 bg-light overflow-hidden">
+
+        <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-2">
+                <mat-form-field class="d-block">
+                    <mat-label>Survey Year:</mat-label>
+                    <mat-select [(ngModel)]="surveyYear" (selectionChange)="getSummaryMonitering($event.value)">
+                        <mat-option *ngFor="let item of surveyYearList" [value]="item.surveyYearValue">{{item.surveyYearValue}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-12 table-responsive">
+                <table class="table table-bordered table-sm">
+                    <tr>
+                        <th>Institution Type</th>
+                        <th>Basic Info</th>
+                        <th>Final Submit</th>
+                    </tr>
+                    <tr>
+                        <td>College</td>
+                        <td>{{totalBasicFilledC}}</td>
+                        <td>{{totalFormUploadedC}}</td>
+                    </tr>
+                    <tr>
+                        <td>Standalone</td>
+                        <td>{{totalBasicFilledS}}</td>
+                        <td>{{totalFormUploadedS}}</td>
+                    </tr>
+                    <tr>
+                        <td>University</td>
+                        <td>{{totalBasicFilledU}}</td>
+                        <td>{{totalFormUploadedU}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

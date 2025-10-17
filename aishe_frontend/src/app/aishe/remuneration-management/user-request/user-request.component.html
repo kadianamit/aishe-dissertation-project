@@ -1,0 +1,341 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+
+    <div class="animated fadeInDown card shadow mb-4 pt-1 pb-2 pr-4 pl-4 bg-light">
+        <div class>
+            <div class="form-row mr-0 ml-0">
+                <div class="col-md-12 mt-0 badges p-2 mt-3">
+                    <div class="float-left">
+                        <span class="font-weight-bold text-lg">Nodal Officer Details :</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="userDetail">
+            <div class="form-row col-md-12 overflow-hidden pt-2">
+
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <mat-label>Name of the User</mat-label>
+                        <input matInput placeholder="User Id" formControlName="nameofUser">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <mat-label>AISHE Code</mat-label>
+                        <input matInput placeholder="User Id" formControlName="aisheCode">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <mat-label>User Role</mat-label>
+                        <input matInput placeholder="User Role" formControlName="roleId" [value]=this.roleName>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <mat-label>Name of the Institute</mat-label>
+                        <input matInput placeholder="Name of the Institute" formControlName="nameOfInstitute">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <mat-label>Mobile No</mat-label>
+                        <input matInput placeholder="Mobile" formControlName="mobile">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <mat-label>Email Id</mat-label>
+                        <input matInput placeholder="Email Id" formControlName="email">
+                    </mat-form-field>
+                </div>
+                <hr>
+                <div class="col-md-4">
+                    <mat-form-field class="d-block">
+                        <mat-label>Survey Year:</mat-label>
+                        <mat-select formControlName="surveyYear" (selectionChange)="checkEligibility($event.value)">
+                            <!-- <mat-option value="2020">2020-21</mat-option>
+                            <mat-option value="2021">2021-22</mat-option> -->
+                            <mat-option value="2022">2022-23</mat-option>
+                            <mat-option value="2023">2023-24</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+            <div class="col-md-12 mt-0 badges p-2 mt-3" *ngIf="showMessage && userDetail.controls['surveyYear'].value ">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">
+                        <span style="color:red">
+                            Sorry, you are not eligible for remuneration
+                            for this survey year {{userDetail.controls['surveyYear'].value}}
+                        </span>
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div *ngIf="eligibilityCheck && userDetail.controls['surveyYear'].value">
+                <div>
+                    <div class="form-row mr-0 ml-0">
+                        <div class="col-md-12 mt-0 badges p-2 mt-3">
+                            <div class="float-left">
+                                <span class="font-weight-bold text-lg">Accounts Details</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-12 mt-0  p-2 mt-3">
+                    <div *ngIf="showButtonLock">
+                        <span class="font-weight-bold text-lg">
+                            <span style="color:red">
+                                Bank Account Details are locked for this survey.
+                            </span>
+                        </span>
+
+                    </div>
+                    <div *ngIf="dataSource && dataSource.length">
+                        <mat-divider></mat-divider>
+                        <table class="mat-elevation-z8">
+                            <tbody>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Action By Name</th>
+                                    <th>Status</th>
+                                    <th>Remarks</th>
+                                    <th>Date</th>
+
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr *ngFor="let item of dataSource; let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.actionBy}}</td>
+                                    <td>{{item.status.status}}</td>
+                                    <td>{{item.remarks}}</td>
+                                    <td>{{item.actionDateTime}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- <mat-divider></mat-divider> -->
+                </div>
+
+                <br>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-label class="label">
+                            <span style="color:red">*</span>
+                            Name of Account Holder:
+                        </mat-label>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="d-block">
+                            <input matInput formControlName="accountHolderName" (keypress)="alphaOnly($event)"
+                                (keypress)="onKeypressEvent($event, 75)" class="uppercase" [disabled]="isDisabled">
+                        </mat-form-field>
+                        <div class="err-msgs"
+                            *ngIf="userDetail.controls['accountHolderName'].dirty || userDetail.controls['accountHolderName'].value || userDetail.controls['accountHolderName'].touched  || isFormInvalid ">
+                            <span *ngIf="userDetail.controls['accountHolderName'].hasError('required')">Please
+                                enter</span>
+                        </div>
+                        <div
+                            *ngIf="userDetail.controls['accountHolderName'].dirty && userDetail.controls['accountHolderName'].hasError('maxlength')">
+                            <span style="color: red;">
+                                Name of Account Holder should not be great than 75.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-label class="label">
+                            <span style="color:red">*</span>
+                            PAN Number:
+                        </mat-label>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="d-block">
+                            <input matInput formControlName="pan" (keypress)="onKeypressEvent($event, 10)"
+                                class="uppercase">
+                        </mat-form-field>
+                        <div class="err-msgs"
+                            *ngIf="userDetail.controls['pan'].dirty || userDetail.controls['pan'].touched || isFormInvalid">
+                            <span *ngIf="userDetail.controls['pan'].hasError('required')">Please enter</span>
+                            <span *ngIf="userDetail.controls['pan'].hasError('pattern')">Please Enter a Valid PAN
+                                Number</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-label class="label">
+                            <span style="color:red">*</span>
+                            IFSC Code:
+                        </mat-label>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="d-block">
+                            <input matInput class="uppercase" formControlName="ifsc_code"
+                                (keypress)="onKeypressEvent($event, 11)">
+                        </mat-form-field>
+                        <div class="err-msgs"
+                            *ngIf="userDetail.get('ifsc_code')?.invalid && (userDetail.get('ifsc_code')?.dirty || userDetail.get('ifsc_code')?.touched || isFormInvalid)">
+                            <span *ngIf="userDetail.get('ifsc_code')?.hasError('required')">Please enter IFSC
+                                code</span>
+                            <span *ngIf="userDetail.get('ifsc_code')?.hasError('pattern')">Please enter valid IFSC
+                                code</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-label class="label">
+                            <span style="color:red">*</span>
+                            Account Number:
+                        </mat-label>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="d-block">
+                            <input matInput formControlName="accountNumber" (keypress)="numberOnly($event)"
+                                (paste)="DisablePaste($event)" (keypress)="onKeypressEvent($event, 18)">
+                        </mat-form-field>
+                        <div class="err-msgs"
+                            *ngIf="userDetail.get('accountNumber')?.invalid && (userDetail.get('accountNumber')?.dirty || userDetail.get('accountNumber')?.touched || isFormInvalid)">
+                            <span *ngIf="userDetail.get('accountNumber')?.hasError('required')"
+                                style="color: red;">Please enter Account Number</span>
+                            <span *ngIf="userDetail.get('accountNumber')?.hasError('maxlength')"
+                                style="color: red;">Account Number must not exceed 18 characters</span>
+                            <span *ngIf="userDetail.get('accountNumber')?.hasError('minlength')"
+                                style="color: red;">Account Number must be at least 11 characters</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-label class="label">
+                            <span style="color:red">*</span>
+                            Re-enter Account Number:
+                        </mat-label>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="d-block">
+                            <input matInput formControlName="reaccountNumber" (keypress)="onKeypressEvent($event, 18)"
+                                (paste)="DisablePaste($event)" style="-webkit-text-security: disc;">
+                        </mat-form-field>
+
+                        <div class="err-msgs"
+                            *ngIf="userDetail.controls['reaccountNumber'].dirty || userDetail.controls['reaccountNumber'].value || userDetail.controls['reaccountNumber'].touched && isFormInvalid ">
+                            <span *ngIf="userDetail.controls['reaccountNumber'].hasError('required')">Please
+                                enter</span>
+                            <span *ngIf="userDetail.controls['reaccountNumber'].hasError('mustMatch')">Account Number
+                                does not match</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-label class="label">
+                            <span style="color:red">*</span>
+                            Name of the Bank:
+                        </mat-label>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="d-block">
+                            <input matInput formControlName="bankName" (keypress)="onKeypressEvent($event, 60)">
+                        </mat-form-field>
+                        <div class="err-msgs"
+                            *ngIf="userDetail.controls['bankName'].dirty || userDetail.controls['bankName'].value || userDetail.controls['bankName'].touched || isFormInvalid ">
+                            <span *ngIf="userDetail.controls['bankName'].hasError('required')">Please enter</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-label class="label">
+                            <span style="color:red">*</span>
+                            Bank complete Address:
+                        </mat-label>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="d-block">
+                            <input matInput formControlName="bankAddress" (keypress)="onKeypressEvent($event, 250)">
+                        </mat-form-field>
+                        <div class="err-msgs"
+                            *ngIf="userDetail.controls['bankAddress'].dirty || userDetail.controls['bankAddress'].value || userDetail.controls['bankAddress'].touched || isFormInvalid ">
+                            <span *ngIf="userDetail.controls['bankAddress'].hasError('required')">Please enter</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-label class="label">
+                            <span style="color:red">*</span>
+                            PIN Code:
+                        </mat-label>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="d-block">
+                            <input matInput formControlName="pincode" (keypress)="onKeypressEvent($event, 6)"
+                                (keypress)="numberOnly($event)">
+                        </mat-form-field>
+                        <div class="err-msgs"
+                            *ngIf="userDetail.controls['pincode'].dirty || userDetail.controls['pincode'].value || userDetail.controls['pincode'].touched || isFormInvalid ">
+                            <span *ngIf="userDetail.controls['pincode'].hasError('required')">Please enter</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="label">
+                            <span style="color:red">*</span>
+                            Upload Document:
+                        </label>
+                    </div>
+
+                    <div class="col-md-6">
+                        <mat-toolbar>
+
+                            <input matInput placeholder="Upload relevant document" readonly name="name"
+                                (click)="viewPdf(bankDocumentName,myFilesName)"
+                                style="font-size: small; text-decoration: underline;cursor: pointer;"
+                                [value]="myFilesName" class="mat-label">
+                        </mat-toolbar>
+                        <input type="file" #fileInput id="uploadFile" name="uploadFile"
+                            (change)="getFileDetails($event)" accept="application/pdf">
+                        <p style="color: red;font-size: small;">Please upload Bank Account Details of the nodal officer
+                            on the Institutions Letterhead</p>
+                        <p style="color: red;font-size: small;">
+                            (File should be in pdf format only & less than 5MB.)
+                        </p>
+                    </div>
+                </div>
+                <div class="text-center col-md-12" *ngIf="!showButtonLock">
+                    <button class="btn btn-success btn-sm mr-2" type="button" (click)="saveAccountDetails()">
+                        Save
+                    </button>
+                    <button class="btn btn-danger btn-sm mr-2" class="btn btn-danger btn-sm mr-2" (click)="resetForm()">
+                        Reset
+                    </button>
+                    <button class="btn btn-danger btn-sm mr-2" class="btn btn-warning btn-sm mr-2" (click)="saveLock()">
+                        Lock
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

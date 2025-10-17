@@ -1,0 +1,30 @@
+<mat-dialog-content *ngIf="element.changePass">
+  <p style="color: green;" >
+    Your password has been changed successfully.Please log in to continue.
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="center" *ngIf="element.changePass">
+  <button mat-raised-button color="primary" tabindex="1" (click)="login()">{{confirmButtonText}}</button>
+</mat-dialog-actions>
+
+
+<mat-dialog-content *ngIf="element.resetPass">
+  <p style="color: green;" >
+    Your password has been reset successfully.Please log in to continue.
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="center" *ngIf="element.resetPass">
+  <button mat-raised-button color="primary" tabindex="1" (click)="dataUser()">{{confirmButtonText}}</button>
+</mat-dialog-actions>
+
+<mat-dialog-content *ngIf="element.logout">
+  <p style="color: green;" >
+    Are You sure you want to logout?
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="center" *ngIf="element.logout">
+  <button mat-raised-button color="warn" tabindex="1" (click)="logout()">Logout</button>
+  <button mat-button  mat-dialog-close tabindex="-1">Close</button>
+</mat-dialog-actions>
+
+

@@ -1,0 +1,40 @@
+<mat-dialog-content>
+
+    <!-- <div class="row col-md-12 overflow-hidden" *ngIf="element.type === 'C' && element.inactive === false">
+        <label class="col-md-8 label">Whether Institution wants to upgrade
+            from College to University:</label>
+        <div class="col-md-3 mt-2">
+            <mat-radio-group aria-label="Select an option">
+                <mat-radio-button [value]=true>Yes</mat-radio-button>&nbsp;
+                <mat-radio-button [value]=false>No</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+    </div> -->
+   
+    <span style="font-weight: 500;" *ngIf="element.type === 'C' && element.inactive === false">Whether Institution wants to upgrade
+        from College to University.If “Yes” then <a href="assets/docs/Guidelines for Addition of University on AISHE Portal.pdf" target="_blank">Please click here</a></span>
+        <span style="font-weight: 500;" *ngIf="element.type === 'S' && element.inactive === false">Whether Institution wants to upgrade from
+            Standalone to College.</span>
+        <!-- <div class="col-md-3 mt-2">
+            <mat-radio-group aria-label="Select an option" (change)="standalone($event.value)">
+                <mat-radio-button [value]=true>Yes</mat-radio-button>&nbsp;
+                <mat-radio-button [value]=false>No</mat-radio-button>
+            </mat-radio-group>
+        </div> -->
+        <br>
+        <span style="color: red;font-weight: 500;" *ngIf="element.type === 'S' && element.inactive === false"> If 'YES' Send request to MoE (drop email
+            on aishe-helpdesk[at]nic[dot]in) for upgradation.</span>
+    <!-- </div> -->
+    <span style="color: red;font-weight: 500;" *ngIf="element.type === 'S' && element.inactive">Send request to SNO/MoE
+        for
+        activation.:</span>
+
+    <span style="color: red;font-weight: 500;" *ngIf="element.type === 'C' && element.inactive">Send request to
+        your
+        UNO/SNO for “affiliation”</span>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">Close</button>
+</mat-dialog-actions>

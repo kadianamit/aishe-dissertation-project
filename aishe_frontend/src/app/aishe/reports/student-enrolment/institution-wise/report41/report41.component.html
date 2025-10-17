@@ -1,0 +1,160 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div
+  class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent"
+  *ngIf="Showdata12"
+
+>
+  <table class="table table-boarderd showReportDataChild">
+    <thead class="childTableStickyHeader">
+      <tr *ngIf="is2020==false">
+        <th rowspan="3" class="text-center table-success">University Type</th>
+        <th colspan="8" class="text-center table-light">Caste-Category</th>
+        <th colspan="8" class="text-center table-secondary">Out of Total</th>
+      </tr>
+      <tr *ngIf="is2020==false">
+       
+        <th colspan="2" class="text-center table-light">Total</th>
+        <th colspan="2" class="text-center table-light">
+          Total SC
+        </th>
+        <th colspan="2" class="text-center table-light">Total ST</th>
+        <th colspan="2" class="text-center table-light">Total OBC</th>
+        <th colspan="2" class="text-center table-secondary">Total PWD</th>
+        <th colspan="2" class="text-center table-secondary">Muslim  Total</th>
+        <th colspan="2" class="text-center table-secondary">Other Minority Total</th>
+        <th colspan="2" class="text-center table-secondary">Total Foreign</th>
+      </tr>
+      <tr *ngIf="is2020">
+        <th rowspan="3" class="text-center table-success">University Type</th>
+        <th colspan="12" class="text-center table-light">Caste-Category</th>
+        <th colspan="15" class="text-center table-secondary">Out of Total</th>
+      </tr>
+      <tr *ngIf="is2020">
+        <th colspan="3" class="text-center table-light">Total</th>
+        <th colspan="3" class="text-center table-light">
+          Total SC
+        </th>
+        <th colspan="3" class="text-center table-light">
+          Total ST
+        </th>
+        <th colspan="3" class="text-center table-light">Total OBC</th>
+        <th colspan="3" class="text-center table-secondary">Total PWD </th>
+        <th colspan="3" class="text-center table-secondary">Total Muslim</th>
+        <th colspan="3" class="text-center table-secondary">Other Minority Total</th>
+        <th colspan="3" class="text-center table-secondary">Total Foreign</th>
+        <th colspan="3" class="text-center table-secondary">Total EWS</th>
+      </tr>
+
+
+      <tr *ngIf="is2020==false">
+        <th
+          *ngFor="let col of tableColumns; let i = index"
+          [attr.style]="i == 0 ? 'display:none' : ''"
+          [ngClass]="[i<3 ?'table-light':'', i>=3 && i<5 ? 'table-light': '',i>=5 && i<7 ? 'table-light': '',
+      i>=7 && i<9 ? 'table-light': '',i>=9 && i<11 ? 'table-secondary': '',i>=11 && i<13 ? 'table-secondary': '',
+      i>=13 && i<15 ? 'table-secondary': '',i>=15 && i<17 ? 'table-secondary': '',i>=17 && i<19 ? 'table-secondary': '',
+      i>=19 && i<21 ? 'table-secondary': '',i>=21 && i<23 ? 'table-secondary': '',
+      ]"
+          class="text-center"
+        >
+          {{
+            col.trim()
+            .replace('totalForeign', '')
+          .replace('otherMinority', '')
+          .replace('muslim', '')
+          .replace('Obc', '')
+          .replace('pwd', '')
+          .replace('St', '')
+          .replace('Sc', '')
+          .replace('total','')
+          .replace('Total','')
+          .replace('Ews','')
+
+          }}
+        </th>
+      </tr>
+      <tr *ngIf="is2020">
+        <th
+          *ngFor="let col of tableColumns; let i = index"
+          [attr.style]="i == 0 ? 'display:none' : ''"
+          [ngClass]="[i<4 ?'table-light':'', i>=4 && i<7 ? 'table-light': '',i>=7 && i<10 ? 'table-light': '',
+      i>=10 && i<13 ? 'table-light': '',i>=13 && i<16 ? 'table-secondary': '',i>=16 && i<19 ? 'table-secondary': '',
+      i>=19 && i<22 ? 'table-secondary': '',i>=22 && i<25 ? 'table-secondary': '',i>=25 && i<28 ? 'table-secondary': '',
+      ]"
+          class="text-center"
+        >
+          {{
+            col.trim()
+            .replace('totalForeign', '')
+          .replace('otherMinority', '')
+          .replace('muslim', '')
+          .replace('Obc', '')
+          .replace('pwd', '')
+          .replace('St', '')
+          .replace('Sc', '')
+          .replace('total','')
+          .replace('Total','')
+          .replace('Ews','')
+
+          }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of reportTableData  | paginate
+      : {
+          itemsPerPage: pageSize,
+          currentPage: page
+        }" [ngClass]="is2020?'d-none':''">
+        <td
+          *ngFor="let col of tableColumns; let i = index"
+          class="text-center"
+          [ngClass]="[i==0?'table-success':  '',
+              i>0 && i<3 ?'table-light':'', i>=3 && i<5 ? 'table-light': '',i>=5 && i<7 ? 'table-light': '',
+          i>=7 && i<9 ? 'table-light': '',i>=9 && i<11 ? 'table-secondary': '',i>=11 && i<13 ? 'table-secondary': '',
+          i>=13 && i<15 ? 'table-secondary': '',i>=15 && i<17 ? 'table-secondary': '',i>=17 && i<19 ? 'table-secondary': '',
+          i>=19 && i<21 ? 'table-secondary': '',i>=21 && i<23 ? 'table-secondary': '',
+          ]"
+        >
+          {{ row[col] }}
+        </td>
+      </tr>
+      <tr *ngFor="let row of reportTableData  | paginate
+      : {
+          itemsPerPage: pageSize,
+          currentPage: page
+        }" [ngClass]="is2020?'':'d-none'">
+        <td
+          *ngFor="let col of tableColumns; let i = index"
+          class="text-center"
+          [ngClass]="[i==0?'table-success':  '',
+          i<4 ?'table-light':'', i>=4 && i<7 ? 'table-light': '',i>=7 && i<10 ? 'table-light': '',
+            i>=10 && i<13 ? 'table-light': '',i>=13 && i<16 ? 'table-secondary': '',i>=16 && i<19 ? 'table-secondary': '',
+            i>=19 && i<22 ? 'table-secondary': '',i>=22 && i<25 ? 'table-secondary': '',i>=25 && i<28 ? 'table-secondary': '',
+          ]"
+        >
+          {{ row[col] }}
+        </td>
+      </tr>
+
+
+      <tr>
+        <!-- <td colspan="1" class="text-center table-success">
+          All India
+        </td> -->
+        <td
+          *ngFor="let summary of summaryColumns; let i = index"
+          class="text-center table-secondary"
+        >
+          {{ summaryData[summary] }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls
+  previousLabel="Prev"
+  nextLabel="Next"
+  (pageChange)="handlePageChange($event)"
+  >
+  </pagination-controls>
+</div>

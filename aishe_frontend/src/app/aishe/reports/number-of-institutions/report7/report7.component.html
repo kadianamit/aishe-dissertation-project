@@ -1,0 +1,99 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"   
+*ngIf="Showdata12">
+  <table class="table showReportDataChild"
+  [attr.style]="[
+                    reportDataForm.value.isUniversity == false &&
+                    reportDataForm.value.isCollege == false &&
+                    reportDataForm.value.isStandalone == false
+                      ? 'width: 15%;'
+                      : ''
+                  ]">
+    <thead class="childTableStickyHeader">
+      <tr>
+        <th rowspan="2" class="table-success">State Name</th>
+        <th colspan="13" class="text-center table-light" *ngIf="reportDataForm.value.isUniversity">
+          University
+        </th>
+        <th colspan="7" class="text-center table-secondary" *ngIf="reportDataForm.value.isCollege">
+          College/Recognised Institution
+        </th>
+        <th colspan="7" class="text-center table-tertiary" *ngIf="reportDataForm.value.isStandalone">
+          Standalone Institution
+        </th>
+      </tr>
+      <tr>
+        <th *ngFor="let col of tableColumns; let i = index"
+         [attr.style]="i == 0 ? 'display:none' : ''"
+          class="text-center" [ngClass]="[
+                          i > 0 && i < 14 && reportDataForm.value.isUniversity
+                            ? 'table-light '
+                            : i > 0 && i < 14
+                            ? 'd-none'
+                            : '',
+                          i >= 14 && i < 21 && reportDataForm.value.isCollege
+                            ? 'table-secondary '
+                            : i >= 14 && i < 21
+                            ? 'd-none'
+                            : '',
+                          i >= 21 && reportDataForm.value.isStandalone
+                            ? 'table-tertiary '
+                            : i >= 21
+                            ? 'd-none'
+                            : ''
+                        ]">
+          {{ col }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of reportTableData">
+        <td *ngFor="let col of tableColumns; let i = index" class="text-center" [ngClass]="[
+                          i == 0 ? 'table-success' : '',
+                          i > 0 && i < 14 && reportDataForm.value.isUniversity
+                            ? 'table-light'
+                            : i > 0 && i < 14
+                            ? 'd-none'
+                            : '',
+                          i >= 14 && i < 21 && reportDataForm.value.isCollege
+                            ? 'table-secondary'
+                            : i >= 14 && i < 21
+                            ? 'd-none'
+                            : '',
+                          i >= 21 && reportDataForm.value.isStandalone
+                            ? 'table-tertiary'
+                            : i >= 21
+                            ? 'd-none'
+                            : ''
+                        ]">
+          {{ row[col] }}
+        </td>
+      </tr>
+      <tr *ngIf="reportFilterForm.value.addressStateCode.stateCode==='ALL' && reportFilterForm.value.surveyYear >= '2021'">
+        <td class="text-center table-success">All India</td>
+        <td *ngFor="let summary of summaryColumns; let i = index" class="text-center table-secondary"
+
+        class="text-center" [ngClass]="[
+                        i >= 0 && i < 13 && reportDataForm.value.isUniversity
+                          ? 'table-secondary '
+                          : i >=0 && i < 13
+                          ? 'd-none'
+                          : '',
+                        i >= 13 && i < 20 && reportDataForm.value.isCollege
+                          ? 'table-secondary '
+                          : i >= 13 && i < 20
+                          ? 'd-none'
+                          : '',
+                        i >= 20 && reportDataForm.value.isStandalone
+                          ? 'table-secondary '
+                          : i >= 20
+                          ? 'd-none'
+                          : ''
+                      ]">
+          {{ summaryData[summary] }}
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>

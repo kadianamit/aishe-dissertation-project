@@ -1,0 +1,33 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+  <div class="form-group">
+    <div class="form-row mr-0 ml-0">
+      <div class="col-md-12 mt-0 badges p-2 mt-3">
+        <div class="float-left">
+          <span class="font-weight-bold text-lg">HEI Onboarding</span>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    <div class="col-md-12 animated fadeInDown card shadow mb-4 pt-1 pb-2 pr-4 pl-4 bg-light">
+    <!-- <app-start-reg ></app-start-reg> -->
+    <mat-tab-group
+        animationDuration="0ms"
+        class="exam-tabing-steps"
+        [(selectedIndex)]="selectedIndex"
+        (selectedTabChange)="tabSelected($event)"
+    >
+    <mat-tab label="View">
+        <mat-card class="mt-2  card " style="border-radius: 26px;">
+            <app-view-reg ></app-view-reg>
+        </mat-card>
+    </mat-tab>
+    <mat-tab label="Create/Edit">
+        <mat-card class="mt-2  card " style="border-radius: 26px;">
+            <app-start-reg *ngIf="selectedIndex===1"></app-start-reg>
+        </mat-card>
+    </mat-tab>
+    </mat-tab-group>
+    </div>
+
+  </div>

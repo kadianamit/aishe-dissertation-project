@@ -1,0 +1,288 @@
+
+/* .dashboard-card .card-title {
+  color: #037a92;
+  font-weight: 700;
+  font-size: 1.3em;
+} */
+
+.dashboradsub{
+  font-size: small;
+    font-weight: 500;
+}
+.latestCard{
+    background-color: #d3d3d3;
+  }
+  .bglight{
+    background-color:#d3d3d3;
+  }
+  .dashboard-card p.card-text {
+    font-size: .8em;
+    font-weight: 500
+  }
+  
+  .dashboard-card p.card-text span {
+    font-size: 1.8em;
+    font-weight: 700;
+    font-family: auto!important
+  }
+  
+  .card-mainwrap {
+    width: 50%;
+    margin-bottom: 25px
+  }
+  
+  .card-mainwrap:last-child {
+    width: 100%
+  }
+  
+  .card-mainwrap .dashboard-card {
+    min-height: 90%;
+    box-shadow: 10px 10px 26px -8px #cfcdcd7d
+  }
+  
+  .card-mainwrap .dashboard-card .card-title {
+    color: #037a92;
+    /* font-weight: 700; */
+    font-size: 20px;
+    font-family: auto!important;
+  
+  }
+  
+  
+  
+  .card-mainwrap .dashboard-card ul {
+    padding: 0;
+    margin: 0
+  }
+  
+  .card-mainwrap .dashboard-card ul li {
+    list-style: none;
+    /* text-align: center; */
+    font-family:auto!important ;
+  }
+  
+  .card-mainwrap .dashboard-card ul li p.card-text {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 28px;
+    font-family: auto!important
+  }
+  
+  
+  .card-mainwrap .dashboard-card ul li p.card-text span {
+    font-size: 34px;
+    font-weight: 700
+  }
+  
+  
+  
+  .card-mainwrap .dashboard-card ul li:last-child p span.text-orange {
+    color: #f29441
+  }
+  
+  .card-mainwrap .dashboard-card ul li:last-child p span.text-default {
+    color: #000
+  }
+  
+  .card-mainwrap .dashboard-card ul.um-status li p {
+    font-style: italic;
+    margin: 10px 0;
+    font-size: .8em
+  }
+  
+  .card-mainwrap .dashboard-card ul.um-status li p span {
+    font-style: normal;
+    font-weight: 700
+  }
+  
+  .card-mainwrap .dashboard-card ul.um-status li p span.error {
+    color: #f29441!important
+  }
+  
+  .card-mainwrap .dashboard-card ul.um-status li:last-child p {
+    margin-bottom: 0
+  }
+  
+  .card-mainwrap .dashboard-card ul.um-status li:last-child p span {
+    color: #000
+  }
+  
+  .more-btn:hover {
+    background-color: #f29441;
+    color: #fff
+  }
+  
+  .dashboard-select {
+    margin-top: -30px
+  }
+  
+  
+  
+  .card-mainwrap.animated.fadeIn.plan .dashboard-card:hover {
+    box-shadow: none
+  }
+  
+  .card-mainwrap.animated.fadeIn.plan li:last-child p span {
+    color: #000
+  }
+  
+  rect.highcharts-background {
+    fill: #0000
+  }
+  
+  .mat-checkbox-inner-container {
+    margin: 0 8px 0 0!important
+  }
+  
+  .justify-text {
+    text-align: justify
+  }
+  
+  .breakword {
+    word-break: break-word
+  }
+  
+  .text-orange {
+    color: #f29441
+  }
+  
+  .templateName {
+    font-weight: 700;
+    color: #037a92;
+    font-size: 1rem;
+    margin-top: -9px
+  }
+  
+  .header-details {
+    line-height: 1.3
+  }
+  
+  .header-details .h4,.header-details h4 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0
+  }
+  
+  
+  
+  .header-details span {
+    font-weight: 700;
+    color: #037a92
+  }
+  
+  .header-details .h6,.header-details h6 {
+    font-weight: 700;
+    color: #037a92;
+    font-size: .9em
+  }
+  
+  
+  
+  .selectedCard {
+    background: #037a92;
+    color: #fff
+  }
+  
+  .card .noBackground:hover,.card .revision-group-card:hover {
+    box-shadow: 0!important
+  }
+  
+  .highcharts-container {
+    margin: 0 auto!important
+  }
+  
+  .cardHeaderTitle{
+    font-weight: 700;
+    /* font-family: Roboto,Helvetica Neue,sans-serif;color: #037a92; */
+    font-family: auto;
+    color:  #2a7ab9;
+    font-size: 1.2em;
+  }
+  
+  h1.cardHeaderTitle{
+    font-size: 2.5rem;
+  }
+  
+  
+  .card-mainwrap .dashboard-card ul li:nth-child(even) p span {
+    color: #fd8484
+  }
+  
+  /*below css for card scrollbard*/
+  .card-body::-webkit-scrollbar {
+    width: 1rem;
+    height: 0.1rem;
+    border-radius: 25px;
+  }
+  .card-body::-webkit-scrollbar-button {
+    border-radius: 25px;
+  }
+  .card-body::-webkit-scrollbar-track-piece {
+    background: #fff
+  }
+  .card-body::-webkit-scrollbar-thumb {
+    background: #eee
+  }
+  /*end css for card scrollbard*/
+  
+  .card-mainwrap .card-body table td{
+    padding: 0.2rem !important;
+  }
+  
+  
+  /* media resolution styling code */
+  @media (max-width: 575.98px) {
+    .card-mainwrap .dashboard-card ul li p.card-text span {
+      font-size:20px
+    }
+    .table-responsive-sm {
+      display:inline-table;
+  }
+  }
+  
+  @media (max-width: 767.98px) {
+    .header-details .h6,.header-details h6 {
+        font-size:.75em
+      }
+      .header-details .h4,.header-details h4 {
+          font-size:.8rem
+      }
+      .card-mainwrap .dashboard-card .card-title {
+        font-size:18px
+    }
+    .table-responsive-sm {
+      display:inline-table;
+  }
+  .table-responsive-sm {
+    display:inline-table;
+  }
+    }
+  
+  @media (max-width: 991.98px) {
+    .dashboard-select {
+        width:100%!important
+    }
+    .card-mainwrap .dashboard-card ul li p.card-text span {
+      font-size:25px
+    }
+    .card-mainwrap .dashboard-card ul li p.card-text {
+      font-size:10px
+    }
+    .table-responsive-sm {
+      display:inline-table;
+  }
+  }
+  @media (max-width: 1199.98px) {
+    .table-responsive-sm {
+        display:inline-table;
+    }
+  }
+  
+  
+  p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 8px !important;
+}
+  
+  

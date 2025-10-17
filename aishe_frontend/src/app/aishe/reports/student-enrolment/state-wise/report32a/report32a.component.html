@@ -1,0 +1,121 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div
+  class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent"
+  *ngIf="Showdata12"
+ 
+>
+  <table class="table table-boarderd showReportDataChild">
+    <thead class="childTableStickyHeader">
+
+<tr>
+  <th colspan="1" class="text-center table-success"></th>
+  <th colspan="1" class="text-center table-light"></th>
+  <th colspan="1" class="text-center table-secondary"></th>
+  <th colspan="1" class="text-center table-tertiary"></th>
+  <th colspan="1" class="text-center table-light"></th>
+  <th colspan="4" class="text-center table-tertiary">Total Enrollment</th>
+</tr>
+
+     
+
+
+      <tr *ngIf="is2020==false">
+        <th
+          *ngFor="let col of tableColumns; let i = index"
+          [ngClass]="[i==0?'table-success':  '',
+          i>0 && i<2 ?'table-light':'', i>=2 && i<3 ? 'table-secondary': '',i>=3 && i<4 ? 'table-tertiary': '',
+      i>=4 && i<5 ? 'table-light': '',i>=5 && i<9 ? 'table-tertiary': '',
+      ]"
+          class="text-center"
+        >
+          {{
+            col.trim()
+
+            .replace('SC', '')
+
+
+          }}
+        </th>
+      </tr>
+      <tr *ngIf="is2020">
+        <th
+          *ngFor="let col of tableColumns; let i = index"
+          [ngClass]="[i==0?'table-success':  '',
+          i>0 && i<2 ?'table-light':'', i>=2 && i<3 ? 'table-secondary': '',i>=3 && i<4 ? 'table-tertiary': '',
+      i>=4 && i<5 ? 'table-light': '',i>=5 && i<9 ? 'table-tertiary': '',
+
+      ]"
+          class="text-center"
+        >
+          {{
+            col.trim()
+
+            .replace('SC', '')
+            .replace('EWS', '')
+            .replace('OBC', '')
+            .replace('PWD', '')
+            .replace('Muslim', '')
+            .replace('Other Minority', '')
+            .replace('ST','')
+
+          }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of reportTableData | paginate
+      : {
+          itemsPerPage: pageSize,
+          currentPage: page
+        }" [ngClass]="is2020?'d-none':''">
+        <td
+          *ngFor="let col of tableColumns; let i = index"
+          class="text-center"
+          [ngClass]="[i==0?'table-success':  '',
+          i>0 && i<2 ?'table-light':'', i>=2 && i<3 ? 'table-secondary': '',i>=3 && i<4 ? 'table-tertiary': '',
+      i>=4 && i<5 ? 'table-light': '',i>=5 && i<9 ? 'table-tertiary': '',
+
+      ]"
+        >
+          {{ row[col] }}
+        </td>
+      </tr>
+      <tr *ngFor="let row of reportTableData | paginate
+      : {
+          itemsPerPage: pageSize,
+          currentPage: page
+        }" [ngClass]="is2020?'':'d-none'">
+        <td
+          *ngFor="let col of tableColumns; let i = index"
+          class="text-center"
+          [ngClass]="[i==0?'table-success':  '',
+          i>0 && i<2 ?'table-light':'', i>=2 && i<3 ? 'table-secondary': '',i>=3 && i<4 ? 'table-tertiary': '',
+      i>=4 && i<5 ? 'table-light': '',i>=5 && i<9 ? 'table-tertiary': '',
+      ]"
+        >
+
+          {{ row[col] }}
+        </td>
+      </tr>
+
+
+      <tr>
+        <td colspan="5" class="text-center table-success">
+          All India
+        </td>
+        <td
+          *ngFor="let summary of summaryColumns; let i = index"
+          class="text-center table-secondary"
+        >
+          {{ summaryData[summary] }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls
+  previousLabel="Prev"
+  nextLabel="Next"
+  (pageChange)="handlePageChange($event)"
+  >
+  </pagination-controls>
+</div>

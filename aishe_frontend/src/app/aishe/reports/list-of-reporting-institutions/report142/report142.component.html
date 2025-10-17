@@ -1,0 +1,71 @@
+
+
+    <div
+    class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+    *ngIf="Showdata12">
+<table
+class="table  showReportDataChild" >
+<thead class="childTableStickyHeader">
+
+
+<tr>
+  <th
+    *ngFor="let col of tableColumns; let i = index"
+
+    [ngClass]="[i>=0 && i<1?'table-success':  '',
+              i>=1 && i<2 ?'table-light':'', i>=2 && i<3 ? 'table-tertiary': '',i>=3 && i<4 ? 'table-secondary': '',
+          i>=4 && i<5 ? 'table-light': '',i>=5 && i<6 ? 'table-secondary': '',i>=6 && i<7 ? 'table-tertiary': '',
+          i>=7 && i<8 ? 'table-light': '',i>=8 && i<9 ? 'table-tertiary': '',i>=9 && i<10 ? 'table-secondary': '',]"
+    class="text-center"
+  >
+    {{
+      col
+        .trim()
+      .replace('NameofVice ', 'Name of Vice-Chancellor')
+        .replace('NameofInstitution ', 'Name of Institution')
+        .replace('STATENAME', 'State Name') 
+        .replace('STATE NAME', 'State Name') 
+    .replace(' ContactNo','Contact No')  
+      .replace('E-mailid ', 'E-mail Id') 
+    }}
+  </th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let row of reportTableData | paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }">
+  <td
+    *ngFor="let col of tableColumns; let i = index"
+    class="text-center"
+    [ngClass]="[i>=0 && i<1?'table-success':  '',
+    i>=1 && i<2 ?'table-light':'', i>=2 && i<3 ? 'table-tertiary': '',i>=3 && i<4 ? 'table-secondary': '',
+i>=4 && i<5 ? 'table-light': '',i>=5 && i<6 ? 'table-secondary': '',i>=6 && i<7 ? 'table-tertiary': '',
+i>=7 && i<8 ? 'table-light': '',i>=8 && i<9 ? 'table-tertiary': '',i>=9 && i<10 ? 'table-secondary': '',]"
+class="text-center"
+  >
+    {{ row[col] }}
+  </td>
+</tr>
+<!-- <tr>
+  <td colspan="1" class="text-center table-success">
+    All State
+  </td>
+  <td
+    *ngFor="let summary of summaryColumns; let i = index"
+    class="text-center table-secondary"
+  >
+    {{ summaryData[summary] }}
+  </td>
+</tr> -->
+</tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

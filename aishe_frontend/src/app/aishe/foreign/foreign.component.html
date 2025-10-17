@@ -1,0 +1,37 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">Foreign Institution Management</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 animated fadeInDown card shadow mb-4 pt-1 pb-2 pr-4 pl-4 bg-light">
+        <mat-tab-group animationDuration="0ms" class="exam-tabing-steps" [(selectedIndex)]="selectedIndex"
+            (selectedTabChange)="tabSelected($event)">
+            <mat-tab label="Dashboard">
+                <app-foreign-dashboard *ngIf="selectedIndex===0"></app-foreign-dashboard>
+            </mat-tab>
+            <mat-tab label="Approved List">
+                <app-approve-foreign-institution *ngIf="selectedIndex===1"></app-approve-foreign-institution>
+            </mat-tab>
+            <mat-tab label="Add" *ngIf="roleId === shared.role['State Nodal Officer'] || roleId === shared.role['University']">
+                <app-add-foreign-institution *ngIf="selectedIndex === 2" [editData]="editData" (backData)="back($event)"></app-add-foreign-institution>
+                <app-approve-reject-foreign *ngIf="selectedIndex === 2" (passData)="recieve($event)"></app-approve-reject-foreign>
+            </mat-tab>
+            <mat-tab label="Pending For Action" *ngIf="roleId === shared.role['Ministry of Education'] || roleId === shared.role['SysAdmin']">
+              <app-add-foreign-institution *ngIf="selectedIndex === 2 && editKey" [editData]="editData" (backData)="back($event)"></app-add-foreign-institution>
+                <app-approve-reject-foreign *ngIf="selectedIndex ===2" [Pending]="Pending" (passData)="recievePen($event)"></app-approve-reject-foreign>
+            </mat-tab>
+            <mat-tab label="Rejected List">
+                <app-reject-foreign-list *ngIf="roleId === shared.role['Ministry of Education'] || roleId === shared.role['SysAdmin']?selectedIndex == 3:selectedIndex ==3"></app-reject-foreign-list>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+
+
+<!-- <router-outlet></router-outlet> -->

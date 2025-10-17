@@ -1,0 +1,106 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"    *ngIf="Showdata12">
+  <table class="table  showReportDataChild">
+      <thead class="childTableStickyHeader">
+          <tr >
+           <!-- <th  class="text-center table-success">University /Statutory Body</th>
+             <th  class="text-center table-light">State</th>
+            <th  class="text-center table-secondary">No. of Prog</th>
+            <th  class="text-center table-tertiary">Amount</th>
+            <th  class="text-center table-light">Account Holder’s Name</th>
+            <th  class="text-center table-secondary">Account No.</th>
+            <th  class="text-center table-tertiary">PAN Number</th>
+            <th  class="text-center table-light">IFSC Code</th>
+            <th class="text-center table-secondary">Account No.</th>
+            <th  class="text-center table-tertiary">IFSC Code</th>
+            <th  class="text-center table-light">College / Standalone Institution</th>
+            <th class="text-center table-secondary">UNO /Sectoral  and SNO Remarks</th>
+            <th  class="text-center table-tertiary">MHRD Remarks</th>
+            <th  class="text-center table-light">Statement Number</th>
+            <th class="text-center table-secondary">Transaction  Status</th> -->
+
+            <th
+            *ngFor="let col of tableColumns; let i = index"
+            [ngClass]="[i===0?'table-success':  '',
+            i>0 && i<2 ?'table-light':'',i>=2 && i<3 ? 'table-secondary': '',i>=3 && i<4 ? 'table-tertiary': '', i>=4 && i<5 ? 'table-light': '',i>=5 && i<6 ? 'table-secondary': '',i>=6 && i<7 ? 'table-tertiary': '',i>=7 && i<8 ? 'table-light': '',i>=8 && i<9 ? 'table-secondary': '',i>=9 && i<10 ? 'table-tertiary': '',i>=10 && i<11 ? 'table-light': '',i>=11 && i<12 ? 'table-secondary': '',i>=12 && i<13 ? 'table-tertiary': '',i>=13 && i<14 ? 'table-light': '',i>=14 && i<15 ? 'table-secondary': ''
+                ]"
+       
+            class="text-center"
+          >
+            {{
+              col
+                .trim()
+                .replace('university_or_statutory_body_name','University /Statutory Body')
+                .replace('state_name', 'State')
+                .replace('total_number_of_programmes', 'No. of Programmes')
+                .replace('amount', 'Amount')
+                .replace('account_holder_name', 'Account Holder’s Name')
+                .replace('account_number', 'Account No.')
+                .replace('transacton_status_timestamp', 'Transaction Status')
+                .replace('pan', 'PAN')
+                .replace('timestamp_mhrd_remarks', 'MHRD Remarks')
+                .replace('timestap_transaction_status', 'Transaction Status')
+                .replace('timestap_transaction_status', 'Transaction Status')
+                .replace('timestamp_mhrd_remarks', 'MHRD Remarks')
+                .replace('transaction_time_status', 'Transaction Status')
+                .replace('upload_time', 'Upload Time')
+                .replace('mhrd_time', 'MHRD Remarks')
+                .replace('statement_id', 'Statement Number')
+                .replace('ifsc_code', 'IFSC Code')
+                .replace('uno_sectorial_remarks', 'UNO /Sectoral  and SNO Remarks')
+                .replace('sno_remarks', 'SNO Remarks')
+                .replace('college_or_standalone_institution_name', 'College / Standalone Institution')
+                .replace('uploading_timestamp', 'Uploading Timestamp')
+                .replace('timestamp_mhrd_status', 'MHRD Remarks')
+                .replace('nodal_officer_name', 'Nodal Officer Name')
+                .replace('transaction_status_timestap','Transaction Status')
+              }}
+        
+          </th>
+            </tr>
+</thead>
+<tbody>
+        <tr *ngFor="let row of reportTableData | paginate
+        : {
+            itemsPerPage: pageSize,
+            currentPage: page
+          }" >
+          <td
+          *ngFor="let col of tableColumns; let i = index"
+          [ngClass]="[i===0?'table-success':  '',
+          i>0 && i<2 ?'table-light':'',i>=2 && i<3 ? 'table-secondary': '',i>=3 && i<4 ? 'table-tertiary': '', i>=4 && i<5 ? 'table-light': '',i>=5 && i<6 ? 'table-secondary': '',i>=6 && i<7 ? 'table-tertiary': '',i>=7 && i<8 ? 'table-light': '',i>=8 && i<9 ? 'table-secondary': '',i>=9 && i<10 ? 'table-tertiary': '',i>=10 && i<11 ? 'table-light': '',i>=11 && i<12 ? 'table-secondary': '',i>=12 && i<13 ? 'table-tertiary': '',i>=13 && i<14 ? 'table-light': '',i>=14 && i<15 ? 'table-secondary': ''
+              ]"
+          >
+            {{ row[col] }}
+          </td>
+        </tr>
+        <!-- <tr *ngFor="let row of reportTableData" [ngClass]="is2020?'':'d-none'">
+          <td
+          *ngFor="let col of tableColumns; let i = index"
+          [ngClass]="[i===0?'table-success':  '',
+          i>0 && i<2 ?'table-light':'',i>=2 && i<3 ? 'table-secondary': '',i>=3 && i<4 ? 'table-tertiary': '', i>=4 && i<5 ? 'table-light': '',i>=5 && i<9 ? 'table-secondary': '',i>=9 && i<13 ? 'table-tertiary': '',i>=13 && i<14 ? 'table-light': '',
+              ]"
+          >
+            {{ row[col] }}
+          </td>
+        </tr> -->
+        <!-- <tr>
+          <td colspan="5" class="text-center table-success">
+            All Institutions
+            </td>
+            <td
+            *ngFor="let summary of summaryColumns; let i = index"
+            class="text-center table-secondary"
+            >
+            {{ summaryData[summary] }}
+          </td>
+        </tr> -->
+        </tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

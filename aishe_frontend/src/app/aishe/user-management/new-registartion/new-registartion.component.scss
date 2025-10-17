@@ -1,0 +1,32 @@
+.heading{
+    background: #337ab7;
+    color: #fff !important;
+    font-size: 100% !important;
+  // font-weight: 500;
+    padding: 10px;
+  }
+  .loginshoweyecls{position: absolute;right: 20px;top: 9px;cursor: pointer;}
+  .col-form-label{
+    font-weight: 500;
+    padding-top: 5px;
+  }
+  .asterisk{
+    color:red
+  }
+  // .mat-hint{
+  //   font-size: medium;
+  //   float:left;
+   
+  // }
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+     padding: 0em 0 0em 0 !important; 
+}
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+    display: none;
+}
+::ng-deep .mat-tooltip{
+  font-size:small !important
+}
+

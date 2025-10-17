@@ -1,0 +1,168 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">Document Upload</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="animated fadeInDown card mb-2 pt-2 pb-1 bg-light overflow-hidden" *ngIf="showForm">
+        <form [formGroup]="uploadForm">
+            <div class="row col-md-12 overflow-hidden pt-4">
+                <div class="col-md-6">
+                    <mat-form-field class="d-block">
+                        <mat-label>Title</mat-label>
+                        <input type="text" matInput autocomplete="off" formControlName="title"
+                            (keypress)="onKeypressEvent($event,200)" required [errorStateMatcher]="errorMatcher">
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="uploadForm.controls['title'].dirty ||uploadForm.controls['title'].value || uploadForm.controls['title'].touched || isFormInvalid">
+                        <span *ngIf="
+                        uploadForm.controls['title'].hasError(
+                          'required'
+                        )
+                      " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="d-block">
+                        <mat-label>Document Type</mat-label>
+                        <mat-select formControlName="documentType" required [errorStateMatcher]="errorMatcher">
+                            <mat-option value="Report">Report</mat-option>
+                            <mat-option value="Certificate">Certificate</mat-option>
+                            <mat-option value="Others">Others</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="uploadForm.controls['documentType'].dirty ||uploadForm.controls['documentType'].value || uploadForm.controls['documentType'].touched || isFormInvalid">
+                        <span *ngIf="
+                    uploadForm.controls['documentType'].hasError(
+                      'required'
+                    )
+                  " class="errorMessage">Please select.</span>
+                    </mat-hint>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label">Upload Document<span class="asterisk">*</span></label>
+                <div class="col-md-3">
+                    <mat-toolbar>
+                        <input matInput placeholder="Upload relevant document" readonly name="name"
+                          style="font-size: small;" [value]="myFilesName" class="mat-label"/>
+                        
+                        <mat-icon style="color: forestgreen;"> attach_file</mat-icon>
+                      </mat-toolbar>
+                      <input type="file" #fileInput id="uploadFile" name="uploadFile"
+                        (change)="getFileDetails($event)" accept="application/pdf" />
+                    <!-- <input type="file" id="myfile" name="myfile" class="mt-2" (change)="getFileDetails($event)"
+                        accept="application/pdf" [value]="myFilesName"> -->
+                    <p style="color: red;font-size: small;">(File should be in pdf format only & less than 5MB.)</p>
+                </div>
+                <!-- <div class="col-md-2" style="padding-top: 30px;">
+                    <table class="media-upload-table table table-borderless">
+                        <tbody>
+                            <tr *ngFor="let media of uploadedMedia; let i = index">
+                                <td style="vertical-align:middle;">
+                                    <div class="d-flex flex-column" style="margin-top: 18px;">
+                                        <div>
+                                            <div class="first-progress">
+                                                <div [ngStyle]="{ 'width.%': media.FileProgress }"
+                                                    class="second-progress"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            {{ fileSize }}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-sm" (click)="uploadDocument()"
+                    [matTooltip]="buttonName">{{buttonName}}
+                </button>
+                <button class="btn btn-danger btn-sm ml-1" matTooltip="Reset" (click)="reset()">Reset
+                </button>
+
+                <button class="btn btn-warning btn-sm ml-1" matTooltip="Close" (click)="close()">Close</button>
+            </div>
+        </form>
+    </div>
+    <div class="animated fadeInDown card bg-light">
+        <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-2 pt-4">
+                <label>Show</label>&nbsp;
+                <select [(ngModel)]="pageSize" (ngModelChange)="onChange($event)">
+                    <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+                </select>
+                entries
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5 pt-4">
+                <label>Search:</label>&nbsp;
+                <input type="text" size="40" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+                    [(ngModel)]="searchText">
+            </div>
+            <div class="col-md-3 pt-4">
+                <button mat-raised-button color="primary" matTooltip="Add New Record" (click)="addRecord()">Add New
+                    Record</button>
+                <!-- <label class="download ml-4" matTooltip="Download as PDF">Download:-
+                    <i class="fa fa-file-pdf-o downloadPDF"></i></label> -->
+            </div>
+            <!-- <div class="col-md-2 pt-4">
+              
+              </div> -->
+        </div>
+    </div>
+    <div class="animated fadeInDown card mb-2 pb-1 pt-1 bg-light overflow-hidden">
+        <div class="col-md-12 table-responsive">
+            <table class="table table-bordered table-sm">
+                <tr>
+                    <th>S.No.</th>
+                    <th>Title</th>
+                    <th>Document Type</th>
+                    <th>Date</th>
+                    <th>Document</th>
+                    <th>Action</th>
+                </tr>
+                <ng-container *ngFor="let item of listData | paginate : {
+            itemsPerPage: pageSize,
+            currentPage: page
+          
+          };
+    let i = index
+    ">
+                    <tr>
+                        <td>{{i+StartLimit+1}}</td>
+                        <td>{{item.title}}</td>
+                        <td>{{item.documentType}}</td>
+                        <td>{{item.dateTime | date: 'd/MM/YYYY'}}</td>
+                        <td  matTooltip="Download as PDF"><span (click)="viewPdf(item.documentFile,item.fileName)" style="color:red;cursor: pointer;">{{item.fileName}}</span></td>
+                        <td style="width: 100px;">
+                            <mat-icon class="edit_icon" matTooltip="Edit" (click)="edit(item,i)">edit</mat-icon>
+                            <mat-icon class="delete_icon" matTooltip="Delete"
+                                (click)="delete(item)">delete_forever</mat-icon>
+                        </td>
+                    </tr>
+                </ng-container>
+            </table>
+        </div>
+        <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-3">
+                Showing {{StartLimit + 1}} to {{pageData === -1?0:pageData}} Of {{listData.length}}
+                entries
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-6" *ngIf="listData.length !== 0">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+                    screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                    screenReaderCurrentLabel="You're on page"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

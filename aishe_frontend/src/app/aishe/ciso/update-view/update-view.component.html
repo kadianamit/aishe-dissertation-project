@@ -1,0 +1,488 @@
+<!-- <mat-dialog-content *ngIf="element.data.edit">
+    <h2 class="font-weight-bold text-lg" style="text-align: center;">Update Ciso</h2>
+    <form [formGroup]="cisoForm">
+        <table class="table table-bordered table-sm">
+            <tr>
+                <td class="viewProgramHeader">Agency Code</td>
+                <td>{{element.data.agencyCode}}
+
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Agency Name</td>
+                <td>{{element.data.agencyName}}</td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Name</td>
+                <td>
+                    <input type="text" formControlName="name" required class="form-control form-control-sm" required>
+                    <mat-hint class="err-msgs"
+                        *ngIf="cisoForm.controls['name'].dirty ||cisoForm.controls['name'].value || cisoForm.controls['name'].touched || isFormInvalid">
+                        <span *ngIf="
+                    cisoForm.controls['name'].hasError(
+                      'required'
+                    )
+                  " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Mobile</td>
+                <td>
+                    <input type="text" formControlName="mobile" required class="form-control form-control-sm"
+                        (keypress)="onKeypressEvent($event,10)">
+                    <mat-hint class="err-msgs"
+                        *ngIf="cisoForm.controls['mobile'].dirty ||cisoForm.controls['mobile'].value || cisoForm.controls['mobile'].touched || isFormInvalid">
+                        <span *ngIf="
+                                cisoForm.controls['mobile'].hasError(
+                                  'required'
+                                )
+                              " class="errorMessage">Please enter.</span>
+                        <span *ngIf="
+                              cisoForm.controls['mobile'].hasError(
+                                'pattern'
+                              )
+                            " class="errorMessage">Invalid.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Alternate Mobile</td>
+                <td>
+                    <input type="text" formControlName="mobileAlternate" class="form-control form-control-sm" (keypress)="onKeypressEvent($event,10)">
+                    <mat-hint class="err-msgs"
+                    *ngIf="cisoForm.controls['mobileAlternate'].dirty ||cisoForm.controls['mobileAlternate'].value || cisoForm.controls['mobileAlternate'].touched || isFormInvalid">
+                   
+                    <span *ngIf="
+                          cisoForm.controls['mobileAlternate'].hasError(
+                            'pattern'
+                          )
+                        " class="errorMessage">Invalid.</span>
+                </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Email</td>
+                <td> <input type="text" formControlName="emailId" required class="form-control form-control-sm">
+                    <mat-hint class="err-msgs"
+                        *ngIf="cisoForm.controls['emailId'].dirty ||cisoForm.controls['emailId'].value || cisoForm.controls['emailId'].touched || isFormInvalid">
+                        <span *ngIf="
+                            cisoForm.controls['emailId'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                        <span *ngIf="
+                            cisoForm.controls['emailId'].hasError(
+                              'pattern'
+                            )
+                          " class="errorMessage">Invalid email.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Alternate Email</td>
+                <td>
+                    <input type="text" formControlName="emailIdAlternate" class="form-control form-control-sm">
+                    <mat-hint class="err-msgs"
+                        *ngIf="cisoForm.controls['emailIdAlternate'].dirty ||cisoForm.controls['emailIdAlternate'].value || cisoForm.controls['emailIdAlternate'].touched || isFormInvalid">
+                        
+                        <span *ngIf="
+                            cisoForm.controls['emailIdAlternate'].hasError(
+                              'pattern'
+                            )
+                          " class="errorMessage">Invalid email.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Designation</td>
+                <td>
+                    <input type="text" formControlName="designation" class="form-control form-control-sm" required>
+                    <mat-hint class="err-msgs"
+                        *ngIf="cisoForm.controls['designation'].dirty ||cisoForm.controls['designation'].value || cisoForm.controls['designation'].touched || isFormInvalid">
+                        <span *ngIf="
+                        cisoForm.controls['designation'].hasError(
+                          'required'
+                        )
+                      " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Post</td>
+                <td> <select formControlName="post" class="form-control form-control-sm" required>
+                        <option value="CISO">CISO</option>
+                        <option value="Dy CISO">Deputy CISO</option>
+                    </select>
+                    <mat-hint class="err-msgs"
+                        *ngIf="cisoForm.controls['post'].dirty ||cisoForm.controls['post'].value || cisoForm.controls['post'].touched || isFormInvalid">
+                        <span *ngIf="
+        cisoForm.controls['post'].hasError(
+          'required'
+        )
+      " class="errorMessage">Please select.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Address</td>
+                <td>
+                    <textarea formControlName="officeAddress" rows="4" cols="60" required class="form-control form-control-sm"></textarea>
+                    <mat-hint class="err-msgs"
+                        *ngIf="cisoForm.controls['officeAddress'].dirty ||cisoForm.controls['officeAddress'].value || cisoForm.controls['officeAddress'].touched || isFormInvalid">
+                        <span *ngIf="
+                cisoForm.controls['officeAddress'].hasError(
+                  'required'
+                )
+              " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Remark</td>
+                <td>
+                    <input type="text" formControlName="remarks" class="form-control form-control-sm">
+                </td>
+            </tr>
+        </table>
+    </form>
+</mat-dialog-content> -->
+<mat-dialog-content *ngIf="element.data.page === 'CISO'">
+    <h2 class="font-weight-bold text-lg" style="text-align: center;">View Ciso</h2>
+    <table class="table table-bordered table-sm">
+        <tr>
+            <td class="viewProgramHeader">Agency Code</td>
+            <td>
+                {{element.data.agencyCode}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Agency Name</td>
+            <td>
+                {{element.data.agencyName}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Name</td>
+            <td>{{element.data.name}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Mobile</td>
+            <td>{{element.data.mobile}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Alternate Mobile</td>
+            <td>{{element.data.mobileAlternate}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Email</td>
+            <td>{{element.data.emailId}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Alternate Email</td>
+            <td>{{element.data.emailIdAlternate}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Designation</td>
+            <td>{{element.data.designation}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Post</td>
+            <td>{{element.data.post}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Address</td>
+            <td>{{element.data.officeAddress}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Remark</td>
+            <td>{{element.data.remarks}}</td>
+        </tr>
+    </table>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.data.page === 'Agency'">
+    <h2 class="font-weight-bold text-lg" style="text-align: center;">View Agency List</h2>
+    <table class="table table-bordered table-sm">
+        <tr>
+            <td class="viewProgramHeader">Agency Code</td>
+            <td>
+                {{element.data.cisoEmadedPK?.aisheCode}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Institution Sub-Type</td>
+            <td>
+                {{element.data.instituteSubType}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Institute Name</td>
+            <td>{{element.data.cisoEmadedPK?.instituteFullName}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Institute MainType</td>
+            <td>{{element.data.instituteMainType}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Short Name</td>
+            <td>{{element.data.shortName}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Address</td>
+            <td>{{element.data.address}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">State</td>
+            <td>{{element.stateName}}</td>
+        </tr>
+       
+        
+    </table>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.data.page === 'Website'">
+    <h2 class="font-weight-bold text-lg" style="text-align: center;">{{addOrUpdate}} Website</h2>
+    <form [formGroup]="applicationForm">
+        <table class="table table-bordered table-sm">
+            <tr>
+                <td class="viewProgramHeader">Department</td>
+                <td>
+                    <select formControlName="departmentName" class="form-control form-control-sm" required>
+                        <option value="Department of Higher Education">Department of Higher Education</option>
+                        <option value="Department of School Education and Literacy
+                        ">Department of School Education and Literacy
+                        </option>
+                    </select>
+                    <mat-hint class="err-msgs"
+                        *ngIf="applicationForm.controls['departmentName'].dirty ||applicationForm.controls['departmentName'].value || applicationForm.controls['departmentName'].touched || isFormInvalid">
+                        <span *ngIf="
+                    applicationForm.controls['departmentName'].hasError(
+                      'required'
+                    )
+                  " class="errorMessage">Please select.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Website Name</td>
+                <td>
+                    <input type="text" formControlName="applicationName" required class="form-control form-control-sm"
+                        required>
+                    <mat-hint class="err-msgs"
+                        *ngIf="applicationForm.controls['applicationName'].dirty ||applicationForm.controls['applicationName'].value || applicationForm.controls['applicationName'].touched || isFormInvalid">
+                        <span *ngIf="
+                applicationForm.controls['applicationName'].hasError(
+                  'required'
+                )
+              " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Website URL</td>
+                <td>
+                    <input type="text" formControlName="websiteUrl" required class="form-control form-control-sm">
+                    <mat-hint class="err-msgs"
+                        *ngIf="applicationForm.controls['websiteUrl'].dirty ||applicationForm.controls['websiteUrl'].value || applicationForm.controls['websiteUrl'].touched || isFormInvalid">
+                        <span *ngIf="
+                            applicationForm.controls['websiteUrl'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                        <span *ngIf="
+                          applicationForm.controls['websiteUrl'].hasError(
+                            'pattern'
+                          )
+                        " class="errorMessage">Invalid.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Remarks</td>
+                <td>
+                    <input type="text" formControlName="remarks" class="form-control form-control-sm"
+                        (keypress)="onKeypressEvent($event,255)">
+                    <mat-hint class="err-msgs"
+                        *ngIf="applicationForm.controls['remarks'].dirty ||applicationForm.controls['remarks'].value || applicationForm.controls['remarks'].touched || isFormInvalid">
+                        <span *ngIf="
+                applicationForm.controls['remarks'].hasError(
+                  'required'
+                )
+              " class="errorMessage">Please enter.</span>
+
+                    </mat-hint>
+                </td>
+            </tr>
+        </table>
+    </form>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.data.page === 'switch'">
+    <h2 class="font-weight-bold text-lg" style="text-align: center;">View Network Switch Details</h2>
+    <table class="table table-bordered table-sm">
+        <tr>
+            <td class="viewProgramHeader">Floor</td>
+            <td>
+                {{element.data.floor}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Room</td>
+            <td>
+                {{element.data.roomNumber}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Switch Host Name</td>
+            <td>{{element.data.switchHostName}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">IP Address</td>
+            <td>{{element.data.ipAddress}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Model</td>
+            <td>{{element.data.model}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Switch Part no.</td>
+            <td>{{element.data.switchPartNumber}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Fast Ethernet</td>
+            <td>
+                {{element.data.fastEthernet}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Gigabit Port</td>
+            <td>
+                {{element.data.gigabitPort}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Serial No</td>
+            <td>{{element.data.serialNumber}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Version</td>
+            <td>{{element.data.version}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Backbone/Location</td>
+            <td>{{element.data.backboneLocation}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Port No</td>
+            <td>{{element.data.portNumber}}</td>
+        </tr>
+
+        <tr>
+            <td class="viewProgramHeader">UTP/Fiber</td>
+            <td>{{element.data.utpFiber}}</td>
+        </tr>
+        
+    </table>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.data.page === 'server'">
+    <h2 class="font-weight-bold text-lg" style="text-align: center;">View Server Details</h2>
+    <table class="table table-bordered table-sm">
+        <tr>
+            <td class="viewProgramHeader">Application Name</td>
+            <td>
+                {{element.data.applicationName}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Server Type (Web/DB)</td>
+            <td>
+                {{element.data.serverType}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Operating System</td>
+            <td>{{element.data.operatingSystem}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Number of vCPU</td>
+            <td>{{element.data.noOfCpu}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">RAM(In GB)</td>
+            <td>{{element.data.ramSizeInGb}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Public IP</td>
+            <td>{{element.data.publicIp}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Private IP</td>
+            <td>
+                {{element.data.privateIp}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Server Location</td>
+            <td>
+                {{element.data.serverLocation}}</td>
+        </tr>
+        
+        
+    </table>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.data.page === 'system'">
+    <h2 class="font-weight-bold text-lg" style="text-align: center;">View System Details</h2>
+    <table class="table table-bordered table-sm">
+        <tr>
+            <td class="viewProgramHeader">User Name</td>
+            <td>
+                {{element.data.userName}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Designation</td>
+            <td>
+                {{element.data.designation}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Operating System</td>
+            <td>{{element.data.operatingSystem}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Section</td>
+            <td>{{element.data.section}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Room Number</td>
+            <td>{{element.data.roomNumber}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Computer Model No.</td>
+            <td>{{element.data.computerModelNumber}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Operating System</td>
+            <td>
+                {{element.data.operatingSystem}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Configuration</td>
+            <td>
+                {{element.data.configuration}}</td>
+        </tr>
+
+        <tr>
+            <td class="viewProgramHeader">CPU Serial Number</td>
+            <td>
+                {{element.data.cpuSerialNumber}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Warranty StartDate</td>
+            <td>
+                {{element.data.warrantyStartDate}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Warranty EndDate</td>
+            <td>
+                {{element.data.warrantyEndDate}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Life As On 30/06/2022(inYears)</td>
+            <td>
+                {{element.data.lifeAsOn_30_06_2022_inYears}}</td>
+        </tr>
+        
+        
+    </table>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" tabindex="1" *ngIf="element.data.page === 'Website'"
+        (click)="save(this.applicationForm.value)">{{addOrUpdate}}</button>
+    <button mat-raised-button mat-dialog-close color="warn" tabindex="-1">{{cancelButtonText}}</button>
+</mat-dialog-actions>

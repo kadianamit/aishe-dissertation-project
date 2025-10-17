@@ -1,0 +1,49 @@
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"    *ngIf="Showdata12">
+    <table class="table  showReportDataChild">
+        <thead class="childTableStickyHeader">
+            <tr>
+                <th rowspan="2"colspan="1" class="text-center table-success">Programme</th>
+                <th colspan="3" class="text-center table-secondary">Students Enrolled</th>
+              </tr>
+              <tr>
+                <th
+                  *ngFor="let col of tableColumns; let i = index"
+                  [attr.style]=" (i ===0) ? 'display:none': ''
+                  "
+                  [ngClass]="[i>=1 ?'table-secondary':'', ]"
+                  class="text-center"
+                >
+
+                    {{col
+                    .trim()
+                    .replace('Student Male','Male')
+                    .replace('Student Female','Female')
+                    .replace('Student Transgender','Transgender')
+                    }}
+                </th>
+              </tr>
+</thead>
+<tbody>
+          <tr *ngFor="let row of reportTableData | paginate
+          : {
+              itemsPerPage: pageSize,
+              currentPage: page
+            }; let i=index">
+            <td
+              *ngFor="let col of tableColumns; let i = index"
+              class="text-center"
+              [ngClass]="[i===0?'table-success':  '',
+              i>=1 ?'table-secondary':'',]"
+            >
+              {{ row[col] }}
+            </td>
+          </tr>
+          </tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

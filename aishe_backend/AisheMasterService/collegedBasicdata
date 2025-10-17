@@ -1,0 +1,31 @@
+ college.setAisheCode(collegeInfo.getAisheCode());
+	 college.setWebsite(collegeInfo.getWebsite());
+		setName(collegeInfo.getName());
+			 college.setEstablishmentYear(collegeInfo.getEstablishmentYear());		
+	college.setConstructedArea(collegeInfo.getConstructedArea());
+		 college.setLocation(collegeInfo.getLocation());
+	college.setAwardsDegreeThroughUniversity(collegeInfo.getAwardsDegreeThroughUniversity());
+	college.setGirl_exclusive(collegeInfo.getGirl_exclusive());
+	college.setSurveyYear(collegeInfo.getSurveyYear());
+	college.setUniversityId(collegeInfo.getUniversityId());
+	college.setNodalOfficer(collegeInfo.getNodalOfficer());
+	college.setRecognitionYear(collegeInfo.getRecognitionYear());
+	setInstituteManagement(collegeInfo.getInstituteManagement());
+	college.setHaveStaffQuarter(collegeInfo.getHaveStaffQuarter());
+	college.setStaffQuarter(collegeInfo.getStaffQuarter());
+	setHaveHostel(collegeInfo.getHaveHostel());
+	college.setNoOfHostel(collegeInfo.getNoOfHostel());
+	setHostels(collegeInfo.getHostels());
+	setMinistry(collegeInfo.getMinistry());
+	college.setRemarks(collegeInfo.getRemarks());
+	setAccredited(collegeInfo.getAccredited());
+	setIsForeignStudents(collegeInfo.getIsForeignStudents());
+		 college.setOffersScholarship(collegeInfo.getOffersScholarship());
+	college.setOffersLoan(collegeInfo.getOffersLoan());
+	setPinCode(collegeInfo.getPinCode());
+	college.setHasFellowships(collegeInfo.getHasFellowships());
+	setHasOtherMinority(collegeInfo.getHasOtherMinority());
+	setBlockCityTown(collegeInfo.getBlockCityTown());
+	setHasForeignTeachers(collegeInfo.getHasForeignTeachers());
+	
+	

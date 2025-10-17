@@ -1,0 +1,957 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<a mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon>close</mat-icon>
+</a>
+<mat-card class="matCard">
+  <!-- <div *ngIf="child?.isDataLoading" class="progress-bar">
+    <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+  </div> -->
+  <mat-card-content class="mt-4">
+    <!--filter table-->
+    <form [formGroup]="reportFilterForm">
+      <div class="table-responsive-sm">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 table-responsive-sm">
+              <table class="table table-borderless">
+                <tr class="row">
+                  <td class="col-md-3" *ngIf="reportInfoObj.reportNumber == 'Report 150C' ||
+                  reportInfoObj.reportNumber == 'Report 126C'">
+                    <mat-form-field class="full-width-field" [readonly]="true">
+                      <mat-label>Select Institution:</mat-label>
+                      <input matInput disabled="" [readonly]="true" type="text" value=" STAND-ALONE"/>
+                      <!-- <mat-select formControlName="institution" [readonly]="true">
+                        <mat-option value="ALL">ALL</mat-option>
+                        <mat-option value="University"
+                          >UNIVERSITY</mat-option
+                        >
+                        <mat-option value="College">
+                          COLLEGE
+                        </mat-option>
+                        <mat-option value="Standalone" >
+                          STAND-ALONE
+                        </mat-option>
+                      </mat-select> -->
+                    </mat-form-field>
+                  </td>
+                  <td class="col-md-3" *ngIf="reportInfoObj.reportNumber == 'Report 110B' ||
+                 
+                  reportInfoObj.reportNumber == 'Report 121B' ||
+                  reportInfoObj.reportNumber == 'Report 150B' ||
+                  reportInfoObj.reportNumber == 'Report 126B' ">
+                    <mat-form-field class="full-width-field" [readonly]="true">
+                      <mat-label>Select Institution:</mat-label>
+                      <input matInput disabled="" [readonly]="true" type="text" value="COLLEGE"/>
+                      <!-- <mat-select formControlName="institution" [readonly]="true">
+                        <mat-option value="ALL">ALL</mat-option>
+                        <mat-option value="University"
+                          >UNIVERSITY</mat-option
+                        >
+                        <mat-option value="College">
+                          COLLEGE
+                        </mat-option>
+                        <mat-option value="Standalone" >
+                          STAND-ALONE
+                        </mat-option>
+                      </mat-select> -->
+                    </mat-form-field>
+                  </td>
+                  <td class="col-md-3">
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="Select Year:"
+                        formControlName="surveyYear"
+                        (selectionChange)="
+                          reportInfoObj.reportNumber.trim() == 'Report 109A' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 109B' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 110A' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 110B' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 38C' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 150A' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 65' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 150B' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 150C' ||
+                             reportInfoObj.reportNumber.trim() == 'Report 121B' ||
+                                reportInfoObj.reportNumber.trim() == 'Report 126B'
+                            ? findUniversityByYearAndState()
+                            : doNothing()
+                        ">
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'surveyYearValue'"
+                          [array]="surveyYearOption"
+                          (filteredReturn)="filterSurveyYearOption = $event"
+                        ></mat-select-filter>
+                        <mat-option
+                          *ngFor="let item of filterSurveyYearOption"
+                          [value]="item.surveyYear"
+                        >
+                          {{ item.surveyYearValue }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="submitted && f['surveyYear'].invalid"
+                        >Survey Year is required</mat-error
+                      >
+                    </mat-form-field>
+                  </td>
+<!-- state -->
+          <td class="col-md-3"  *ngIf="reportInfoObj.reportNumber.trim()=='Report 109'
+          || reportInfoObj.reportNumber.trim()=='Report 109A'
+          || reportInfoObj.reportNumber.trim()=='Report 109B'
+          || reportInfoObj.reportNumber.trim()=='Report 109C'
+          || reportInfoObj.reportNumber.trim()=='Report 110'
+          || reportInfoObj.reportNumber.trim()=='Report 110A'
+          || reportInfoObj.reportNumber.trim()=='Report 110B'
+          || reportInfoObj.reportNumber.trim()=='Report 110C'
+          || reportInfoObj.reportNumber.trim()=='Report 120'
+          || reportInfoObj.reportNumber.trim()=='Report 121'
+          || reportInfoObj.reportNumber.trim()=='Report 121A'
+          || reportInfoObj.reportNumber.trim()=='Report 121B'
+          || reportInfoObj.reportNumber.trim()=='Report 121C'
+          || reportInfoObj.reportNumber.trim()=='Report 126'
+          || reportInfoObj.reportNumber.trim()=='Report 126A'
+          || reportInfoObj.reportNumber.trim()=='Report 126B'
+          || reportInfoObj.reportNumber.trim()=='Report 126C'
+          || reportInfoObj.reportNumber.trim() == 'Report 38C'
+          || reportInfoObj.reportNumber.trim()=='Report 65'
+          || reportInfoObj.reportNumber.trim()=='Report 150'
+          || reportInfoObj.reportNumber.trim()=='Report 150A'
+          || reportInfoObj.reportNumber.trim()=='Report 150B'
+          || reportInfoObj.reportNumber == 'Report 150C'
+          ">
+              <mat-form-field class="full-width-field">
+                <mat-select placeholder="State:" formControlName="addressStateCode"  (ngModelChange)="finddistectdata()"
+                (ngModelChange)="(reportInfoObj.reportNumber.trim()=='Report 109A'
+                || reportInfoObj.reportNumber.trim()=='Report 109B'
+                || reportInfoObj.reportNumber.trim()=='Report 110A'
+                || reportInfoObj.reportNumber.trim()=='Report 110B'
+                || reportInfoObj.reportNumber.trim()=='Report 121A'
+                || reportInfoObj.reportNumber.trim()=='Report 121B'
+                || reportInfoObj.reportNumber.trim()=='Report 126A'
+                || reportInfoObj.reportNumber.trim()=='Report 150B'
+                || reportInfoObj.reportNumber.trim()=='Report 150A'
+                )? findUniversityByYearAndState()
+                : (reportInfoObj.reportNumber=='Report 109C' || reportInfoObj.reportNumber=='Report 110C' || reportInfoObj.reportNumber.trim()=='Report 121C' || reportInfoObj.reportNumber.trim()=='Report 150C') ? findInstitutionNames(): doNothing() ">
+                  <mat-select-filter [placeholder]="'Filter'" [displayMember]="'stateName'"
+                  [array]="filterStatesOption" (filteredReturn)="filterdStates =$event"></mat-select-filter>
+                    <mat-option *ngFor="let item of filterdStates" [value]="item">
+                      {{item.stateName}}
+                    </mat-option>
+                </mat-select>
+              </mat-form-field>
+              </td>
+
+                  <td class="col-md-3" *ngIf="reportInfoObj.reportNumber.trim() == 'Report 38C'
+                  ||  reportInfoObj.reportNumber.trim()=='Report 65'
+              
+                  ">
+                    <mat-form-field class="full-width-field">
+                      <mat-label>Select Institution:</mat-label>
+                      <mat-select formControlName="institution">
+                        <mat-option  value="ALL">ALL</mat-option>
+                        <mat-option  *ngIf="reportInfoObj.reportNumber.trim() !=='Report 110B'" value="University"
+                          >UNIVERSITY</mat-option
+                        >
+                        <mat-option value="College Institution">
+                          COLLEGE
+                        </mat-option>
+                        <mat-option *ngIf="reportInfoObj.reportNumber.trim() !=='Report 110B'" value="Standalone Institution">
+                          STAND-ALONE
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                  
+<!-- district -->
+
+<td
+class="col-sm-3" *ngIf="reportInfoObj.reportNumber.trim() =='Report 38C'">
+<mat-form-field class="full-width-field">
+  <mat-select
+    placeholder="Districts:"
+    formControlName="districtsName"
+
+  >
+    <mat-select-filter
+      [placeholder]="'Filter'"
+      [displayMember]="'districtName'"
+      [array]="DistrictsData"
+      (filteredReturn)="filteredDistrictsData = $event"
+    >
+    </mat-select-filter>
+    <mat-option
+      *ngFor="let item of filteredDistrictsData"
+      [value]="item"
+    >
+      {{ item.districtName }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+</td>
+                  <!-- body type -->
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 109C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 150C'||
+                      
+                      (reportInfoObj.reportNumber.trim() == 'Report 65' && f['institution'].value === 'Standalone Institution' )
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="Body Type:"
+                        formControlName="bodyType"
+                        (ngModelChange)="
+                          reportInfoObj.reportNumber == 'Report 109C' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 110C' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 121C' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 126C' ||reportInfoObj.reportNumber.trim() == 'Report 150C'
+                            ? findInstitutionNames()
+                            : doNothing()
+                        "
+                      >
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'type'"
+                          [array]="dataBodyType"
+                          (filteredReturn)="filteredBodyTypes = $event"
+                        >
+                        </mat-select-filter>
+                        <mat-option
+                          *ngFor="let item of filteredBodyTypes"
+                          [value]="item"
+                        >
+                          {{ item.type }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                  <!-- instituiton name -->
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 109C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126C' || reportInfoObj.reportNumber == 'Report 150C'
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="Institution Name:"
+                        formControlName="institution"
+                      >
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'type'"
+                          [array]="institutions"
+                          (filteredReturn)="filterinstitutions = $event"
+                        >
+                        </mat-select-filter>
+                        <mat-option
+                          *ngFor="let item of filterinstitutions"
+                          [value]="item"
+                        >
+                          {{ item.name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 109B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 150B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 150C'||
+                      (reportInfoObj.reportNumber.trim() === 'Report 65' && (f['institution'].value=='College Institution'||f['institution'].value=='Standalone Institution'))
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="Management Type:"
+                        formControlName="managementType"
+                      >
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'type'"
+                          [array]="managmentTypeData"
+                          (filteredReturn)="filtermanagmentTypeData = $event"
+                        >
+                        </mat-select-filter>
+                        <mat-option
+                          *ngFor="let item of filtermanagmentTypeData"
+                          [value]="item"
+                        >
+                          {{ item.managementType }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                  <!-- <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 109' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109A' ||
+                      reportInfoObj.reportNumber == 'Report 109B' ||
+                      reportInfoObj.reportNumber == 'Report 109C' ||
+                      reportInfoObj.reportNumber == 'Report 126' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126C'
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="Religious Category/PWD:"
+                        formControlName="religiousCategory"
+                      >
+                        <mat-option value="ALL">ALL</mat-option>
+                        <mat-option value="1">Muslim</mat-option>
+                        <mat-option value="2">OTHER MINORITY</mat-option>
+                        <mat-option value="3">PWD</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td> -->
+
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 109A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126B' ||
+                      reportInfoObj.reportNumber.trim()=='Report 150A' ||
+                       (reportInfoObj.reportNumber.trim() === 'Report 65' &&
+                  f['institution'].value === 'University')||
+
+                      reportInfoObj.reportNumber.trim() == 'Report 150B'">
+
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="University Type:"
+                        formControlName="universityType"
+                        (ngModelChange)="
+                          reportInfoObj.reportNumber.trim() == 'Report 65' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 109B' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 110A' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 110B' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 121A' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 121B' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 126A' ||
+                          reportInfoObj.reportNumber.trim() == 'Report 126B'
+                          || reportInfoObj.reportNumber.trim()=='Report 150B'
+                          || reportInfoObj.reportNumber.trim()=='Report 150A'||
+                          reportInfoObj.reportNumber.trim() == 'Report 109A'
+
+                            ? findUniversityByYearAndState()
+                            : doNothing()
+                        "
+                      >
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'type'"
+                          [array]="universityType1"
+                          (filteredReturn)="filtereduniversityType = $event"
+                        >
+                        </mat-select-filter>
+                        <mat-option
+                          *ngFor="let item of filtereduniversityType"
+                          [value]="item"
+                        >
+                          {{ item.type }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 109B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 150B'||
+                      (reportInfoObj.reportNumber.trim() === 'Report 65' &&
+                        f['institution'].value === 'College Institution')
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="College Type:"
+                        formControlName="collegeType"
+                        (ngModelChange)="findCollegeName()"
+                      >
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'type'"
+                          [array]="collegeType"
+                          (filteredReturn)="filterColleges = $event"
+                        >
+                        </mat-select-filter>
+                        <mat-option
+                          *ngFor="let item of filterColleges"
+                          [value]="item"
+                        >
+                          {{ item.type }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 109A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 150A' ||
+                      
+                      (reportInfoObj.reportNumber.trim() === 'Report 65' &&
+                  f['institution'].value === 'College Institution'|| reportInfoObj.reportNumber.trim() === 'Report 65'&&f['institution'].value === 'University' )||
+
+                      reportInfoObj.reportNumber.trim() == 'Report 150B'">
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="University Name:" (ngModelChange)="reportInfoObj.reportNumber.trim()=='Report 150B'
+
+                        ? findCollegeName()
+                        : doNothing()"
+                        formControlName="universityName"
+                      >
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'name'"
+                          [array]="UniversityNameData"
+                          (filteredReturn)="filteredUniversityNameData = $event"
+                        >
+                        </mat-select-filter>
+                        <mat-option
+                          *ngFor="let item of filteredUniversityNameData"
+                          [value]="item"
+                        >
+                          {{ item.name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+
+                  <!--College Name:-->
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                     reportInfoObj.reportNumber.trim() == 'Report 110B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 150B'
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="College Name:"
+                        formControlName="collegeName"
+                      >
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'name'"
+                          [array]="collegeName"
+                          (filteredReturn)="filterCollegesName = $event"
+                        >
+                        </mat-select-filter>
+                        <mat-option
+                          *ngFor="let item of collegeName"
+                          [value]="item"
+                        >
+                          {{ item.name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+
+                  <!-- <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 109' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126C'
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="Social Category:"
+                        formControlName="socialCategory"
+                      >
+                        <mat-option value="ALL">ALL</mat-option>
+                        <mat-option value="1">SC</mat-option>
+                        <mat-option value="2">ST</mat-option>
+                        <mat-option value="3">OBC</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td> -->
+
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 109' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 120' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 121C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126C' ||
+                     
+                       reportInfoObj.reportNumber.trim()=='Report 150' ||
+                       reportInfoObj.reportNumber.trim()=='Report 150A' ||
+                       reportInfoObj.reportNumber.trim() == 'Report 150B' ||
+                       reportInfoObj.reportNumber == 'Report 150C'
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="Study Mode:"
+                        formControlName="studyMode"
+                      >
+                        <mat-option value="ALL">ALL</mat-option>
+                        <mat-option  id='1' value="1">REGULAR</mat-option>
+                        <mat-option  id='2' value="2">DISTANCE</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 109' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 109C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126C' ||
+                      reportInfoObj.reportNumber.trim()=='Report 150A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 150B' ||
+                      reportInfoObj.reportNumber == 'Report 150C'
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="Course Mode:"
+                        formControlName="courseMode"
+                      >
+                        <mat-option value="ALL">ALL</mat-option>
+                        <mat-option id='1' value="1">GENERAL</mat-option>
+                        <mat-option id='2' value="2">SELF-FINANCING</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 110' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 120' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126C'
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select placeholder="Level:" formControlName="level">
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'name'"
+                          [array]="userCourseLevel"
+                          (filteredReturn)="filterCourseLevel = $event"
+                        >
+                        </mat-select-filter>
+                        <mat-option
+                          *ngFor="let item of filterCourseLevel"
+                          [value]="item"
+                        >
+                          {{ item.name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 110' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 120' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126C'
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="Discipline Group:"
+                        formControlName="disciplineGroup"
+                        (ngModelChange)="findDisciplineName()"
+                      >
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'disciplinGrouCategory'"
+                          [array]="DisciplineGroup"
+                          (filteredReturn)="filteredDisciplineGroup = $event"
+                        >
+                        </mat-select-filter>
+                        <mat-option
+                          *ngFor="let item of filteredDisciplineGroup"
+                          [value]="item"
+                        >
+                          {{ item.disciplinGrouCategory }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                  <td
+                    class="col-md-3"
+                    *ngIf="
+                      reportInfoObj.reportNumber.trim() == 'Report 110' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 110C' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 120' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126A' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126B' ||
+                      reportInfoObj.reportNumber.trim() == 'Report 126C'
+                    "
+                  >
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="Discipline Name:"
+                        formControlName="disciplineName"
+                      >
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'disciplineGroup'"
+                          [array]="DisciplineName"
+                          (filteredReturn)="(filterDisciplineName)"
+                        ></mat-select-filter>
+                        <mat-option
+                          *ngFor="let items of filterDisciplineName"
+                          [value]="items"
+                          >{{ items.disciplineGroup }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                  <td class="col-md-3"
+                  *ngIf="
+                    reportInfoObj.reportNumber.trim() == 'Report 38c'">
+                    <mat-form-field appearance="fill">
+                      <mat-label>District</mat-label>
+                      <mat-select [disableOptionCentering]="true" #select3 placeholder="District"
+                        formControlName="districtCode">
+                        <mat-select-filter *ngIf="select3.focused" [array]="dataDistrict"
+                          (filteredReturn)="filteredDistrict =$event" [displayMember]="'name'"></mat-select-filter>
+                        <mat-option *ngFor="let item of filteredDistrict" [value]="item">
+                          {{item.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-md-3 table-responsive-sm">
+              <table class="table table-borderless d-flex justify-content-end">
+                <tr class="row">
+                  <td>
+                    <div class="d-flex justify-content-end">
+                      <mat-card-actions>
+                        <button
+                          mat-raised-button
+                          color="primary"
+                          type="submit"
+                          (click)="submit()"
+                        >
+                          Show
+                        </button>
+                        <span></span>
+                        <button
+                          mat-raised-button
+                          color="secondary"
+                          (click)="onReset()"
+                        >
+                          Reset
+                        </button>
+                      </mat-card-actions>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div
+      class="mat-elevation-z8 table-responsive-sm"
+      style="height: 100%; width: 100%"
+    >
+      <table class="table table-bordered reportTableData">
+        <thead>
+          <tr>
+            <th colspan="2" class="table-primary">
+              <div class="d-flex justify-content-between">
+                <h4 class="text-center">
+                  {{ reportInfoObj.reportTitle.replace("Report", "") }} -
+                  {{ reportInfoObj.reportNumber }}
+                </h4>
+                <div class="justify-content-end" *ngIf="child?.showPdfButton">
+                  <a mat-button>
+                    <i class="material-icons">print</i>
+                  </a>
+                  <a mat-button (click)="child?.generatePDF()">
+                    <!-- <mat-icon style="color: red;">picture_as_pdf</mat-icon> -->
+                    <i
+                      class="fa fa-file-pdf-o"
+                      matTooltip="Download as Pdf"
+                      matTooltipPosition="above"
+                      matTooltipClass="blackTooltip"
+                      style="font-size: 24px"
+                    ></i>
+                    <mat-icon style="color: red">
+                      vertical_align_bottom
+                    </mat-icon>
+                  </a>
+                  <a mat-button (click)="child?.exportAsXLSX()">
+                    <i
+                      class="fa fa-file-excel-o"
+                      matTooltip="Download as Excel"
+                      matTooltipPosition="above"
+                      matTooltipClass="blackTooltip"
+                      style="font-size: 24px"
+                    ></i>
+                    <mat-icon style="color: green">
+                      vertical_align_bottom
+                    </mat-icon>
+                  </a>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    <section [id]="reportInfoObj.reportNumber">
+      <!-- to hide filter in data table -->
+      <table style="width: 100%" class="d-none">
+        <tr>
+          <td [colSpan]="child?.tableColumns?.length">
+            {{ reportInfoObj.reportTitle.replace("Report", "") }} -
+            {{ reportInfoObj.reportNumber }}
+          </td>
+        </tr>
+        <tr *ngFor="let item of fieldsData">
+          <td colspan="1">{{ item.label1 }}</td>
+          <td colspan="1">{{ item.value1 }}</td>
+          <td colspan="3"></td>
+          <td colspan="1" style="text-align: right">{{ item.label2 }}</td>
+          <td colspan="1">{{ item.value2 }}</td>
+        </tr>
+        <tr></tr>
+      </table>
+
+      <app-report38a
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 38A'"
+      ></app-report38a>
+      <app-report38b
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 38B'"
+      ></app-report38b>
+      <app-report38c
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 38C'"
+      ></app-report38c>
+      <app-report65
+      #child
+      [reportInfoObj]="reportInfoObj"
+      [reportFilterForm]="reportFilterForm"
+      *ngIf="reportInfoObj.reportNumber == 'Report 65'"
+    ></app-report65>
+      <app-report109
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 109'"
+      ></app-report109>
+      <app-report109a
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 109A'"
+      ></app-report109a>
+      <app-report109b
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 109B'"
+      ></app-report109b>
+      <app-report109c
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 109C'"
+      ></app-report109c>
+      <app-report110
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 110'"
+      ></app-report110>
+      <app-report110a
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 110A'"
+      ></app-report110a>
+      <app-report110b
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 110B'"
+      ></app-report110b>
+      <app-report110c
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 110C'"
+      ></app-report110c>
+      <app-report120
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 120'"
+      ></app-report120>
+      <app-report121
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 121'"
+      ></app-report121>
+      <app-report121a
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 121A'"
+      ></app-report121a>
+      <app-report121b
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 121B'"
+      ></app-report121b>
+      <app-report121c
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 121C'"
+      ></app-report121c>
+      <app-report126
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 126'"
+      ></app-report126>
+      <app-report126a
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 126A'"
+      ></app-report126a>
+      <app-report126b
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 126B'"
+      ></app-report126b>
+      <app-report126c
+        #child
+        [reportInfoObj]="reportInfoObj"
+        [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber == 'Report 126C'"
+      ></app-report126c>
+      <app-report150
+      #child
+      [reportInfoObj]="reportInfoObj"
+      [reportFilterForm]="reportFilterForm"
+      *ngIf="reportInfoObj.reportNumber == 'Report 150'"
+    ></app-report150>
+    <app-report150a
+    #child
+    [reportInfoObj]="reportInfoObj"
+    [reportFilterForm]="reportFilterForm"
+    *ngIf="reportInfoObj.reportNumber == 'Report 150A'"
+  ></app-report150a>
+  <app-report150b
+    #child
+    [reportInfoObj]="reportInfoObj"
+    [reportFilterForm]="reportFilterForm"
+    *ngIf="reportInfoObj.reportNumber == 'Report 150B'"
+  ></app-report150b>
+  <app-report150c
+  #child
+  [reportInfoObj]="reportInfoObj"
+  [reportFilterForm]="reportFilterForm"
+  *ngIf="reportInfoObj.reportNumber == 'Report 150C'"
+></app-report150c>
+    </section>
+  </mat-card-content>
+</mat-card>

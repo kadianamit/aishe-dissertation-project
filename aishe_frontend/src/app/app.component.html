@@ -1,0 +1,11 @@
+<!-- <p (window:beforeunload)="doBeforeUnload()" (window:unload)="doUnload()">
+</p> -->
+<!-- <a href="http://localhost:4200" target="blank">Open New Tab</a><br />
+<button (click)="close()">close</button> -->
+<div *ngIf="sharedService.global_loader" class="loadermainbg">
+    <div class="loader"></div>
+  </div>
+
+<app-top-bar></app-top-bar>
+<router-outlet></router-outlet>
+<app-footer></app-footer>

@@ -1,0 +1,179 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+
+
+<div
+class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+*ngIf="Showdata12">
+<table
+class="table  showReportDataChild" [id]="reportInfoObj.reportNumber">
+<thead class="childTableStickyHeader">
+
+  <tr *ngIf="is2020==false">
+    <th rowspan="3" class="text-center table-success">State</th>
+<th rowspan="3" class="text-center table-tertiary">University</th>
+<th colspan="19" class="text-center table-secondary">Level</th>
+<th rowspan="3" class="text-center table-secondary">Upload Year</th>
+  </tr>
+
+  <tr *ngIf="is2020">
+    <th rowspan="3" class="text-center table-success">State</th>
+    <th rowspan="3" class="text-center table-tertiary">University</th>
+<th colspan="28" class="text-center table-secondary">Level</th>
+<th rowspan="3" class="text-center table-secondary">Upload Year</th>
+  </tr>
+
+<tr *ngIf="is2020==false">
+<th colspan="2" class="text-center table-light">Ph.D</th>
+<th colspan="2" class="text-center table-secondary">M.Phil</th>
+<th colspan="2" class="text-center table-tertiary">Post Graduate</th>
+<th colspan="2" class="text-center table-light">Under Graduate</th>
+<th colspan="2" class="text-center table-secondary">PG Diploma</th>
+<th colspan="2" class="text-center table-tertiary">Diploma</th>
+<th colspan="2" class="text-center table-light">Certificate</th>
+<th colspan="2" class="text-center table-secondary">Integrated</th>
+<th colspan="2" class="text-center table-tertiary">Total</th>
+<th rowspan="2" class="text-center table-light">Grand Total</th>
+</tr>
+<!-- new data 2020 -->
+<tr *ngIf="is2020">
+<th colspan="3" class="text-center table-light">Ph.D</th>
+<th colspan="3" class="text-center table-secondary">M.Phil</th>
+<th colspan="3" class="text-center table-tertiary">Post Graduate</th>
+<th colspan="3" class="text-center table-light">Under Graduate</th>
+<th colspan="3" class="text-center table-secondary">PG Diploma</th>
+<th colspan="3" class="text-center table-tertiary">Diploma</th>
+<th colspan="3" class="text-center table-light">Certificate</th>
+<th colspan="3" class="text-center table-secondary">Integrated</th>
+<th colspan="3" class="text-center table-tertiary">Total</th>
+<th rowspan="2" class="text-center table-light">Grand Total</th>
+
+<tr *ngIf="is2020==false">
+  <th colspan="1" class="text-center table-light">Male</th>
+  <th colspan="1" class="text-center table-light">Female</th>
+  <th colspan="1" class="text-center table-secondary">Male</th>
+  <th colspan="1" class="text-center table-secondary">Female</th>
+  <th colspan="1" class="text-center table-tertiary">Male</th>
+  <th colspan="1" class="text-center table-tertiary">Female</th>
+  <th colspan="1" class="text-center table-light">Male</th>
+  <th colspan="1" class="text-center table-light">Female</th>
+  <th colspan="1" class="text-center table-secondary">Male</th>
+  <th colspan="1" class="text-center table-secondary">Female</th>
+  <th colspan="1" class="text-center table-tertiary">Male</th>
+  <th colspan="1" class="text-center table-tertiary">Female</th>
+  <th colspan="1" class="text-center table-light">Male</th>
+  <th colspan="1" class="text-center table-light">Female</th>
+  <th colspan="1" class="text-center table-secondary">Male</th>
+  <th colspan="1" class="text-center table-secondary">Female</th>
+  <th colspan="1" class="text-center table-tertiary">Male</th>
+  <th colspan="1" class="text-center table-tertiary">Female</th>
+</tr>
+<tr *ngIf="is2020">
+  <th colspan="1" class="text-center table-light">Male</th>
+  <th colspan="1" class="text-center table-light">Female</th>
+  <th colspan="1" class="text-center table-light">Transgender</th>
+  <th colspan="1" class="text-center table-secondary">Male</th>
+  <th colspan="1" class="text-center table-secondary">Female</th>
+  <th colspan="1" class="text-center table-secondary">Transgender</th>
+  <th colspan="1" class="text-center table-tertiary">Male</th>
+  <th colspan="1" class="text-center table-tertiary">Female</th>
+  <th colspan="1" class="text-center table-tertiary">Transgender</th>
+  <th colspan="1" class="text-center table-light">Male</th>
+  <th colspan="1" class="text-center table-light">Female</th>
+  <th colspan="1" class="text-center table-light">Transgender</th>
+  <th colspan="1" class="text-center table-secondary">Male</th>
+  <th colspan="1" class="text-center table-secondary">Female</th>
+  <th colspan="1" class="text-center table-secondary">Transgender</th>
+  <th colspan="1" class="text-center table-tertiary">Male</th>
+  <th colspan="1" class="text-center table-tertiary">Female</th>
+  <th colspan="1" class="text-center table-tertiary">Transgender</th>
+  <th colspan="1" class="text-center table-light">Male</th>
+  <th colspan="1" class="text-center table-light">Female</th>
+  <th colspan="1" class="text-center table-light">Transgender</th>
+  <th colspan="1" class="text-center table-secondary">Male</th>
+  <th colspan="1" class="text-center table-secondary">Female</th>
+  <th colspan="1" class="text-center table-secondary">Transgender</th>
+  <th colspan="1" class="text-center table-tertiary">Male</th>
+  <th colspan="1" class="text-center table-tertiary">Female</th>
+  <th colspan="1" class="text-center table-tertiary">Transgender</th>
+</tr>
+
+</thead>
+<tbody>
+<tr *ngFor="let row of reportTableData | paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }" [ngClass]="is2020?'d-none':''">
+<td
+*ngFor="let col of tableColumns; let i = index"
+class="text-center"
+[ngClass]="
+      [i==0?'table-success':'',
+      i>0 && i<2 ?'table-tertiary':'',
+      i>1 && i<4 ?'table-light':'',
+      i>=4 && i<6 ? 'table-secondary': '',
+      i>=6 && i<8 ? 'table-tertiary': '',
+      i>=8 && i<10 ? 'table-light': '',
+      i>=10 && i<12 ? 'table-secondary': '',
+      i>=12 && i<14 ? 'table-tertiary': '',
+      i>=14 && i<16 ? 'table-light': '',
+      i>=16 && i<18 ? 'table-secondary': '',
+      i>=18 && i<20 ? 'table-tertiary': '',
+      i>=20 && i<21 ? 'table-light': '',
+      i>=21 && i<22 ? 'table-secondary': '',
+      ]"
+>
+{{ row[col] }}
+</td>
+</tr>
+<!-- new 2020 data -->
+<tr *ngFor="let row of reportTableData | paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }" [ngClass]="is2020?'':'d-none'">
+<td
+*ngFor="let col of tableColumns; let i = index"
+class="text-center"
+[ngClass]="
+[i==0?'table-success':'',
+i>0 && i<2 ?'table-secondary':'',
+i>1 && i<5 ?'table-light':'',
+i>=5 && i<8 ? 'table-secondary': '',
+i>=8 && i<11 ? 'table-tertiary': '',
+i>=11 && i<14 ? 'table-light': '',
+i>=14 && i<17 ? 'table-secondary': '',
+i>=17 && i<20 ? 'table-tertiary': '',
+i>=20 && i<23 ? 'table-light': '',
+i>=23 && i<26 ? 'table-secondary': '',
+i>=26 && i<29 ? 'table-tertiary': '',
+i>=29 && i<30 ? 'table-light': '',
+i>=30 && i<31 ? 'table-secondary': '',
+    ]"
+>
+{{ row[col] }}
+</td>
+</tr>
+<tr>
+<td colspan="2" class="text-center table-success">
+  Grand Total
+</td>
+<td
+*ngFor="let summary of summaryColumns; let i = index"
+class="text-center table-secondary"
+[ngClass]="
+[i==0?'d-none':'',
+    ]"
+>
+{{ summaryData[summary] }}
+</td>
+</tr>
+</tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

@@ -1,0 +1,79 @@
+<section class="p-3 bg-gray-400">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-lg-3 shadow bg-white" style="border-radius: 10px;">
+                <div class="row">
+                    <div class="col-md-12 pr-0">
+
+                        <div class=" example-form">
+                            <div class="border-bottom-dark col-md-12 mb-2 mt-2 text-center">
+                                <h5 style="font-size: 20px !important;
+                                color: black!important">Reset Password</h5>
+                            </div>
+                            <form [formGroup]="password">
+                                <div class="col-md-12">
+                                    <mat-form-field class="d-block">
+                                      <mat-label>Password</mat-label>
+                                      <input matInput formControlName="password" [type]="show ? 'text' : 'password'" placeholder="Password"
+                                        (paste)="false" (draggable)="false" (drop)="false" (dragover)="false" autocomplete="new"
+                                        matTooltip="Password must be of minimum 8 characters long with at least one Upper case, one lower case alphabet, one numeric value and  one special characters">
+                                      <span class="loginshoweyecls">
+                                        <i (click)="showpassword()" class="fa" [ngClass]="{'fa-eye-slash': !show, 'fa-eye': show}"
+                                          aria-hidden="true"></i></span>
+                                    </mat-form-field>
+                                    <div class="err-msgs"
+                                      *ngIf="password.controls['password'].dirty || password.controls['password'].value || password.controls['password'].touched || isFormInvalid ">
+                                      <span *ngIf="password.controls['password'].hasError('required')">Please enter
+                                      </span>
+                                      <span *ngIf="password.controls['password'].hasError('pattern')">Invalid Password
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <mat-form-field class="d-block">
+                                      <mat-label>Confirm Password</mat-label>
+                                      <input matInput formControlName="confirmPassword" type="password" placeholder="Confirm Password" (paste)="false"
+                                        (draggable)="false" (drop)="false" (dragover)="false" autocomplete="conf">
+                                    </mat-form-field>
+                                    <div class="err-msgs"
+                                      *ngIf="password.controls['confirmPassword'].dirty || password.controls['confirmPassword'].value || password.controls['confirmPassword'].touched || isFormInvalid ">
+                                      <span *ngIf="password.controls['confirmPassword'].hasError('required')">Please enter
+                                      </span>
+                                      <span *ngIf="password.controls['confirmPassword'].hasError('mustMatch')">Passwords do not match
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <mat-form-field class="d-block">
+                                      <input matInput autocomplete="off" maxlength="15" (paste)="false" (draggable)="false" (drop)="false"
+                                        (dragover)="false" formControlName="captcha" placeholder="Enter Below Verfication Code" class="textTransform"
+                                        required />
+                                    </mat-form-field>
+                                    <div class="err-msgs"
+                                      *ngIf="password.controls['captcha'].dirty || password.controls['captcha'].value || password.controls['captcha'].touched || isFormInvalid ">
+                                      <span *ngIf="password.controls['captcha'].hasError('required')">Please enter
+                                      </span>
+                                    </div>
+                                    <div class="mt-2">
+                                      <span class="font-weight-bold pt-2 pb-2 pr-1 pl-1 mr-1">Verification Code</span>
+                                      <img [src]="captchaText" alt="" class="captcha">
+                                      <a class="btn btn-link" (click)="getCaptcha()">
+                                        <i tabindex="0" class="fa fa-refresh captcha-refresh ml-1"></i>
+                                      </a>
+                                    </div>
+                                  </div>
+                            </form>
+                            <div class="form-group mt-3 text-center">
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary btn-sm mr-2" (click)="verifyCaptcha()"
+                                        type="submit">Reset</button>
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

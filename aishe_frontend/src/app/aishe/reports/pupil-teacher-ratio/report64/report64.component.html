@@ -1,0 +1,79 @@
+
+
+    <div
+    class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+    *ngIf="Showdata12">
+<table
+class="table  showReportDataChild" >
+<thead class="childTableStickyHeader">
+
+ <tr>
+    <th rowspan="1" class="text-center table-success">State Name</th>
+  <th colspan="13" class="text-center table-light"> University</th>
+  <th colspan="7" class="text-center table-secondary">College / Recognised Institution</th>
+  <th colspan="6" class="text-center table-tertiary">Stand Alone Institution</th>
+  <th colspan="1" class="text-center table-light">Grand</th>
+
+
+ </tr>
+<tr>
+  <th
+    *ngFor="let col of tableColumns; let i = index"
+
+    [ngClass]="[i===0?'table-success':  '',
+              i>0 && i<14 ?'table-light':'', i>=14 && i<21 ? 'table-secondary': '',i>=21 && i<27 ? 'table-tertiary': '',
+         i>=27 && i<28 ? 'table-light':''
+
+                    ]"
+    class="text-center"
+  >
+    {{
+      col
+        .trim()
+        .replace('Other University', 'Other')
+        .replace('College', '')
+        .replace('University Total', 'Total')
+        .replace('Standalone', '')
+        .replace('State Name', '')
+      }}
+
+  </th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let row of reportTableData | paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }">
+  <td
+    *ngFor="let col of tableColumns; let i = index"
+    [ngClass]="[i===0?'table-success':  '',
+    i>0 && i<14 ?'table-light':'', i>=14 && i<21 ? 'table-secondary': '',i>=21 && i<27 ? 'table-tertiary': '',
+i>=27 && i<28 ? 'table-light':''
+
+          ]"
+  >
+    {{ row[col] }}
+  </td>
+</tr>
+<tr>
+  <td colspan="1" class="text-center table-success">
+    All State
+  </td>
+  <td
+    *ngFor="let summary of summaryColumns; let i = index"
+    class="text-center table-secondary"
+  >
+    {{ summaryData[summary] }}
+  </td>
+</tr>
+</tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

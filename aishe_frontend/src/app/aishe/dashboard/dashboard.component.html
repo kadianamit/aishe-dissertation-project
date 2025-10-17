@@ -1,0 +1,1964 @@
+<!-- <div style="color: red;font-weight: bold;" *ngIf="final_lock">
+  <p class="ml-5">You have successfully submitted DCF for Survey Year {{surveySub}} .Your Reference No. is {{aisheCode}}-{{currentSurveyYear}}</p>
+</div> -->
+<div class="row d-flex justify-content-between">
+  <!-- Latest Survey year card -->
+	<div class="col-lg-6 mb-4 mt-4 justify-content-between mat-elevation-z8 latestCard"  *ngIf="latestSurveyYearApiData">
+
+		<div class="row justify-content-between m-4">
+
+			<h3 class="cardHeaderTitle" >
+				Previous Survey Year
+			</h3>
+			<h3 class="cardHeaderTitle" *ngIf="latestSurveyYear !== currentSurveyYear">
+				{{surveylatestSub}}
+			</h3>
+		</div>
+
+		<!-- <h3 class="cardHeaderTitle" [ngClass]="card.alignTitle=='right'?'text-end mr-4':'ml-4' : mb-2">
+		</h3> -->
+		<div class="row d-flex bglight">
+			<div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn">
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr>
+                      <td  class="text-center" colspan="3">
+                        <h5  class="card-title cardHeaderTitle">Programmes</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center">REGULAR MODE</td>
+										<td class="text-center">DISTANCE MODE</td>
+                    <td class="text-center">PRIVATE MODE</td>
+                     <td class="text-center">ONLINE MODE</td>
+									</tr>
+									<tr class="dashboradsub">
+										<td class="text-center">
+                      <p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regularModeProg}}</span></p>
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].distanceModeProg}}</span></p>
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].privateModeProg}}</span></p>
+                      </td>
+                      <td class="text-center">
+                      <p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineModeProg}}</span></p>
+                      </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+<!--Total Intake Capacity-->
+<div class="col-lg-6 col-md-6 mb-4">
+  <div  class="d-flex" >
+    <div  class="card-mainwrap animated fadeIn">
+      <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+        <div class="card-body overflow-auto" style="padding: 32px;">
+          <table class="table table-responsive-sm table-borderless dashboard-card">
+            <thead>
+              <tr class="dashboradsub">
+                <td  class="text-center" colspan="3">
+                  <h5  class="card-title cardHeaderTitle">Programmes</h5>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+            <tr class="dashboradsub">
+              <td class="text-center">TOTAL INTAKE CAPACITY</td>
+
+            </tr>
+            <tr>
+              <td class="text-center">
+                <p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].intake}}</span></p>
+              </td>
+
+            </tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+            <!-- Enrollment Regular -->
+            <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Enrollment Regular</h5>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tr class="dashboradsub">
+                          <td class="text-center text-uppercase">SC</td>
+                          <td class="text-center text-uppercase">ST</td>
+                          <td class="text-center text-uppercase">OBC</td>
+                          <td class="text-center text-uppercase">EWS</td>
+                          <td class="text-center text-uppercase">GN</td>
+                          <td class="text-center text-uppercase">MM</td>
+                          <td class="text-center text-uppercase">PwBD</td>
+                          <td class="text-center text-uppercase">OM</td>
+                          <td class="text-center text-uppercase">TOTAL</td>
+                        </tr>
+                        <tr>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regularSC}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regularST}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regularOBC}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regularEWS}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regularGeneral}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regularMuslim}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regularPwd}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regularOtherMinority}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regularSC+latestSurveyYearApiData[0].regularST+latestSurveyYearApiData[0].regularOBC+latestSurveyYearApiData[0].regularGeneral}}</span></p></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+             <!-- Enrollment Distance card -->
+             <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Enrollment Distance</h5>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tr class="dashboradsub">
+                          <td class="text-center text-uppercase">SC</td>
+                          <td class="text-center text-uppercase">ST</td>
+                          <td class="text-center text-uppercase">OBC</td>
+                          <td class="text-center text-uppercase">EWS</td>
+                          <td class="text-center text-uppercase">GN</td>
+                          <td class="text-center text-uppercase">MM</td>
+                          <td class="text-center text-uppercase">PwBD</td>
+                          <td class="text-center text-uppercase">OM</td>
+                          <td class="text-center text-uppercase">TOTAL</td>
+                        </tr>
+                        <tr>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].distanceSC}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].distanceST}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].distanceOBC}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].distanceEWS}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].distanceGeneral}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].distanceMuslim}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].distancePwd}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].distanceOtherMinority}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].distanceSC+latestSurveyYearApiData[0].distanceST+latestSurveyYearApiData[0].distanceOBC+latestSurveyYearApiData[0].distanceGeneral}}</span></p></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+           
+
+            <!-- Enrollment Private  -->
+            <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Enrollment Private</h5>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tr class="dashboradsub">
+                          <td class="text-center text-uppercase">SC</td>
+                          <td class="text-center text-uppercase">ST</td>
+                          <td class="text-center text-uppercase">OBC</td>
+                          <td class="text-center text-uppercase">EWS</td>
+                          <td class="text-center text-uppercase">GN</td>
+                           <td class="text-center text-uppercase">MM</td>
+                          <td class="text-center text-uppercase">PwBD</td>
+                          <td class="text-center text-uppercase">OM</td>
+                          <td class="text-center text-uppercase">TOTAL</td>
+                        </tr>
+                        <tr>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].privateSC}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].privateST}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].privateOBC}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].privateEWS}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].privateGeneral}}</span></p></td>
+                           <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].privateMuslim}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].privatePwdEnroll}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].otherMinorityTotalTotalPrivate}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].privateSC+latestSurveyYearApiData[0].privateST+latestSurveyYearApiData[0].privateOBC+latestSurveyYearApiData[0].privateGeneral}}</span></p></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+             <!-- Enrollment online  -->
+            <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Enrollment Online</h5>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tr class="dashboradsub">
+                          <td class="text-center text-uppercase">SC</td>
+                          <td class="text-center text-uppercase">ST</td>
+                          <td class="text-center text-uppercase">OBC</td>
+                          <td class="text-center text-uppercase">EWS</td>
+                          <td class="text-center text-uppercase">GN</td>
+                           <td class="text-center text-uppercase">MM</td>
+                          <td class="text-center text-uppercase">PwBD</td>
+                          <td class="text-center text-uppercase">OM</td>
+                          <td class="text-center text-uppercase">TOTAL</td>
+                        </tr>
+                        <tr>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineSCEnroll}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineSTEnroll}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineOBCEnroll}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineEWSEnroll}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineGeneralEnroll}}</span></p></td>
+                           <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineMuslimEnroll}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlinePwdEnroll}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].otherMinorityTotalTotalOnline}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineSCEnroll+latestSurveyYearApiData[0].onlineSTEnroll+latestSurveyYearApiData[0].onlineOBCEnroll+latestSurveyYearApiData[0].onlineGeneralEnroll}}</span></p></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+             <!-- Enrollment Total  -->
+ <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr>
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Total Enrollment</h5>
+                            </td>
+                          </tr>
+                          <tr>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{totalLatest}}</span></p></td>
+                         
+                        </tr>
+                          <tr><td></td></tr>
+
+                          <tr><td></td></tr>
+                          <tr><td></td></tr>
+                          <tr><td></td></tr>
+
+                          <tr><td></td></tr>
+                        </thead>
+                       
+                        
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+             <!-- Enrollment Foreign -->
+            <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="2">
+                              <h5  class="card-title cardHeaderTitle">Enrollment Foreign</h5>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tr class="dashboradsub">
+                          <td class="text-center text-uppercase">Male</td>
+                          <td class="text-center text-uppercase">Female</td>
+                        </tr>
+                        <tr>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].maleForeign}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].femaleForeign}}</span></p></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+             <!-- Enrollment Regional Center -->
+             <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Enrollment Regional Center</h5>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tr class="dashboradsub">
+                          <td class="text-center text-uppercase">SC</td>
+                          <td class="text-center text-uppercase">ST</td>
+                          <td class="text-center text-uppercase">OBC</td>
+                          <td class="text-center text-uppercase">EWS</td>
+                          <td class="text-center text-uppercase">GN</td>
+                          <td class="text-center text-uppercase">TOTAL</td>
+                        </tr>
+                        <tr>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regionalSC}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regionalST}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regionalOBC}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regionalEWS}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regionalGeneral}}</span></p></td>
+                          <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].regionalSC+latestSurveyYearApiData[0].regionalST+latestSurveyYearApiData[0].regionalOBC+latestSurveyYearApiData[0].regionalGeneral}}</span></p></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+      <!-- Examination Result Regular -->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" colspan="6">
+                        <h5  class="card-title cardHeaderTitle">Exam Result Regular(Passed)</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">SC</td>
+										<td class="text-center text-uppercase">ST</td>
+										<td class="text-center text-uppercase">OBC</td>
+										<td class="text-center text-uppercase">EWS</td>
+										<td class="text-center text-uppercase">GN</td>
+										<td class="text-center text-uppercase">TOTAL</td>
+									</tr>
+									<tr>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultSCRegular}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultSTRegular}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultOBCRegular}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultEWSRegular}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultGeneralRegular}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultSCRegular+latestSurveyYearApiData[0].examinationResultSTRegular+latestSurveyYearApiData[0].examinationResultOBCRegular+latestSurveyYearApiData[0].examinationResultGeneralRegular}}</span></p></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+      <!-- Examination Result Distance -->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" colspan="6">
+                        <h5  class="card-title cardHeaderTitle">Exam Result Distance(Passed)</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">SC</td>
+										<td class="text-center text-uppercase">ST</td>
+										<td class="text-center text-uppercase">OBC</td>
+										<td class="text-center text-uppercase">EWS</td>
+										<td class="text-center text-uppercase">GN</td>
+										<td class="text-center text-uppercase">TOTAL</td>
+									</tr>
+									<tr>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultSCDistance}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultSTDistance}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultOBCDistance}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultEWSDistance}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultGeneralDistance}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultSCDistance+latestSurveyYearApiData[0].examinationResultSTDistance+latestSurveyYearApiData[0].examinationResultOBCDistance+latestSurveyYearApiData[0].examinationResultGeneralDistance}}</span></p></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+      <!-- Examination Result Private -->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" colspan="6">
+                        <h5  class="card-title cardHeaderTitle">Exam Result Private(Passed)</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">SC</td>
+										<td class="text-center text-uppercase">ST</td>
+										<td class="text-center text-uppercase">OBC</td>
+										<td class="text-center text-uppercase">EWS</td>
+										<td class="text-center text-uppercase">GN</td>
+										<td class="text-center text-uppercase">TOTAL</td>
+									</tr>
+									<tr>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultSCPrivate}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultSTPrivate}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultOBCPrivate}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultEWSPrivate}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultGeneralPrivate}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].examinationResultSCPrivate+latestSurveyYearApiData[0].examinationResultSTPrivate+latestSurveyYearApiData[0].examinationResultOBCPrivate+latestSurveyYearApiData[0].examinationResultGeneralPrivate}}</span></p></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+      <!-- Examination Result Online -->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" colspan="6">
+                        <h5  class="card-title cardHeaderTitle">Exam Result Online(Passed)</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">SC</td>
+										<td class="text-center text-uppercase">ST</td>
+										<td class="text-center text-uppercase">OBC</td>
+										<td class="text-center text-uppercase">EWS</td>
+										<td class="text-center text-uppercase">GN</td>
+										<td class="text-center text-uppercase">TOTAL</td>
+									</tr>
+									<tr>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineSCResult}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineSTResult}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineOBCResult}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineEWSResult}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineGeneralResult}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].onlineSCResult+latestSurveyYearApiData[0].onlineSTResult+latestSurveyYearApiData[0].onlineOBCResult+latestSurveyYearApiData[0].onlineGeneralResult}}</span></p></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+    <!-- Staff Information -->
+    <div class="col-lg-6 col-md-6 mb-4">
+      <div  class="d-flex" >
+        <div  class="card-mainwrap animated fadeIn " >
+          <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+            <div class="card-body overflow-auto">
+              <table class="table table-responsive-sm table-borderless dashboard-card">
+                <thead>
+                  <tr class="dashboradsub">
+                    <td  class="text-center" colspan="2">
+                      <h5  class="card-title cardHeaderTitle">Teaching Staff Info..</h5>
+                    </td>
+                  </tr>
+                </thead>
+                <tr class="dashboradsub">
+                  <td class="text-center text-uppercase">Sanctioned Strength</td>
+                  <td class="text-center text-uppercase">In Position</td>
+                </tr>
+                <tr>
+                  <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].teachingStaffSanctionedStrength}}</span></p></td>
+                  <td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].teachingStaffInPosition}}</span></p></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+      <!--non teaching staff -->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" colspan="2">
+                        <h5  class="card-title cardHeaderTitle">Non Teaching Staff Info..</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">Sanctioned Strength</td>
+										<td class="text-center text-uppercase">In Position</td>
+									</tr>
+									<tr>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].nonTeachingStaffSanctioned}}</span></p></td>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].nonTeachingStaffInPosition}}</span></p></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+      <!-- Scholarship card-->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto" >
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" >
+                        <h5  class="card-title cardHeaderTitle">Scholarship</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">Total</td>
+									</tr>
+									<tr>
+										<td class="text-center"><p class="card-text"><span style="color:#037a92">{{latestSurveyYearApiData[0].scholarship}}</span></p></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+
+
+
+
+
+  <!-- Current year card -->
+  <div class="col-lg-6 mb-4 mt-4 justify-content-between mat-elevation-z8"  *ngIf="currentSurveyYearApiData">
+
+		<div class="row justify-content-between m-4">
+
+			<h3 class="cardHeaderTitle" >
+				Current Survey Year
+			</h3>
+			<h3 class="cardHeaderTitle">
+				{{(currentSurveyYear+ "-" + (currentSurveyYear+ 1 - 2000))}}
+			</h3>
+		</div>
+
+		<div class="row d-flex">
+			<div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" colspan="3">
+                        <h5  class="card-title cardHeaderTitle">Programmes</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center">REGULAR MODE</td>
+										<td class="text-center">DISTANCE MODE</td>
+                    <td class="text-center">PRIVATE MODE</td>
+                    <td class="text-center">ONLINE MODE</td>
+
+									</tr>
+									<tr>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].regularModeProg > latestSurveyYearApiData[0].regularModeProg)?'color:green'
+                        :(currentSurveyYearApiData[0].regularModeProg < latestSurveyYearApiData[0].regularModeProg)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].regularModeProg}}
+                        </span>
+                      </p>
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].distanceModeProg > latestSurveyYearApiData[0].distanceModeProg)?'color:green'
+                        :(currentSurveyYearApiData[0].distanceModeProg < latestSurveyYearApiData[0].distanceModeProg)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].distanceModeProg}}
+                        </span>
+                      </p>
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].privateModeProg > latestSurveyYearApiData[0].privateModeProg)?'color:green'
+                        :(currentSurveyYearApiData[0].privateModeProg < latestSurveyYearApiData[0].privateModeProg)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].privateModeProg}}
+                        </span>
+
+                      </p>
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].onlineModeProg > latestSurveyYearApiData[0].onlineModeProg)?'color:green'
+                        :(currentSurveyYearApiData[0].onlineModeProg < latestSurveyYearApiData[0].onlineModeProg)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].onlineModeProg}}
+                        </span>
+
+                      </p>
+                    </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+<!--Total Intake Capacity-->
+<div class="col-lg-6 col-md-6 mb-4">
+  <div  class="d-flex" >
+    <div  class="card-mainwrap animated fadeIn">
+      <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+        <div class="card-body overflow-auto" style="padding: 32px;">
+          <table class="table table-responsive-sm table-borderless dashboard-card">
+            <thead>
+              <tr class="dashboradsub">
+                <td  class="text-center" colspan="3">
+                  <h5  class="card-title cardHeaderTitle">Programmes</h5>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+            <tr class="dashboradsub">
+              <td class="text-center">TOTAL INTAKE CAPACITY</td>
+
+            </tr>
+            <tr>
+              <td class="text-center">
+                <p class="card-text"><span [attr.style]="(currentSurveyYearApiData[0].intake > latestSurveyYearApiData[0].intake)?'color:green'
+                  :(currentSurveyYearApiData[0].intake < latestSurveyYearApiData[0].intake)?'color:red'
+                  :'color:#037a92'" style="color:#037a92">{{currentSurveyYearApiData[0].intake}}</span></p>
+              </td>
+
+            </tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+            <!-- Enrollment Regular -->
+            <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Enrollment Regular</h5>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tr class="dashboradsub">
+                          <td class="text-center text-uppercase">SC</td>
+                          <td class="text-center text-uppercase">ST</td>
+                          <td class="text-center text-uppercase">OBC</td>
+                          <td class="text-center text-uppercase">EWS</td>
+                          <td class="text-center text-uppercase">GN</td>
+                          <td class="text-center text-uppercase">MM</td>
+                          <td class="text-center text-uppercase">PwBD</td>
+                          <td class="text-center text-uppercase">OM</td>
+                          <td class="text-center text-uppercase">TOTAL</td>
+                        </tr>
+                        <tr>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regularSC > latestSurveyYearApiData[0].regularSC)?'color:green'
+                              :(currentSurveyYearApiData[0].regularSC < latestSurveyYearApiData[0].regularSC)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regularSC}}
+                              </span>
+                            </p>
+
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regularST > latestSurveyYearApiData[0].regularST)?'color:green'
+                              :(currentSurveyYearApiData[0].regularST < latestSurveyYearApiData[0].regularST)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regularST}}
+                              </span>
+                            </p>
+
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regularOBC > latestSurveyYearApiData[0].regularOBC)?'color:green'
+                              :(currentSurveyYearApiData[0].regularOBC < latestSurveyYearApiData[0].regularOBC)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regularOBC}}
+                              </span>
+                            </p>
+
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regularEWS > latestSurveyYearApiData[0].regularEWS)?'color:green'
+                              :(currentSurveyYearApiData[0].regularEWS < latestSurveyYearApiData[0].regularEWS)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regularEWS}}
+                              </span>
+                            </p>
+
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regularGeneral > latestSurveyYearApiData[0].regularGeneral)?'color:green'
+                              :(currentSurveyYearApiData[0].regularGeneral < latestSurveyYearApiData[0].regularGeneral)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regularGeneral}}
+                              </span>
+                            </p>
+
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regularMuslim > latestSurveyYearApiData[0].regularMuslim)?'color:green'
+                              :(currentSurveyYearApiData[0].regularMuslim < latestSurveyYearApiData[0].regularMuslim)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regularMuslim}}
+                              </span>
+                            </p>
+
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regularPwd > latestSurveyYearApiData[0].regularPwd)?'color:green'
+                              :(currentSurveyYearApiData[0].regularPwd < latestSurveyYearApiData[0].regularPwd)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regularPwd}}
+                              </span>
+                            </p>
+
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regularOtherMinority > latestSurveyYearApiData[0].regularOtherMinority)?'color:green'
+                              :(currentSurveyYearApiData[0].regularOtherMinority < latestSurveyYearApiData[0].regularOtherMinority)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regularOtherMinority}}
+                              </span>
+                            </p>
+
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="((currentSurveyYearApiData[0].regularMuslim+currentSurveyYearApiData[0].regularPwd+currentSurveyYearApiData[0].regularOtherMinority+currentSurveyYearApiData[0].regularSC+currentSurveyYearApiData[0].regularST+currentSurveyYearApiData[0].regularOBC+currentSurveyYearApiData[0].regularGeneral) > (latestSurveyYearApiData[0].regularSC+latestSurveyYearApiData[0].regularST+latestSurveyYearApiData[0].regularOBC+latestSurveyYearApiData[0].regularGeneral))?'color:green'
+                              :((currentSurveyYearApiData[0].regularSC+currentSurveyYearApiData[0].regularST+currentSurveyYearApiData[0].regularOBC+currentSurveyYearApiData[0].regularGeneral) < (latestSurveyYearApiData[0].regularSC+latestSurveyYearApiData[0].regularST+latestSurveyYearApiData[0].regularOBC+latestSurveyYearApiData[0].regularGeneral))?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regularSC+currentSurveyYearApiData[0].regularST+currentSurveyYearApiData[0].regularOBC+currentSurveyYearApiData[0].regularGeneral}}
+                              </span>
+                            </p>
+
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+             <!-- Enrollment Distance card -->
+             <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Enrollment Distance</h5>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tr class="dashboradsub">
+                          <td class="text-center text-uppercase">SC</td>
+                          <td class="text-center text-uppercase">ST</td>
+                          <td class="text-center text-uppercase">OBC</td>
+                          <td class="text-center text-uppercase">EWS</td>
+                          <td class="text-center text-uppercase">GN</td>
+                          <td class="text-center text-uppercase">MM</td>
+                          <td class="text-center text-uppercase">PwBD</td>
+                          <td class="text-center text-uppercase">OM</td>
+                          <td class="text-center text-uppercase">TOTAL</td>
+                        </tr>
+                        <tr>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].distanceSC > latestSurveyYearApiData[0].distanceSC)?'color:green'
+                              :(currentSurveyYearApiData[0].distanceSC < latestSurveyYearApiData[0].distanceSC)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].distanceSC}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].distanceST > latestSurveyYearApiData[0].distanceST)?'color:green'
+                              :(currentSurveyYearApiData[0].distanceST < latestSurveyYearApiData[0].distanceST)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].distanceST}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].distanceOBC > latestSurveyYearApiData[0].distanceOBC)?'color:green'
+                              :(currentSurveyYearApiData[0].distanceOBC < latestSurveyYearApiData[0].distanceOBC)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].distanceOBC}}
+                              </span>
+                            </p>
+                          </td><td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].distanceEWS > latestSurveyYearApiData[0].distanceEWS)?'color:green'
+                              :(currentSurveyYearApiData[0].distanceEWS < latestSurveyYearApiData[0].distanceEWS)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].distanceEWS}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].distanceGeneral > latestSurveyYearApiData[0].distanceGeneral)?'color:green'
+                              :(currentSurveyYearApiData[0].distanceGeneral < latestSurveyYearApiData[0].distanceGeneral)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].distanceGeneral}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].distanceMuslim > latestSurveyYearApiData[0].distanceMuslim)?'color:green'
+                              :(currentSurveyYearApiData[0].distanceMuslim < latestSurveyYearApiData[0].distanceMuslim)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].distanceMuslim}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].distancePwd > latestSurveyYearApiData[0].distancePwd)?'color:green'
+                              :(currentSurveyYearApiData[0].distancePwd < latestSurveyYearApiData[0].distancePwd)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].distancePwd}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].distanceOtherMinority > latestSurveyYearApiData[0].distanceOtherMinority)?'color:green'
+                              :(currentSurveyYearApiData[0].distanceOtherMinority < latestSurveyYearApiData[0].distanceOtherMinority)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].distanceOtherMinority}}
+                              </span>
+                            </p>
+                          </td>
+
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="((currentSurveyYearApiData[0].distanceMuslim+currentSurveyYearApiData[0].distancePwd+currentSurveyYearApiData[0].distanceOtherMinority+currentSurveyYearApiData[0].distanceSC+currentSurveyYearApiData[0].distanceST+currentSurveyYearApiData[0].distanceOBC+currentSurveyYearApiData[0].distanceGeneral) > (latestSurveyYearApiData[0].distanceSC+latestSurveyYearApiData[0].distanceST+latestSurveyYearApiData[0].distanceOBC+latestSurveyYearApiData[0].distanceGeneral))?'color:green'
+                              :((currentSurveyYearApiData[0].distanceSC+currentSurveyYearApiData[0].distanceST+currentSurveyYearApiData[0].distanceOBC+currentSurveyYearApiData[0].distanceGeneral) < (latestSurveyYearApiData[0].distanceSC+latestSurveyYearApiData[0].distanceST+latestSurveyYearApiData[0].distanceOBC+latestSurveyYearApiData[0].distanceGeneral))?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].distanceSC+currentSurveyYearApiData[0].distanceST+currentSurveyYearApiData[0].distanceOBC+currentSurveyYearApiData[0].distanceGeneral}}
+                              </span>
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+                        
+            <!--Enrollment Private  -->
+
+            <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Enrollment Private</h5>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tr class="dashboradsub">
+                          <td class="text-center text-uppercase">SC</td>
+                          <td class="text-center text-uppercase">ST</td>
+                          <td class="text-center text-uppercase">OBC</td>
+                          <td class="text-center text-uppercase">EWS</td>
+                          <td class="text-center text-uppercase">GN</td>
+                           <td class="text-center text-uppercase">MM</td>
+                          <td class="text-center text-uppercase">PwBD</td>
+                          <td class="text-center text-uppercase">OM</td>
+                          <td class="text-center text-uppercase">TOTAL</td>
+                        </tr>
+                        <tr>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].privateSC > latestSurveyYearApiData[0].privateSC)?'color:green'
+                              :(currentSurveyYearApiData[0].privateSC < latestSurveyYearApiData[0].privateSC)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].privateSC}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].privateST > latestSurveyYearApiData[0].privateST)?'color:green'
+                              :(currentSurveyYearApiData[0].privateST < latestSurveyYearApiData[0].privateST)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].privateST}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].privateOBC > latestSurveyYearApiData[0].privateOBC)?'color:green'
+                              :(currentSurveyYearApiData[0].privateOBC < latestSurveyYearApiData[0].privateOBC)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].privateOBC}}
+                              </span>
+                            </p>
+                          </td><td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].privateEWS > latestSurveyYearApiData[0].privateEWS)?'color:green'
+                              :(currentSurveyYearApiData[0].privateEWS < latestSurveyYearApiData[0].privateEWS)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].privateEWS}}
+                              </span>
+                            </p>
+                          </td><td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].privateGeneral > latestSurveyYearApiData[0].privateGeneral)?'color:green'
+                              :(currentSurveyYearApiData[0].privateGeneral < latestSurveyYearApiData[0].privateGeneral)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].privateGeneral}}
+                              </span>
+                            </p>
+                          </td>
+
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].privateMuslim > latestSurveyYearApiData[0].privateMuslim)?'color:green'
+                              :(currentSurveyYearApiData[0].privateMuslim < latestSurveyYearApiData[0].privateMuslim)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].privateMuslim}}
+                              </span>
+                            </p>
+                          </td>
+
+                           <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].privatePwdEnroll > latestSurveyYearApiData[0].privatePwdEnroll)?'color:green'
+                              :(currentSurveyYearApiData[0].privatePwdEnroll < latestSurveyYearApiData[0].privatePwdEnroll)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].privatePwdEnroll}}
+                              </span>
+                            </p>
+                          </td>
+
+                           <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].otherMinorityTotalTotalPrivate > latestSurveyYearApiData[0].otherMinorityTotalTotalPrivate)?'color:green'
+                              :(currentSurveyYearApiData[0].otherMinorityTotalTotalPrivate < latestSurveyYearApiData[0].otherMinorityTotalTotalPrivate)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].otherMinorityTotalTotalPrivate}}
+                              </span>
+                            </p>
+                          </td>
+
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="((currentSurveyYearApiData[0].privateSC+currentSurveyYearApiData[0].privateST+currentSurveyYearApiData[0].privateOBC+currentSurveyYearApiData[0].privateGeneral) > (latestSurveyYearApiData[0].privateSC+latestSurveyYearApiData[0].privateST+latestSurveyYearApiData[0].privateOBC+latestSurveyYearApiData[0].privateGeneral))?'color:green'
+                              :((currentSurveyYearApiData[0].privateSC+currentSurveyYearApiData[0].privateST+currentSurveyYearApiData[0].privateOBC+currentSurveyYearApiData[0].privateGeneral) < (latestSurveyYearApiData[0].privateSC+latestSurveyYearApiData[0].privateST+latestSurveyYearApiData[0].privateOBC+latestSurveyYearApiData[0].privateGeneral))?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].privateSC+currentSurveyYearApiData[0].privateST+currentSurveyYearApiData[0].privateOBC+currentSurveyYearApiData[0].privateGeneral}}
+                              </span>
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+ <!--Enrollment Online  -->
+
+            <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Enrollment Online</h5>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tr class="dashboradsub">
+                          <td class="text-center text-uppercase">SC</td>
+                          <td class="text-center text-uppercase">ST</td>
+                          <td class="text-center text-uppercase">OBC</td>
+                          <td class="text-center text-uppercase">EWS</td>
+                          <td class="text-center text-uppercase">GN</td>
+                           <td class="text-center text-uppercase">MM</td>
+                          <td class="text-center text-uppercase">PwBD</td>
+                          <td class="text-center text-uppercase">OM</td>
+                          <td class="text-center text-uppercase">TOTAL</td>
+                        </tr>
+                        <tr>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].onlineSCEnroll > latestSurveyYearApiData[0].onlineSCEnroll)?'color:green'
+                              :(currentSurveyYearApiData[0].onlineSCEnroll < latestSurveyYearApiData[0].onlineSCEnroll)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].onlineSCEnroll}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].onlineSTEnroll > latestSurveyYearApiData[0].onlineSTEnroll)?'color:green'
+                              :(currentSurveyYearApiData[0].onlineSTEnroll < latestSurveyYearApiData[0].onlineSTEnroll)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].onlineSTEnroll}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].onlineOBCEnroll > latestSurveyYearApiData[0].onlineOBCEnroll)?'color:green'
+                              :(currentSurveyYearApiData[0].onlineOBCEnroll < latestSurveyYearApiData[0].onlineOBCEnroll)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].onlineOBCEnroll}}
+                              </span>
+                            </p>
+                          </td><td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].onlineEWSEnroll > latestSurveyYearApiData[0].onlineEWSEnroll)?'color:green'
+                              :(currentSurveyYearApiData[0].onlineEWSEnroll < latestSurveyYearApiData[0].onlineEWSEnroll)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].onlineEWSEnroll}}
+                              </span>
+                            </p>
+                          </td><td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].onlineGeneralEnroll > latestSurveyYearApiData[0].onlineGeneralEnroll)?'color:green'
+                              :(currentSurveyYearApiData[0].onlineGeneralEnroll < latestSurveyYearApiData[0].onlineGeneralEnroll)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].onlineGeneralEnroll}}
+                              </span>
+                            </p>
+                          </td>
+
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].onlineGeneralEnroll > latestSurveyYearApiData[0].onlineGeneralEnroll)?'color:green'
+                              :(currentSurveyYearApiData[0].onlineGeneralEnroll < latestSurveyYearApiData[0].onlineGeneralEnroll)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].onlineGeneralEnroll}}
+                              </span>
+                            </p>
+                          </td>
+
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].onlineMuslimEnroll > latestSurveyYearApiData[0].onlineMuslimEnroll)?'color:green'
+                              :(currentSurveyYearApiData[0].onlineMuslimEnroll < latestSurveyYearApiData[0].onlineMuslimEnroll)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].onlineMuslimEnroll}}
+                              </span>
+                            </p>
+                          </td>
+
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].onlinePwdEnroll > latestSurveyYearApiData[0].onlinePwdEnroll)?'color:green'
+                              :(currentSurveyYearApiData[0].onlinePwdEnroll < latestSurveyYearApiData[0].onlinePwdEnroll)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].onlinePwdEnroll}}
+                              </span>
+                            </p>
+                          </td>
+
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="((currentSurveyYearApiData[0].onlineSCEnroll+currentSurveyYearApiData[0].onlineSTEnroll+currentSurveyYearApiData[0].onlineOBCEnroll+currentSurveyYearApiData[0].onlineGeneralEnroll) > (latestSurveyYearApiData[0].onlineSCEnroll+latestSurveyYearApiData[0].onlineSTEnroll+latestSurveyYearApiData[0].onlineOBCEnroll+latestSurveyYearApiData[0].onlineGeneralEnroll))?'color:green'
+                              :((currentSurveyYearApiData[0].onlineSCEnroll+currentSurveyYearApiData[0].onlineSTEnroll+currentSurveyYearApiData[0].onlineOBCEnroll+currentSurveyYearApiData[0].onlineGeneralEnroll) < (latestSurveyYearApiData[0].onlineSCEnroll+latestSurveyYearApiData[0].onlineSTEnroll+latestSurveyYearApiData[0].onlineOBCEnroll+latestSurveyYearApiData[0].onlineGeneralEnroll))?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].onlineSCEnroll+currentSurveyYearApiData[0].onlineSTEnroll+currentSurveyYearApiData[0].onlineOBCEnroll+currentSurveyYearApiData[0].onlineGeneralEnroll}}
+                              </span>
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!--Enrollment Total  -->
+
+            <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Total Enrollment</h5>
+                            </td>
+                            
+                          </tr>
+                           <tr >
+                          <td class="text-center"><p class="card-text"><span
+                              [attr.style]="totalLatest > totalCurrent?'color:red'
+                              :'color:#037a92'">
+                              {{totalCurrent}}
+                              </span></p></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                        </tr><tr>
+                          <td></td>
+                        </tr><tr>
+                          <td></td>
+                        </tr>
+                        </thead>
+                        
+                       
+                       
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+<!-- Enrollment Foreign -->
+                        <div class="col-lg-6 col-md-6 mb-4">
+                          <div  class="d-flex" >
+                            <div  class="card-mainwrap animated fadeIn " >
+                              <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                                <div class="card-body overflow-auto">
+                                  <table class="table table-responsive-sm table-borderless dashboard-card">
+                                    <thead>
+                                      <tr class="dashboradsub">
+                                        <td  class="text-center" colspan="2">
+                                          <h5  class="card-title cardHeaderTitle">Enrollment Foreign</h5>
+                                        </td>
+                                      </tr>
+                                    </thead>
+                                    <tr class="dashboradsub">
+                                      <td class="text-center text-uppercase">Male</td>
+                                      <td class="text-center text-uppercase">Female</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="text-center">
+                                        <p class="card-text">
+                                          <span
+                                          [attr.style]="(currentSurveyYearApiData[0].maleForeign > latestSurveyYearApiData[0].maleForeign)?'color:green'
+                                          :(currentSurveyYearApiData[0].maleForeign < latestSurveyYearApiData[0].maleForeign)?'color:red'
+                                          :'color:#037a92'">
+                                          {{currentSurveyYearApiData[0].maleForeign}}
+                                          </span>
+                                        </p>
+                                      </td>
+                                      <td class="text-center">
+                                        <p class="card-text">
+                                          <span
+                                          [attr.style]="(currentSurveyYearApiData[0].femaleForeign > latestSurveyYearApiData[0].femaleForeign)?'color:green'
+                                          :(currentSurveyYearApiData[0].femaleForeign < latestSurveyYearApiData[0].femaleForeign)?'color:red'
+                                          :'color:#037a92'">
+                                          {{currentSurveyYearApiData[0].femaleForeign}}
+                                          </span>
+                                        </p>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+             <!-- Enrollment Regional Center -->
+             <!-- show this card in case of university login only -->
+             <div class="col-lg-6 col-md-6 mb-4">
+              <div  class="d-flex" >
+                <div  class="card-mainwrap animated fadeIn " >
+                  <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+                    <div class="card-body overflow-auto">
+                      <table class="table table-responsive-sm table-borderless dashboard-card">
+                        <thead>
+                          <tr class="dashboradsub">
+                            <td  class="text-center" colspan="6">
+                              <h5  class="card-title cardHeaderTitle">Enrollment Regional Center</h5>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tr class="dashboradsub">
+                          <td class="text-center text-uppercase">SC</td>
+                          <td class="text-center text-uppercase">ST</td>
+                          <td class="text-center text-uppercase">OBC</td>
+                          <td class="text-center text-uppercase">EWS</td>
+                          <td class="text-center text-uppercase">GN</td>
+                          <td class="text-center text-uppercase">TOTAL</td>
+                        </tr>
+                        <tr>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regionalSC > latestSurveyYearApiData[0].regionalSC)?'color:green'
+                              :(currentSurveyYearApiData[0].regionalSC < latestSurveyYearApiData[0].regionalSC)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regionalSC}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regionalST > latestSurveyYearApiData[0].regionalST)?'color:green'
+                              :(currentSurveyYearApiData[0].regionalST < latestSurveyYearApiData[0].regionalST)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regionalST}}
+                              </span>
+                            </p>
+                          </td>
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regionalOBC > latestSurveyYearApiData[0].regionalOBC)?'color:green'
+                              :(currentSurveyYearApiData[0].regionalOBC < latestSurveyYearApiData[0].regionalOBC)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regionalOBC}}
+                              </span>
+                            </p>
+                          </td><td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regionalEWS > latestSurveyYearApiData[0].regionalEWS)?'color:green'
+                              :(currentSurveyYearApiData[0].regionalEWS < latestSurveyYearApiData[0].regionalEWS)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regionalEWS}}
+                              </span>
+                            </p>
+                          </td><td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="(currentSurveyYearApiData[0].regionalGeneral > latestSurveyYearApiData[0].regionalGeneral)?'color:green'
+                              :(currentSurveyYearApiData[0].regionalGeneral < latestSurveyYearApiData[0].regionalGeneral)?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regionalGeneral}}
+                              </span>
+                            </p>
+                          </td>
+
+                          <td class="text-center">
+                            <p class="card-text">
+                              <span
+                              [attr.style]="((currentSurveyYearApiData[0].regionalSC+currentSurveyYearApiData[0].regionalST+currentSurveyYearApiData[0].regionalOBC+currentSurveyYearApiData[0].regionalGeneral) > (latestSurveyYearApiData[0].regionalSC+latestSurveyYearApiData[0].regionalST+latestSurveyYearApiData[0].regionalOBC+latestSurveyYearApiData[0].regionalGeneral))?'color:green'
+                              :((currentSurveyYearApiData[0].regionalSC+currentSurveyYearApiData[0].regionalST+currentSurveyYearApiData[0].regionalOBC+currentSurveyYearApiData[0].regionalGeneral) < (latestSurveyYearApiData[0].regionalSC+latestSurveyYearApiData[0].regionalST+latestSurveyYearApiData[0].regionalOBC+latestSurveyYearApiData[0].regionalGeneral))?'color:red'
+                              :'color:#037a92'">
+                              {{currentSurveyYearApiData[0].regionalSC+currentSurveyYearApiData[0].regionalST+currentSurveyYearApiData[0].regionalOBC+currentSurveyYearApiData[0].regionalGeneral}}
+                              </span>
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+    
+
+
+
+      <!-- Examination Result Regular -->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" colspan="6">
+                        <h5  class="card-title cardHeaderTitle">Exam Result Regular(Passed)</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">SC</td>
+										<td class="text-center text-uppercase">ST</td>
+										<td class="text-center text-uppercase">OBC</td>
+										<td class="text-center text-uppercase">EWS</td>
+										<td class="text-center text-uppercase">GN</td>
+										<td class="text-center text-uppercase">TOTAL</td>
+									</tr>
+									<tr>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultSCRegular > latestSurveyYearApiData[0].examinationResultSCRegular)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultSCRegular < latestSurveyYearApiData[0].examinationResultSCRegular)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultSCRegular}}
+                        </span>
+                      </p>
+
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultSTRegular > latestSurveyYearApiData[0].examinationResultSTRegular)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultSTRegular < latestSurveyYearApiData[0].examinationResultSTRegular)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultSTRegular}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultOBCRegular > latestSurveyYearApiData[0].examinationResultOBCRegular)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultOBCRegular < latestSurveyYearApiData[0].examinationResultOBCRegular)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultOBCRegular}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultEWSRegular > latestSurveyYearApiData[0].examinationResultEWSRegular)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultEWSRegular < latestSurveyYearApiData[0].examinationResultEWSRegular)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultEWSRegular}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultGeneralRegular > latestSurveyYearApiData[0].examinationResultGeneralRegular)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultGeneralRegular < latestSurveyYearApiData[0].examinationResultGeneralRegular)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultGeneralRegular}}
+                        </span>
+                      </p>
+
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="((currentSurveyYearApiData[0].examinationResultSCRegular+currentSurveyYearApiData[0].examinationResultSTRegular+currentSurveyYearApiData[0].examinationResultOBCRegular+currentSurveyYearApiData[0].examinationResultGeneralRegular) > (latestSurveyYearApiData[0].examinationResultSCRegular+latestSurveyYearApiData[0].examinationResultSTRegular+latestSurveyYearApiData[0].examinationResultOBCRegular+latestSurveyYearApiData[0].examinationResultGeneralRegular))?'color:green'
+                        :((currentSurveyYearApiData[0].examinationResultSCRegular+currentSurveyYearApiData[0].examinationResultSTRegular+currentSurveyYearApiData[0].examinationResultOBCRegular+currentSurveyYearApiData[0].examinationResultGeneralRegular) < (latestSurveyYearApiData[0].examinationResultSCRegular+latestSurveyYearApiData[0].examinationResultSTRegular+latestSurveyYearApiData[0].examinationResultOBCRegular+latestSurveyYearApiData[0].examinationResultGeneralRegular))?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultSCRegular+currentSurveyYearApiData[0].examinationResultSTRegular+currentSurveyYearApiData[0].examinationResultOBCRegular+currentSurveyYearApiData[0].examinationResultGeneralRegular}}
+                        </span>
+                      </p>
+
+                    </td>
+
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+      <!-- Examination Result Distance -->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" colspan="6">
+                        <h5  class="card-title cardHeaderTitle">Exam Result Distance(Passed)</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">SC</td>
+										<td class="text-center text-uppercase">ST</td>
+										<td class="text-center text-uppercase">OBC</td>
+										<td class="text-center text-uppercase">EWS</td>
+										<td class="text-center text-uppercase">GN</td>
+										<td class="text-center text-uppercase">TOTAL</td>
+									</tr>
+									<tr>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultSCDistance > latestSurveyYearApiData[0].examinationResultSCDistance)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultSCDistance < latestSurveyYearApiData[0].examinationResultSCDistance)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultSCDistance}}
+                        </span>
+                      </p>
+
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultSTDistance > latestSurveyYearApiData[0].examinationResultSTDistance)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultSTDistance < latestSurveyYearApiData[0].examinationResultSTDistance)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultSTDistance}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultOBCDistance > latestSurveyYearApiData[0].examinationResultOBCDistance)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultOBCDistance < latestSurveyYearApiData[0].examinationResultOBCDistance)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultOBCDistance}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultEWSDistance > latestSurveyYearApiData[0].examinationResultEWSDistance)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultEWSDistance < latestSurveyYearApiData[0].examinationResultEWSDistance)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultEWSDistance}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultGeneralDistance > latestSurveyYearApiData[0].examinationResultGeneralDistance)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultGeneralDistance < latestSurveyYearApiData[0].examinationResultGeneralDistance)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultGeneralDistance}}
+                        </span>
+                      </p>
+
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="((currentSurveyYearApiData[0].examinationResultSCDistance+currentSurveyYearApiData[0].examinationResultSTDistance+currentSurveyYearApiData[0].examinationResultOBCDistance+currentSurveyYearApiData[0].examinationResultGeneralDistance) > (latestSurveyYearApiData[0].examinationResultSCDistance+latestSurveyYearApiData[0].examinationResultSTDistance+latestSurveyYearApiData[0].examinationResultOBCDistance+latestSurveyYearApiData[0].examinationResultGeneralDistance))?'color:green'
+                        :((currentSurveyYearApiData[0].examinationResultSCDistance+currentSurveyYearApiData[0].examinationResultSTDistance+currentSurveyYearApiData[0].examinationResultOBCDistance+currentSurveyYearApiData[0].examinationResultGeneralDistance) < (latestSurveyYearApiData[0].examinationResultSCDistance+latestSurveyYearApiData[0].examinationResultSTDistance+latestSurveyYearApiData[0].examinationResultOBCDistance+latestSurveyYearApiData[0].examinationResultGeneralDistance))?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultSCDistance+currentSurveyYearApiData[0].examinationResultSTDistance+currentSurveyYearApiData[0].examinationResultOBCDistance+currentSurveyYearApiData[0].examinationResultGeneralDistance}}
+                        </span>
+                      </p>
+
+                    </td>
+
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+      <!-- Examination Result Private -->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" colspan="6">
+                        <h5  class="card-title cardHeaderTitle">Exam Result Private(Passed)</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">SC</td>
+										<td class="text-center text-uppercase">ST</td>
+										<td class="text-center text-uppercase">OBC</td>
+										<td class="text-center text-uppercase">EWS</td>
+										<td class="text-center text-uppercase">GN</td>
+										<td class="text-center text-uppercase">TOTAL</td>
+									</tr>
+									<tr>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultSCPrivate > latestSurveyYearApiData[0].examinationResultSCPrivate)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultSCPrivate < latestSurveyYearApiData[0].examinationResultSCPrivate)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultSCPrivate}}
+                        </span>
+                      </p>
+
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultSTPrivate > latestSurveyYearApiData[0].examinationResultSTPrivate)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultSTPrivate < latestSurveyYearApiData[0].examinationResultSTPrivate)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultSTPrivate}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultOBCPrivate > latestSurveyYearApiData[0].examinationResultOBCPrivate)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultOBCPrivate < latestSurveyYearApiData[0].examinationResultOBCPrivate)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultOBCPrivate}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultEWSPrivate > latestSurveyYearApiData[0].examinationResultEWSPrivate)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultEWSPrivate < latestSurveyYearApiData[0].examinationResultEWSPrivate)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultEWSPrivate}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].examinationResultGeneralPrivate > latestSurveyYearApiData[0].examinationResultGeneralPrivate)?'color:green'
+                        :(currentSurveyYearApiData[0].examinationResultGeneralPrivate < latestSurveyYearApiData[0].examinationResultGeneralPrivate)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultGeneralPrivate}}
+                        </span>
+                      </p>
+
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="((currentSurveyYearApiData[0].examinationResultSCPrivate+currentSurveyYearApiData[0].examinationResultSTPrivate+currentSurveyYearApiData[0].examinationResultOBCPrivate+currentSurveyYearApiData[0].examinationResultGeneralPrivate) > (latestSurveyYearApiData[0].examinationResultSCPrivate+latestSurveyYearApiData[0].examinationResultSTPrivate+latestSurveyYearApiData[0].examinationResultOBCPrivate+latestSurveyYearApiData[0].examinationResultGeneralPrivate))?'color:green'
+                        :((currentSurveyYearApiData[0].examinationResultSCPrivate+currentSurveyYearApiData[0].examinationResultSTPrivate+currentSurveyYearApiData[0].examinationResultOBCPrivate+currentSurveyYearApiData[0].examinationResultGeneralPrivate) < (latestSurveyYearApiData[0].examinationResultSCPrivate+latestSurveyYearApiData[0].examinationResultSTPrivate+latestSurveyYearApiData[0].examinationResultOBCPrivate+latestSurveyYearApiData[0].examinationResultGeneralPrivate))?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].examinationResultSCPrivate+currentSurveyYearApiData[0].examinationResultSTPrivate+currentSurveyYearApiData[0].examinationResultOBCPrivate+currentSurveyYearApiData[0].examinationResultGeneralPrivate}}
+                        </span>
+                      </p>
+
+                    </td>
+
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+<!-- Examination Result Online -->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" colspan="6">
+                        <h5  class="card-title cardHeaderTitle">Exam Result Online(Passed)</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">SC</td>
+										<td class="text-center text-uppercase">ST</td>
+										<td class="text-center text-uppercase">OBC</td>
+										<td class="text-center text-uppercase">EWS</td>
+										<td class="text-center text-uppercase">GN</td>
+										<td class="text-center text-uppercase">TOTAL</td>
+									</tr>
+									<tr>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].onlineSCResult > latestSurveyYearApiData[0].onlineSCResult)?'color:green'
+                        :(currentSurveyYearApiData[0].onlineSCResult < latestSurveyYearApiData[0].onlineSCResult)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].onlineSCResult}}
+                        </span>
+                      </p>
+
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].onlineSTResult > latestSurveyYearApiData[0].onlineSTResult)?'color:green'
+                        :(currentSurveyYearApiData[0].onlineSTResult < latestSurveyYearApiData[0].onlineSTResult)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].onlineSTResult}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].onlineOBCResult > latestSurveyYearApiData[0].onlineOBCResult)?'color:green'
+                        :(currentSurveyYearApiData[0].onlineOBCResult < latestSurveyYearApiData[0].onlineOBCResult)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].onlineOBCResult}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].onlineEWSResult > latestSurveyYearApiData[0].onlineEWSResult)?'color:green'
+                        :(currentSurveyYearApiData[0].onlineEWSResult < latestSurveyYearApiData[0].onlineEWSResult)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].onlineEWSResult}}
+                        </span>
+                      </p>
+
+                    </td>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].onlineGeneralResult > latestSurveyYearApiData[0].onlineGeneralResult)?'color:green'
+                        :(currentSurveyYearApiData[0].onlineGeneralResult < latestSurveyYearApiData[0].onlineGeneralResult)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].onlineGeneralResult}}
+                        </span>
+                      </p>
+
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="((currentSurveyYearApiData[0].onlineSCResult+currentSurveyYearApiData[0].onlineSTResult+currentSurveyYearApiData[0].onlineOBCResult+currentSurveyYearApiData[0].onlineGeneralResult) > (latestSurveyYearApiData[0].onlineSCResult+latestSurveyYearApiData[0].onlineSTResult+latestSurveyYearApiData[0].onlineOBCResult+latestSurveyYearApiData[0].onlineGeneralResult))?'color:green'
+                        :((currentSurveyYearApiData[0].onlineSCResult+currentSurveyYearApiData[0].onlineSTResult+currentSurveyYearApiData[0].onlineOBCResult+currentSurveyYearApiData[0].onlineGeneralResult) < (latestSurveyYearApiData[0].onlineSCResult+latestSurveyYearApiData[0].onlineSTResult+latestSurveyYearApiData[0].onlineOBCResult+latestSurveyYearApiData[0].onlineGeneralResult))?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].onlineSCResult+currentSurveyYearApiData[0].onlineSTResult+currentSurveyYearApiData[0].onlineOBCResult+currentSurveyYearApiData[0].onlineGeneralResult}}
+                        </span>
+                      </p>
+
+                    </td>
+
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+    <!-- Staff Information -->
+    <div class="col-lg-6 col-md-6 mb-4">
+      <div  class="d-flex" >
+        <div  class="card-mainwrap animated fadeIn " >
+          <div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+            <div class="card-body overflow-auto">
+              <table class="table table-responsive-sm table-borderless dashboard-card">
+                <thead>
+                  <tr class="dashboradsub">
+                    <td  class="text-center" colspan="2">
+                      <h5  class="card-title cardHeaderTitle">Teaching Staff Info..</h5>
+                    </td>
+                  </tr>
+                </thead>
+                <tr class="dashboradsub">
+                  <td class="text-center text-uppercase">Sanctioned Strength</td>
+                  <td class="text-center text-uppercase">In Position</td>
+                </tr>
+                <tr>
+                  <td class="text-center"><p class="card-text"><span [attr.style]="(currentSurveyYearApiData[0].teachingStaffSanctionedStrength > latestSurveyYearApiData[0].teachingStaffSanctionedStrength)?'color:green'
+                    :(currentSurveyYearApiData[0].teachingStaffSanctionedStrength < latestSurveyYearApiData[0].teachingStaffSanctionedStrength)?'color:red'
+                    :'color:#037a92'">{{currentSurveyYearApiData[0].teachingStaffSanctionedStrength}}</span></p></td>
+
+                  <td class="text-center"><p class="card-text"><span [attr.style]="(currentSurveyYearApiData[0].teachingStaffInPosition > latestSurveyYearApiData[0].teachingStaffInPosition)?'color:green'
+                        :(currentSurveyYearApiData[0].teachingStaffInPosition < latestSurveyYearApiData[0].teachingStaffInPosition)?'color:red'
+                        :'color:#037a92'">{{currentSurveyYearApiData[0].teachingStaffInPosition}}</span></p></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!--non teaching staff -->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" colspan="2">
+                        <h5  class="card-title cardHeaderTitle">Non Teaching Staff Info..</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">Sanctioned Strength</td>
+										<td class="text-center text-uppercase">In Position</td>
+									</tr>
+									<tr>
+										<td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].nonTeachingStaffSanctioned > latestSurveyYearApiData[0].nonTeachingStaffSanctioned)?'color:green'
+                        :(currentSurveyYearApiData[0].nonTeachingStaffSanctioned < latestSurveyYearApiData[0].nonTeachingStaffSanctioned)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].nonTeachingStaffSanctioned}}
+                        </span>
+                      </p>
+                    </td>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].nonTeachingStaffInPosition > latestSurveyYearApiData[0].nonTeachingStaffInPosition)?'color:green'
+                        :(currentSurveyYearApiData[0].nonTeachingStaffInPosition < latestSurveyYearApiData[0].nonTeachingStaffInPosition)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].nonTeachingStaffInPosition}}
+                        </span>
+                      </p>
+                    </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+      <!-- Scholarship card-->
+      <div class="col-lg-6 col-md-6 mb-4">
+				<div  class="d-flex" >
+					<div  class="card-mainwrap animated fadeIn " >
+						<div  class="card dashboard-card ml-2 mr-2" style="border: solid 1px #2a7ab9; border-radius: 25px; box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);">
+							<div class="card-body overflow-auto">
+								<table class="table table-responsive-sm table-borderless dashboard-card">
+									<thead>
+                    <tr class="dashboradsub">
+                      <td  class="text-center" >
+                        <h5  class="card-title cardHeaderTitle">Scholarship</h5>
+                      </td>
+                    </tr>
+                  </thead>
+									<tr class="dashboradsub">
+										<td class="text-center text-uppercase">Total</td>
+									</tr>
+
+									<tr>
+                    <td class="text-center">
+                      <p class="card-text">
+                        <span
+                        [attr.style]="(currentSurveyYearApiData[0].scholarship > latestSurveyYearApiData[0].scholarship)?'color:green'
+                        :(currentSurveyYearApiData[0].scholarship < latestSurveyYearApiData[0].scholarship)?'color:red'
+                        :'color:#037a92'">
+                        {{currentSurveyYearApiData[0].scholarship}}
+                        </span>
+                      </p>
+                    </td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</div>

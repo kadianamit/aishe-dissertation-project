@@ -1,0 +1,20 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="animated fadeInDown card mb-2 pt-2 pb-1 bg-light overflow-hidden">
+        <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-2 pt-4">
+                <label>Show</label>&nbsp;
+                <select [(ngModel)]="sharedService.pageSize" (ngModelChange)="onChange($event)">
+                <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+              </select>
+                entries
+              </div>
+              <div class="col-md-4"></div>
+              <div class="col-md-6 pt-4">
+                <label>Search:</label>&nbsp;
+                <input type="text" size="35" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+                [(ngModel)]="searchText">
+              </div>
+        </div>
+
+    </div>
+</div>

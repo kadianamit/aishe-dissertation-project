@@ -1,0 +1,48 @@
+
+// ::ng-deep .mat-form-field-label-wrapper {
+//     top: -1.5em;
+// }
+
+// ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+//     transform: translateY(-1.1em) scale(.75);
+//     width: 133.33333%;
+
+// }
+
+// ::ng-deep .mat-radio-label-content {
+//     padding-right: 8px !important;
+// }
+
+// label {
+//     color: black;
+//     font-weight: 600;
+//     margin-top: 0.7rem;
+//     font-family: 'Font Awesome 5 Free';
+// }
+
+.heading{
+    background: #337ab7;
+    color: #fff !important;
+    font-size: 90% !important;
+    font-weight: 500;
+    padding: 10px;
+}
+
+
+// .custom-border {
+//     border: 1px solid lightgray;
+//     border-radius: 4px;
+//     padding: 0px 5px 15px 14px;
+//     height: 50px;
+
+// }
+
+.label{
+    margin-top: 20px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

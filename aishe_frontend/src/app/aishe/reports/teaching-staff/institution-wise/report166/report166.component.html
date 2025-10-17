@@ -1,0 +1,218 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"    *ngIf="Showdata12">
+  <table class="table  showReportDataChild">
+<thead class="childTableStickyHeader">
+ 
+  <tr *ngIf="is2020==false">
+    <th
+      *ngFor="let col of tableColumns; let i = index"
+      [attr.style]="
+        i == 0 && col.trim() == 'Institution'
+          ? 'display:none'
+          : ''
+      "
+      [ngClass]="
+
+                          [i==0?'table-success':'',
+                          i>0 && i<3 ?'table-light':'',
+                          i>=3 && i<5 ? 'table-secondary': '',
+                          i>=5 && i<7 ? 'table-tertiary': '',
+                          i>=7 && i<9 ? 'table-light': '',
+                          i>=9 && i<11 ? 'table-secondary': '',
+                          i>=11 && i<13 ? 'table-tertiary': '',
+                          i>=13 && i<15 ? 'table-light': '',
+                          i>=15 && i<17 ? 'table-secondary': '',
+                          i>=17 && i<19 ? 'table-tertiary': '',
+                          i>=19 && i<21 ? 'table-light': '',
+                          i>=21 && i<23 ? 'table-secondary': '',
+                          i>=23 && i<25 ? 'table-tertiary': '',
+                          i>=25 && i<27 ? 'table-light': '',
+                          i>=27 && i<29 ? 'table-secondary': '',
+                          i>=29 && i<31 ? 'table-tertiary': '',
+                          i>=31 && i<33 ? 'table-light': '',
+                          i>=33 && i<35 ? 'table-secondary': '',
+                          i>=35 && i<37 ? 'table-tertiary': '',
+                          i>=37 && i<39 ? 'table-light': '',
+                          i>=39 && i<41 ? 'table-secondary': '',
+                          i>=41 && i<43 ? 'table-tertiary': '',
+                          i>=43 && i<44 ? 'table-light': '',
+
+                          ]"
+      class="text-center"
+    >
+      {{
+        col
+          .trim()
+          .replace('VICE_CHANCELLOR', 'VICE CHANCELLOR')
+          .replace('PRO_Vice Chancellor', 'PRO VICE CHANCELLOR')
+          .replace('LECTURER_GRADE', 'LECTURER GRADE')
+          .replace('ASST_PROFESSOR', 'ASST PROFESSOR')
+          .replace('LECTURER_SCALE', 'LECTURER SCALE')
+          .replace('PRO_VICE','PRO VICE')
+          .replace('GUEST_LECT','GUEST LECTURER')
+          .replace('PART_TIME_TEACHER', 'PART TIME TEACHER')
+          .replace('AD_HOC_TEACHER', 'AD HOC TEACHER')
+          .replace('TEMPORARY_TEACHER', 'TEMPORARY TEACHER')
+          .replace('CONTRACT_TEACHER', 'CONTRACT TEACHER')
+          .replace('VISITING_TEACHER', 'VISITING TEACHER')
+          .replace('ADDITIONAL_PROFESSOR', 'ADDITIONAL PROFESSOR')
+          .replace('PRINCIPAL_INCHARGE', 'PRINCIPAL INCHARGE')
+       }}
+    </th>
+  </tr>
+  <tr *ngIf="is2020">
+    <th
+      *ngFor="let col of tableColumns; let i = index"
+      [attr.style]="
+        i == 0 && col.trim() == 'Institution'
+          ? 'display:none'
+          : ''
+      "
+      [ngClass]="
+
+                          [i==0?'table-success':'',
+                          i>0 && i<4 ?'table-light':'',
+                          i>=4 && i<7 ? 'table-secondary': '',
+                          i>=7 && i<10 ? 'table-tertiary': '',
+                          i>=10 && i<13 ? 'table-light': '',
+                          i>=13 && i<16 ? 'table-secondary': '',
+                          i>=16 && i<19 ? 'table-tertiary': '',
+                          i>=19 && i<22 ? 'table-light': '',
+                          i>=22 && i<25 ? 'table-secondary': '',
+                          i>=25 && i<28 ? 'table-tertiary': '',
+                          i>=28 && i<31 ? 'table-light': '',
+                          i>=31 && i<34 ? 'table-secondary': '',
+                          i>=34 && i<37 ? 'table-tertiary': '',
+                          i>=37 && i<40 ? 'table-light': '',
+                          i>=40 && i<43 ? 'table-secondary': '',
+                          i>=43 && i<46 ? 'table-tertiary': '',
+                          i>=46 && i<49 ? 'table-light': '',
+                          i>=49 && i<52 ? 'table-secondary': '',
+                          i>=52 && i<55 ? 'table-tertiary': '',
+                          i>=55 && i<58 ? 'table-light': '',
+                          i>=58 && i<61 ? 'table-secondary': '',
+                          i>=61 && i<64 ? 'table-tertiary': '',
+                          i>=64 && i<67? 'table-light': '',
+
+                          ]"
+      class="text-center"
+    >
+      {{
+        col
+        .trim()
+        .replace('VICE_CHANCELLOR', 'VICE CHANCELLOR')
+        .replace('PRO_Vice Chancellor', 'PRO VICE CHANCELLOR')
+        .replace('LECTURER_GRADE', 'LECTURER GRADE')
+        .replace('ASST_PROFESSOR', 'ASST PROFESSOR')
+        .replace('LECTURER_SCALE', 'LECTURER SCALE')
+        .replace('GUEST_LECT','GUEST LECTURER')
+        .replace('TEACHING_ASS','TEACHING ASSISTANT')
+        .replace('PART_TIME_TEACHER', 'PART TIME TEACHER')
+        .replace('AD_HOC_TEACHER', 'AD HOC TEACHER')
+        .replace('TEMPORARY_TEACHER', 'TEMPORARY TEACHER')
+        .replace('CONTRACT_TEACHER', 'CONTRACT TEACHER')
+        .replace('VISITING_TEACHER', 'VISITING TEACHER')
+        .replace('ADDITIONAL_PROFESSOR', 'ADDITIONAL PROFESSOR')
+        .replace('PRINCIPAL_INCHARGE', 'PRINCIPAL INCHARGE')
+      }}
+    </th>
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let row of reportTableData | paginate
+  : {
+      itemsPerPage: pageSize,
+      currentPage: page
+    }" [ngClass]="is2020?'d-none':''">
+    <td
+      *ngFor="let col of tableColumns; let i = index"
+      class="text-center"
+      [ngClass]="
+                      [i==0?'table-success':'',
+                          i>0 && i<3 ?'table-light':'',
+                          i>=3 && i<5 ? 'table-secondary': '',
+                          i>=5 && i<7 ? 'table-tertiary': '',
+                          i>=7 && i<9 ? 'table-light': '',
+                          i>=9 && i<11 ? 'table-secondary': '',
+                          i>=11 && i<13 ? 'table-tertiary': '',
+                          i>=13 && i<15 ? 'table-light': '',
+                          i>=15 && i<17 ? 'table-secondary': '',
+                          i>=17 && i<19 ? 'table-tertiary': '',
+                          i>=19 && i<21 ? 'table-light': '',
+                          i>=21 && i<23 ? 'table-secondary': '',
+                          i>=23 && i<25 ? 'table-tertiary': '',
+                          i>=25 && i<27 ? 'table-light': '',
+                          i>=27 && i<29 ? 'table-secondary': '',
+                          i>=29 && i<31 ? 'table-tertiary': '',
+                          i>=31 && i<33 ? 'table-light': '',
+                          i>=33 && i<35 ? 'table-secondary': '',
+                          i>=35 && i<37 ? 'table-tertiary': '',
+                          i>=37 && i<39 ? 'table-light': '',
+                          i>=39 && i<41 ? 'table-secondary': '',
+                          i>=41 && i<43 ? 'table-tertiary': '',
+                          i>=43 && i<44 ? 'table-light': '',
+
+                          ]"
+    >
+      {{ row[col] }}
+    </td>
+  </tr>
+  <tr *ngFor="let row of reportTableData | paginate
+  : {
+      itemsPerPage: pageSize,
+      currentPage: page
+    }" [ngClass]="is2020?'':'d-none'">
+    <td
+      *ngFor="let col of tableColumns; let i = index"
+      class="text-center"
+      [ngClass]="
+                      [i==0?'table-success':'',
+                      i>0 && i<4 ?'table-light':'',
+                      i>=4 && i<7 ? 'table-secondary': '',
+                      i>=7 && i<10 ? 'table-tertiary': '',
+                      i>=10 && i<13 ? 'table-light': '',
+                      i>=13 && i<16 ? 'table-secondary': '',
+                      i>=16 && i<19 ? 'table-tertiary': '',
+                      i>=19 && i<22 ? 'table-light': '',
+                      i>=22 && i<25 ? 'table-secondary': '',
+                      i>=25 && i<28 ? 'table-tertiary': '',
+                      i>=28 && i<31 ? 'table-light': '',
+                      i>=31 && i<34 ? 'table-secondary': '',
+                      i>=34 && i<37 ? 'table-tertiary': '',
+                      i>=37 && i<40 ? 'table-light': '',
+                      i>=40 && i<43 ? 'table-secondary': '',
+                      i>=43 && i<46 ? 'table-tertiary': '',
+                      i>=46 && i<49 ? 'table-light': '',
+                      i>=49 && i<52 ? 'table-secondary': '',
+                      i>=52 && i<55 ? 'table-tertiary': '',
+                      i>=55 && i<58 ? 'table-light': '',
+                      i>=58 && i<61 ? 'table-secondary': '',
+                      i>=61 && i<64 ? 'table-tertiary': '',
+                      i>=64 && i<67? 'table-light': '',
+
+                          ]"
+    >
+      {{ row[col] }}
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="1" class="text-center table-success">
+      All Country
+    </td>
+    <td
+      *ngFor="let summary of summaryColumns; let i = index"
+      class="text-center table-secondary"
+    >
+      {{ summaryData[summary] ? summaryData[summary] : 0 }}
+    </td>
+  </tr>
+</tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

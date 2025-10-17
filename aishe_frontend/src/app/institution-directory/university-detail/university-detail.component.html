@@ -1,0 +1,154 @@
+<!-- Banner -->
+<div>
+  <img src="assets/img/uniDirBanner.jpg" width="100%" alt="">
+</div>
+<!-- /Banner -->
+<div class="container-fluid py-2" style="background-color: aliceblue;">
+  <!--Search-->
+  <div class="d-flex mb-2" style="justify-content:end">
+    <a (click)="back()" matTooltip="Back" matTooltipPosition="above" class="justify-content-end"><img
+        src="assets/img/table-back.svg" class="table-back me-2" />
+      Back
+    </a>
+  </div>
+  <div class="row justify-content-between">
+    <div class="col-md-7 d-flex " style="justify-content:right">
+
+
+      <h2 *ngIf="isUniversity"><span class="pgtitle">{{pageTitle}}</span></h2>
+      <h2 *ngIf="isCollege"><span class="pgtitle">{{pageTitle}}</span></h2>
+      <h2 *ngIf="isStandalone"><span class="pgtitle">{{pageTitle}}</span></h2>
+      <!-- <h2 *ngIf="isStandalone"><span class="pgtitle">{{filterForm.value.standaloneType=='ALL'?'ALL STANDALONE':pageTitle}}</span></h2> -->
+      <h2 *ngIf="isNationalImportance">
+        <span class="pgtitle">
+          {{pageTitle }}
+          <!-- :pageTitle.toUpperCase()=="SCHOOL OF PLANNING & ARCHITECTURE"?"Institute of National Importance - SPA"  -->
+        </span>
+      </h2>
+
+
+    </div>
+    <div>
+      <!-- <h2 class="pgtitle">(As per AISHE 2020-21)</h2> -->
+    </div>
+
+
+  </div>
+<div class="card p-3" style="margin-bottom: 20px;"> 
+
+
+  <div class="d-flex justify-content-between p-2"  *ngIf="Showdata">
+
+    <div class="card shadow-sm p-2" style="width:40%; margin:0 auto;" *ngIf="Showdata">
+      <div class="row has-search">
+        <div class="col-md-10 col-sm-8">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input type="text" id='myInput' class="form-control" placeholder="Search" (keyup)="applyFilter($event)"
+            #input>
+        </div>
+        <div class="col-md-2 col-sm-4" style="padding-left:0;">
+          <button class="btn btn-blue1" style="width:100%" type="submit">Search</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="justify-content-end p-2 ">
+
+
+      <a mat-button (click)="exportData('xls')">
+        <i class="fa fa-file-excel-o" matTooltip="Download as Excel" matTooltipPosition="above"
+          matTooltipClass="blackTooltip" style="font-size: 24px"></i>
+        <mat-icon style="color: green">
+          vertical_align_bottom
+        </mat-icon>
+      </a>
+
+      <a mat-button (click)="exportData('pdf')">
+        <i class="fa fa-file-pdf-o" matTooltip="Download as Pdf" matTooltipPosition="above"
+          matTooltipClass="blackTooltip" style="font-size: 24px"></i>
+        <mat-icon style="color: red">
+          vertical_align_bottom
+        </mat-icon>
+      </a>
+    </div>
+
+  </div>
+
+  <div
+    [ngClass]="isUniversity?'universityTable':isCollege?'collegeTable':isStandalone?'standTable':isNationalImportance?'nationalImportance':''"
+    class=" table-responsive-sm overflow-auto; mt-4" *ngIf="Showdata" id="universityTable">
+    <mat-table [dataSource]="dataSource " class=" overflow-auto" style="border-radius: 6px;">
+      <ng-container matColumnDef="aisheCode">
+        <mat-header-cell *matHeaderCellDef> Aishe Code </mat-header-cell>
+        <!-- <mat-cell *matCellDef="let element">
+          {{isUniversity?'U':isCollege?'C':isStandalone?'S':isNationalImportance?'U':''}}-{{element.aisheCode}} </mat-cell> -->
+        <!-- <mat-cell *matCellDef="let element"style="cursor:pointer; color: blue; " (click)="openView(element)">{{element.aisheCode}} </mat-cell> -->
+        <mat-cell *matCellDef="let element" >{{element.aisheCode}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell class="text-left" *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell class="text-left" *matCellDef="let element"> {{element.name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="address1">
+        <mat-header-cell class="text-left" *matHeaderCellDef> Address </mat-header-cell>
+        <mat-cell class="text-left" *matCellDef="let element"> {{element.address1===null?'-':element.address1}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="stateName">
+        <mat-header-cell *matHeaderCellDef> State </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.stateName}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="districtName">
+        <mat-header-cell *matHeaderCellDef> District </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.districtName}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="webSite">
+        <mat-header-cell class="text-left" *matHeaderCellDef> WebSite </mat-header-cell>
+        <mat-cell class="text-left" *matCellDef="let element"><a class="link"
+            (click)="websiteRedirect(element.webSite)">{{element.webSite===null?'-':element.webSite}} </a></mat-cell>
+
+        <!-- <mat-cell class="text-left" *matCellDef="let element"><a class="link" (click)="openURL(element.webSite)">{{element.webSite===null?'-':element.webSite}} </a></mat-cell> -->
+
+        <!-- <mat-cell class="text-left" *matCellDef="let element"><a [href]="element.webSite" target="_blank">{{element.webSite}} </a></mat-cell> -->
+      </ng-container>
+      <ng-container matColumnDef="yearOfEstablishment">
+        <mat-header-cell *matHeaderCellDef> Year Of Establishment </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.yearOfEstablishment===null?'-':element.yearOfEstablishment}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.location===null?'-':element.location}} </mat-cell>
+      </ng-container>
+      <!-- <ng-container matColumnDef="girlExcusive">
+        <mat-header-cell *matHeaderCellDef> Girl Exclusive </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.girlExcusive==='false'?'No':'Yes'}} </mat-cell>
+      </ng-container> -->
+      <ng-container matColumnDef="manegement">
+        <mat-header-cell *matHeaderCellDef> Manegement </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.manegement===null?'-':element.manegement}} </mat-cell>
+      </ng-container>
+      <!-- <ng-container matColumnDef="specializedIn">
+        <mat-header-cell *matHeaderCellDef> Specialized In </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{(element.specializedIn==='No' ||
+          element.specializedIn===null)?'-':element.specializedIn}} </mat-cell>
+      </ng-container> -->
+      <ng-container matColumnDef="universityName">
+        <mat-header-cell *matHeaderCellDef> University Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.universityName}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="universityType">
+        <mat-header-cell *matHeaderCellDef> University Type </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.universityType}} </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="matColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: matColumns;"></mat-row>
+    </mat-table>
+  </div>
+
+  <mat-paginator [style.display]="Showdata?'':'none'"
+    [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>
+</div>

@@ -1,0 +1,363 @@
+<!-- <a mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon matTooltip="Close">close</mat-icon>
+  </a> -->
+<mat-dialog-content *ngIf="!edit">
+    <h2 class="font-weight-bold text-lg" style="text-align: center;" *ngIf="!view">User Action
+        Form</h2>
+    <h2 class="font-weight-bold text-lg" style="text-align: center;" *ngIf="view">User Detail</h2>
+    <table class="table table-bordered table-sm">
+        <tr *ngIf="(data.selectedIndex === 1 || data.selectedIndex === 2) && data.showAisheCode">
+            <td class="viewProgramHeader">AISHE Code</td>
+            <td>{{data.aisheCode}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">User Id</td>
+            <td>{{data.userId}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">User Type</td>
+            <td>{{data.roleName}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Name</td>
+            <td>{{data.fullName}}</td>
+        </tr>
+
+        <tr *ngIf="data.gender === '1'">
+            <td class="viewProgramHeader">Gender</td>
+            <td>Male</td>
+        </tr>
+        <tr *ngIf="data.gender === '2'">
+            <td class="viewProgramHeader">Gender</td>
+            <td>Female</td>
+        </tr>
+        <tr *ngIf="data.gender === '3'">
+            <td class="viewProgramHeader">Gender</td>
+            <td>Transgender</td>
+        </tr>
+
+        <tr>
+            <td class="viewProgramHeader">Email</td>
+            <td>{{data.emailId}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Mobile No</td>
+            <td>{{data.mobile}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Alternate Email</td>
+            <td>{{data.alternateEmailId}}</td>
+        </tr>
+
+        <tr>
+            <td class="viewProgramHeader">Alternate Mobile No</td>
+            <td>{{data.phone}}</td>
+        </tr>
+        <tr *ngIf="data.selectedIndex === 2 || data.selectedIndex === 3">
+            <td class="viewProgramHeader">Institute Name</td>
+            <td>{{data.instituteName?data.instituteName:data.universityName}}</td>
+        </tr>
+        <tr *ngIf="data.selectedIndex === 1">
+            <td class="viewProgramHeader">University Name</td>
+            <td>{{data.universityName}}</td>
+        </tr>
+        <tr *ngIf="data.roleId === 12">
+            <td class="viewProgramHeader">Affiliated University</td>
+            <td>{{data.universityName}}</td>
+        </tr>
+
+        <tr>
+            <td class="viewProgramHeader">Address Line1</td>
+            <td>{{data.addressLine1}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Address Line2</td>
+            <td>{{data.addressLine2}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">City</td>
+            <td>{{data.city}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">State Name</td>
+            <td>{{data.stateName}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">District Name</td>
+            <td>{{data.districtName}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Download Document</td>
+            <td>
+                <span (click)="data.documentName?downloadPdf(data.document,data.documentName):''"
+                    [matTooltip]="data.documentName?'Download as PDF':''"
+                    [ngClass]="{hyperlink:data.documentName}">{{data.documentName?data.documentName:'NA'}}</span>
+            </td>
+        </tr>
+
+
+    </table>
+
+    <div class="col-md-12" *ngIf="!view">
+        <label style="font-weight: 500;">Action:-</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-radio-group [(ngModel)]="status" *ngIf="showInactive">
+            <mat-radio-button [value]=approvalVal>Approve</mat-radio-button>
+            &nbsp;&nbsp;
+            <mat-radio-button *ngIf="!(data.userStatus===3 && data.userStatusName==='Inactive')"
+                [value]=disApprovalVal>Disapprove</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-radio-group [(ngModel)]="status" *ngIf="!showInactive">
+            <mat-radio-button *ngIf="(data.userStatus===3 && data.userStatusName==='Inactive')"
+                [value]=approvalVal>Active</mat-radio-button>
+            <mat-radio-button *ngIf="!(data.userStatus===3 && data.userStatusName==='Inactive')"
+                [value]=inactiveVal>Inactive</mat-radio-button>
+        </mat-radio-group>
+
+
+    </div>
+    <div class="col-md-12" *ngIf="!view">
+        <mat-form-field class="d-block">
+            <mat-label>Remarks</mat-label>
+            <input type="text" matInput autocomplete="off" [(ngModel)]="remark">
+        </mat-form-field>
+    </div>
+    <div class="col-md-12 font-weight-semibold" *ngIf="data.showNote" >
+        Note:<br>
+        1. An active user <span style="font-weight: bold;color: red;">({{data.activeUserUserId}} , {{data.activeUserName}})</span> already exists <span *ngIf="data.instituteName">for </span> <span style="font-weight: bold;color: red;">{{data.instituteName?data.instituteName:''}}, {{data.activeUserAisheCode?data.activeUserAisheCode:''}}.</span>
+        <br>
+        2. Only one active user is allowed for an institute.
+        <br>
+    </div>
+</mat-dialog-content>
+<!-- <mat-dialog-content *ngIf="edit">
+    <h2 class="font-weight-bold text-lg" style="text-align: center;">Update User Detail</h2>
+    <form [formGroup]="registation">
+        <table class="table table-bordered table-sm">
+
+            <tr *ngIf="(data.selectedIndex === 1 || data.selectedIndex === 2) && data.showAisheCode">
+                <td class="viewProgramHeader">AISHE Code</td>
+                <td>{{data.aisheCode}}</td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">User Id</td>
+                <td>{{data.userId}}</td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Role</td>
+                <td>
+                    <select formControlName="role" required class="form-control form-control-sm"
+                        (ngModelChange)="filterData($event,'change')">
+                        <option value="1">National Level Officer</option>
+                        <option value="2">State Level Officer</option>
+                        <option value="3">Institute Level</option>
+                    </select>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['role'].dirty ||registation.controls['role'].value || registation.controls['role'].touched || isFormInvalid">
+                        <span *ngIf="
+                        registation.controls['role'].hasError(
+                          'required'
+                        )
+                      " class="errorMessage">Please select.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">User Type</td>
+                <td>
+                    <select formControlName="roleId" required class="form-control form-control-sm">
+                        <option *ngFor="let item of roleList" [value]="item.id">{{item.roleName}}</option>
+                    </select>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['roleId'].dirty ||registation.controls['roleId'].value || registation.controls['roleId'].touched || isFormInvalid">
+                        <span *ngIf="
+                        registation.controls['roleId'].hasError(
+                          'required'
+                        )
+                      " class="errorMessage">Please select.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">First Name</td>
+                <td><input type="text" formControlName="firstName" required class="form-control form-control-sm">
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['firstName'].dirty ||registation.controls['firstName'].value || registation.controls['firstName'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['firstName'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Middle Name</td>
+                <td><input type="text" formControlName="middleName" class="form-control form-control-sm"></td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Last Name</td>
+                <td><input type="text" formControlName="lastName" class="form-control form-control-sm"></td>
+            </tr>
+
+            <tr>
+                <td class="viewProgramHeader">Gender</td>
+                <td> <mat-radio-group aria-label="Select an option" required formControlName="gender">
+                        <mat-radio-button value="1">Male</mat-radio-button>&nbsp;&nbsp;
+                        <mat-radio-button value="2">Female</mat-radio-button>&nbsp;&nbsp;
+                        <mat-radio-button value="3">Transgender</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-hint class="err-msgs"
+                    *ngIf="registation.controls['gender'].dirty ||registation.controls['gender'].value || registation.controls['gender'].touched || isFormInvalid">
+                    <span *ngIf="
+                        registation.controls['gender'].hasError(
+                          'required'
+                        )
+                      " class="errorMessage">Please choose.</span>
+                </mat-hint>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="viewProgramHeader">Email</td>
+                <td><input type="text" formControlName="emailId" class="form-control form-control-sm" required></td>
+                <mat-hint class="err-msgs mt-3"
+                        *ngIf="registation.controls['emailId'].dirty ||registation.controls['emailId'].value || registation.controls['emailId'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['emailId'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                        <span *ngIf="
+                            registation.controls['emailId'].hasError(
+                              'pattern'
+                            )
+                          " class="errorMessage">Invalid Email.</span>
+                    </mat-hint>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Mobile No</td>
+                <td><input type="text" formControlName="mobile" class="form-control form-control-sm" required></td>
+                <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['mobile'].dirty ||registation.controls['mobile'].value || registation.controls['mobile'].touched || isFormInvalid">
+                        <span *ngIf="
+                                registation.controls['mobile'].hasError(
+                                  'required'
+                                )
+                              " class="errorMessage">Please enter.</span>
+                        <span *ngIf="
+                              registation.controls['mobile'].hasError(
+                                'pattern'
+                              )
+                            " class="errorMessage">Invalid.</span>
+                    </mat-hint>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Alternate Email</td>
+                <td><input type="text" formControlName="alternateEmailId" class="form-control form-control-sm"></td>
+            </tr>
+
+            <tr>
+                <td class="viewProgramHeader">Alternate Mobile No</td>
+                <td><input type="text" formControlName="phone" class="form-control form-control-sm"></td>
+            </tr>
+            <tr *ngIf="data.selectedIndex === 2 || data.selectedIndex === 3">
+                <td class="viewProgramHeader">Institute Name</td>
+                <td>{{data.instituteName?data.instituteName:data.universityName}}</td>
+            </tr>
+            <tr *ngIf="data.selectedIndex === 1">
+                <td class="viewProgramHeader">University Name</td>
+                <td>{{data.universityName}}</td>
+            </tr>
+            <tr *ngIf="data.roleId === 12">
+                <td class="viewProgramHeader">Affiliated University</td>
+                <td>{{data.universityName}}</td>
+            </tr>
+
+            <tr>
+                <td class="viewProgramHeader">Address Line1</td>
+                <td><input type="text" formControlName="addressLine1" class="form-control form-control-sm" required>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['addressLine1'].dirty ||registation.controls['addressLine1'].value || registation.controls['addressLine1'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['addressLine1'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">Address Line2</td>
+                <td><input type="text" formControlName="addressLine2" class="form-control form-control-sm" required>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['addressLine2'].dirty ||registation.controls['addressLine2'].value || registation.controls['addressLine2'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['addressLine2'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">City</td>
+                <td><input type="text" formControlName="city" class="form-control form-control-sm" required></td>
+                <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['city'].dirty ||registation.controls['city'].value || registation.controls['city'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['city'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                    </mat-hint>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">State Name</td>
+                <td>
+
+                    <select formControlName="stateCode" class="form-control form-control-sm" (ngModelChange)="getDistrict($event)">
+                        <option *ngFor="let item of stateList" [value]="item.stateCode">{{item.name}}</option>
+                    </select>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['stateCode'].dirty ||registation.controls['stateCode'].value || registation.controls['stateCode'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['stateCode'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please select.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+            <tr>
+                <td class="viewProgramHeader">District Name</td>
+                <td>
+                    <select formControlName="districtCode" required class="form-control form-control-sm">
+                        <option *ngFor="let item of districtList" [value]="item.distCode">{{item.name}}</option>
+                    </select>
+                    <mat-hint class="err-msgs"
+                        *ngIf="registation.controls['districtCode'].dirty ||registation.controls['districtCode'].value || registation.controls['districtCode'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['districtCode'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please select.</span>
+                    </mat-hint>
+                </td>
+            </tr>
+
+
+
+        </table>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center" *ngIf="edit">
+    <button mat-raised-button color="primary" tabindex="1" (click)="saveUserDetails()">Update</button>
+    <button mat-raised-button mat-dialog-close color="warn" tabindex="1">Close</button>
+</mat-dialog-actions> -->
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" tabindex="1" (click)="approveDis()"
+        *ngIf="!view">{{confirmButtonText}}</button>
+    <button mat-raised-button mat-dialog-close color="warn" tabindex="1">Close</button>
+</mat-dialog-actions>

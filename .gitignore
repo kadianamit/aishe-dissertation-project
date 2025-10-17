@@ -1,0 +1,30 @@
+# Generic
+.DS_Store
+.vscode/
+error.txt
+
+# Java / Maven
+target/
+*.jar
+*.war
+*.ear
+.project
+.classpath
+.factorypath
+.settings/
+aishe_backend/AisheMasterService/aishe-master.log
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+*.log
+*.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database dumps
+*.dump

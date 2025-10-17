@@ -1,0 +1,12 @@
+.table tr:nth-child(odd) td{
+    background-color: #f5eded
+  }
+  .table tr:nth-child(even) td{
+    background-color: #ffffff;
+  }
+  .larger-checkbox {
+    width: 20px; /* Adjust the width as needed */
+    height: 20px; /* Adjust the height as needed */
+    transform: scale(1.0); /* Scale the checkbox size */
+    margin: 2px; /* Adjust the margin as needed */
+  }

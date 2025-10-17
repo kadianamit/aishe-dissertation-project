@@ -1,0 +1,77 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto"  *ngIf="Showdata12">
+
+  <table class="table  showReportDataChild">
+      <thead class="childTableStickyHeader">
+        <tr>
+          <th rowspan="2" class="text-center table-success">Aishe Code</th>
+          <th rowspan="2" class="text-center table-light">Intitution Name</th>
+              <th rowspan="2" class="text-center table-secondary">Level</th>
+              <th rowspan="2" class="text-center table-tertiary">Programme</th>
+              <th rowspan="2" class="text-center table-light">Discipline Group Category</th>
+              <th rowspan="2" class="text-center table-secondary">Discipline Group Name</th>
+              <th rowspan="2" class="text-center table-tertiary">Country</th>
+              <th colspan="2" class="text-center table-light">Total</th>
+              <th rowspan="2" class="text-center table-secondary">Grand Total</th>
+        </tr>
+       <tr>
+        <th class="text-center table-light">Male</th>
+        <th class="text-center table-light">Female</th>
+       </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of reportTableData | paginate
+        : {
+            itemsPerPage: pageSize,
+            currentPage: page
+          }">
+          <td
+            *ngFor="let col of tableColumns; let i = index"
+            class="text-center"
+            [ngClass]="[i>=0 && i<1 ? 'table-success': '',i>=1 && i<2 ? 'table-light': '',i>=2 && i<3  ? 'table-secondary': '',
+              i>=3 && i<4 ? 'table-tertiary': '',i>=4 && i<5 ? 'table-light': '',i>=5 && i<6 ? 'table-secondary': '',
+              i>=6 && i<7 ? 'table-tertiary': '',i>=7 && i<9 ? 'table-light': '',i>=9 && i<10 ? 'table-secondary': '',
+              ]"
+          >
+            {{ row[col] }}
+          </td>
+        </tr>
+        <tr>
+         
+          <td colspan="1" class="text-center table-success">
+            All Countries
+          </td>
+          <td colspan="1" class="text-center table-success">
+            All Levels
+          </td>
+          <td colspan="1" class="text-center table-success">
+            All Programmes
+          </td>
+          <td colspan="2" class="text-center table-success">
+            All Disciplines
+          </td>
+          <td colspan="2" class="text-center table-success">
+            All Institutions
+          </td>
+         
+          <td
+            *ngFor="let summary of summaryColumns; let i = index"
+            class="text-center table-secondary"
+            [attr.style]="[i >=0 && i<5? 'display:none':'']"
+            [ngClass]="[i>=0 && i<1 ? 'table-success': '',
+              ]"
+          >
+
+            {{ summaryData[summary] }}
+          </td>
+        </tr>
+        </tbody>
+  </table>
+  <pagination-controls
+  previousLabel="Prev"
+  nextLabel="Next"
+  (pageChange)="handlePageChange($event)"
+  >
+  </pagination-controls>
+      </div>
+

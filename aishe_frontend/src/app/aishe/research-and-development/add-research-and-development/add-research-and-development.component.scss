@@ -1,0 +1,28 @@
+.heading {
+    background: #337ab7;
+    color: #fff !important;
+    font-size: 90% !important;
+    font-weight: 500;
+    padding: 10px;
+}
+.asterisk_input::after 
+{
+    content:" *"; 
+    color: red;
+}
+.loginshoweyecls{position: absolute;right: 0;top: 10px;cursor: pointer;}
+.errorMessage {
+    color: red;
+    font-size: inherit;
+  }
+  /* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+  }
+  input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}

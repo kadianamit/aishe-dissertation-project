@@ -1,0 +1,10 @@
+
+
+.showReportDataChild{
+    width: max-content;
+}
+
+.showReportDataChild thead tr:nth-child(1) th:nth-child(1),
+.showReportDataChild thead tr:nth-child(1) th:nth-child(2) {
+    width:10%;
+}

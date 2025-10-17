@@ -1,0 +1,115 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { finalize } from 'rxjs';
+import { utility } from 'src/app/common/utility';
+import { ReportChildComponent } from 'src/app/interface/ReportChildComponent';
+import { GetService } from 'src/app/service/get/get.service';
+import { LocalserviceService } from 'src/app/service/localservice.service';
+
+@Component({
+  selector: 'app-report112',
+  templateUrl: './report112.component.html',
+  styleUrls: ['./report112.component.scss']
+})
+export class Report112Component implements OnInit ,ReportChildComponent {
+
+
+  @Input()
+  reportInfoObj: any;
+
+  @Input()
+  reportForm: any;
+
+  pageSize: any = 10;
+  page: number = 1
+  StartLimit: number = 0;
+  pageData: number = 10;
+  EndLimit: number = 0;
+  reportTableData: any;
+  tableColumns: any;
+  Showdata12: boolean | undefined;
+  isDataLoading: boolean=false;
+  summaryColumns: any;
+  summaryData: any;
+  showPdfButton: boolean=false;
+  aisheCode: string;
+  splitAisheCode: string;
+
+  constructor(private getReport:GetService,public localService:LocalserviceService) { 
+     this.aisheCode=localService.getData('aisheCode')
+                
+                 this.splitAisheCode=this.aisheCode.split('-')[1]
+  }
+  exportAsXLSX(): void {
+     this.reportForm.value=this.reportForm.getRawValue();
+    this.reportForm.value.exportType="EXCEL";
+    this.reportForm.value.universityId=this.splitAisheCode
+    this.getReport.getReport112(this.reportForm.value).subscribe((res:any) => {
+          let byteArrays = res.byteData;
+          utility.downloadAsExcel(byteArrays,this.reportInfoObj.reportNumber);
+    });
+  }
+ 
+  ngOnInit(): void {
+    console.log("inside reports112")
+
+  }
+
+  getReportDataTable(): void {
+    this.isDataLoading=true;
+     this.reportForm.value=this.reportForm.getRawValue();
+    this.reportForm.value.exportType = "JSON";
+    this.reportForm.value.universityId=this.splitAisheCode
+    this.getReport.getReport112(this.reportForm.value).pipe(
+      finalize(() => {
+        this.isDataLoading = false;
+      })
+      ).subscribe((res:any) => {
+        if (res.list.length > 0) {
+        this.Showdata12=true;
+        this.showPdfButton = true;
+        this.reportTableData = res.list.slice(0, res.list.length-1);
+        this.tableColumns = Object.keys(res.list[0]);
+        this.summaryData = res.list[res.list.length - 1];
+       this.summaryColumns = Object.keys(this.summaryData);
+       this.handlePageChange(1)
+      } else {
+        this.tableColumns = [];
+        this.summaryData = [];
+        this.showPdfButton = false;
+        this.Showdata12=false;
+      }
+    });
+  }
+  generatePDF(): void {
+     this.reportForm.value=this.reportForm.getRawValue();
+    this.reportForm.value.exportType="PDF";
+    this.reportForm.value.universityId=this.splitAisheCode
+    this.getReport.getReport112(this.reportForm.value).subscribe((res:any) => {
+          let byteArrays = res.byteData;
+          utility.downloadPdf(byteArrays,this.reportInfoObj.reportNumber);
+    });
+  }
+  onReset(): void {
+    this.Showdata12=false;
+    this.showPdfButton=false;
+  }
+
+  handlePageChange(event: number) {
+    this.page = event;
+    let fgh = parseInt(this.pageSize);
+    (this.StartLimit = (this.page - 1) * fgh),
+      (this.EndLimit = this.StartLimit + fgh);
+    var a = Math.ceil(this.reportTableData.length / fgh);
+    if (a === event) {
+      this.pageData = Math.min(
+        this.StartLimit + fgh,
+        this.reportTableData.length
+      );
+    } else {
+      this.pageData = Math.min(
+        this.StartLimit + fgh,
+        this.reportTableData.length
+      );
+    }
+  }
+}

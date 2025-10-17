@@ -1,0 +1,80 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">Universal Search</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <mat-card class="border bg-gray-400">
+        <form class="mt-2">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Please Enter AISHE Code:<span class="asterisk">*</span></label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" (keypress)="onKeypressEvent($event,8)" [(ngModel)]="aisheCode" style="text-transform: uppercase;" [ngModelOptions]="{standalone: true}">
+                </div>
+
+            </div>
+            <p style="text-align: center;color: red;">{{errorMessage}}</p>
+            <p style="text-align: center;color: red;">{{lengthMessage}}</p>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-sm" (click)="getDetails()">Get Details</button>
+            </div>
+        </form>
+    </mat-card>
+
+
+        <!-- <div class="table-responsive" *ngIf="array && array.length">
+            <table class="table mt-2 text-left pe-2 table-bordered table-sm">
+                <tr>
+                    <th>Institute Name</th>
+                    <th>Current Status</th>
+                    <th>Last Updated Date(Name/University/Address)</th>
+                    <th>Nodal Officer</th>
+                    <th>Last DCF uploaded S.Y</th>
+                    <th>Is DCF Applicable</th>
+                </tr>
+                <tr>
+                    <td><span (click)="openDialog('Institution Details',array)" class="hyperlink">{{name}}</span></td>
+                    <td><span (click)="openDialog('Current Status',array)" class="hyperlink">{{currentStatus}}</span></td>
+                    <td><span (click)="openDialog('Last Updated',array)" class="hyperlink">{{lastUpdated?.actionTimeString}}</span></td>
+                    <td><span (click)="openDialog('User Details',array)" class="hyperlink">{{userId}}</span></td>
+                    <td><span (click)="openDialog('User Last Uploaded DCF Details',array)" class="hyperlink">{{latestDcfUploadSurveyyear}}</span></td>
+                    <td>{{isDcfApplicable?'Yes':'No'}}</td>
+                </tr>
+
+            </table>
+
+    </div>  -->
+    <div class="table-responsive" *ngFor="let item of array">
+        <table class="table mt-2 text-left pe-2 table-bordered table-sm">
+            <tr>
+                <th>AISHE Code </th>
+                <th>Name of the Institution</th>
+                <th>Nodal Office</th>
+                <th>Last Update Status</th>
+                <th>Last DCF uploaded S.Y</th>
+                <th>Status</th>
+                <!-- <th>SurveyYear</th> -->
+
+            </tr>
+            <tr>
+               <td><a class="requestIdLink" (click)="nextPage()">{{item.aisheCode}}</a></td>
+               <td>{{item.name}}</td>
+               <td>{{item.userId}}</td>
+               <td>{{item.lastActionDateTime}}</td>
+               <td><a class="requestIdLink" (click)="openSurveyYearDialog(item,item?.formUpload)">{{item?.formUpload?item.formUpload[0].surveyYear:'' }}</a></td>
+               <td>{{item.status}}</td>
+               <!-- <td>{{item.surveyYear}}</td> -->
+
+            </tr>
+
+        </table>
+
+</div>
+
+
+</div>

@@ -1,0 +1,25 @@
+table > thead{
+    background-color: #12426b !important
+}
+
+.table .thead-dark th{
+    background-color: transparent !important;
+}
+
+table th{
+    // color: black !important;
+    // border-top: #ccc solid 1px !important;
+    // border-bottom: none !important;
+    // border-right: none !important;
+    // border-left: none !important;
+    white-space: nowrap;
+}
+
+.show-button{
+  padding-top: 9px;
+}
+
+tr td{
+  padding:  5px 10px 5px 10px !important;
+  vertical-align: middle;
+}

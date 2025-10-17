@@ -1,0 +1,54 @@
+<div style="text-align:center" *ngIf="!(element.savePrefilled || element.showState || element.updateSubDis || element.research)">
+    <h1 style="color: red;">Access not allowed !! Already logged in</h1>
+</div>
+
+<mat-dialog-content *ngIf="element.savePrefilled">
+    <p style="font-weight: 500;color: green;">Please try again !!!</p>
+</mat-dialog-content>
+
+<mat-dialog-content *ngIf="element.showState">
+    <h2 class="font-weight-bold text-lg" style="text-align: center;color: red">Alert !!</h2>
+    <!-- <h3 class="text-center" style="color: red;font-size: large;font-family: auto;">Alert !!</h3> -->
+    <div class="table-responsive">
+        <table class="table mt-2 text-left pe-2 table-bordered table-sm">
+            <tr>
+                <th></th>
+                <th><span>As per Latitude: {{element.latitude}}</span><br>
+                    Longitude: {{element.latitude}}
+                    <span></span>
+                </th>
+                <th>As per entered Address for correspondence</th>
+            </tr>
+            <tr [ngClass]="element.stateName === element.enteredState?'green':'red'">
+                <td style="font-weight: 500;">State</td>
+                <td >{{element.stateName}}</td>
+                <td>{{element.enteredState}}</td>
+            </tr>
+            <tr [ngClass]="element.districtName === element.enteredDistrict?'green':'red'">
+                <td style="font-weight: 500;">District</td>
+                <td>{{element.districtName}}</td>
+                <td>{{element.enteredDistrict}}</td>
+            </tr>
+            <tr [ngClass]="element.subDistrict === element.enterdSubDistrict?'green':'red'">
+                <td style="font-weight: 500;">Sub-District</td>
+                <td>{{element.subDistrict}}</td>
+                <td>{{element.enterdSubDistrict}}</td>
+            </tr>
+        </table>
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-content *ngIf="element.research">
+    <p style="font-weight: 500;color: red;font-size:medium;">Same institution is already
+        existing in AISHE, thus you are not allowed to add this institution.</p>
+</mat-dialog-content>
+
+<mat-dialog-content *ngIf="element.updateSubDis">
+    <p style="font-weight: 500;color: green;">Please Update Subdistrict
+        (Subdivision/Tehsil/Taluk/Taluka/Mandal/Mandal(Circle) /Circle).Ignore,if already updated.</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center" *ngIf="element.savePrefilled || element.showState || element.updateSubDis || element.research">
+    <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">Close</button>
+</mat-dialog-actions>

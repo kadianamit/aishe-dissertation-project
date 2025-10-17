@@ -1,0 +1,190 @@
+.table {
+    border-collapse: initial;
+    border-spacing: 0 0.575rem;
+}
+
+
+.table th{
+  border-color: #b8ced2;
+  border-width: 1px 0;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  vertical-align: middle;
+  height: 68px;
+  background-color: #aae2ed;
+  color: black !important;
+}
+
+.table td:first-child, .table th:first-child {
+    padding-left: 1.5rem;
+    border-left-width: 1px;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+
+.table td:first-child {
+    padding-left: 1.5rem;
+    border-left-width: 1px;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+
+tbody, td, tfoot, th, thead, tr {
+  border: 0 solid;
+  border-color: inherit;
+}
+.table td:last-child, .table th:last-child {
+  padding-right: 1.5rem;
+  border-right-width: 1px;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.table td, .table th {
+    border-color: #b8ced2;
+    border-width: 1px 0;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    vertical-align: middle;
+    height: 58px;
+  }
+
+
+  .card-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #4a90e2; /* blue background */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 200px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s ease;
+  color: white; /* text color to contrast */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.icon {
+  background: #003d99; /* darker blue */
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin: 0 auto 10px;
+}
+
+.number {
+ margin-top: 12px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #000;
+    text-decoration: underline;
+      font-family:ui-rounded;
+}
+
+.label {
+  font-size: 22px;
+  color: #ffff; /* lighter text for label */
+  margin-top: 5px;
+  font-weight: 500;
+  font-family:ui-rounded;
+}
+.rejectRequest , .pending ,.standalone{
+  cursor: pointer !important;
+  
+}
+ .number1:hover{
+    color: #ffff;
+     text-decoration: underline;
+  }
+.card.rejectRequest{
+  background :#7030a0 !important;
+}
+.card.rejectRequest .icon{
+  background :#fb4a40 !important;
+}
+.card.pending {
+  background: #f7933d; /* orange */
+  color: #fff;
+}
+
+.card.pending .icon {
+  background: #f7933d; /* dark orange */
+}
+
+.card.standalone {
+  background: #0070c0; /* green */
+}
+
+.card.standalone .icon {
+  background: #1e8449; /* dark green */
+}
+.approveRejectLink{
+    color: blue !important;
+        text-decoration: underline !important;
+        cursor: pointer
+    }
+@media (max-width: 480px) {
+  .card-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+::ng-deep .mat-form-field {
+   display: unset !important
+}
+
+.status-bar {
+  background-color: #f7933d; /* Orange color */
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  width: 100%;
+}
+.status-bar-count{
+    background-color: #0070c0; /* Orange color */
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  width: 100%;
+}
+.status-bar-rejected{
+    background-color: #7030a0; /* Orange color */
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  width: 100%;
+}
+.status-text {
+  display: inline-block;
+    font-family:ui-rounded;
+    font-size: 18px;
+}
+.dashboard{
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+// .disabled {
+//   opacity: 0.5;
+// }
+.pointer-none {
+  pointer-events: none;
+  cursor: not-allowed;
+}

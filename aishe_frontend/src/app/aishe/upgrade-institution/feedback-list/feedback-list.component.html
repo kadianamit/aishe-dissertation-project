@@ -1,0 +1,219 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">HEIs Feedback Report</span>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-sm-2 d-flex justify-content-end mt-2 ml-auto" *ngIf="this.collegeToUniversityCode">
+            <a (click)="back()" matTooltip="Back" style="cursor: pointer;" class="text-uppercase"><img
+                    src="assets/img/table-back.svg" class="table-back me-2" />
+                Back
+            </a>
+        </div> -->
+    </div>
+    <div class="animated fadeInDown card mb-2 pt-2 pb-1 bg-light overflow-hidden">
+      <mat-tab-group animationDuration="0ms" class="exam-tabing-steps" [(selectedIndex)]="selectedIndex"
+      (selectedTabChange)="tabSelected($event)">
+      <!-- view -->
+      <mat-tab label="Unread">
+         
+      </mat-tab>
+      <mat-tab label="Read">
+
+        </mat-tab>
+        <mat-tab label="Flag">
+
+        </mat-tab>
+       </mat-tab-group>
+        <div class="row col-md-12 overflow-hidden mb-2">
+            <div class="col-md-2">
+                <mat-form-field class="d-block">
+                  <mat-label>From Date:</mat-label>
+                  <input matInput [matDatepicker]="picker1" readonly [min]="maxDate1" [(ngModel)]="fromDate" (focus)="picker1.open()"
+                    placeholder="From Date" (dateChange)="handleToDate($event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker-toggle matSuffix (click)="clearStartDate()">
+                    <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                </mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field class="d-block">
+                  <mat-label>To Date:</mat-label>
+                  <input matInput [matDatepicker]="picker2" readonly  [(ngModel)]="toDate"
+                    placeholder="To Date" (dateChange)="handleToDateMax($event)" [(ngModel)]="toDate" [min]="fromDate" (focus)="picker2.open()">
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker-toggle matSuffix (click)="clearEndDate()">
+                    <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                </mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+              </div>
+            <div class="col-md-2">
+                <mat-form-field class="d-block">
+                    <mat-label>Menu</mat-label>
+                    <mat-select [(ngModel)]="menu" (selectionChange)="getFilterData($event.value)">
+                      <!-- <mat-select-filter [placeholder]="'Filter'" [displayMember]="'surveyYearValue'"
+                      [array]="surveyYearOption" (filteredReturn)="filterSurveyYearOption =$event"></mat-select-filter> -->
+                      <mat-option [value]=0>--ALL--</mat-option>
+                    <mat-option *ngFor="let item of menuList" [value]="item.menu">
+                      {{item.menu}}
+                    </mat-option>
+                    </mat-select>
+                   
+                  </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field class="d-block">
+                    <mat-label>Sub Menu</mat-label>
+                    <mat-select [(ngModel)]="submenu" (selectionChange)="getFilterData1($event.value)">
+                      <!-- <mat-select-filter [placeholder]="'Filter'" [displayMember]="'surveyYearValue'"
+                      [array]="surveyYearOption" (filteredReturn)="filterSurveyYearOption =$event"></mat-select-filter> -->
+                      <!-- <mat-option [value]=0>--ALL--</mat-option> -->
+                    <mat-option *ngFor="let item of subMenuListDistinct" [value]="item.submenu">
+                      {{item.submenu}}
+                    </mat-option>
+                    </mat-select>
+                   
+                  </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field class="d-block">
+                    <mat-label>Page</mat-label>
+                    <mat-select [(ngModel)]="page" (selectionChange)="getFilterData2($event.value)">
+                      <!-- <mat-select-filter [placeholder]="'Filter'" [displayMember]="'surveyYearValue'"
+                      [array]="surveyYearOption" (filteredReturn)="filterSurveyYearOption =$event"></mat-select-filter> -->
+                      <!-- <mat-option [value]=0>--ALL--</mat-option> -->
+                    <mat-option *ngFor="let item of pageListDistinct" [value]="item.page">
+                      {{item.page}}
+                    </mat-option>
+                    </mat-select>
+                   
+                  </mat-form-field>
+            </div>
+            <div class="col-md-1">
+                <button mat-button class="btn btn-primary btn-sm mt-2 ml-2" matTooltip="Reset"
+                (click)="reset()">
+                <i class="fa fa-refresh" aria-hidden="true"></i></button>
+            </div>
+        </div>
+        <div class="ml-3">
+          <!-- <button class="btn btn-success btn-sm align-items-center" (click)="showList(1)">
+            <mat-icon matTooltip="Read" class="read_icon" style="color: #fff;"> done </mat-icon> Read</button>
+          <button class="btn btn-secondary btn-sm ml-2 align-items-center" (click)="showList(2)"><mat-icon matTooltip="Unread" class="unread_icon" style="color: #fff;"> mail </mat-icon> Unread</button>
+          <button class="btn btn-danger btn-sm ml-2 align-items-center" (click)="showList(3)"><mat-icon matTooltip="Flag" class="flag_icon" style="color: #fff;"> flag </mat-icon> Flag</button> -->
+          <div class="col-3">
+          <!-- <mat-form-field class="d-block">
+            <mat-label>Select Status</mat-label>
+            <mat-select [(ngModel)]="statusValue" (selectionChange)="showList($event.value)">
+            <mat-option *ngFor="let item of statusList" [value]="item.id">
+              {{item.status}}
+            </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+           </div>
+        </div>
+
+        <div class="row col-md-12 overflow-hidden mb-2">
+            <div class="col-md-2 pt-4">
+                <label>Show</label>&nbsp;
+                <select [(ngModel)]="sharedService.pageSize" (ngModelChange)="onChange($event)">
+                    <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+                </select>
+                entries
+            </div>
+            <div class="col-md-5"></div>
+            <div class="col-md-5 pt-4">
+                <label>Search:</label>&nbsp;
+                <input type="text" size="45" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+                    [(ngModel)]="searchText">
+            </div>
+            <!-- <div class="col-md-2 mt-1">
+                <a mat-button (click)="downloadPDF()">
+                    <i class="fa fa-file-pdf-o" matTooltip="Download as PDF" matTooltipPosition="above"
+                        matTooltipClass="downloadPDF" style="font-size: 24px;color: red;"></i>
+                    <mat-icon style="color: red;">vertical_align_bottom</mat-icon>
+                </a>
+                <a mat-button (click)="downloadExcel()">
+                    <i class="fa fa-file-excel-o" matTooltip="Download as Excel" matTooltipPosition="above"
+                        matTooltipClass="downloadExcel" style="font-size: 24px;color: green;"></i>
+                    <mat-icon style="color: green;">vertical_align_bottom</mat-icon>
+                </a>
+            </div> -->
+
+        </div>
+        <div class="col-md-12 table-responsive">
+            <table class="table table-bordered table-sm">
+                <tr class="text-center">
+                    <th>S.No</th>
+                    <th style="width: 10%;">AISHE Code</th>
+                    <th>Institution Name</th>
+                    <th style="width: 10%;">Menu</th>
+                    <th style="width: 10%;">Sub Menu</th>
+                    <th style="width: 8%;">Page</th>
+                    <!-- <th>State</th> -->
+                    <th style="width: 30%;">Remarks</th>
+                    <th style="width: 10%;">Date</th>
+                    <th style="width: 10%;">Action</th>
+                </tr>
+
+                <ng-container *ngFor="let obj of feedbackList | paginate : {
+                itemsPerPage: sharedService.pageSize,
+                currentPage: sharedService.page
+              
+              };
+        let i = index
+        ">
+                    <tr>
+                        <td>{{i+sharedService.StartLimit+1}}</td>
+                        <td>{{obj.aishe_code?obj.aishe_code:obj.msg}}</td>
+                        <td>{{obj.institutionName?obj.institutionName:'NA'}}</td>
+                        <td>{{obj.menu?obj.menu:'NA'}}</td>
+                        <td>{{obj.submenu?obj.submenu:'NA'}}</td>
+                        <td>{{obj.page?obj.page:'NA'}}</td>
+                        <!-- <td>{{obj.state?.name}}</td> -->
+                        <td>{{obj.remarks}}</td>
+                        <!-- <td><span style="display: inline-block;width: max-content;">{{obj?.dateTime?.split(' ')[0]}}</span></td> -->
+                        <td><span style="display: inline-block;width: max-content;">{{obj?.dateTime}}</span></td>
+
+                        <td *ngIf="obj.status.id==1">
+                          <!-- <a class="p-1"><mat-icon matTooltip="Read" class="read_icon"> done </mat-icon></a> -->
+                          <a class="p-1" (click)="changeStatus(obj,2)"><mat-icon matTooltip="Unread" class="unread_icon"> mail </mat-icon></a>
+                          <a class="p-1" (click)="changeStatus(obj,3)"><mat-icon matTooltip="Flag" class="flag_icon"> flag </mat-icon></a>
+                        </td>
+                        <td *ngIf="obj.status.id==2">
+                          <a style="cursor: pointer !important;" class="p-1" (click)="changeStatus(obj,1)"><mat-icon matTooltip="Read" class="read_icon"> done </mat-icon></a>
+                          <!-- <a class="p-1"><mat-icon matTooltip="Unread" class="unread_icon"> mail </mat-icon></a> -->
+                          <a class="p-1" (click)="changeStatus(obj,3)"><mat-icon matTooltip="Flag" class="flag_icon"> flag </mat-icon></a>
+                        </td>
+                        <td *ngIf="obj.status.id==3">
+                          <a style="cursor: pointer !important;" class="p-1" (click)="changeStatus(obj,1)"><mat-icon matTooltip="Read" class="read_icon"> done </mat-icon></a>
+                          <a class="p-1" (click)="changeStatus(obj,2)"><mat-icon matTooltip="Unread" class="unread_icon"> mail </mat-icon></a>
+                          <!-- <a class="p-1" (click)="changeStatus(obj,3)"><mat-icon matTooltip="Flag" class="flag_icon"> flag </mat-icon></a> -->
+                        </td>
+                    </tr>
+                </ng-container>
+            </table>
+            <div class="table-norecord" *ngIf="feedbackList.length === 0">No Record Found.</div>
+        </div>
+
+        <div class="row col-md-12 overflow-hidden" *ngIf="feedbackList.length !== 0">
+            <div class="col-md-3">
+                Showing {{sharedService.StartLimit + 1}} to {{sharedService.pageData === -1?0:sharedService.pageData}}
+                Of {{feedbackList.length}}
+                entries
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-7">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+                    screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                    screenReaderCurrentLabel="You're on page"></pagination-controls>
+            </div>
+        </div>
+
+    </div>
+</div>

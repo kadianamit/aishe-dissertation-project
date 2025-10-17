@@ -1,0 +1,168 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto"   *ngIf="Showdata12">
+
+  <table class="table  showReportDataChild">
+      <thead class="childTableStickyHeader">
+        <tr *ngIf="is2020==false">
+          <th rowspan="1" class="text-center table-success">University Name</th>
+          <th colspan="6" class="text-center table-tertiary">University Teaching Department
+              From DCF-I</th>
+              <th colspan="4" class="text-center table-light">Affiliated College</th>
+              <th colspan="4" class="text-center table-tertiary">Constituent/ University College</th>
+              <th colspan="4" class="text-center table-secondary">Recognised Centre</th>
+              <th colspan="4" class="text-center table-light">PG/Off-Campus Centre</th>
+              <th colspan="2" class="text-center table-tertiary">Total</th>
+              <th colspan="1" class="text-center table-secondary"></th>
+        </tr>
+        <tr *ngIf="is2020">
+          <th rowspan="1" class="text-center table-success">University Name</th>
+          <th colspan="8" class="text-center table-tertiary">University Teaching Department
+              From DCF-I</th>
+              <th colspan="5" class="text-center table-light">Affiliated College</th>
+              <th colspan="5" class="text-center table-tertiary">Constituent/ University College</th>
+              <th colspan="5" class="text-center table-secondary">Recognised Centre</th>
+              <th colspan="5" class="text-center table-light">PG/Off-Campus Centre</th>
+              <th colspan="3" class="text-center table-tertiary">Total</th>
+              <th colspan="1" class="text-center table-secondary"></th>
+        </tr>
+
+
+            <tr *ngIf="is2020==false">
+              <th rowspan="2" class="text-center table-success"></th>
+              <th colspan="3" class="text-center table-tertiary">Regular Enrolment</th>
+              <th colspan="3" class="text-center table-secondary">Distance Enrolment</th>
+              <th colspan="4" class="text-center table-light">Enrolment</th>
+              <th colspan="4" class="text-center table-tertiary">Enrolment</th>
+              <th colspan="4" class="text-center table-secondary">Enrolment</th>
+              <th colspan="4" class="text-center table-light">Enrolment </th>
+              <th colspan="2" class="text-center table-tertiary">Enrolment</th>
+              <th colspan="1" class="text-center table-secondary">Grand</th>
+                </tr>
+                <tr *ngIf="is2020">
+                  <th rowspan="2" class="text-center table-success"></th>
+                  <th colspan="4" class="text-center table-tertiary">Regular Enrolment</th>
+                  <th colspan="4" class="text-center table-secondary">Distance Enrolment</th>
+                  <th colspan="5" class="text-center table-light">Enrolment</th>
+                  <th colspan="5" class="text-center table-tertiary">Enrolment</th>
+                  <th colspan="5" class="text-center table-secondary">Enrolment</th>
+                  <th colspan="5" class="text-center table-light">Enrolment </th>
+                  <th colspan="3" class="text-center table-tertiary">Enrolment</th>
+                  <th colspan="1" class="text-center table-secondary">Grand</th>
+                    </tr>
+
+            <tr *ngIf="is2020==false">
+              <th
+                *ngFor="let col of tableColumns; let i = index"
+                [attr.style]="
+                  (i == 0 && col=='University Name')
+                    ? 'display:none'
+                    : ''"
+                    [ngClass]="[i>=0 && i<1 ? 'table-success': '',i>=1 && i<4 ? 'table-tertiary': '',i>=4 && i<7  ? 'table-secondary': '',
+                      i>=7 && i<11 ? 'table-light': '',i>=11 && i<15 ? 'table-tertiary': '',i>=15 && i<19 ? 'table-secondary': '',
+                      i>=19 && i<23 ? 'table-light': '',i>=23 && i<25 ? 'table-tertiary': '', i>=25 && i<26 ? 'table-secondary': '',
+                      ]"
+                class="text-center"
+              >
+                {{
+                  col
+                    .trim()
+                    .replace('University Name','')
+                    .replace('Regular Enroll', '')
+                    .replace('Distance Enroll', '')
+                    .replace('Affiliated College', '')
+                    .replace('University College', '')
+                    .replace('Recognised Center', '')
+                    .replace('Off Campus Center','')
+                    .replace('Total Male','Male')
+                    .replace('Total Female','Female')
+                    .replace('Grand Total','Total')
+
+                  }}
+              </th>
+            </tr>
+            <tr *ngIf="is2020">
+              <th
+                *ngFor="let col of tableColumns; let i = index"
+                [attr.style]="
+                  (i == 0 && col=='University Name')
+                    ? 'display:none'
+                    : ''"
+                    [ngClass]="[i>=0 && i<1 ? 'table-success': '',i>=1 && i<5 ? 'table-tertiary': '',i>=5 && i<9  ? 'table-secondary': '',
+                      i>=9 && i<14 ? 'table-light': '',i>=14 && i<19 ? 'table-tertiary': '',i>=19 && i<24 ? 'table-secondary': '',
+                      i>=24 && i<29 ? 'table-light': '',i>=29 && i<32 ? 'table-tertiary': '', i>=32 && i<33 ? 'table-secondary': '',
+                      ]"
+                class="text-center"
+              >
+                {{
+                  col
+                    .trim()
+                    .replace('University Name','')
+                    .replace('Regular Enroll', '')
+                    .replace('Distance Enroll', '')
+                    .replace('Affiliated College', '')
+                    .replace('University College', '')
+                    .replace('Recognised Center', '')
+                    .replace('Off Campus Center','')
+                    .replace('Total Male','Male')
+                    .replace('Total Female','Female')
+                    .replace('Total Transgender','Transgender')
+                    .replace('Grand','')
+
+                  }}
+              </th>
+            </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of reportTableData  | paginate
+        : {
+            itemsPerPage: pageSize,
+            currentPage: page
+          }" [ngClass]="is2020?'d-none':''">
+          <td
+            *ngFor="let col of tableColumns; let i = index"
+            class="text-center"
+            [ngClass]="[i>=0 && i<1 ? 'table-success': '',i>=1 && i<4 ? 'table-tertiary': '',i>=4 && i<7  ? 'table-secondary': '',
+              i>=7 && i<11 ? 'table-light': '',i>=11 && i<15 ? 'table-tertiary': '',i>=15 && i<19 ? 'table-secondary': '',
+              i>=19 && i<23 ? 'table-light': '',i>=23 && i<25 ? 'table-tertiary': '', i>=25 && i<26 ? 'table-secondary': '',
+              ]"
+          >
+            {{ row[col] }}
+          </td>
+        </tr>
+        <tr *ngFor="let row of reportTableData  | paginate
+        : {
+            itemsPerPage: pageSize,
+            currentPage: page
+          }" [ngClass]="is2020?'':'d-none'">
+          <td
+            *ngFor="let col of tableColumns; let i = index"
+            class="text-center"
+            [ngClass]="[i>=0 && i<1 ? 'table-success': '',i>=1 && i<5 ? 'table-tertiary': '',i>=5 && i<9  ? 'table-secondary': '',
+              i>=9 && i<14 ? 'table-light': '',i>=14 && i<19 ? 'table-tertiary': '',i>=19 && i<24 ? 'table-secondary': '',
+              i>=24 && i<29 ? 'table-light': '',i>=29 && i<32 ? 'table-tertiary': '', i>=32 && i<33 ? 'table-secondary': '',
+              ]"
+          >
+            {{ row[col] }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="1" class="text-center table-success">
+            All India
+          </td>
+          <td
+            *ngFor="let summary of summaryColumns; let i = index"
+            class="text-center table-secondary"
+          >
+            {{ summaryData[summary] }}
+          </td>
+        </tr>
+        </tbody>
+  </table>
+  <pagination-controls
+  previousLabel="Prev"
+  nextLabel="Next"
+  (pageChange)="handlePageChange($event)"
+  >
+  </pagination-controls>
+      </div>
+

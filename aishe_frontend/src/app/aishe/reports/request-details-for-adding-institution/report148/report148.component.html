@@ -1,0 +1,142 @@
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData" *ngIf="Showdata12">
+    <table class="table  showReportDataChild">
+        <thead class="childTableStickyHeader">
+            <tr>
+                <th rowspan="3" class="text-center table-success">Sr. No.</th>
+                <th rowspan="3" class="text-center table-light">Request Id</th>
+                <th rowspan="3" class="text-center table-secondary">Request Created Date</th>
+                <th rowspan="2" colspan="6" class="text-center table-tertiary">Institution Details Nodal Officer Profile
+                </th>
+                <th rowspan="2" colspan="6" class="text-center table-light">Institution Head Profile</th>
+                <th rowspan="2" colspan="11" class="text-center table-secondary">Institution Details</th>
+                <th rowspan="2" colspan="5" class="text-center table-tertiary">Addresses for Correspondence</th>
+                <th rowspan="1" colspan="12" class="text-center table-light">User Approval Details </th>
+
+            </tr>
+
+            <tr>
+                <th colspan="4" class="text-center table-secondary">MHRD</th>
+                <th colspan="4" class="text-center table-tertiary">SNO</th>
+                <th colspan="4" class="text-center table-secondary">UNO</th>
+            </tr>
+
+            <tr>
+                <th class="text-center table-tertiary">Officer Name</th>
+                <th class="text-center table-tertiary">Designation</th>
+                <th class="text-center table-tertiary">Gender</th>
+                <th class="text-center table-tertiary">Email</th>
+                <th class="text-center table-tertiary">Phone Landline</th>
+                <th class="text-center table-tertiary">Mobile</th>
+
+                <th class="text-center table-light">Officer Name</th>
+                <th class="text-center table-light">Designation</th>
+                <th class="text-center table-light">Gender</th>
+                <th class="text-center table-light">Email</th>
+                <th class="text-center table-light">Phone Landline</th>
+                <th class="text-center table-light">Mobile</th>
+
+                <th  class="text-center table-secondary">Name</th>
+                <th  class="text-center table-secondary">State</th>
+                <th  class="text-center table-secondary">District</th>
+                <th  class="text-center table-secondary">Location</th>
+                <th  class="text-center table-secondary">College Type</th>
+                <th  class="text-center table-secondary">Management Type</th>
+                <th  class="text-center table-secondary">Affiliated University Name</th>
+                <th  class="text-center table-secondary">Year from Which Admission</th>
+                <th  class="text-center table-secondary">AISHE-CODE</th>
+                <th  class="text-center table-secondary">Affiliated To Other University</th>
+                <th  class="text-center table-secondary">other Affiliated University Name</th>
+
+                <th class="text-center table-tertiary">Address Line</th>
+                <th class="text-center table-tertiary">City</th>
+                <th class="text-center table-tertiary">State</th>
+                <th class="text-center table-tertiary">District</th>
+                <th class="text-center table-tertiary">Pincode</th>
+
+                <th class="text-center table-secondary">Approval Status</th>
+                <th class="text-center table-secondary">Approval Date & Time</th>
+                <th class="text-center table-secondary" style="min-width: 185px;">Remarks</th>
+                <th class="text-center table-secondary">Email id</th>
+
+                <th class="text-center table-tertiary">Approval Status</th>
+                <th class="text-center table-tertiary">Approval Date & Time</th>
+                <th class="text-center table-tertiary" style="min-width: 185px;">Remarks</th>
+                <th class="text-center table-tertiary">Email id</th>
+
+                <th class="text-center table-secondary">Approval Status</th>
+                <th class="text-center table-secondary">Approval Date & Time</th>
+                <th class="text-center table-secondary" style="min-width: 185px;">Remarks</th>
+                <th class="text-center table-secondary">Email id</th>
+
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let row of reportTableData | paginate
+: {
+itemsPerPage: pageSize,
+currentPage: page
+} let i=index">
+                <td class="text-center table-success">{{i+1}}</td>
+                <td class="text-center table-light">{{row.request_id}}</td>
+                <td class="text-center table-secondary">{{row.requestDate}}</td>
+                <td class="text-center table-tertiary">{{row.officer_name}}</td>
+                <td class="text-center table-tertiary">{{row.designation}}</td>
+                <td class="text-center table-tertiary">{{row.nodal_gender}}</td>
+                <td class="text-center table-tertiary">{{row.email}}</td>
+                <td class="text-center table-tertiary">{{row.land_line}}</td>
+                <td class="text-center table-tertiary">{{row.mobile}}</td>
+
+                <td class="text-center table-light">{{row.head_name}}</td>
+                <td class="text-center table-light">{{row.head_designation}}</td>
+                <td class="text-center table-light">{{row.gender}}</td>
+                <td class="text-center table-light">{{row.head_email}}</td>
+                <td class="text-center table-light">{{row.head_landline}}</td>
+                <td class="text-center table-light">{{row.head_mobile}}</td>
+                <!-- college -->
+                <td class="text-center table-secondary">{{row.college_name}}</td>
+                <td class="text-center table-secondary">{{row.college_state_name}}</td>
+                <td class="text-center table-secondary">{{row.college_district_name}}</td>
+                <td class="text-center table-secondary">{{row.location}}</td>
+                <td class="text-center table-secondary">{{row.college_type}}</td>
+                <td class="text-center table-secondary">{{row.management_type}}</td>
+                <td class="text-center table-secondary">{{row.university_name}}</td>
+                <td class="text-center table-secondary">{{row.admission_year}}</td>
+                <td class="text-center table-secondary">{{row.aishe_code}}</td>
+                <td class="text-center table-secondary">{{row.is_affiliated_other_university}}</td>
+                <td class="text-center table-secondary">{{row.other_univ_name}}</td>
+
+
+                <!-- address -->
+
+                <td class="text-center table-tertiary">{{row.address_line1}} {{row.address_line2}}</td>
+                <td class="text-center table-tertiary">{{row.address_city}}</td>
+                <td class="text-center table-tertiary">{{row.address_state}}</td>
+                <td class="text-center table-tertiary">{{row.address_district}}</td>
+                <td class="text-center table-tertiary">{{row.pin_code}}</td>
+
+                <!-- mhrd pending -->
+                <td class="text-center table-secondary">{{row.mhrd_status}}</td>
+                <td class="text-center table-secondary">{{row.mhrd_approval_date}}</td>
+                <td class="text-center table-secondary" style="min-width: 185px;">{{row.mhrd_remarks}}</td>
+                <td class="text-center table-secondary">{{row.mhrd_email}}</td>
+
+                <td class="text-center table-tertiary">{{row.sno_status}}</td>
+                <td class="text-center table-tertiary">{{row.sno_approval_date}}</td>
+                <td class="text-center table-tertiary" style="min-width: 185px;">{{row.sno_remarks}}</td>
+                <td class="text-center table-tertiary">{{row.sno_email}}</td>
+
+                <td class="text-center table-secondary">{{row.uno_status}}</td>
+                <td class="text-center table-secondary">{{row.uno_approval_date}}</td>
+                <td class="text-center table-secondary" style="min-width: 185px;">{{row.uno_remarks}}</td>
+                <td class="text-center table-secondary">{{row.uno_email}}</td>
+
+                
+            </tr>
+
+        </tbody>
+    </table>
+    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)">
+    </pagination-controls>
+</div>

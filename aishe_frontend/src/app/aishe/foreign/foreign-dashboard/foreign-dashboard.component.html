@@ -1,0 +1,52 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+      <div class="row col-md-12 overflow-hidden pt-4">
+        <div class="col-md-2">
+          <label>Show</label>&nbsp;
+          <select [(ngModel)]="pageSize" (ngModelChange)="onChange($event)">
+            <option *ngFor="let data of shared.pageSizeOptions" [value]="data">{{data}}</option>
+          </select>
+          entries
+        </div>
+        <div class="col-md-5">
+         
+        </div>
+        
+        <div class="col-md-5">
+          <label>Search:</label>&nbsp;
+          <input type="text" size="40" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+            [(ngModel)]="searchText">
+        </div>
+      </div>
+      <div class="row col-md-12 table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+          <tr>
+            <th>S.No.</th>
+            <th>Country Name</th>
+            <th>Foreign Instititions</th>
+          </tr>
+          </thead>
+          <ng-container>
+            <tbody>
+            <tr *ngFor="let item of filteredCountries | paginate : { itemsPerPage: shared.pageSize, currentPage: shared.page }; let i = index">
+              <td>{{i+shared.StartLimit+1}}</td>
+              <td>{{item.country}}</td>
+              <td>{{item.count}}</td>
+            </tr>
+          </tbody>
+          </ng-container>
+        </table>
+      </div>
+      <div class="row col-12 overflow-hidden">
+        <div class="col-12 col-md-3">
+            Showing {{shared.StartLimit + 1}} to {{shared.pageData === -1?0:shared.pageData}} Of {{tempList.length}} entries
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-12 col-md-6" *ngIf="tempList.length !== 0">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+                screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                screenReaderCurrentLabel="You're on page"></pagination-controls>
+        </div>
+    </div>
+    <!-- </div> -->
+  </div>

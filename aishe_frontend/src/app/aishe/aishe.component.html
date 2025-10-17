@@ -1,0 +1,10 @@
+<app-header></app-header>
+<div id="wrapper">
+    <app-sidebar class="d-flex"></app-sidebar>
+    <div id="content-wrapper" class="position-relative">
+        <mat-icon class="toggle" (click)="toggleSidebar()">{{icon}}</mat-icon>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  

@@ -1,0 +1,24 @@
+.mat-card {
+    max-width: 500px;
+    margin: 2em auto;
+    text-align: center;
+  }
+  .border {
+    border-top: 0.10rem solid #0061a2 !important;
+    border-bottom: 0.10rem solid #0061a2 !important;
+    border-left: 0.10rem solid #0061a2 !important;
+    border-right: 0.10rem solid #0061a2 !important;
+  }
+  input::placeholder {
+    white-space: normal;
+  }
+  input:focus::placeholder {
+    color: transparent;
+  }
+  .mat-hint{
+    color: red !important;
+    font-size: small;
+    float:left
+  
+    
+  }

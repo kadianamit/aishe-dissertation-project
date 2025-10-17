@@ -1,0 +1,151 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+      <div class="form-row mr-0 ml-0">
+        <div class="col-md-12 mt-0 badges p-2 mt-3">
+          <div class="float-left">
+            <span class="font-weight-bold text-lg">Approve/Reject R&D Institute</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="animated fadeInDown card bg-light">
+      <div class="row col-md-12 overflow-hidden">
+        <div class="col-md-2 pt-4">
+          <label>Show</label>&nbsp;
+          <select [(ngModel)]="pageSize" (ngModelChange)="onChange($event)">
+            <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+          </select>
+          entries
+        </div>
+        <div class="col-md-5"></div>
+        <div class="col-md-5 pt-4">
+          <label>Search:</label>&nbsp;
+          <input type="text" size="40" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+            [(ngModel)]="searchText">
+        </div>
+      </div>
+      <div class="row col-md-12 overflow-hidden pt-2">
+        <div class="col-md-3">
+          <mat-form-field class="d-block">
+            <mat-label>State:</mat-label>
+            <mat-select [(ngModel)]="stateName" (selectionChange)="getStateId($event)">
+                <mat-select-filter [array]="stateListArray" [displayMember]="'name'"
+                    (filteredReturn)="stateList = $event">
+                </mat-select-filter>
+                <mat-option *ngFor="let data of stateList"
+                    [value]="data.stateCode">{{data.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+        <div class="col-md-3">
+            <mat-form-field class="d-block">
+                <mat-label>Administrative Ministry:</mat-label>
+                <mat-select [(ngModel)]="ministryName" (selectionChange)="getMinistryId($event)">
+                    <mat-select-filter [array]="ministryArray" [displayMember]="'name'"
+                        (filteredReturn)="ministryList = $event">
+                    </mat-select-filter>
+                    <mat-option *ngFor="let data of ministryList" [value]="data.id">{{data.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+       
+        <!-- <div class="col-md-2">
+           
+        </div> -->
+        <div class="col-md-2">
+          <!-- <button mat-button class="btn btn-success btn-sm mt-2" matTooltip="Search"
+            (click)="getApproveRND()">
+            <i class="fa fa-search" aria-hidden="true"></i></button> -->
+
+            <button mat-button class="btn btn-primary btn-sm mt-2 ml-2" matTooltip="Reset"
+            (click)="reset()">
+            <i class="fa fa-refresh" aria-hidden="true"></i></button>
+        </div>
+        
+        <!-- <div class="col-md-1">
+            <button mat-button class="btn btn-sm btn-danger d-block mt-3" matTooltip="Refresh" (click)="reload()">
+              <i class="fa fa-refresh" aria-hidden="true"></i>
+            </button>
+          </div> -->
+          <div class="col-md-4 mt-2" style="float: right;display: flex;flex-direction:row-reverse">
+            <a mat-button (click)="downloadExcel()">
+                <i class="fa fa-file-excel-o" matTooltip="Download as Excel" matTooltipPosition="above"
+                    matTooltipClass="downloadExcel" style="font-size: 24px;color: green;"></i>
+                <mat-icon style="color: green;">vertical_align_bottom</mat-icon>
+            </a>
+        </div>
+      </div>
+
+    </div>
+    <!-- <mat-card class="m-1 mt-3" *ngIf="selfDetailsLevel1">
+      <h1 class="authorized">You are not authorized for this Tab</h1>
+    </mat-card> -->
+
+    <div class="animated fadeInDown card mb-2 pb-1 pt-1 bg-light overflow-hidden">
+    <div class="col-md-12 table-responsive">
+      <table class="table table-bordered table-sm">
+        <tr>
+          <th>S.No.</th>
+          <th>Request Id</th>
+          <th>Institution Name</th>
+          <th>Administrative Ministry</th>
+          <th>State Name</th>
+          <th>District Name</th>
+          <th>Request Submitted Date & Time</th>
+          <th>Action</th>
+
+        </tr>
+        <ng-container *ngFor="let item of approveArrData | paginate : {
+          itemsPerPage: sharedService.pageSize,
+          currentPage: sharedService.page
+        
+        };
+  let i = index
+  ">
+          <tr>
+            <td>{{i+sharedService.StartLimit+1}}</td>
+            <td>{{item.requestId}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.ministryOnosName}}</td>
+            <td>{{item.stateName}}</td>
+            <td>{{item.districtName}}</td>
+            <td>{{item.createdDate}}</td>
+            <td class="actionHeader">
+              <mat-icon matTooltip="Click here for Approve/Reject" (click)="openApproveDialog(item)" class="pointer">trending_up</mat-icon>
+                <!-- <mat-icon class="view_icon" matTooltip="View" (click)="openApproveDialog(item)">
+                  remove_red_eye</mat-icon> -->
+                  <!-- <div class="piped d-flex" style="width: max-content; cursor:pointer">
+
+                    <a matTooltip="Click here for Approve/Reject" class="approveRejectLink"
+                        (click)="openApproveDialog(item)">
+                        
+                        <i class="fas fa-check-circle" aria-hidden="true"
+                            style="color: green;font-size: medium;font-size: 22px;"></i>
+                        <i class="fa fa-times-circle-o ml-1" aria-hidden="true"
+                            style="color: red;font-size:22px;"></i>
+                    </a>
+                </div> -->
+              </td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+    <div class="row col-md-12 overflow-hidden">
+      <div class="col-md-3">
+        Showing {{sharedService.StartLimit + 1}} to {{sharedService.pageData === -1?0:sharedService.pageData}} Of {{approveArrData.length}}
+        entries
+
+        
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-6" *ngIf="approveArrData.length !== 0">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+          screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+          screenReaderCurrentLabel="You're on page">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+
+
+  </div>

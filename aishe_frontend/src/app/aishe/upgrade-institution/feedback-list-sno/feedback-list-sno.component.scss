@@ -1,0 +1,36 @@
+.table tr:nth-child(odd) td{
+    background-color: #f5eded
+  }
+  .table tr:nth-child(even) td{
+    background-color: #ffffff;
+  }
+
+  .read_icon {
+    color: green;
+  }
+  
+  .unread_icon {
+    color: gray;
+  }
+  
+  .flag_icon {
+    color: red;
+  }
+  button .mat-icon.read_icon {
+    vertical-align: middle; /* Aligns icon with the text */
+    margin-right: 5px; /* Adds spacing between the icon and text */
+    font-size: 16px; /* Ensures icon size matches text size */
+  }
+  button .mat-icon.unread_icon {
+    vertical-align: middle; /* Aligns icon with the text */
+    margin-right: 5px; /* Adds spacing between the icon and text */
+    font-size: 16px; /* Ensures icon size matches text size */
+  }
+  button .mat-icon.flag_icon {
+    vertical-align: middle; /* Aligns icon with the text */
+    margin-right: 5px; /* Adds spacing between the icon and text */
+    font-size: 16px; /* Ensures icon size matches text size */
+  }
+  ::ng-deep.mat-tab-header{
+    padding: 12px !important;
+  }

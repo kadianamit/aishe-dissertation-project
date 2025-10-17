@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: aishe_db
+      POSTGRES_USER: aishe_user
+      POSTGRES_PASSWORD: aishe_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  aishe-master-service:
+    build: ./AisheMasterService
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/aishe_db
+      SPRING_DATASOURCE_USERNAME: aishe_user
+      SPRING_DATASOURCE_PASSWORD: aishe_password
+    depends_on:
+      - postgres
+
+  user-mgt-service:
+    build: ./UserMgtService
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/aishe_db
+      SPRING_DATASOURCE_USERNAME: aishe_user
+      SPRING_DATASOURCE_PASSWORD: aishe_password
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

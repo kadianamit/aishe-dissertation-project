@@ -1,0 +1,202 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+
+
+    <div
+    class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+    *ngIf="Showdata12" >
+<table
+class="table  showReportDataChild" [id]="reportInfoObj.reportNumber">
+<thead class="childTableStickyHeader">
+
+<tr *ngIf="is2020==false">
+    <th rowspan="2" class="text-center table-success">State</th>
+  <th colspan="2" class="text-center table-light">Ph.D</th>
+  <th colspan="2" class="text-center table-secondary">M.Phil</th>
+  <th colspan="2" class="text-center table-tertiary">Post Graduate</th>
+  <th colspan="2" class="text-center table-light">Under Graduate</th>
+  <th colspan="2" class="text-center table-secondary">PG Diploma</th>
+  <th colspan="2" class="text-center table-tertiary">Diploma</th>
+  <th colspan="2" class="text-center table-light">Certificate</th>
+  <th colspan="2" class="text-center table-secondary">Integrated</th>
+  <th colspan="2" class="text-center table-tertiary">Total</th>
+  <th colspan="1" class="text-center table-light">Grand</th>
+</tr>
+<!-- new data 2020 -->
+<tr *ngIf="is2020">
+  <th rowspan="3" class="text-center table-success">State</th>
+<th colspan="9" class="text-center table-light">Ph.D</th>
+<th colspan="9" class="text-center table-secondary">M.Phil</th>
+<th colspan="9" class="text-center table-tertiary">Post Graduate</th>
+<th colspan="9" class="text-center table-light">Under Graduate</th>
+<th colspan="9" class="text-center table-secondary">PG Diploma</th>
+<th colspan="9" class="text-center table-tertiary">Diploma</th>
+<th colspan="9" class="text-center table-light">Certificate</th>
+<th colspan="9" class="text-center table-secondary">Integrated</th>
+<th colspan="9" class="text-center table-tertiary">Total</th>
+<th colspan="1" rowspan="2" class="text-center table-light">Grand</th>
+</tr>
+<tr *ngIf="is2020">
+  <th colspan="3"class="text-center table-light" >Appeared</th>
+  <th colspan="3"class="text-center table-light">Passed</th>
+  <th colspan="3"class="text-center table-light">First Class Passed</th>
+  <th colspan="3"class="text-center table-secondary">Appeared</th>
+  <th colspan="3"class="text-center table-secondary">Passed</th>
+  <th colspan="3"class="text-center table-secondary">First Class Passed</th>
+  <th colspan="3"class="text-center table-tertiary">Appeared</th>
+  <th colspan="3"class="text-center table-tertiary">Passed</th>
+  <th colspan="3"class="text-center table-tertiary">First Class Passed</th>
+  <th colspan="3"class="text-center table-light">Appeared</th>
+  <th colspan="3"class="text-center table-light">Passed</th>
+  <th colspan="3"class="text-center table-light">First Class Passed</th>
+  <th colspan="3"class="text-center table-secondary">Appeared</th>
+  <th colspan="3"class="text-center table-secondary">Passed</th>
+  <th colspan="3"class="text-center table-secondary">First Class Passed</th>
+  <th colspan="3"class="text-center table-tertiary">Appeared</th>
+  <th colspan="3"class="text-center table-tertiary">Passed</th>
+  <th colspan="3"class="text-center table-tertiary">First Class Passed</th>
+  <th colspan="3"class="text-center table-light">Appeared</th>
+  <th colspan="3"class="text-center table-light">Passed</th>
+  <th colspan="3"class="text-center table-light">First Class Passed</th>
+  <th colspan="3"class="text-center table-secondary">Appeared</th>
+  <th colspan="3"class="text-center table-secondary">Passed</th>
+  <th colspan="3"class="text-center table-secondary">First Class Passed</th>
+  <th colspan="3"class="text-center table-tertiary">Appeared</th>
+  <th colspan="3"class="text-center table-tertiary">Passed</th>
+  <th colspan="3"class="text-center table-tertiary">First Class Passed</th>
+</tr>
+<tr *ngIf="is2020==false">
+  <th
+    *ngFor="let col of tableColumns; let i = index"
+    [attr.style]="
+      i == 0
+        ? 'display:none'
+        : ''
+    "
+    [ngClass]="[i<3 ?'table-light':'', i>=3 && i<5 ? 'table-secondary': '',i>=5 && i<7 ? 'table-tertiary': '',
+      i>=7 && i<9 ? 'table-light': '',i>=9 && i<11 ? 'table-secondary': '',i>=11 && i<13 ? 'table-tertiary': '',
+      i>=13 && i<15 ? 'table-light': '',i>=15 && i<17 ? 'table-secondary': '',i>=17 && i<19 ? 'table-tertiary': '',
+      i>=19 && i<21 ? 'table-light': '',i>=21 && i<23 ? 'table-secondary': '',
+      ]"
+    class="text-center"
+  >
+    {{
+      col
+        .trim()
+        .replace('Phd', '')
+        .replace('Mphill Total', '')
+        .replace('PG', '')
+        .replace('UG', '')
+        .replace('PG Dip Total', '')
+        .replace('Dip Total', '')
+        .replace('Integrated Total','')
+        .replace('Integrated','')
+        .replace('Total', '')
+        .replace('Cert Total','')
+        .replace('Cert','')
+        .replace('Grand','Total')
+      }}
+      <!-- .replace('Cert Female','Female')  -->
+      <!-- .replace('Total ', 'Female') -->
+  </th>
+</tr>
+<!-- new data 2020 -->
+<tr *ngIf="is2020">
+  <th
+    *ngFor="let col of tableColumns; let i = index"
+    [attr.style]="
+      i == 0
+        ? 'display:none'
+        : ''
+    "
+    [ngClass]="[ i>=0 && i<1 ? 'table-success': '', i>=1 && i<10 ? 'table-light': '',i>=10 && i<19 ? 'table-secondary': '',
+      i>=19&& i<28 ? 'table-tertiary': '',i>=28 && i<37 ? 'table-light': '',i>=37 && i<46 ? 'table-secondary': '',
+      i>=46 && i<55 ? 'table-tertiary': '',i>=55 && i<64 ? 'table-light': '',i>=64 && i<73 ? 'table-secondary': '',
+      i>=73 && i<82 ? 'table-tertiary': '',i>=82 && i<83 ? 'table-light': '',
+      ]"
+    class="text-center"
+  >
+    {{
+      col
+        .trim()
+        .replace('Discipline Name', '')
+        .replace('Discipline Group','')
+        .replace('Phd', '')
+
+        .replace('Appeared','')
+        .replace('Passed','')
+        .replace('First Class','')
+        .replace('MPhill', '')
+        .replace('PG', '')
+        .replace('UG', '')
+        .replace('PG Dip Total', '')
+        .replace('Dip Total', '')
+        .replace('Integrated Total','')
+        .replace('Integrated','')
+        .replace('Total', '')
+        .replace('Cert','')
+        .replace('Diploma ','')
+        .replace('Grand','Total')
+      }}
+      <!-- .replace('Cert Female','Female')  -->
+      <!-- .replace('Total ', 'Female') -->
+  </th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let row of reportTableData | paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }" [ngClass]="is2020?'d-none':''">
+  <td
+    *ngFor="let col of tableColumns; let i = index"
+    class="text-center"
+    [ngClass]="[i==0?'table-success':  '',
+              i>0 && i<3 ?'table-light':'', i>=3 && i<5 ? 'table-secondary': '',i>=5 && i<7 ? 'table-tertiary': '',
+          i>=7 && i<9 ? 'table-light': '',i>=9 && i<11 ? 'table-secondary': '',i>=11 && i<13 ? 'table-tertiary': '',
+          i>=13 && i<15 ? 'table-light': '',i>=15 && i<17 ? 'table-secondary': '',i>=17 && i<19 ? 'table-tertiary': '',
+          i>=19 && i<21 ? 'table-light': '',i>=21 && i<23 ? 'table-secondary': '',
+          ]"
+  >
+    {{ row[col] }}
+  </td>
+</tr>
+<!-- new 2020 data -->
+<tr *ngFor="let row of reportTableData | paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }" [ngClass]="is2020?'':'d-none'">
+  <td
+    *ngFor="let col of tableColumns; let i = index"
+    class="text-center"
+    [ngClass]="[ i>=0 && i<1 ? 'table-success': '', i>=1 && i<10 ? 'table-light': '',i>=10 && i<19 ? 'table-secondary': '',
+      i>=19&& i<28 ? 'table-tertiary': '',i>=28 && i<37 ? 'table-light': '',i>=37 && i<46 ? 'table-secondary': '',
+      i>=46 && i<55 ? 'table-tertiary': '',i>=55 && i<64 ? 'table-light': '',i>=64 && i<73 ? 'table-secondary': '',
+      i>=73 && i<82 ? 'table-tertiary': '',i>=82 && i<83 ? 'table-light': '',
+      ]"
+  >
+    {{ row[col] }}
+  </td>
+</tr>
+<tr>
+  <td colspan="1" class="text-center table-success">
+    All State
+  </td>
+  <td
+    *ngFor="let summary of summaryColumns; let i = index"
+    class="text-center table-secondary"
+  >
+    {{ summaryData[summary] }}
+  </td>
+</tr>
+</tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+<!-- <app-pagination></app-pagination> -->
+</div>

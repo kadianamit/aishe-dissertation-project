@@ -1,0 +1,328 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+  <div class="form-group">
+    <div class="form-row mr-0 ml-0">
+      <div class="col-md-12 mt-0 badges p-2 mt-3">
+        <div class="float-left">
+          <span class="font-weight-bold text-lg">Programme Management</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <mat-tab-group animationDuration="0ms" class="exam-tabing-steps" [(selectedIndex)]="selectedIndex"
+    (selectedTabChange)="tabSelected($event)">
+
+    <mat-tab label="Level"></mat-tab>
+    <mat-tab label="Programme">
+      <div class="animated fadeInDown card bg-light">
+        <form [formGroup]="programmeForm">
+          <div class="row col-md-12 overflow-hidden pt-2">
+            <div class="col-md-2">
+              <mat-form-field class="d-block">
+                <mat-label>Select Level </mat-label>
+                <mat-select placeholder="Select Level" formControlName="level">
+                  <mat-option *ngFor="let item of levelList" [value]="item.id">{{item.level}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-hint class="err-msgs"
+                *ngIf="programmeForm.controls['level'].dirty || programmeForm.controls['level'].value || programmeForm.controls['level'].touched || isFormInvalid ">
+                <span *ngIf="programmeForm.controls['level'].hasError('required')">Please enter
+                </span>
+              </mat-hint>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="d-block">
+                <mat-label>Programme Name</mat-label>
+                <input type="text" matInput autocomplete="off" placeholder="Programme Name" formControlName="programme">
+              </mat-form-field>
+              <mat-hint class="err-msgs"
+                *ngIf="programmeForm.controls['programme'].dirty || programmeForm.controls['programme'].value || programmeForm.controls['programme'].touched || isFormInvalid ">
+                <span *ngIf="programmeForm.controls['programme'].hasError('required')">Please enter
+                </span>
+              </mat-hint>
+            </div>
+            <!-- <div class="col-md-1">
+              <mat-form-field class="d-block">
+                <mat-label>Year</mat-label>
+                <mat-select formControlName="year" required>
+                  <mat-option *ngFor="let e of sharedService.courseDurationYear" [value]="e.value">{{e.id}}</mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-1">
+              <mat-form-field class="d-block">
+                <mat-label>Month</mat-label>
+                <mat-select formControlName="month" required>
+                  <mat-option *ngFor="let e of sharedService.courseDurationMonth" [value]="e.value">{{e.id}}</mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div> -->
+            <div class="col-md-1 mt-3">
+              <button class="btn btn-success btn-sm" (click)="saveProgrammeData()">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-tab>
+
+
+    <mat-tab label="BDGC">
+      <div class="animated fadeInDown card bg-light">
+        <form [formGroup]="BDGCForm">
+          <div class="row col-md-12 overflow-hidden">
+
+            <div class="col-md-6">
+              <mat-form-field class="d-block">
+                <mat-label>Broad Disipline Group Category</mat-label>
+                <input type="text" matInput autocomplete="off" placeholder="Broad Disipline Group Category"
+                  formControlName="category">
+              </mat-form-field>
+              <mat-hint class="err-msgs"
+                *ngIf="BDGCForm.controls['category'].dirty || BDGCForm.controls['category'].value || BDGCForm.controls['category'].touched || isFormInvalid1">
+                <span *ngIf="BDGCForm.controls['category'].hasError('required')">Please enter
+                </span>
+              </mat-hint>
+
+            </div>
+            <div class="col-md-4 mt-3">
+              <button class="btn btn-success btn-sm" (click)="saveBDGCData()">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-tab>
+
+
+    <mat-tab label="BDGN">
+      <div class="animated fadeInDown card bg-light">
+        <form [formGroup]="BDGNForm">
+          <div class="row col-md-12 overflow-hidden">
+
+            <div class="col-md-6">
+              <mat-form-field class="d-block">
+                <mat-label>Broad Disipline Group Name</mat-label>
+                <input type="text" matInput autocomplete="off" placeholder="Broad Disipline Group Name"
+                  formControlName="disciplineGroup">
+              </mat-form-field>
+              <mat-hint class="err-msgs"
+                *ngIf="BDGNForm.controls['disciplineGroup'].dirty || BDGNForm.controls['disciplineGroup'].value || BDGNForm.controls['disciplineGroup'].touched || isFormInvalid2">
+                <span *ngIf="BDGNForm.controls['disciplineGroup'].hasError('required')">Please enter
+                </span>
+              </mat-hint>
+
+            </div>
+            <div class="col-md-4 mt-3">
+              <button class="btn btn-success btn-sm" (click)="saveBDGNData()">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Programme Mapping">
+      <div class="animated fadeInDown card bg-light">
+        <form [formGroup]="BDGMappingForm">
+          <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-2 mt-2">
+              <mat-form-field class="d-block">
+                <mat-label>Select Level</mat-label>
+                <mat-select placeholder="Select Level" formControlName="levelId">
+                  <mat-option *ngFor="let item of levelList" [value]="item.id">{{item.level}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-hint class="err-msgs"
+                *ngIf="BDGMappingForm.controls['levelId'].dirty || BDGMappingForm.controls['levelId'].value || BDGMappingForm.controls['levelId'].touched || isFormInvalid3">
+                <span *ngIf="BDGMappingForm.controls['levelId'].hasError('required')">Please enter
+                </span>
+              </mat-hint>
+            </div>
+
+            <div class="col-md-3 mt-2">
+              <mat-form-field class="d-block">
+                <mat-label>Select Programme</mat-label>
+                <mat-select placeholder="Select programme" formControlName="programmeId">
+                  <mat-select-filter [array]="programmeListArray" [displayMember]="'programme'"
+                  (filteredReturn)="programmeList = $event">
+                </mat-select-filter>
+                  <mat-option *ngFor="let item of programmeList" [value]="item.id">{{item.programme}}</mat-option>
+                </mat-select>
+
+              </mat-form-field>
+              <mat-hint class="err-msgs"
+                *ngIf="BDGMappingForm.controls['programmeId'].dirty || BDGMappingForm.controls['programmeId'].value || BDGMappingForm.controls['programmeId'].touched || isFormInvalid3">
+                <span *ngIf="BDGMappingForm.controls['programmeId'].hasError('required')">Please enter
+                </span>
+              </mat-hint>
+            </div>
+            <div class="col-md-3 mt-2">
+              <mat-form-field class="d-block">
+                <mat-label>Select BDGC</mat-label>
+                <mat-select placeholder="Select BDGC" formControlName="broadDisciplineGroupCategoryId">
+                  <mat-select-filter [array]="bdgcListArray" [displayMember]="'category'"
+                  (filteredReturn)="bdgcList = $event">
+                </mat-select-filter>
+                  <mat-option *ngFor="let item of bdgcList" [value]="item.id">{{item.category}}</mat-option>
+                </mat-select>
+
+              </mat-form-field>
+              <mat-hint class="err-msgs"
+                *ngIf="BDGMappingForm.controls['broadDisciplineGroupCategoryId'].dirty || BDGMappingForm.controls['broadDisciplineGroupCategoryId'].value || BDGMappingForm.controls['broadDisciplineGroupCategoryId'].touched || isFormInvalid3">
+                <span *ngIf="BDGMappingForm.controls['broadDisciplineGroupCategoryId'].hasError('required')">Please
+                  enter
+                </span>
+              </mat-hint>
+            </div>
+            <div class="col-md-3 mt-2">
+              <mat-form-field class="d-block">
+                <mat-label>Select BDGN</mat-label>
+                <mat-select placeholder="Select BDGN" formControlName="broadDisciplineGroupId">
+                  <mat-select-filter [array]="bdgnListArray" [displayMember]="'discipline'"
+                  (filteredReturn)="bdgnList = $event">
+                </mat-select-filter>
+                  <mat-option *ngFor="let item of bdgnList" [value]="item.id">{{item.discipline}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-hint class="err-msgs"
+                *ngIf="BDGMappingForm.controls['broadDisciplineGroupId'].dirty || BDGMappingForm.controls['broadDisciplineGroupId'].value || BDGMappingForm.controls['broadDisciplineGroupId'].touched || isFormInvalid3">
+                <span *ngIf="BDGMappingForm.controls['broadDisciplineGroupId'].hasError('required')">Please enter
+                </span>
+              </mat-hint>
+            </div>
+            <div class="col-md-1 mt-4">
+              <button class="btn btn-primary btn-sm" (click)="saveBDGMappingData()">Save</button>
+            </div>
+
+          </div>
+        </form>
+
+       
+        
+      </div>
+
+    </mat-tab>
+
+  </mat-tab-group>
+  <br><br>
+  <div class="animated fadeInDown card mb-2 pb-1 bg-light overflow-hidden">
+    <div class="row col-md-12 overflow-hidden">
+      <div class="col-md-1 mt-4 mr-0 ml-0 pr-0 ">
+        <label>Show</label>&nbsp;
+        <select (ngModelChange)="onChange($event)" [(ngModel)]="pageSize">
+          <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+        </select>
+        entries
+      </div>
+
+      <div class="col-md-5" *ngIf="selectedIndex === 2 || selectedIndex === 3"></div>
+      <div class="col-md-5 pt-4" *ngIf="selectedIndex === 2 || selectedIndex === 3">
+        <label>Search:</label>&nbsp;
+        <input type="text" size="40" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+          [(ngModel)]="searchText">
+      </div>
+
+      <div class="col-md-2" *ngIf="selectedIndex === 1">
+        <mat-form-field class="d-block">
+          <mat-label>Select Level </mat-label>
+          <mat-select placeholder="Select Level" (selectionChange)="getFilterLevel($event.value)" [(ngModel)]="levelId">
+            <mat-option *ngFor="let item of levellistFilter" [value]="item.id">{{item.level}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2" *ngIf="selectedIndex === 4">
+        <mat-form-field class="d-block">
+          <mat-label>Select Level </mat-label>
+          <mat-select placeholder="Select Level" (selectionChange)="selectChangeHandlerProgramme($event.value)" [(ngModel)]="levelId">
+            <mat-option *ngFor="let item of levellistFilter" [value]="item.id">{{item.level}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2" *ngIf="selectedIndex === 4">
+        <mat-form-field class="d-block">
+          <mat-label>Select Programme</mat-label>
+          <mat-select placeholder="Select programme" [(ngModel)]="programmeId"
+            (selectionChange)="selectChangeHandlerBDGC($event.value)">
+            <mat-select-filter [array]="programmeListFilterArray" [displayMember]="'programme'"
+            (filteredReturn)="programmeListFilter = $event">
+          </mat-select-filter>
+            <mat-option *ngFor="let item of programmeListFilter" [value]="item.id">{{item.programme}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2" *ngIf="selectedIndex === 4">
+        <mat-form-field class="d-block">
+          <mat-label>Select BDGC</mat-label>
+          <mat-select placeholder="Select BDGC" [(ngModel)]="broadDisciplineGroupCategoryId"
+            (selectionChange)="selectChangeHandlerBDGN($event.value)">
+            <mat-select-filter [array]="bdgcListFilterArray" [displayMember]="'category'"
+            (filteredReturn)="bdgcListFilter = $event">
+          </mat-select-filter>
+            <mat-option *ngFor="let item of bdgcListFilter" [value]="item.id">{{item.category}}</mat-option>
+          </mat-select>
+
+        </mat-form-field>
+      </div>
+      <div class="col-md-2" *ngIf="selectedIndex === 4">
+        <mat-form-field class="d-block">
+          <mat-label>Select BDGN</mat-label>
+          <mat-select placeholder="Select BDGN" [(ngModel)]="broadDisciplineGroupId">
+            <mat-select-filter [array]="bdgnListFilterArray" [displayMember]="'discipline'"
+            (filteredReturn)="bdgnListFilter = $event">
+          </mat-select-filter>
+            <mat-option *ngFor="let item of bdgnListFilter" [value]="item.id">{{item.discipline}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2 mt-3" *ngIf="selectedIndex === 4">
+        <button class="btn btn-success btn-sm" (click)="searchProgramme()">Search</button>
+        <button class="btn btn-dark btn-sm ml-1" (click)="refresh()">Refresh</button>
+      </div>
+      <div class="col-md-1 mt-3" *ngIf="selectedIndex === 4">
+        <a mat-button (click)="downloadExcel()">
+            <i class="fa fa-file-excel-o" matTooltip="Download as Excel" matTooltipPosition="above"
+                matTooltipClass="downloadExcel" style="font-size: 24px;color: green;"></i>
+            <mat-icon style="color: green;">vertical_align_bottom</mat-icon>
+        </a>
+    </div>
+    </div>
+    <table class="table table-bordered table-sm">
+      <tr>
+        <th>S.No.</th>
+        <th *ngIf="selectedIndex === 0 || selectedIndex === 4 || selectedIndex === 1">Level</th>
+        <th *ngIf="selectedIndex === 1 || selectedIndex === 4">Programme</th>
+        <th *ngIf="selectedIndex === 2 || selectedIndex === 4">Broad Disciplne Group Category</th>
+        <th *ngIf="selectedIndex === 3 || selectedIndex === 4">Broad Disciplne Group Name</th>
+      </tr>
+      <ng-container *ngFor="let item of programmeManagementList | paginate : {
+        itemsPerPage: pageSize,
+        currentPage: page
+      };
+let i = index
+">
+        <tr>
+          <td>{{i+StartLimit+1}}</td>
+          <td *ngIf="selectedIndex === 0 || selectedIndex === 4 || selectedIndex === 1">{{item.level}}</td>
+          <td *ngIf="selectedIndex === 1 || selectedIndex === 4">{{item.programme}}</td>
+          <td *ngIf="selectedIndex === 2 || selectedIndex === 4">{{item.category}}</td>
+          <td *ngIf="selectedIndex === 3 || selectedIndex === 4">{{item.discipline}}</td>
+        </tr>
+      </ng-container>
+    </table>
+    <div class="row col-md-12 overflow-hidden">
+      <!-- <div class="col-md-3">
+        Showing {{StartLimit + 1}} to {{EndLimit === -1?0:EndLimit}} Of {{programmeManagementList.length}} entries
+      </div>  -->
+
+      <div class="col-md-3">
+        Showing {{StartLimit + 1}} to {{pageData === -1?0:pageData}} Of {{programmeManagementList.length}} entries
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+          screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+          screenReaderCurrentLabel="You're on page"></pagination-controls>
+      </div>
+    </div>
+  </div>
+
+</div>

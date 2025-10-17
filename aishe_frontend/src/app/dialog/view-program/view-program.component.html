@@ -1,0 +1,517 @@
+
+  <span class="font-weight-bolder text-lg" *ngIf="data.program === true">{{data.header}} :-</span>
+  <span class="text-info font-weight-bolder text-md" *ngIf="data.program === true">{{data.subHeader}}</span>
+
+  
+<mat-dialog-content *ngIf="data.program === true">
+  <table class="table table-bordered table-sm">
+    <tr *ngIf="showInUniv || showInCollege">
+      <td class="viewProgramHeader">Indian Language as a medium of instruction</td>
+      <td>{{(data.mediumOfInstructionIndianLanguage)?'Yes':'No'}}</td>
+    </tr>
+    <tr *ngIf="(showInUniv || showInCollege) && data.mediumOfInstructionIndianLanguage">
+      <td class="viewProgramHeader">Language</td>
+      <td>{{data.mediumOfInstructionIndianLanguageName}}</td> 
+    </tr>
+    <tr *ngIf="showInUniv || showInCollege">
+      <td class="viewProgramHeader">Program accredited by NBA</td>
+      <td>{{(data.accreditedByNba)?'Yes':'No'}}</td>
+    </tr>
+    <!-- <tr *ngIf="(showInUniv || showInCollege) && data.accreditedByNba">
+      <td class="viewProgramHeader">NBA Score</td>
+      <td>{{data.nbaScore}}</td>
+    </tr> -->
+    <tr *ngIf="(showInUniv || showInCollege)">
+      <td class="viewProgramHeader">Current Status of Programme</td>
+      <td>{{(data.courseStatus==false)?'Discontinued '+'('+data.yearOfDiscontinuance+')':'Continued'}}</td>
+    </tr>
+    <tr *ngIf="showInUniv && data.offcampusName">
+      <td class="viewProgramHeader">Off Campus Centre</td>
+      <td>{{data.offcampusName}}</td>
+    </tr>
+    <tr *ngIf="showInUniv">
+      <td class="viewProgramHeader">Faculty/School</td>
+      <td>{{data.faculty?data.faculty.facultyName:'No Faculty'}}</td>
+    </tr>
+    <tr *ngIf="showInUniv">
+      <td class="viewProgramHeader">Department/Centre</td>
+      <td>{{data.department?data.department.departmentName:'No Department'}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Level</td>
+      <td>{{data.levelId.level}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Name of the Programme</td>
+      <td>{{data.programmeId.programme}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Broad Discipline Group Category</td>
+      <td>{{data.broadDisciplineGroupCategoryId.category}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Broad Discipline Group Name
+      </td>
+      <td>{{data.broadDisciplineGroup.discipline}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Discipline/Subject</td>
+      <td>{{data.discipline}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Admission Criterion</td>
+      <td>{{data.admissionCriterionId?.name}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Examination System</td>
+      <td>{{data.examSystemId?.system}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Course Duration(Year)</td>
+      <td>{{data.durationYear}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Course Duration(Month)</td>
+      <td>{{data.durationMonth}}</td>
+    </tr>
+    <!-- <tr>
+      <td class="viewProgramHeader">Approved Intake (Seats for First Year)</td>
+      <td>{{data.intake}}</td>
+    </tr> -->
+    <tr>
+      <td class="viewProgramHeader">Supernumerary Seats</td>
+      <td>{{data.superNumerary}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Type</td>
+      <td>{{data.typeId?.type}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Whether Vocational Course</td>
+      <td>{{data.whetherVocationalCourse?'YES':'NO'}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Year of Start</td>
+      <td>{{data.yearOfStart}}</td>
+    </tr>
+    <!-- <tr>
+      <td class="viewProgramHeader">Accreditation Status</td>
+      <td>{{data.accreditationStatus === true?'Valid':data.accreditationStatus === false?'Invalid':'NA'}}</td>
+    </tr> -->
+    <tr *ngIf="!showInUniv">
+      <td class="viewProgramHeader">University through which approved</td>
+      <td>{{data?.approvingUniversity?.name}}</td>
+    </tr>
+    <tr *ngIf="!showInUniv">
+      <td class="viewProgramHeader">Statutory Body through which approved</td>
+      <td>{{data.approvingStatutory?.statutoryBody}}</td>
+      
+    </tr>
+    <!-- <tr>
+      <td class="viewProgramHeader">Social category wise break up</td>
+      <td>{{data.accreditationValid === true?'Valid':data.accreditationValid === false?'Invalid':'NA'}}</td>
+    </tr> -->
+    <tr class="text-center" *ngIf="data.modeId === 1 || data.modeId === 4">
+      <th colspan="12">Approved Intake (Seats for First Year)</th>
+    </tr>
+    
+    <tr class="text-center" *ngIf="data.modeId === 1 || data.modeId === 4">
+      <th colspan="12">Social Category wise Breakup</th>
+    </tr>
+    <tr *ngIf="data.modeId === 1 || data.modeId === 4">
+      <td class="viewProgramHeader">General</td>
+      <td>{{data.intakeGeneral}}</td>
+    </tr>
+    <tr *ngIf="data.modeId === 1 || data.modeId === 4">
+      <td class="viewProgramHeader">EWS</td>
+      <td>{{data.intakeEws}}</td>
+    </tr>
+    <tr *ngIf="data.modeId === 1 || data.modeId === 4">
+      <td class="viewProgramHeader">OBC</td>
+      <td>{{data.intakeObc}}</td>
+    </tr>
+    <tr *ngIf="data.modeId === 1 || data.modeId === 4">
+      <td class="viewProgramHeader">SC</td>
+      <td>{{data.intakeSc}}</td>
+    </tr>
+    <tr *ngIf="data.modeId === 1 || data.modeId === 4">
+      <td class="viewProgramHeader">ST</td>
+      <td>{{data.intakeSt}}</td>
+    </tr>
+  </table>
+</mat-dialog-content>
+  <span class="font-weight-bolder text-lg" *ngIf="data.staff === true">Teaching Staff Information :-</span>
+  <span class="text-info font-weight-bolder text-md" *ngIf="data.staff === true">Staff Details</span>
+
+<mat-dialog-content *ngIf="data.staff === true">
+  <table class="table table-bordered table-sm table-hover" *ngIf="data.program === false">
+    <tr>
+      <td class="viewProgramHeader">Country Name</td>
+      <td>{{data.country}}</td>
+    </tr>
+    <tr *ngIf="data.facultyName">
+      <td class="viewProgramHeader">Faculty/School</td>
+      <td>{{data.facultyName}}</td>
+    </tr>
+    <tr *ngIf="data.departmentName">
+      <td class="viewProgramHeader">Department/Centre</td>
+      <td>{{data.departmentName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Name of the Employee</td>
+      <td>{{data.name}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Gender</td>
+      <td>{{data.gender}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Date of Birth</td>
+      <td>{{data.dateOfBirthInString}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Email</td>
+      <td>{{data.email}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Mobile No</td>
+      <td>{{data.mobile}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">PAN Number</td>
+      <td>{{data.panNumber}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Designation
+      </td>
+      <td>{{data.designationName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Nature of Appointment</td>
+      <td>{{data.natureOfAppointmentName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Social Category</td>
+      <td>{{data.socialCategoryName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Religious Community</td>
+      <td>{{data.religiousCommunityName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">PWD</td>
+      <td>{{data.isPwd?'YES':'NO'}}</td>
+    </tr>
+    
+    <tr>
+      <td class="viewProgramHeader">Selection Mode</td>
+      <td>{{data.selectionModeName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Date of Joining Teaching Profession</td>
+      <td>{{data.dateOfJoiningTeachingProfessionString}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Date of Joining</td>
+      <td>{{data.dateOfJoiningInstitutionString}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Date of Leaving</td>
+      <td>{{data.dateOfLeavingString}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Highest Qualification</td>
+      <td>{{data.highestQualificationName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Programme name of highest qualification</td>
+      <td>{{data.programmeName}}</td>
+    </tr>
+    
+    <tr>
+      <td class="viewProgramHeader">Broad Discipline Group Category</td>
+      <td>{{data.broadDisciplineGroupCategory}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Broad Discipline Group Name</td>
+      <td>{{data.broadDisciplineGroup}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Additional/Eligibility Qualification</td>
+      <td>{{data.additionalQualificationName?data.additionalQualificationName:'NA'}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Whether Vocational Course</td>
+      <td>{{data.whetherVocationalCourse?'YES':'No'}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Year spent exclusively in other than teaching job</td>
+      <td>{{data.yearSpendOtherThanTeachingJob}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Job Status</td>
+      <td>{{data.jobStatusName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Date of change in status</td>
+      <td>{{data.dateOfChangeInJobStatusString?data.dateOfChangeInJobStatusString:'NA'}}</td>
+    </tr>
+  </table>
+</mat-dialog-content>
+
+  <span class="font-weight-bolder text-lg" *ngIf="data.foreign === true">{{data.header}} :-</span>
+  <span class="text-info font-weight-bolder text-md" *ngIf="data.foreign === true">{{data.subHeader}}</span>
+
+<mat-dialog-content *ngIf="data.foreign === true">
+  <table class="table table-bordered table-sm table-hover">
+    <tr>
+      <td class="viewProgramHeader">Country Name</td>
+      <td>{{data.countryName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Faculty/School</td>
+      <td>{{data.facultyName?data.facultyName:'No Faculty'}}</td>
+    </tr>
+    
+   <tr>
+    <td class="viewProgramHeader">Department/Centre</td>
+    <td>{{data.deptName?data.deptName:'No Department'}}</td>
+   </tr>
+     
+    <tr>
+      <td class="viewProgramHeader">Level</td>
+      <td>{{data.levelName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Name of the Programme</td>
+      <td>{{data.programme}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Broad Discipline Group Category</td>
+      <td>{{data.disciplineGroupCategory}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Broad Discipline Group Name
+      </td>
+      <td>{{data.disciplineGroupDiscipline}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Discipline/Subject</td>
+      <td>{{data.discipline}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Method Of Admission</td>
+      <td>{{data.admissionMethod}}</td>
+    </tr>
+    <tr *ngIf="data.otherAdmissionMethod">
+      <td class="viewProgramHeader">Other Admission Method</td>
+      <td >{{data.otherAdmissionMethod}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">No. Of Students Enrolled(Total)</td>
+      <td>{{data.total}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">No. Of Students Enrolled(Girls)</td>
+      <td>{{data.girls}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">No. Of Students Staying in Institution's Hostel</td>
+      <td>{{data.studentsResidingInHostel}}</td>
+    </tr>
+  </table>
+</mat-dialog-content>
+
+<mat-dialog-content *ngIf="data.viewRnD === true">
+  <div class="text-centre heading">R&D Institute Details</div>
+  <table class="table table-bordered table-sm table-hover">
+    <tr>
+      <td class="viewProgramHeader">AISHE Code</td>
+      <td>{{data.data.aisheCode}}</td>
+    </tr>
+    <!-- <tr>
+      <td>Request Submitted Date & Time</td>
+      <td>{{data.data.createdDate}}</td>
+
+  </tr> -->
+    <tr>
+      <td class="viewProgramHeader">Institute Name</td>
+      <td>{{data.data.name}}</td>
+    </tr>
+    <!-- <tr>
+      <td class="viewProgramHeader">Survey Year</td>
+      <td>{{data.data.surveyYear}}</td>
+    </tr> -->
+   <tr>
+    <td class="viewProgramHeader">Administrative Ministry</td>
+    <td>{{data.data.ministryOnosName}}</td>
+   </tr>
+   <tr>
+    <td class="viewProgramHeader">State Name</td>
+    <td>{{data.data.stateName}}</td>
+   </tr>
+   <tr>
+    <td class="viewProgramHeader">District Name</td>
+    <td>{{data.data.districtName}}</td>
+   </tr>
+
+
+    <!-- <tr>
+      <td class="viewProgramHeader">Location Name
+      </td>
+      <td>{{data.data.locationName}}</td>
+    </tr> -->
+
+    <th colspan="2" style="font-size: 17px !important;">Nodal Officer Details</th>
+    <tr>
+      <td class="viewProgramHeader">Name</td>
+      <td>{{data.data.instituteDetails.nodalOfficerName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Gender</td>
+      <td *ngIf="data.data.instituteDetails.nodalOfficerGender">{{data.data.instituteDetails.nodalOfficerGender==1?'Male':'Female'}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Designation</td>
+      <td>{{data.data.instituteDetails.nodalOfficerDesignation}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Email</td>
+      <td>{{data.data.instituteDetails.nodalOfficerEmail}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Mobile</td>
+      <td>{{data.data.instituteDetails.nodalOfficerMobile}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Telephone</td>
+      <td>{{data.data.instituteDetails.nodalOfficerTelephone}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Complete Address</td>
+      <td>{{data.data.instituteDetails.addressLine1}}</td>
+    </tr>
+    <!-- <tr *ngIf="data.data.instituteDetails.addressLine2">
+      <td class="viewProgramHeader">Address Line2</td>
+      <td>{{data.data.instituteDetails.addressLine2}}</td>
+    </tr> -->
+    <tr>
+      <td class="viewProgramHeader">Pin Code</td>
+      <td>{{data.data.instituteDetails.pinCode}}</td>
+    </tr>
+    <th colspan="2" style="font-size: 17px !important;">Institutional Head Details</th>
+    <tr>
+      <td class="viewProgramHeader">Name</td>
+      <td>{{data.data.instituteDetails.headOfficerName}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Gender</td>
+      <td *ngIf="data.data.instituteDetails.headOfficerGender">{{data.data.instituteDetails.headOfficerGender==2?'Female':'Male'}}</td>
+    </tr>
+    <tr>
+      <td class="viewProgramHeader">Designation</td>
+      <td>{{data.data.instituteDetails.headOfficerDesignation}}</td>
+    </tr>
+    <tr >
+      <td class="viewProgramHeader">Email</td>
+      <td >{{data.data.instituteDetails.headOfficerEmail}}</td>
+    </tr>
+
+    <tr>
+      <td class="viewProgramHeader">Mobile</td>
+      <td>{{data.data.instituteDetails.headOfficerMobile}}</td>
+    </tr>
+    <tr *ngIf="data.data.instituteDetails.headOfficerTelephone">
+      <td class="viewProgramHeader">Telephone</td>
+      <td>{{data.data.instituteDetails.headOfficerTelephone}}</td>
+    </tr>
+  </table>
+   <div class="ml-1">Document :-<a href="javascript:void(0)" matTooltip="view document" (click)="getDoc(data.data.aisheCode)">Click here to view Document</a></div>
+</mat-dialog-content>
+
+<div class="table-responsive-sm mt-2 myTable" *ngIf="data.similarIsVisible == true">
+  <div>
+    <mat-label style="font-weight:500;">Selet an Option </mat-label>&nbsp;&nbsp;
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="stateDistrict" (change)="optionChange($event.value)">
+    <mat-radio-button [value]="1">State</mat-radio-button>
+    <mat-radio-button [value]="2" class="ml-2">District</mat-radio-button>
+</mat-radio-group>
+  </div>
+  <table class="table table-responsive">
+      <thead>
+          <tr>
+              <th colspan="8">
+                  <h3 class="text-center h3heading">
+                      <b>Similar institutions already existing in AISHE</b>
+                  </h3>
+              </th>
+          </tr>
+      </thead>
+      <tr>
+          <th>AISHE Code</th>
+          <th>Category</th>
+          <th>Institution Name</th>
+          <th>University Name</th>
+          <th>State</th>
+          <th>District</th>
+          <th>Status</th>
+      </tr>
+      <tbody>
+          <tr *ngFor="let data of sharedData2">
+              <td>{{ data.requestIdOrAisheCode }}</td>
+              <td>{{ data.categoryName }}</td>
+              <td style="width: 26%;">{{ data.instituteName }}</td>
+              <td>{{data.universityOrStateBodyName}}</td>
+              <td>{{data.stateName}}</td>
+              <td>{{data.districtName}}</td>
+              <td>{{ data.statusName }}</td>
+
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+
+
+
+<!-- <div class="table-responsive-sm mt-2 myTable"  *ngIf="data.similarIsVisible == true && data.key === 'S'">
+  <table class="table">
+    <thead>
+      <tr>
+        <th colspan="7">
+          <h3 class="text-center h3heading">
+            <b>Similar institutions already existing in AISHE</b>
+          </h3>
+        </th>
+      </tr>
+    </thead>
+    <tr>
+      <th>AISHE Code</th>
+      <th>Category</th>
+      <th>Body</th>
+      <th>Institution Name</th>
+      <th>State</th>
+      <th>District</th>
+      <th>Status</th>
+    </tr>
+    <tbody id="myTable">  
+      <tr>
+        <td>S-{{ sharedData.id }}</td>
+        <td>{{ sharedData.category }}</td>
+        <td style="width: 26%;">{{ sharedData.collegeName }}</td>
+        <td>{{ sharedData.type }}</td>
+        <td>{{sharedData.state}}</td>
+        <td>{{sharedData.district}}</td>
+      <td>{{ sharedData.status }}</td>
+
+      </tr>
+    </tbody>
+  </table>
+</div> -->
+
+
+
+
+<mat-dialog-actions align="center">
+  <button mat-raised-button mat-dialog-close color="warn" tabindex="1">{{confirmButtonText}}</button>
+</mat-dialog-actions>

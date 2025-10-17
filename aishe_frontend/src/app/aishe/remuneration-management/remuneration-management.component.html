@@ -1,0 +1,24 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">{{this.role !== this.sharedService.role['SysAdmin'] && this.role !==this.sharedService.role['Ministry of Education']?'Remuneration Management':'Remuneration Report'}}</span>
+                </div>
+            </div>
+            <p *ngIf="this.role !==this.sharedService.role['SysAdmin'] && this.role !==this.sharedService.role['Ministry of Education']" style="font-size: medium;font-family: initial;font-weight: 600;color: red;">
+                To know the eligibility for remuneration,
+                <a
+                    href="assets/docs/Guidelines for Remuneration under AISHE.pdf"
+                    target="_blank"
+                >
+                    click here
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <app-user-request *ngIf="this.role&&(this.role !==this.sharedService.role['Ministry of Education'] && this.role !==this.sharedService.role['SysAdmin'])"></app-user-request>
+    <app-remuneration-report *ngIf="this.role&&(this.role ===this.sharedService.role['SysAdmin'] || this.role ===this.sharedService.role['Ministry of Education'])"></app-remuneration-report>
+   
+</div>

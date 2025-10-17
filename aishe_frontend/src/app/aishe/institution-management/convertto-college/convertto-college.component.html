@@ -1,0 +1,367 @@
+
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="" *ngIf="showTable">
+      <div class="row justify-content-between">
+        <div class="col-auto show-button" >
+          <label>Show</label>&nbsp;
+          <select (ngModelChange)="onChange($event)" [(ngModel)]="pageSize">
+            <option *ngFor="let data of tableSize" [value]="data">
+              {{ data }}
+            </option>
+          </select>
+          entries
+        </div>
+
+        <div class="col-auto ml-4">
+          <label>Search:</label>&nbsp;
+          <input id="myInput" type="text" [(ngModel)]="searchText" (keyup)="applyFilter($any($event.target).value)"/>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table mt-2 text-left pe-2">
+
+          <thead>
+            <tr>
+              <th>AISHE Code</th>
+              <th>University Name</th>
+              <th>University Type</th>
+              <th>State</th>
+              <th>District</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="myTable">
+            <tr
+              *ngFor="
+                let data of userDataTable
+                  | searchFilter : searchText
+                  | paginate
+                    : {
+                        itemsPerPage: pageSize,
+                        currentPage: page
+                      };
+                let i = index
+              ">
+              <td>U-{{ data.aishecode }}</td>
+              <td>{{ data.name }}</td>
+              <td>{{ data.universityType }}</td>
+              <td>{{ data.statename }}</td>
+              <td>{{ data.districtname }}</td>
+              <td>
+                <div class="piped d-flex" >
+                  <a   style="cursor: pointer;"
+                    (click)="ConverttoColleg(data)"
+                  >
+                  <i matTooltip="Convert to College" class="fa fa-level-up upgrade" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-md-3" *ngIf="showTable">
+        Showing {{ StartLimit + 1 }} to {{ pageData }} Of
+        {{ userDataTable.length }} entries
+      </div>
+      <div class="d-flex justify-content-center" *ngIf="showTable">
+        <pagination-controls
+          previousLabel="Prev"
+          nextLabel="Next"
+          (pageChange)="handlePageChange($event)"
+        >
+      </pagination-controls>
+      </div>
+      <!--  -->
+    </div>
+  </div>
+
+  <div class="container-fluid reg-page-bg pl-4 pr-4" *ngIf="showEdit" style="margin-top: 5%;">
+    <mat-card>
+        <mat-card-content>
+     <div class="row">
+      <!-- <mat-card-title>Edit College</mat-card-title> -->
+      <div class="col-10 d-flex justify-content-between align-items-center">
+        <h1 class="insthead position-relative mb-md-4"><span>Conversion to College</span></h1>
+
+
+      </div>
+      <div class="col-2 d-flex justify-content-end mt-2 ml-auto">
+        <a (click)="backClicked()" matTooltip="Back" style="cursor: pointer;" class="text-uppercase"><img src="assets/img/table-back.svg"
+          class="table-back me-2" />
+          Back
+        </a>
+      </div>
+    </div>
+
+        <div class="row" style="border-bottom: 2px solid #d4c8c8;">
+          <div class="col-2">
+            <label class="form-label editLabel">Survey Year</label>
+            <p style="width: max-content;">{{surveyYear1}}</p>
+          </div>
+          <div class="col-2">
+            <label class="form-label editLabel">AISHE Code</label>
+            <p>U-{{id}}</p>
+          </div>
+          <div class="col-2">
+            <label class="form-label editLabel">Name</label>
+            <p>{{Name1}}</p>
+          </div>
+          <!-- <div class="col-2">
+            <label for="" class="form-label editLabel">Management Type</label>
+            <p>{{managmentType}}</p>
+          </div> -->
+          <div class="col-2">
+            <label for="" class="form-label editLabel">University Type</label>
+            <p>{{universityTypeV}}</p>
+          </div>
+
+          <div class="col-2">
+            <label class="form-label editLabel">State</label>
+            <p>{{stateName}}</p>
+          </div>
+          <div class="col-2">
+            <label class="form-label editLabel">District</label>
+            <p>{{districtName}}</p>
+          </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="animated fadeIn">
+
+            <div class="row" style="margin-top: 4%;">
+                <div class="col-4">
+
+                        <mat-form-field  appearance="fill">
+                            <mat-label>Survey Year</mat-label>
+                            <mat-select   formControlName="surveyYear"   [ngClass]="{ 'is-invalid': submitted && f['surveyYear'].errors }">
+                              <mat-option *ngFor="let year of surveyYearList" [value]="year">{{year}}</mat-option>
+                             </mat-select>
+                      <!-- <mat-select placeholder="Survey Year" [compareWith]="compareFn" formControlName="stateName" (ngModelChange)="getdistrictName()"  [ngClass]="{ 'is-invalid': submitted && f['stateName'].errors }">
+                        <mat-select-filter [array]="userData" (filteredReturn)="filteredState =$event" [displayMember]="'name'"></mat-select-filter>
+                        <mat-option *ngFor="let item of filteredState" [value]="item.name">
+                          {{item.name}}
+                        </mat-option>
+                      </mat-select> -->
+                      <div *ngIf="submitted && f['surveyYear'].errors" class="invalid-feedback">
+                        <div *ngIf="f['surveyYear'].errors['required']">Survey Year is required</div>
+                    </div>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-4">
+
+
+                    <mat-form-field appearance="fill">
+                    <mat-label>Affiliating University State</mat-label>
+
+                  <mat-select [disableOptionCentering]="true" #select1 placeholder="Affiliating University State" [compareWith]="compareFn" formControlName="universitystateName" (selectionChange)="loadUniversityData()"  [ngClass]="{ 'is-invalid': submitted && f['universitystateName'].errors }">
+                    <mat-select-filter *ngIf="select1.focused" [array]="userData" (filteredReturn)="filteredState =$event" [displayMember]="'name'"></mat-select-filter>
+                    <mat-option *ngFor="let item of filteredState" [value]="item.stateCode">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+                  <div *ngIf="submitted && f['universitystateName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['universitystateName'].errors['required']">State Name is required</div>
+                </div>
+                </mat-form-field>
+              </div>
+                <div class="col-4">
+
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Affiliating University Name</mat-label>
+                            <mat-select [disableOptionCentering]="true" #select2 formControlName="universityValue" [ngClass]="{ 'is-invalid': submitted && f['universityValue'].errors }">
+                              <mat-select-filter *ngIf="select2.focused"
+                                [array]="universityList"
+                                (filteredReturn)="filtereduniversityList = $event"
+                                [displayMember]="'name'"
+                              ></mat-select-filter>
+                              <mat-option
+                                *ngFor="let university of filtereduniversityList"
+                                [value]="university.id"
+                              >
+                                {{ university.name }}
+                              </mat-option>
+                            </mat-select>
+                      <div *ngIf="submitted && f['universityValue'].errors" class="invalid-feedback">
+                        <div *ngIf="f['universityValue'].errors['required']">Affiliating University Name is required</div>
+                    </div>
+                    </mat-form-field>
+                </div>
+                  <div class="col-4">
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>College Type</mat-label>
+                            <mat-select [disableOptionCentering]="true" #select3
+                              placeholder="College Type"
+                              formControlName="collegeType" [ngClass]="{ 'is-invalid': submitted && f['collegeType'].errors }"
+                            >
+                              <mat-select-filter *ngIf="select3.focused"
+                                [array]="collegeTypeData"
+                                (filteredReturn)="filteredcollegeTypeData = $event"
+                                [displayMember]="'type'"
+                              ></mat-select-filter>
+                              <!-- <mat-option>Select College Type</mat-option> -->
+                              <mat-option
+                                *ngFor="let item of filteredcollegeTypeData"
+                                [value]="item.id"
+                              >
+                                {{ item.type }}
+                              </mat-option>
+                            </mat-select>
+                        <div *ngIf="submitted && f['collegeType'].errors" class="invalid-feedback">
+                          <div *ngIf="f['collegeType'].errors['required']">College Type is required</div>
+                      </div>
+                      </mat-form-field>
+                  </div>
+
+                  <div class="col-4">
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Management Type</mat-label>
+                        <mat-select [disableOptionCentering]="true" #select4
+                          placeholder="Management Type"
+                          formControlName="managementType" [ngClass]="{ 'is-invalid': submitted && f['managementType'].errors }"
+                        >
+                          <mat-select-filter *ngIf="select4.focused"
+                            [array]="managmentData"
+                            (filteredReturn)="filteredmanagementT = $event"
+                            [displayMember]="'type'"
+                          ></mat-select-filter>
+
+                          <mat-option
+                            *ngFor="let item of filteredmanagementT"
+                            [value]="item.id"
+                          >
+                            {{ item.management }}
+                          </mat-option>
+                        </mat-select>
+                    <div *ngIf="submitted && f['managementType'].errors" class="invalid-feedback">
+                      <div *ngIf="f['managementType'].errors['required']">Management Type is required</div>
+                  </div>
+                  </mat-form-field>
+              </div>
+
+                  <div class="col-4">
+
+                    <mat-form-field appearance="fill">
+                      <mat-select [disableOptionCentering]="true" #select5 placeholder="College State " [compareWith]="compareFn" formControlName="collegestateName" (selectionChange)="getdistrictName()"  [ngClass]="{ 'is-invalid': submitted && f['collegestateName'].errors }">
+                        <mat-select-filter *ngIf="select5.focused" [array]="userData" (filteredReturn)="filteredState =$event" [displayMember]="'name'"></mat-select-filter>
+                        <mat-option *ngFor="let item of filteredState" [value]="item.name">
+                          {{item.name}}
+                        </mat-option>
+                      </mat-select>
+                      <div *ngIf="submitted && f['collegestateName'].errors" class="invalid-feedback">
+                        <div *ngIf="f['collegestateName'].errors['required']">State Name is required</div>
+                    </div>
+                    </mat-form-field>
+                  </div>
+
+
+
+                  <div class="col-4">
+                    <mat-form-field appearance="fill">
+                      <mat-select [disableOptionCentering]="true" #select6 placeholder="College District " [compareWith]="compareFn" formControlName="districtName"  [ngClass]="{ 'is-invalid': submitted && f['districtName'].errors }">
+                        <mat-select-filter *ngIf="select6.focused" [array]="dataDistrict" (filteredReturn)="filteredDistrict =$event" [displayMember]="'name'"></mat-select-filter>
+                        <mat-option *ngFor="let item of filteredDistrict" [value]="item.name">
+                          {{item.name}}
+                        </mat-option>
+                      </mat-select>
+                      <div *ngIf="submitted && f['districtName'].errors" class="invalid-feedback">
+                        <div *ngIf="f['districtName'].errors['required']">District Name is required</div>
+                      </div>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-4">
+                    <mat-form-field class="example-form-field" appearance="fill">
+                      <mat-label>College Name</mat-label>
+                      <input matInput type="text" formControlName="CollegeName"  (keypress)="alphaNumberOnly($event)" [ngClass]="{ 'is-invalid': submitted && f['CollegeName'].errors }">
+                      <div *ngIf="submitted && f['CollegeName'].errors" class="invalid-feedback">
+                        <div *ngIf="f['CollegeName'].errors['required']||f['CollegeName'].errors['whitespace']">College Name is required</div>
+                      </div>
+                   
+                      <!-- <span class="text-muted" *ngIf="!form.controls['CollegeName'].valid && 
+                      form.controls['email']?.touched"> Please enter a valid first name</span> -->
+                    </mat-form-field>
+                    <!-- <small class="form-text text-muted" *ngIf="form.controls['CollegeName']?.touched" style="color: #d50404;">Only allow Alphabet</small> -->
+                  </div>
+                  <div class="col-4">
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Location</mat-label>
+                        <mat-select [disableOptionCentering]="true" #select4
+                          placeholder="Location"
+                          formControlName="location" [ngClass]="{ 'is-invalid': submitted && f['location'].errors }"
+                        >
+                          <!-- <mat-select-filter *ngIf="select4.focused"
+                            [array]="managmentData"
+                            (filteredReturn)="filteredmanagementT = $event"
+                            [displayMember]="'type'"
+                          ></mat-select-filter> -->
+
+                          <mat-option
+                            *ngFor="let item of locationData"
+                            [value]="item.id"
+                          >
+                            {{ item.name }}
+                          </mat-option>
+                        </mat-select>
+                    <div *ngIf="submitted && f['location'].errors" class="invalid-feedback">
+                      <div *ngIf="f['location'].errors['required']">Location is required</div>
+                  </div>
+                  </mat-form-field>
+              </div>
+                  <div class="col-4">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Remarks</mat-label>
+                      <textarea matInput formControlName="remarks"  [ngClass]="{ 'is-invalid': submitted || f['remarks'].errors }"></textarea>
+                      <span *ngIf="(( submitted || f['remarks'].touched) && f['remarks'].errors)" class="invalid-feedback">
+                        <span class="validation" *ngIf="f['remarks'].errors['required']||f['remarks'].errors['whitespace']">Remarks is required</span>
+                        <span class="validation" *ngIf="f['remarks'].errors['maxlength']" style="color: #d50404;">Maximum length is 2000</span>
+                        <span class="validation" *ngIf="f['remarks'].errors['minlength']" style="color: #d50404;">Minimum length is 3</span>
+                      </span>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12">
+                    <ng-container>
+                      <mat-checkbox  formControlName="isDCFApplicable" class="checkbox">Is DCF Applicable</mat-checkbox>
+                      <!-- <mat-error *ngIf="(form.controls['isDCFApplicable'].hasError('required')&& submitted)">It is required field</mat-error> -->
+                    </ng-container>
+                  </div>
+
+            </div>
+          </div>
+
+
+          <!--26 Nov Start-->
+          <!-- <div class="d-flex .justify-content-center" style="margin: 2% 0px;">
+            <button id="save"  type="submit" class="btn1" style="margin: 1.0% 0; width: 10%;">
+              SAVE
+            </button>
+            <button id="cancel" type="button" (click)="backClicked()" class="btn2 btn1" style="margin: 1.0%;width: 10%;">Cancel</button>
+          </div> -->
+             <!--26 Nov Start-->
+        <div class="d-flex justify-content-center text-center " style="margin: 2% 0px; text-align: center;">
+          <button id="save"  type="submit" class="btn1 btn btn-success btn-sm">
+            SAVE
+          </button>&nbsp;
+          <button id="cancel" type="button" (click)="form.reset({});this.form.markAsPristine();
+          this.form.markAsUntouched();
+          this.form.updateValueAndValidity(); " (click)="backClicked()" class="btn1 btn btn-danger btn-sm" >Cancel</button>
+        </div>
+
+
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+
+
+
+
+
+
+

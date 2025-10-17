@@ -1,0 +1,20 @@
+<mat-dialog-content>
+   <p style="color: red;font-size:large;">{{element?message:'Sorry AISHE Registration is now closed.'}}</p>
+   <div class="row justify-content-center" *ngIf="!element">
+      <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 50 50" xml:space="preserve" width="68px" height="68px" fill="#000000">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+              <circle style="fill:#D75A4A;" cx="25" cy="25" r="25"></circle>
+              <polyline style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;text-align: center;"
+                  points="16,34 25,25 34,16 "></polyline>
+              <polyline style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;text-align: center;"
+                  points="16,16 25,25 34,34 "></polyline>
+          </g>
+      </svg>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center" *ngIf="element">
+	<button mat-raised-button color="warn" tabindex="-1" (click)="closed()">{{cancelButtonText}}</button>
+</mat-dialog-actions>

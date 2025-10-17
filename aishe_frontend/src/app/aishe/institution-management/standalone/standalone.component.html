@@ -1,0 +1,887 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+
+  <div class="form-group">
+    <div class="form-row mr-0 ml-0">
+        <div class="col-md-12 mt-0 badges p-2 mt-3">
+            <div class="float-left">
+                <span class="font-weight-bold text-lg">Standalone Management</span>
+            </div>
+        </div>
+    </div>
+</div>
+  <div class="col-md-12 animated fadeInDown card shadow mb-4 pt-1 pb-2 pr-4 pl-4 bg-light">
+  <mat-tab-group animationDuration="0ms" class="exam-tabing-steps" [(selectedIndex)]="selectedIndex"
+    (selectedTabChange)="tabSelected($event)" #tabGroup>
+
+    <mat-tab label="Dashboard">
+    </mat-tab>
+    <!-- view -->
+    <mat-tab label="Approved List">
+      <!-- <mat-card> -->
+      <mat-card class="mt-2  card " style="border-radius: 26px;"  *ngIf="view?!view.isView:true">
+      <form [formGroup]="instiForm" (ngSubmit)="findOnView12()" *ngIf="view?!view.isView:true">
+       <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <mat-form-field appearance="fill" style="width: 100%;">
+              <mat-label>Search by AISHE-Code or Insititution Name</mat-label>
+              <input matInput formControlName="searchText" (keyup)="searchTextValue();instiForm.controls['surveyYearValue'].setValue('');instiForm.controls['stateValue'].setValue('');instiForm.controls['standaloneType'].setValue('')">
+              <!-- <input matInput formControlName="aisheCodeValue" maxlength="7" (keyup)="editCollegeValidation();instiForm.controls['collegeLocation'].setValue('');instiForm.controls['collegeType'].setValue('');"/> -->
+            </mat-form-field>
+          </div>
+          <div class="col-md-3"></div>
+        </div>
+        <div class="col-md-12" style="display: flex;flex-direction: column;">
+        <div class="row mt-4 mx-auto">
+
+          <div class="col-auto">
+            <mat-form-field appearance="fill">
+              <mat-label>Survey Year</mat-label>
+              <mat-select formControlName="surveyYearValue" (selectionChange)="instiForm.controls['searchText'].setValue('');viewValidations()">
+                <mat-option *ngFor="let year of surveyYearList" [value]="year">{{year}}</mat-option>
+              </mat-select>
+              <mat-error
+              *ngIf="instiForm.controls['surveyYearValue'].hasError('required') || instiForm.controls['surveyYearValue'].dirty || instiForm.controls['surveyYearValue'].value || instiForm.controls['surveyYearValue'].touched">
+              Please select Survey Year
+            </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-auto" *ngIf="roleId === '26' || roleId === '1'">
+            <mat-form-field appearance="fill">
+              <mat-label>State</mat-label>
+              <mat-select formControlName="stateValue" #select1 [disableOptionCentering]="true">
+                <mat-select-filter *ngIf="select1.focused" [array]="stateList"
+                  (filteredReturn)="filterStateList = $event" [displayMember]="'name'"></mat-select-filter>
+                  <mat-option value="ALL" *ngIf="roleId === '26' || roleId === '1'">--ALL--
+                  </mat-option>
+                <mat-option *ngFor="let state of filterStateList" [value]="state.stateCode">{{ state.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+              *ngIf="instiForm.controls['stateValue'].hasError('required') || instiForm.controls['stateValue'].dirty || instiForm.controls['stateValue'].value || instiForm.controls['stateValue'].touched">
+              Please select State
+            </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-auto">
+            <mat-form-field appearance="fill">
+              <mat-label>Institution Type</mat-label>
+              <mat-select placeholder="Institution Type" #select1 [disableOptionCentering]="true"
+                formControlName="standaloneType" (closed)="resteFilter($event,standalonTypefilter)">
+                <mat-select-filter [array]="standalonTypeData" *ngIf="select1.focused"
+                  (filteredReturn)="standalonTypefilter =$event" [displayMember]="'type'"></mat-select-filter>
+                  <mat-option value="ALL" *ngIf="roleId === '26' || roleId === '1' || roleId === '6'">--ALL--
+                  </mat-option>
+                <mat-option *ngFor="let item of standalonTypefilter" [value]="item.id">
+                  {{item.type}}
+                </mat-option>
+              </mat-select>
+              <mat-error
+              *ngIf="instiForm.controls['standaloneType'].hasError('required') || instiForm.controls['standaloneType'].dirty || instiForm.controls['standaloneType'].value || instiForm.controls['standaloneType'].touched">
+              Please Select Institution Type
+            </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- <div class="col-md-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Standalone Institution</mat-label>
+                <mat-select formControlName="standaloneValue">
+                  <mat-select-filter [array]="universityList" (filteredReturn)="filtereduniversityList =$event" [displayMember]="'name'"></mat-select-filter>
+                  <mat-option *ngFor="let university of filtereduniversityList" [value]="university.id">
+                   {{university.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div> -->
+
+        </div>
+        </div>
+        <div class="row mt-1">
+          <div Class="col-sm-12 text-center mb-3">
+            <button class="btn1 btn btn-sm btn-success" type="submit">Find</button>&nbsp;
+            <button class="btn1 btn btn-sm btn-danger" (click)="instiForm.reset({}); view?.resetdata();submitted = false">Reset
+            </button>
+          </div>
+        </div>
+       </div>
+
+      </form>
+      </mat-card>
+      <!-- </mat-card> -->
+    </mat-tab>
+
+    <!-- Edit -->
+    <mat-tab label="Edit" *ngIf="accessibilityData?.sedit">
+      <mat-card class="mt-2  card " style="border-radius: 26px;" *ngIf="edit?!edit.isEdit:true">
+      <form [formGroup]="instiForm" (ngSubmit)="findOnEdit()" *ngIf="edit?!edit.isEdit:true">
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <mat-form-field appearance="fill" style="width: 100%;">
+              <mat-label>Survey Year</mat-label>
+              <mat-select formControlName="surveyYearValue">
+                <mat-option *ngFor="let year of surveyYearList" [value]="year">{{year}}</mat-option>
+              </mat-select>
+              <mat-error
+              *ngIf="instiForm.controls['surveyYearValue'].hasError('required') || instiForm.controls['surveyYearValue'].dirty || instiForm.controls['surveyYearValue'].value || instiForm.controls['surveyYearValue'].touched">
+              Please select Survey Year
+            </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4"></div>
+        </div> 
+        <span class="card" style="border: 1px solid;">
+          <div class="row mt-3">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+
+                  <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>AISHE CODE</mat-label>
+                    <input matInput formControlName="aisheCodeValue" maxlength="7" (keyup)="editStandaloneValidation();instiForm.controls['stateValue'].setValue('');instiForm.controls['standaloneType'].setValue('');"/>
+                  </mat-form-field>
+
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+          
+          <div class="row">
+             <div class="col-md-12 text-center" style="font-size: 20px;font-weight: 500;">
+                 OR
+             </div>
+          </div> 
+       
+          <div class="col-md-12" style="display: flex;flex-direction: column;">
+          <div class="row mt-4 mx-auto">
+            <!-- <div class="col-auto">
+              <mat-form-field appearance="fill">
+                <mat-label>Survey Year</mat-label>
+                <mat-select formControlName="surveyYearValue">
+                  <mat-option *ngFor="let year of surveyYearList" [value]="year">{{year}}</mat-option>
+                </mat-select>
+                <mat-error
+                *ngIf="instiForm.controls['surveyYearValue'].hasError('required') || instiForm.controls['surveyYearValue'].dirty || instiForm.controls['surveyYearValue'].value || instiForm.controls['surveyYearValue'].touched">
+                Please select Survey Year
+              </mat-error>
+              </mat-form-field>
+            </div> -->
+            <div class="col-auto" *ngIf="roleId === '26' || roleId=== '1'">
+              <mat-form-field appearance="fill">
+                <mat-label>State</mat-label>
+                <mat-select formControlName="stateValue" #select1 [disableOptionCentering]="true" (selectionChange)="instiForm.controls['aisheCodeValue'].setValue('');">
+                  <mat-select-filter *ngIf="select1.focused" [array]="stateList"
+                    (filteredReturn)="filterStateList = $event" [displayMember]="'name'"></mat-select-filter>
+                  <mat-option [value]="' '">All</mat-option>  
+                  <mat-option *ngFor="let state of filterStateList" [value]="state.stateCode">{{ state.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                *ngIf="instiForm.controls['stateValue'].hasError('required') || instiForm.controls['stateValue'].dirty || instiForm.controls['stateValue'].value || instiForm.controls['stateValue'].touched">
+                Please select State
+              </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-auto">
+              <mat-form-field appearance="fill">
+                <mat-label>Institution Type</mat-label>
+                <mat-select placeholder="Institution Type" formControlName="standaloneType" #select1
+                  [disableOptionCentering]="true">
+                  <mat-select-filter [array]="standalonTypeData" *ngIf="select1.focused"
+                    (filteredReturn)="standalonTypefilter =$event" [displayMember]="'type'"></mat-select-filter>
+                    <mat-option [value]="' '">All</mat-option>   
+                  <mat-option *ngFor="let item of standalonTypefilter" [value]="item.id">
+                    {{item.type}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-md-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Standalone Institution</mat-label>
+              <mat-select formControlName="universityValue">
+                <mat-select-filter [array]="universityList" (filteredReturn)="filtereduniversityList =$event" [displayMember]="'name'"></mat-select-filter>
+                <mat-option *ngFor="let university of filtereduniversityList" [value]="university.id">
+                {{university.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> -->
+          </div>
+          </div>
+          <!-- <div class="row mt-1">
+            <div Class="col-sm-12 text-center mb-3">
+              <button class="btn1 btn btn-sm btn-success" type="submit">Find</button>&nbsp;
+              <button class="btn1 btn btn-sm btn-danger"(click)="instiForm.reset({}); edit?.resetdata(); submitted = false">Reset
+              </button>
+            </div>
+          </div> -->
+  
+          </span>
+          <div class="row mt-2">
+            <div Class="col-sm-12 mb-3 text-center ">
+              <button class="btn1 btn btn-sm btn-success" type="submit">Find</button>&nbsp;
+              <button class="btn1 btn btn-sm btn-danger"(click)="instiForm.reset({}); edit?.resetdata(); submitted = false">Reset
+              </button>
+            </div>
+          </div>
+      </form>
+      </mat-card>
+    </mat-tab>
+
+    <!--   Approve/Reject  -->
+    <mat-tab label="Approve/Reject" *ngIf="accessibilityData?.sapproveReject">
+      <mat-card class="mt-2  card " style="border-radius: 26px;" *ngIf="approve?!approve.isApproved:true">
+      <form [formGroup]="instiForm" (ngSubmit)="findOnApprove12()" *ngIf="approve?!approve.isApproved:true">
+        <div class="col-md-12"> 
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <mat-form-field appearance="fill">
+              <mat-label>Request Id</mat-label>
+              <input matInput formControlName="RequestId" (keyup)="isRequstId();instiForm.controls['districtValue'].setValue('');instiForm.controls['standaloneType'].setValue('');instiForm.controls['pendingLevel'].setValue('')"  (keypress)="alphaNumberOnly($event)" maxlength="6" >
+            </mat-form-field>
+          </div>
+          <div class="col-md-4"></div>
+        </div>  
+        <div class="row">
+          <div class="col-md-12 text-center" style="font-size: 15px;font-weight: 500;">
+             OR
+          </div>
+        </div>
+        <div class="col-md-12" style="display: flex;flex-direction: column;">  
+        <div class="row mt-4 mx-auto" >
+          <!-- <div class="col-auto">
+            <mat-form-field appearance="fill">
+              <mat-label>Request Id</mat-label>
+              <input matInput formControlName="RequestId">
+            </mat-form-field>
+          </div> -->
+          <div class="col-auto" *ngIf="this.roleId==='26' || this.roleId==='1' || this.roleId=='6' || this.roleId=='10' || this.roleId=='9' || this.roleId=='8' || this.roleId=='11' || this.roleId=='22'">
+            <mat-form-field appearance="fill">
+              <mat-label>Pending Level</mat-label>
+              <mat-select placeholder="MoE Pending" formControlName="pendingLevel"  #select2 (selectionChange)="instiForm.get('RequestId')?.setValue('')"
+                [disableOptionCentering]="true">
+                <mat-option *ngFor="let item of pendingLevel" [value]="item.id">
+                  {{item.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error
+              *ngIf="instiForm.controls['pendingLevel'].hasError('required') || instiForm.controls['pendingLevel'].dirty || instiForm.controls['pendingLevel'].value || instiForm.controls['pendingLevel'].touched">
+              Please select Pending Level
+            </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-auto">
+            <mat-form-field appearance="fill">
+              <mat-label>Survey Year</mat-label>
+              <mat-select formControlName="surveryApprove"  (selectionChange)="instiForm.get('RequestId')?.setValue('')">
+                <mat-option *ngFor="let year of surveyYearList" [value]="year">{{year}}</mat-option>
+              </mat-select>
+              <mat-error
+              *ngIf="instiForm.controls['surveryApprove'].hasError('required') || instiForm.controls['surveryApprove'].dirty || instiForm.controls['surveryApprove'].value || instiForm.controls['surveryApprove'].touched">
+              Please select Survey Year
+            </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-auto" *ngIf="roleId === '26' || roleId=== '1'">
+            <mat-form-field appearance="fill">
+              <mat-label>State</mat-label>
+              <mat-select formControlName="stateApprove" #select1 [disableOptionCentering]="true" (selectionChange)="loadDistrict($event);">
+                <mat-select-filter *ngIf="select1.focused" [array]="stateList"
+                  (filteredReturn)="filterStateList = $event" [displayMember]="'name'"></mat-select-filter>
+                <mat-option [value]="''">All</mat-option>
+                <mat-option *ngFor="let state of filterStateList" [value]="state.stateCode">{{ state.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+              *ngIf="instiForm.controls['stateApprove'].hasError('required') || instiForm.controls['stateApprove'].dirty || instiForm.controls['stateApprove'].value || instiForm.controls['stateApprove'].touched">
+              Please select State
+            </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-auto" *ngIf="roleId ==='26' || roleId==='1'">
+            <mat-form-field appearance="fill">
+              <mat-label>District</mat-label>
+              <mat-select  [disableOptionCentering]="true" #select12 
+              formControlName="districtValue" (selectionChange)="instiForm.controls['aisheCodeValue'].setValue('')">
+                <mat-select-filter *ngIf="select12.focused"
+                  [array]="districtList"
+                  (filteredReturn)="filterDistrictList = $event"
+                  [displayMember]="'name'"
+                ></mat-select-filter>
+                <mat-option [value]="' '">All</mat-option>
+                <mat-option
+                  *ngFor="let district of filterDistrictList"
+                  [value]="district.distCode"
+                  >{{ district.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+              *ngIf="instiForm.controls['districtValue'].hasError('required') || instiForm.controls['districtValue'].dirty || instiForm.controls['districtValue'].value || instiForm.controls['districtValue'].touched">
+              Please select State
+            </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-auto">
+            <mat-form-field appearance="fill">
+              <mat-label>Institution Type</mat-label>
+              <mat-select placeholder="Institution Type" formControlName="standaloneType" #select1
+                [disableOptionCentering]="true" >
+                <mat-select-filter [array]="standalonTypeData" *ngIf="select1.focused"
+                  (filteredReturn)="standalonTypefilter =$event" [displayMember]="'type'"></mat-select-filter>
+                  <mat-option [value]="' '">All</mat-option>  
+                <mat-option *ngFor="let item of standalonTypefilter" [value]="item.id">
+                  {{item.type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-auto" *ngIf="roleId === '26' || roleId==='1'">
+            <mat-form-field class="d-block">
+                <mat-label>From Date:</mat-label>
+                <input matInput [matDatepicker]="picker1" readonly 
+                    placeholder="From Date" formControlName="fromDate" (focus)="picker1.open()">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix (click)="instiForm.controls['fromDate'].setValue(null)">
+                  <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+              </mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-auto" *ngIf="roleId === '26' || roleId==='1'">
+            <mat-form-field class="d-block">
+                <mat-label>To Date:</mat-label>
+                <input matInput [matDatepicker]="picker2" readonly 
+                  placeholder="From Date" formControlName="toDate" [min]="instiForm.controls['fromDate'].value" (focus)="picker2.open()">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix (click)="instiForm.controls['toDate'].setValue(null)">
+                  <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+              </mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+        </div>
+        </div>
+        <div class="row mt-1">
+          <div Class="col-sm-12 text-center mb-3">
+            <button class="btn1 btn btn-sm btn-success" type="submit">Find</button>&nbsp;
+            <button class="btn1 btn btn-sm btn-danger" (click)="instiForm.reset({}); approve?.resetdata(); this.filterDistrictList=[]; submitted = false">Reset</button>
+          </div>
+        </div>
+        </div>
+      </form>
+      </mat-card>
+    </mat-tab>
+
+    <!-- upgrade standalone to college -->
+    <mat-tab label="Upgrade to  College" *ngIf="accessibilityData?.stoC">
+      <mat-card class="mt-2  card " style="border-radius: 26px;"  *ngIf="upgradetoClg ? !upgradetoClg.isUpgradetoClg : true">
+      <form [formGroup]="instiForm" (ngSubmit)="findUpgradeList()"
+        *ngIf="upgradetoClg ? !upgradetoClg.isUpgradetoClg : true">
+        <span class="card" style="border: 1px solid;">
+          <div class="row mt-3">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+
+                  <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>AISHE CODE</mat-label>
+                    <input matInput formControlName="aisheCodeValue" maxlength="7" (keyup)="upgradeToCollegeThroughAisheCodeValidation();instiForm.controls['stateValue'].setValue('');instiForm.controls['standaloneType'].setValue('');instiForm.controls['districtValue'].setValue('')"/>
+                  </mat-form-field>
+
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+          
+          <div class="row">
+             <div class="col-md-12 text-center" style="font-size: 20px;font-weight: 500;">
+                 OR
+             </div>
+          </div> 
+          <div class="col-md-12" style="display: flex;flex-direction: column;">  
+            <div class="row mt-4 mx-auto">
+              <!-- <div class="col-auto">
+                <mat-form-field appearance="fill">
+                  <mat-label>Survey Year</mat-label>
+                  <mat-select formControlName="surveyYearValue">
+                    <mat-option *ngFor="let year of surveyYearList" [value]="year">{{year}}</mat-option>
+                  </mat-select>
+                  <mat-error
+                  *ngIf="instiForm.controls['surveyYearValue'].hasError('required') || instiForm.controls['surveyYearValue'].dirty || instiForm.controls['surveyYearValue'].value || instiForm.controls['surveyYearValue'].touched">
+                  Please select Survey Year
+                </mat-error>
+                </mat-form-field>
+              </div> -->
+              <div class="col-auto" *ngIf="roleId === '26' || roleId=== '1'">
+                <mat-form-field appearance="fill">
+                  <mat-label>State</mat-label>
+                  <mat-select formControlName="stateValue" #select1 [disableOptionCentering]="true"  (selectionChange)="loadDistrict($event);instiForm.controls['aisheCodeValue'].setValue('');">
+                    <mat-select-filter *ngIf="select1.focused" [array]="stateList"
+                      (filteredReturn)="filterStateList = $event" [displayMember]="'name'"></mat-select-filter>
+                    <mat-option [value]="' '">All</mat-option>  
+                    <mat-option *ngFor="let state of filterStateList" [value]="state.stateCode">{{ state.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                  *ngIf="instiForm.controls['stateValue'].hasError('required') || instiForm.controls['stateValue'].dirty || instiForm.controls['stateValue'].value || instiForm.controls['stateValue'].touched">
+                  Please select State
+                </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-auto" *ngIf="roleId ==='26' || roleId==='1'">
+                <mat-form-field appearance="fill">
+                  <mat-label>District</mat-label>
+                  <mat-select  [disableOptionCentering]="true" #select12 
+                  formControlName="districtValue" (selectionChange)="instiForm.controls['aisheCodeValue'].setValue('')">
+                    <mat-select-filter *ngIf="select12.focused"
+                      [array]="districtList"
+                      (filteredReturn)="filterDistrictList = $event"
+                      [displayMember]="'name'"
+                    ></mat-select-filter>
+                    <mat-option [value]="' '">All</mat-option>   
+                    <mat-option
+                      *ngFor="let district of filterDistrictList"
+                      [value]="district.distCode"
+                      >{{ district.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                  *ngIf="instiForm.controls['districtValue'].hasError('required') || instiForm.controls['districtValue'].dirty || instiForm.controls['districtValue'].value || instiForm.controls['districtValue'].touched">
+                  Please select State
+                </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-auto">
+                <mat-form-field appearance="fill">
+                  <mat-label>Institution Type</mat-label>
+                  <mat-select placeholder="Institution Type" formControlName="standaloneType" #select1
+                    [disableOptionCentering]="true">
+                    <mat-select-filter [array]="standalonTypeData" *ngIf="select1.focused"
+                      (filteredReturn)="standalonTypefilter =$event" [displayMember]="'type'"></mat-select-filter>
+                      <mat-option [value]="' '">All</mat-option>   
+                    <mat-option *ngFor="let item of standalonTypefilter" [value]="item.id">
+                      {{item.type}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                  *ngIf="instiForm.controls['standaloneType'].hasError('required') || instiForm.controls['standaloneType'].dirty || instiForm.controls['standaloneType'].value || instiForm.controls['standaloneType'].touched">
+                  Please Select Institution Type
+                </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            </div>
+          </span>
+          <div class="row mt-2">
+            <div Class="col-sm-12 mb-3 text-center ">
+              <button class="btn1 btn btn-sm btn-success" type="submit">Find</button>&nbsp;
+              <button class="btn1 btn btn-sm btn-danger"
+              (click)="instiForm.reset({}); upgradetoClg?.resetdata(); submitted = false">Reset</button>
+            </div>
+          </div>
+          <!-- <div class="row mt-1">
+            <div Class="col-sm-12 text-center mb-3">
+              <button class="btn1 btn btn-sm btn-success" type="submit">Find</button>&nbsp;
+              <button class="btn1 btn btn-sm btn-danger"
+                (click)="instiForm.reset({}); upgradetoClg?.resetdata(); submitted = false">Reset</button>
+            </div>
+          </div> -->
+ 
+
+      </form>
+      </mat-card>
+    </mat-tab>    
+
+
+    <!-- Active -->
+    <mat-tab label="Active/Inactive" *ngIf="accessibilityData?.sinactive">
+      <mat-card class="mt-2  card " style="border-radius: 26px;" *ngIf="status1?!status1.isStatus1:true">
+      <form [formGroup]="instiForm" (ngSubmit)="findOnStatus()" *ngIf="status1?!status1.isStatus1:true">
+        <div class="col-md-12">
+          <div class="col-md-12" style="display: flex;flex-direction: column;">  
+          <div class="row mt-4 mx-auto">
+            <div class="col-auto">
+              <mat-form-field appearance="fill">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                  <mat-option value="active">
+                    Active
+                  </mat-option>
+                  <mat-option value="inactive">
+                    Inactive
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                *ngIf="instiForm.controls['status'].hasError('required') || instiForm.controls['status'].dirty || instiForm.controls['status'].value || instiForm.controls['status'].touched">
+                Please select Status
+              </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-auto" *ngIf="f['status'].value==='inactive'">
+              <mat-form-field appearance="fill">
+                <mat-label>Survey Year</mat-label>
+                <mat-select formControlName="surveyYearValue">
+                  <mat-option *ngFor="let year of surveyYearAllList" [value]="year.surveyYearValue">
+                    {{year.surveyYearValue}}</mat-option>
+                </mat-select>
+                <mat-error
+                *ngIf="instiForm.controls['surveyYearValue'].hasError('required') || instiForm.controls['surveyYearValue'].dirty || instiForm.controls['surveyYearValue'].value || instiForm.controls['surveyYearValue'].touched">
+                Please select Survey Year
+              </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-auto" *ngIf="f['status'].value==='active'">
+              <mat-form-field appearance="fill">
+                <mat-label>Survey Year</mat-label>
+                <mat-select formControlName="surveyYearValue">
+                  <mat-option *ngFor="let year of surveyYearList" [value]="year">{{year}}</mat-option>
+                </mat-select>
+                <mat-error
+                *ngIf="instiForm.controls['surveyYearValue'].hasError('required') || instiForm.controls['surveyYearValue'].dirty || instiForm.controls['surveyYearValue'].value || instiForm.controls['surveyYearValue'].touched">
+                Please select Survey Year
+              </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-auto" *ngIf="roleId === '26' || roleId=== '1'">
+              <mat-form-field appearance="fill">
+                <mat-label>State</mat-label>
+                <mat-select formControlName="stateValue" #select1 [disableOptionCentering]="true">
+                  <mat-select-filter [array]="stateList" *ngIf="select1.focused"
+                    (filteredReturn)="filterStateList = $event" [displayMember]="'name'"></mat-select-filter>
+                  <mat-option [value]="' '">All</mat-option>  
+                  <mat-option *ngFor="let state of filterStateList" [value]="state.stateCode">{{ state.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                *ngIf="instiForm.controls['stateValue'].hasError('required') || instiForm.controls['stateValue'].dirty || instiForm.controls['stateValue'].value || instiForm.controls['stateValue'].touched">
+                Please select State
+              </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-auto">
+              <mat-form-field appearance="fill">
+                <mat-label>Institution Type</mat-label>
+                <mat-select placeholder="Institution Type" formControlName="standaloneType" #select1
+                  [disableOptionCentering]="true">
+                  <mat-select-filter [array]="standalonTypeData" *ngIf="select1.focused"
+                    (filteredReturn)="standalonTypefilter =$event" [displayMember]="'type'"></mat-select-filter>
+                    <mat-option [value]="' '">All</mat-option>   
+                  <mat-option *ngFor="let item of standalonTypefilter" [value]="item.id">
+                    {{item.type}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          </div>
+          <div class="row mt-1">
+            <div Class="col-sm-12 text-center mb-3">
+              <button class="btn1 btn btn-sm btn-success" type="submit">Find</button>&nbsp;
+              <button class="btn1 btn btn-sm btn-danger" (click)="instiForm.reset({}); status1?.resetdata();submitted = false">Reset</button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+      </mat-card>
+    </mat-tab>
+
+    <!-- Approved list -->
+    <mat-tab label="Approved/Rejected List" *ngIf="roleId !=='1' && roleId !=='26'">
+      <mat-card class="mt-2  card " style="border-radius: 26px;" *ngIf="approveList1?!approveList1.isApproveList1:true">
+      <form [formGroup]="instiForm" (ngSubmit)="findOnApprovedList()"
+        *ngIf="approveList1?!approveList1.isApproveList1:true">
+        <div class="row mt-4" style="justify-content: center;">
+
+          <div class="col-sm-3" style="text-align: end;">
+            <mat-form-field appearance="fill">
+              <mat-label>Survey Year</mat-label>
+              <mat-select formControlName="surveyYearValue">
+                <mat-option *ngFor="let year of surveyYearAllList" [value]="year.surveyYear">{{year.surveyYearValue}}</mat-option>
+              </mat-select>
+              <mat-error
+              *ngIf="instiForm.controls['surveyYearValue'].hasError('required') || instiForm.controls['surveyYearValue'].dirty || instiForm.controls['surveyYearValue'].value || instiForm.controls['surveyYearValue'].touched">
+              Please select Survey Year
+            </mat-error>
+            </mat-form-field>
+          </div>
+
+
+          <div class="col-sm-3">
+            <button class="btn1 btn btn-success btn-sm" type="submit">Find</button>&nbsp;
+            <button class="btn1 btn btn-danger btn-sm" (click)="instiForm.reset({}); approveList1?.resetData(); submitted = false">Reset</button>
+          </div>
+        </div>
+      </form>
+      </mat-card>
+    </mat-tab>
+
+    <!--upgrade standalone to university-->
+    <mat-tab label="Upgrade to  University" *ngIf="accessibilityData?.stoU">
+      <mat-card class="mt-2  card " style="border-radius: 26px;" *ngIf="upgradetoUniversity ? !upgradetoUniversity.isUpgradetoUniversity : true">
+      <form [formGroup]="instiForm" (ngSubmit)="findUpgradeUniversity()"
+        *ngIf="upgradetoUniversity ? !upgradetoUniversity.isUpgradetoUniversity : true">
+        <span class="card" style="border: 1px solid;">
+          <div class="row mt-3">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+
+                  <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>AISHE CODE</mat-label>
+                    <input matInput formControlName="aisheCodeValue" maxlength="7" (keyup)="upgradeToUniversityThroughAisheCodeValidation();instiForm.controls['stateValue'].setValue('');instiForm.controls['standaloneType'].setValue('');instiForm.controls['districtValue'].setValue('')"/>
+                  </mat-form-field>
+
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+          
+          <div class="row">
+             <div class="col-md-12 text-center" style="font-size: 20px;font-weight: 500;">
+                 OR
+             </div>
+          </div> 
+            <div class="col-md-12" style="display: flex;flex-direction: column;">  
+            <div class="row mt-4 mx-auto">
+              <!-- <div class="col-auto">
+                <mat-form-field appearance="fill">
+                  <mat-label>Survey Year</mat-label>
+                  <mat-select formControlName="surveyYearValue">
+                    <mat-option *ngFor="let year of surveyYearList" [value]="year">{{year}}</mat-option>
+                  </mat-select>
+                  <mat-error
+                  *ngIf="instiForm.controls['surveyYearValue'].hasError('required') || instiForm.controls['surveyYearValue'].dirty || instiForm.controls['surveyYearValue'].value || instiForm.controls['surveyYearValue'].touched">
+                  Please select Survey Year
+                </mat-error>
+                </mat-form-field>
+              </div> -->
+              <div class="col-auto" *ngIf="roleId === '26' || roleId=== '1'">
+                <mat-form-field appearance="fill">
+                  <mat-label>State</mat-label>
+                  <mat-select formControlName="stateValue" #select1 [disableOptionCentering]="true" (selectionChange)="loadDistrict($event);instiForm.controls['aisheCodeValue'].setValue('');">
+                    <mat-select-filter [array]="stateList" *ngIf="select1.focused"
+                      (filteredReturn)="filterStateList = $event" [displayMember]="'name'"></mat-select-filter>
+                    <mat-option [value]="' '">All</mat-option>  
+                    <mat-option *ngFor="let state of filterStateList" [value]="state.stateCode">{{ state.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                  *ngIf="instiForm.controls['stateValue'].hasError('required') || instiForm.controls['stateValue'].dirty || instiForm.controls['stateValue'].value || instiForm.controls['stateValue'].touched">
+                  Please select State
+                </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-auto" *ngIf="roleId ==='26' || roleId==='1'">
+                <mat-form-field appearance="fill">
+                  <mat-label>District</mat-label>
+                  <mat-select  [disableOptionCentering]="true" #select12 
+                  formControlName="districtValue" (selectionChange)="instiForm.controls['aisheCodeValue'].setValue('')">
+                    <mat-select-filter *ngIf="select12.focused"
+                      [array]="districtList"
+                      (filteredReturn)="filterDistrictList = $event"
+                      [displayMember]="'name'"
+                    ></mat-select-filter>
+                    <mat-option [value]="' '">All</mat-option> 
+                    <mat-option
+                      *ngFor="let district of filterDistrictList"
+                      [value]="district.distCode"
+                      >{{ district.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                  *ngIf="instiForm.controls['districtValue'].hasError('required') || instiForm.controls['districtValue'].dirty || instiForm.controls['districtValue'].value || instiForm.controls['districtValue'].touched">
+                  Please select State
+                </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-auto">
+                <mat-form-field appearance="fill">
+                  <mat-label>Institution Type</mat-label>
+                  <mat-select placeholder="Institution Type" formControlName="standaloneType" #select1
+                    [disableOptionCentering]="true">
+                    <mat-select-filter [array]="standalonTypeData" *ngIf="select1.focused"
+                      (filteredReturn)="standalonTypefilter =$event" [displayMember]="'type'"></mat-select-filter>
+                    <mat-option [value]="' '">All</mat-option>   
+                    <mat-option *ngFor="let item of standalonTypefilter" [value]="item.id">
+                      {{item.type}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                  *ngIf="instiForm.controls['standaloneType'].hasError('required') || instiForm.controls['standaloneType'].dirty || instiForm.controls['standaloneType'].value || instiForm.controls['standaloneType'].touched">
+                  Please Select Institute Type
+                </mat-error>
+                </mat-form-field>
+              </div> 
+            </div>
+            </div>
+            <!-- <div class="row mt-1">
+              <div Class="col-sm-12 text-center mb-3">
+                <button class="btn1 btn btn-sm btn-success" type="submit">Find</button>&nbsp;
+                <button class="btn1 btn btn-sm btn-danger"
+                  (click)="instiForm.reset({}); upgradetoUniversity?.resetdata(); submitted = false">Reset</button>
+              </div>
+            </div> -->
+       
+        </span>
+        <div class="row mt-2">
+          <div Class="col-sm-12 mb-3 text-center ">
+            <button class="btn1 btn btn-sm btn-success" type="submit">Find</button>&nbsp;
+            <button class="btn1 btn btn-sm btn-danger"
+            (click)="instiForm.reset({}); upgradetoUniversity?.resetdata(); submitted = false">Reset</button>
+          </div>
+        </div>
+
+      </form>
+      </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Rejected List"
+        *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education']">
+        <div class="animated fadeInDown card bg-light mt-2" *ngIf="!showRejectDetail">
+          <form [formGroup]="instiForm">
+            <div class="row col-md-12 overflow-hidden">
+              <div class="col-md-2 pt-4">
+                <label>Show</label>&nbsp;
+                <select [(ngModel)]="sharedservice.pageSize" (ngModelChange)="onChange($event)" [ngModelOptions]="{standalone: true}">
+                  <option *ngFor="let data of sharedservice.pageSizeOptions" [value]="data">{{data}}</option>
+                </select>
+                entries
+              </div>
+              <div class="col-sm-2 pt-4">
+                <mat-form-field appearance="fill" style="display: block">
+                  <mat-label>Survey Year</mat-label>
+                  <mat-select formControlName="surveyYearValue">
+                    <mat-option *ngFor="let year of surveyYearAllList" [value]="year.surveyYear">{{
+                      year.surveyYearValue}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-1 pt-4">
+                <button class="btn1 btn btn-success btn-sm" type="submit" (click)="getRejectedList()">Find</button>
+              </div>
+              <div class="col-sm-2"></div>
+              <div class="col-md-5 pt-4">
+                <label>Search:</label>&nbsp;
+                <input type="text" size="40" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+                  [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+
+          </form>
+        </div>
+          <div class="table-responsive" *ngIf="!showRejectDetail">
+            <table class="table text-left">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Request Id</th>
+                  <th>College Name</th>
+                  <th>Type</th>
+                   <th>Reject Date</th>
+                   <th>Action By</th>
+                  <th>Remarks</th>
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                <tr *ngFor="let item of alldata | paginate : {
+                  itemsPerPage: sharedservice.pageSize,
+                  currentPage: sharedservice.page
+                
+                };
+          let i = index
+          ">
+          
+                  <td>{{i+sharedservice.StartLimit+1}}</td>
+                  <td><a href="javascript:void(0)" (click)="sendDetailRequest(item.requestId)">{{item.requestId}}</a></td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.institutionTypeName}}</td>
+                  <td>{{item.actionOn}}</td>
+                  <td>{{item.actionBy}}</td>
+                  <td>{{item.remarks}}</td>
+
+                </tr>
+              </tbody>
+          
+            </table>
+            <div class="col-md-3">
+              Showing {{sharedservice.StartLimit + 1}} to {{sharedservice.pageData === -1?0:sharedservice.pageData}} Of {{tempUserList.length}}
+              entries
+            </div>
+            <div class="d-flex justify-content-center" >
+              <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)">
+              </pagination-controls>
+          
+            </div>
+         </div>
+         <app-standalone-rejected-req (statusChanged)="onStatusChanged($event)" [requestDetail]="rejectedRequestId" *ngIf="showRejectDetail"></app-standalone-rejected-req>
+      </mat-tab>
+
+    <!-- standlone report  -->
+    <mat-tab class="report-university" label="View-Log" *ngIf="accessibilityData?.report">
+      <!-- <app-university-report *ngIf="showReport"></app-university-report> -->
+      <mat-card class="mt-2  card " style="border-radius: 26px;">
+      <form [formGroup]="instiForm" (ngSubmit)="findReport('StandaloneReport')">
+        <div class="col-md-12 ">
+          <div class="row mt-4 mx-auto justify-content-center">
+
+            <div class="col-sm-3" style="text-align: end;">
+              <mat-form-field appearance="fill">
+                <mat-label>Survey Year</mat-label>
+                <mat-select formControlName="surveyYearValue">
+                  <mat-option *ngFor="let year of surveyYearAllList" [value]="year.surveyYear">{{year.surveyYearValue}}</mat-option>
+                </mat-select>
+                <mat-error
+                *ngIf="instiForm.controls['surveyYearValue'].hasError('required') || instiForm.controls['surveyYearValue'].dirty || instiForm.controls['surveyYearValue'].value || instiForm.controls['surveyYearValue'].touched">
+                Please select Survey Year
+              </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-auto" *ngIf="roleId === '26' || roleId==='1'">
+              <mat-form-field class="d-block">
+                  <mat-label>From Date:</mat-label>
+                  <input matInput [matDatepicker]="picker1" readonly 
+                      placeholder="From Date" formControlName="fromDate" (focus)="picker1.open()">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker-toggle matSuffix (click)="instiForm.controls['fromDate'].setValue(null)">
+                    <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                </mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+          </div>
+          <div class="col-auto" *ngIf="roleId === '26' || roleId==='1'">
+              <mat-form-field class="d-block">
+                  <mat-label>To Date:</mat-label>
+                  <input matInput [matDatepicker]="picker2" readonly 
+                    placeholder="From Date" formControlName="toDate" [min]="instiForm.controls['fromDate'].value" (focus)="picker2.open()">
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker-toggle matSuffix (click)="instiForm.controls['toDate'].setValue(null)">
+                    <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                </mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+          </div>
+  
+            <div class="col-sm-3">
+              <button class="btn1 btn btn-sm btn-success">Find</button>&nbsp;
+              <button class="btn1 btn btn-sm btn-danger"  (click)="instiForm.reset();showReport?.resetData();">Reset</button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+  </div>
+</div>
+
+<app-upgradetocollege #upgradetoClg [instiFormData]="instiForm" *ngIf="selectedIndexUpgradetoClg">
+</app-upgradetocollege>
+<app-standalone-view #view [instiFormData]="instiForm" *ngIf="selectedIndexView"></app-standalone-view>
+<app-standalone-edit #edit [instiFormData]="instiForm" *ngIf="selectedIndexEdit"></app-standalone-edit>
+<app-standalone-approve #approve [instiFormData]="instiForm" *ngIf="selectedIndexApprove"></app-standalone-approve>
+<app-standalone-approve-list #approveList1 [instiFormData]="instiForm"
+  *ngIf="selectedIndexApproveList"></app-standalone-approve-list>
+<app-standalone-status #status1 [instiFormData]="instiForm" *ngIf="selectedIndexStatus"></app-standalone-status>
+<app-upgrade-standaloneto-university #upgradetoUniversity [instiFormData]="instiForm"
+  *ngIf="selectedIndexUpgradetoUniversity"></app-upgrade-standaloneto-university>
+<app-institutional-report #Reports [instiFormData]="instiForm" *ngIf="showReportIndex"></app-institutional-report>
+<app-institution-management-dashboard [message]="type" *ngIf="selectedIndex === 0"></app-institution-management-dashboard>

@@ -1,0 +1,28 @@
+<mat-dialog-content>
+    <table class="table table-sm table-bordered">
+        <tr>
+            <th *ngFor="let item of sharedService.AnnexureHeader">{{item}}</th>
+        </tr>
+        <ng-container *ngFor="let item of sharedService.Annexure;let i=index">
+            <tr>
+                <td>{{i+1}}</td>
+                <td>{{item.exam}}</td>
+                <td>{{item.particulars}}</td>
+                <td>{{item.squareCandidate}}</td>
+                <td>{{item.candidates}}</td>
+                <td>{{item.totalSpace}}</td>
+            </tr>
+        </ng-container>
+        <tr>
+            <td></td>
+            <td><b>Total</b></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><b>3420</b></td>
+        </tr>
+    </table>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button mat-dialog-close color="warn" tabindex="-1">Close</button>
+</mat-dialog-actions>

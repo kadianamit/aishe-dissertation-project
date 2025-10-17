@@ -1,0 +1,954 @@
+<div class="container-fluid">
+    <h2 class="custom-header header-top">Common Data For One Nation One Data</h2>
+    <div class="row col-md-12 overflow-hidden">
+        <div class="col-md-2">
+          <mat-form-field class="d-block">
+            <mat-label>Enter AISHE CODE</mat-label>
+            <input type="text" matInput autocomplete="off" [(ngModel)]="aisheCode" placeholder="Enter AISHE CODE" style="text-transform: uppercase;">
+          </mat-form-field>
+        </div>
+        <!-- <div class="col-md-2">
+            <mat-form-field class="d-block">
+              <mat-label>Survey Year</mat-label>
+              <mat-select [(ngModel)]="surveyYear">
+                <mat-option *ngFor="let item of surveyYearList" [value]="item.surveyYear">{{item.surveyYearValue}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> -->
+        <div class="col-md-2">
+            <button mat-button class="btn btn-success btn-sm  mt-2" matTooltip="Search" (click)="getInstituteData()">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-tab-group animationDuration="0ms" style="overflow: hidden;">
+            <mat-tab label="Basic Details">
+                <div class="animated fadeInDown card shadow mb-4 pt-1 pb-2 pr-3 pl-3 bg-light">
+                <h3 class="heading">Basic Details</h3> 
+                <div class="row details">
+                <div class="col-md-3"><span class="caption">AISHE CODE</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{loginMode}} - {{officerListArray.aisheCode}}</span></div>
+              
+                <div class="col-md-2"><span class="caption">Name of Institution</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-3"><span class="field">{{filter.institutionName}}</span></div>
+               </div>
+               <h3 class="headingTitle">Institute Details</h3> 
+               <div class="row details">
+                <div class="col-md-3"><span class="caption">Type of Institution:</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.instituteType}}</span></div>
+              <div class="col-md-2"><span class="caption">Ownership status of Institution</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-3"><span class="field">{{filter.ownershipStatus}}</span></div>
+               </div>
+               <div class="row details">
+                <div class="col-md-5"><span class="caption">Name of the Trust / Society/ Company/ Act of parliament/Act of state (if applicable)</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.nameOfTrustSocietyCompany}}</span></div>
+              </div>
+              <div class="row details">
+               <div class="col-md-5"><span class="caption">Address of the Trust / Society/ Company/ Act of parliament/Act of state (if applicable)</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.addressOfTrustSocietyCompany}}</span></div>
+               </div>
+               <!-- <h3 class="headingTitle"></h3>  -->
+               <div class="row">
+                <div class="col-md-12" style="margin-top: 10px;">
+                    <label>Affiliated Institutions to the University (Not applicable for Private and Deemed to be Universities)</label>
+                    <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">S. No.</th>
+                            <th scope="col">Specialisation</th>
+                            <th scope="col">Number of Colleges with Permanent Affiliation</th>
+                            <th scope="col">Number of Colleges with Temporary Affiliation</th>
+                            <th scope="col">Total</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of tableArray; let i=index">
+                            <td>{{i + 1}}</td>
+                            <td>{{item.specialization}}</td>
+                            <td>{{item.noOfPermanentAffiliationCollege}}</td>
+                            <td>{{item.noOfTemporaryAffiliationCollege}}</td>
+                            <td>{{item.total}}</td>
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+               <h3 class="heading">Officers Details</h3> 
+               <h3 class="headingTitle">Institute Head Details</h3> 
+               <div class="row details">
+                <div class="col-md-3"><span class="caption">Name of Vice Chancellor/ Director/Head/Principal</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{officerListArray.officerName}}</span></div>
+              
+                <div class="col-md-3"><span class="caption">Designation</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{officerListArray.officerDesignation}}</span></div>
+               </div>
+               <div class="row details">
+                <div class="col-md-3"><span class="caption">Email</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{officerListArray.officerEmail}}</span></div>
+               
+                <div class="col-md-3"><span class="caption">Mobile No</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{officerListArray.officerMobile}}</span></div>
+               </div>
+               <div class="row details">
+                <div class="col-md-3"><span class="caption">Telephone No.</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-6"><span class="field">{{officerListArray.officerTelephone}}</span></div>
+               </div>
+               <h3 class="heading">Address</h3> 
+               <div class="row details">
+                <div class="col-md-3"><span class="caption">Location of the University / University Level Institution:</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-6">
+            <span class="field">{{filter.location === 'U'?'Urban':filter.location === 'R'?'Rural':''}}</span>    
+            </div>
+               </div>
+               <div class="row details">
+                <div class="col-md-3"><span class="caption">Locality/City/Town/Village</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.city}}</span></div>
+               <div class="col-md-3"><span class="caption">State</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.sName}}</span></div>
+               </div>
+               <div class="row details">
+                <div class="col-md-3"><span class="caption">District</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.dName}}</span></div>
+               <div class="col-md-3"><span class="caption">Country</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">INDIA</span></div>
+               </div>
+               <div class="row details">
+                <div class="col-md-3"><span class="caption">Urban Local Body</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.ulbId}}</span></div>
+               <div class="col-md-3"><span class="caption">PIN Code</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.pinCode}}</span></div>
+               </div>
+               <div class="row details">
+                <div class="col-md-3"><span class="caption">Latitude [Range:6.00000-38.00000] In degree </span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.latitude}}</span></div>
+               <div class="col-md-3"><span class="caption">Longitude [Range:68.00000-98.00000] In degree</span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.longitude}}</span></div>
+               </div>
+               <div class="row details">
+                <div class="col-md-3"><span class="caption">Total Area </span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.totalArea}}</span></div>
+               <div class="col-md-3"><span class="caption">Total Constructed Area (Ground level only)[ In sqm] </span></div>
+                <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+               <div class="col-md-2"><span class="field">{{filter.constructArea}}</span></div>
+               </div>
+               </div>
+                </mat-tab>
+            <mat-tab label="Institution Bank Details">
+                <div class="animated fadeInDown card shadow mb-4 pt-1 pb-2 pr-3 pl-3 bg-light">
+                    <h3 class="heading">Bank Details</h3> 
+                    
+                    <div class="row details">
+                        
+                        <div class="col-md-2"><span class="caption">Account Holder Name</span></div>
+                        <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+                       <div class="col-md-3"><span class="field">{{bankDetailsArray.accountHolderName}}</span></div>
+                       <div class="col-md-2"><span class="caption">Bank Name</span></div>
+                       <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+                       <div class="col-md-3"><span class="field">{{bankDetailsArray.bankName}}</span></div>
+                
+                    </div>
+                    <div class="row details">
+                        
+                        <div class="col-md-2"><span class="caption">Bank Address</span></div>
+                        <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+                       <div class="col-md-3"><span class="field">{{bankDetailsArray.bankAddress}}</span></div>
+                       <div class="col-md-2"><span class="caption">IFSC Code</span></div>
+                       <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+                       <div class="col-md-3"><span class="field">{{bankDetailsArray.ifscCode}}</span></div>
+                
+                    </div>
+                    <div class="row details">
+                        <div class="col-md-2"><span class="caption">Account No.</span></div>
+                        <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+                       <div class="col-md-3"><span class="field">{{bankDetailsArray.accountNumber}}</span></div>
+                       <div class="col-md-2"><span class="caption">Confirm Account No.</span></div>
+                       <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+                       <div class="col-md-3"><span class="field">{{bankDetailsArray.accountNumber}}</span></div>
+                
+                    </div>
+                    <div class="row details">
+                        <div class="col-md-2"><span class="caption">Bank Account Type</span></div>
+                        <div class="col-md-1"><span class="caption"><b>:</b></span></div>
+                       <div class="col-md-3"><span class="field">{{bankDetailsArray.typeOfAccount}}</span></div>
+                    </div>
+                </div>
+
+            </mat-tab>
+            <mat-tab label="Infrastructure">
+              <div class="container-fluid reg-page-bg pl-4 pr-4">
+                <div class="animated fadeInDown">
+                    <div class="card shadow mb-4 pl-3 pr-3 pb-4">
+            
+                        <form [formGroup]="infrastructure">
+                            <div class="row col-md-12">
+                                <div class="col-md-6">
+                                    <table class="table table-responsive table-sm">
+                                        <tr>
+                                            <td>1.</td>
+                                            <td>Total number of buildings</td>
+                                            <td></td>
+                                            <td>
+                                                <input matInput class="effect-2"
+                                                   type="number" appOnlyNumeric formControlName="totalNoBuilding">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2.</td>
+                                            <td>Playground</td>
+                                            <td>
+                                                <mat-checkbox formControlName="playGround">
+
+                                                </mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2"
+                                                   
+                                                    formControlName="playgroundCount" type="number" appOnlyNumeric>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3.</td>
+                                            <td>Auditorium</td>
+                                            <td>
+                                                <mat-checkbox formControlName="auditorium"
+                                                   ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2"
+                                                   
+                                                    formControlName="auditoriumCount" type="number"
+                                                   appOnlyNumeric formCo>
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>a.</td>
+                                            <td> Auditorium Capacity (number of seats) </td>
+                                            <td></td>
+                                            <td>
+                                                <input matInput class="effect-2"
+                                                     type="number"
+                                                    appOnlyNumeric formControlName="auditoriumCapacitySeats">
+            
+                                            </td>
+                                        </tr>
+            
+            
+                                        <tr>
+                                            <td>4.</td>
+                                            <td>Theatre</td>
+                                            <td>
+                                                <mat-checkbox formControlName="theatre"
+                                                   ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2"
+                                                    type="number"
+                                                     appOnlyNumeric
+                                                    formControlName="theatresCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>5.</b></td>
+                                            <td><b>Library</b></td>
+                                            <td>
+                                                <mat-checkbox formControlName="library"
+                                                    >
+                                                </mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2"
+                                                    type="number"
+                                                   appOnlyNumeric
+                                                    formControlName="librarayCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subNumberAlign">(a)</td>
+                                            <td>Number of books</td>
+                                            <td>
+                                                <!-- <mat-checkbox></mat-checkbox> -->
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2"
+                                                     type="number"
+                                                     appOnlyNumeric
+                                                    formControlName="bookCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subNumberAlign">(b)</td>
+                                            <td>Number of Journals (Peer reviewed) subscribed</td>
+                                            <td>
+                                                <!-- <mat-checkbox></mat-checkbox> -->
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                     appOnlyNumeric
+                                                    
+                                                    formControlName="journalCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="subNumberAlign">(c)</td>
+                                            <td>Library(s) Area (sqm) </td>
+                                            <td>
+                                                <!-- <mat-checkbox></mat-checkbox> -->
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                    
+                                                    formControlName="liberaryArea">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>6.</td>
+                                            <td>Laboratory</td>
+                                            <td>
+                                                <mat-checkbox formControlName="laboratory"
+                                                    ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                   appOnlyNumeric
+                                                   
+                                                    formControlName="laboratoryCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>7.</td>
+                                            <td>Whether Firefighting equipments available in the Lab</td>
+                                            <td>
+                                                <mat-checkbox formControlName="whetherFireFightingEquipmentsAvailableInLab"
+                                                ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>8.</td>
+                                            <td>Conference Hall</td>
+                                            <td>
+                                                <mat-checkbox formControlName="conferenceHall"
+                                                   ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                   appOnlyNumeric
+                                                    
+                                                    formControlName="conferenceHallCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>9.</td>
+                                            <td>Health Center</td>
+                                            <td>
+                                                <mat-checkbox formControlName="healthCenter"
+                                                   ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                    appOnlyNumeric
+                                                   
+                                                    formControlName="healthCenterCount">
+            
+                                            </td>
+                                        </tr>
+            
+                                        <tr>
+                                            <td>10.</td>
+                                            <td>Number of Medical practitioners available University/ College</td>
+                                            <td></td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                    appOnlyNumeric formControlName="numberOfMedicalPractitioner"
+                                                    >
+            
+                                            </td>
+                                        </tr>
+            
+                                        <tr>
+                                            <td>11.</td>
+                                            <td>Number of nursing staffs available in the
+                                                University/ College</td>
+                                            <td></td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                     appOnlyNumeric
+                                                    formControlName="numberOfNursingStaff"
+                                                    >
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>12.</td>
+                                            <td>Gymnasium/ Fitness Center</td>
+                                            <td>
+                                                <mat-checkbox formControlName="gymCenter"></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                    appOnlyNumeric
+                                                   
+                                                    formControlName="gymCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>13.</td>
+                                            <td>Indoor Stadium</td>
+                                            <td>
+                                                <mat-checkbox formControlName="indoorStadium"
+                                                   ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                     appOnlyNumeric
+                                                   
+                                                    formControlName="indoorStadiumCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>14.</td>
+                                            <td>Common Room</td>
+                                            <td>
+                                                <mat-checkbox formControlName="commonRoom"
+                                                    ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                     appOnlyNumeric
+                                                   
+                                                    formControlName="commonRoomCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>15.</td>
+                                            <td>Computer Center</td>
+                                            <td>
+                                                <mat-checkbox formControlName="compCenter"
+                                                   ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                    appOnlyNumeric
+                                                   
+                                                    formControlName="computerCenterCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>16.</td>
+                                            <td>Total Number of Computers in the Campus for Academic Work
+                                                <!-- (* To be filled by institutions desiring NAAC and NBA approval) -->
+                                            </td>
+                                            <td>
+            
+                                            </td>
+                                            <td>
+                                                <input autocomplete="off" class="effect-2" type="number"
+                                                    appOnlyNumeric
+                                                    formControlName="totalComputersForAcademicWork">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>17.</td>
+                                            <td>Examination Hall (with Computer) Yes/No if yes then No. of Computers</td>
+                                            <td>
+            
+                                                <mat-checkbox formControlName="whetherExaminationHallWithComputer"
+                                                ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input autocomplete="off" matInput class="effect-2" type="number"
+                                                
+                                               appOnlyNumeric 
+                                                formControlName="numberOfComputerInExaminationHall">
+                                            </td>
+                                         
+                                        </tr>
+                                        <tr>
+                                            <td>18.</td>
+                                            <td>Cafeteria</td>
+                                            <td>
+                                                <mat-checkbox formControlName="cafeteria"
+                                                   ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                    appOnlyNumeric
+                                                   
+                                                    formControlName="cafeCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>19.</td>
+                                            <td>Drinking Water Facility in the University/ College along with No. of Watercooler
+                                            </td>
+                                            <td>
+                                                <mat-checkbox formControlName="isDrinkingWaterFacilityAvailable"
+                                                ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                appOnlyNumeric 
+                                                    formControlName="numberOfWatercooler">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>20.</td>
+                                            <td>Guest House</td>
+                                            <td>
+                                                <mat-checkbox formControlName="guestHouse"
+                                                   ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                    appOnlyNumeric
+                                                   
+                                                    formControlName="guestHouseCount">
+            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>21.</td>
+                                            <td>Separate Common Room exclusively for Girls</td>
+                                            <td>
+                                                <mat-checkbox formControlName="girlsCommonRoom"
+                                                    ></mat-checkbox>
+                                            </td>
+                                            <td>
+                                                <input matInput class="effect-2" type="number"
+                                                  appOnlyNumeric
+                                                   
+                                                    formControlName="girlRoomCount">
+            
+                                            </td>
+                                        </tr>
+            
+                                        <tr>
+                                            <td>22.</td>
+                                            <td>Total Number of Classrooms and Seminar Halls</td>
+                                            <td>
+            
+                                            </td>
+                                            <td>
+                                                <input matInput autocomplete="off" class="effect-2" type="number"
+                                                     appOnlyNumeric
+                                                    formControlName="totalClassroomAndSeminarHalls">
+            
+                                            </td>
+            
+            
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>23.</td>
+                                            <td>Incubation Centres/Start-up Units</td>
+                                            <td>
+            
+                                            </td>
+                                            <td>
+            
+                                                <input autocomplete="off" matInput autocomplete="off" class="effect-2" type="number"
+                                                    appOnlyNumeric
+                                                    formControlName="incubationCentres">
+            
+                                            </td>
+                                        </tr>
+                                        
+            
+                                    </table>
+            
+                                </div>
+                                <div class="col-md-6">
+                                    <table class="table table-responsive table-sm">
+                                        <tr>
+                                            <td>24.</td>
+                                            <td>Power Backup-Generator .</td>
+                                            <td>
+                                                <mat-checkbox formControlName="whetherPowerBackupGeneratorAvailable"
+                                                ></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+            
+                                        <tr>
+                                            <td>25.</td>
+                                            <td>Solar Power Generation</td>
+                                            <td>
+                                                <mat-checkbox formControlName="solarPower"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td>26.</td>
+                                            <td>Internet Bandwidth (Mbps)</td>
+                                            <td>
+                                                <!-- <mat-checkbox></mat-checkbox> -->
+                                                <input autocomplete="off" matInput class="effect-3" type="number"
+                                                appOnlyNumeric formControlName="internetBandwidth">
+                                            </td>
+                              
+                                        </tr>
+                                       
+                                        <tr>
+                                            <td>27.</td>
+                                            <td>Connectivity NKN</td>
+                                            <td>
+                                                <mat-checkbox formControlName="connectivityNkn"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td>28.</td>
+                                            <td>Connectivity NMEICT</td>
+                                            <td>
+                                                <mat-checkbox formControlName="connectivityNmeict"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td><b>29.</b></td>
+                                            <td><b>Campus is differently abled friendly</b></td>
+                                            <td>
+                                                <mat-checkbox formControlName="campusFriendly"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td class="subNumberAlign">(i)</td>
+                                            <td>Hand Rails</td>
+                                            <td>
+                                                <mat-checkbox formControlName="handRails"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+            
+                                        <!-- <tr>
+                                            <td>(ii)</td>
+                                            <td>Separate toilet for disabled female</td>
+                                            <td>
+                                                <mat-checkbox formControlName="disabledGirlToilet"></mat-checkbox>
+                                            </td>
+            
+                                        </tr> -->
+                                        <tr>
+                                            <td class="subNumberAlign">(ii)</td>
+                                            <td>Ramp attached to classroom / library</td>
+                                            <td>
+                                                <mat-checkbox formControlName="attachedRampClassLibrary"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td>30.</td>
+                                            <td>Grievance Redressal Mechanism</td>
+                                            <td>
+                                                <mat-checkbox formControlName="grievanceRedressal"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td>31.</td>
+                                            <td>Vigilance Cell</td>
+                                            <td>
+                                                <mat-checkbox formControlName="vigilanceCell"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td>32.</td>
+                                            <td>Equal Opportunity Cell</td>
+                                            <td>
+                                                <mat-checkbox formControlName="oppportunityCell"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td>33.</td>
+                                            <td>Sexual Harassment Cell</td>
+                                            <td>
+                                                <mat-checkbox formControlName="sexualHarrassmentCell"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td>34.</td>
+                                            <td>Counselors for students</td>
+                                            <td>
+                                                <mat-checkbox formControlName="studentCounselor"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td>35.</td>
+                                            <td>Clinic / first-aid room</td>
+                                            <td>
+                                                <mat-checkbox formControlName="firstAidRoom"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+            
+                                        <tr>
+                                            <td>36.</td>
+                                            <td>Skill development centre</td>
+                                            <td>
+                                                <mat-checkbox formControlName="skillCenter"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td>37.</td>
+                                            <td>Number of start-ups incubated by the HEI</td>
+                                            <td>
+                                                <!-- <mat-checkbox></mat-checkbox> -->
+                                                <input autocomplete="off" matInput class="effect-3" type="number"
+                                                 appOnlyNumeric formControlName="numberOfStartUpsHei">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>38.</td>
+                                            <td>Self-defence class for females</td>
+                                            <td>
+                                                <mat-checkbox formControlName="girlSelfDefenceClass"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td>39.</td>
+                                            <td>Anti-ragging Cell</td>
+                                            <td>
+                                                <mat-checkbox formControlName="antiRaggingCell"></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td>40.</td>
+                                            <td>Separate toilet for girls</td>
+                                            <td>
+                                                <mat-checkbox formControlName="girlsToilet"
+                                                   ></mat-checkbox>
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td><b>41.</b></td>
+                                            <td><b>Number of Toilets</b></td>
+                                            <td>
+            
+                                            </td>
+                                            <!-- <td>
+                                                <input matInput class="effect-2" (keypress)="onKeypressEvent($event,9)"   appOnlyNumeric formControlName="incubationCentres">
+            
+                                            </td> -->
+                                        </tr>
+                                        <tr>
+                                            <td class="subNumberAlign">(i)</td>
+                                            <td>Total</td>
+                                            <!-- <td></td> -->
+                                            <td>
+                                                <input autocomplete="off" formControlName="noOfToiletsTotal" matInput
+                                                    class="effect-3" type="number"
+                                                    appOnlyNumeric>
+            
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td class="subNumberAlign">(ii)</td>
+                                            <td>Girls</td>
+                                            <!-- <td></td> -->
+                                            <td>
+                                                <input autocomplete="off" formControlName="noOfToiletsGirls" matInput
+                                                    class="effect-3" type="number" 
+                                                    appOnlyNumeric
+                                                    
+                                                   >
+            
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td class="subNumberAlign">(iii)</td>
+                                            <td>Toilet for disabled Males</td>
+                                            <!-- <td></td> -->
+                                            <td>
+                                                <input autocomplete="off" formControlName="noOfToiletsDisabledMales" matInput
+                                                    class="effect-3" type="number" 
+                                                    appOnlyNumeric>
+            
+                                            </td>
+            
+                                        </tr>
+                                        <tr>
+                                            <td class="subNumberAlign">(iv)</td>
+                                            <td>Toilet for disabled Females</td>
+                                            <!-- <td></td> -->
+                                            <td>
+                                                <input autocomplete="off" matInput class="effect-3" type="number"
+                                                    formControlName="noOfToiletsDisabledFemales"
+                                                     appOnlyNumeric>
+            
+                                            </td>
+            
+            
+                                        </tr>
+                                        <tr>
+                                            <td>42.</td>
+                                            <td>Rain Water Harvesting (with storage capacity in Liters)</td>
+                                            <td>
+                                                <input autocomplete="off" matInput class="effect-3" type="number"
+                                                    appOnlyNumeric formControlName="rainWaterHarvestingCapacityLiters">
+            
+                                            </td>
+                                            <!-- <td>
+                                                <input matInput class="effect-2" (keypress)="onKeypressEvent($event,9)"   appOnlyNumeric formControlName="incubationCentres">
+            
+                                            </td> -->
+                                        </tr>
+                                       
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row col-md-12 overflow-hidden">
+                                <table class="noborder">
+                                    <tr>
+                                        <td><b>(B). </b>Whether the University / Institution have Disaster Management facilities.
+                                        </td>
+                                        <td>
+                                            <mat-radio-group formControlName="disasterMgmt" >
+                                                <mat-radio-button [value]=true>Yes</mat-radio-button>&nbsp;&nbsp;
+                                                <mat-radio-button [value]=false>No</mat-radio-button>
+                                            </mat-radio-group>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pl-4"><b>(i). </b>Whether capacity Building and Training/awareness programmes
+                                            conducted.</td>
+                                        <td>
+                                            <mat-radio-group formControlName="capacityBuilding">
+                                                <mat-radio-button [value]=true>Yes</mat-radio-button>&nbsp;&nbsp;
+                                                <mat-radio-button [value]=false>No</mat-radio-button>
+                                            </mat-radio-group>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pl-4"><b>(ii).</b>Whether vulnerability assessment checks were made during the
+                                            year.</td>
+                                        <td>
+                                            <mat-radio-group formControlName="vulnerableAssessChecks">
+                                                <mat-radio-button [value]=true>Yes</mat-radio-button>&nbsp;&nbsp;
+                                                <mat-radio-button [value]=false>No</mat-radio-button>
+                                            </mat-radio-group>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pl-4"><b>(iii).</b>Is any mock drill or rehearsal programme conducted.</td>
+                                        <td>
+                                            <mat-radio-group formControlName="mockDrillPrograms">
+                                                <mat-radio-button [value]=true>Yes</mat-radio-button>&nbsp;&nbsp;
+                                                <mat-radio-button [value]=false>No</mat-radio-button>
+                                            </mat-radio-group>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>(C).</b>Whether Institution has Internal Quality Assurance Cell (IQAC)
+                                        </td>
+                                        <td>
+                                            <mat-radio-group formControlName="whetherInstitutionHasIqac"
+                                               >
+                                                <mat-radio-button [value]=true>Yes</mat-radio-button>&nbsp;&nbsp;
+                                                <mat-radio-button [value]=false>No</mat-radio-button>
+                                            </mat-radio-group>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr >
+                                        <td class="pl-4"><b>(i). </b>Date of Establishment of IQAC.
+                                            <mat-form-field>
+                                                <input matInput [matDatepicker]="picker" [max]="maxDate" [min]="minDate" readonly
+                                                    formControlName="dateOfIqacEstablishment">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </td>
+            
+                                    </tr>
+                                    <tr *ngIf="!infrastructure.controls['whetherInstitutionHasIqac'].value === false">
+                                        <td class="pl-4"><b>(ii). </b> Contact Details of IQAC.
+                                            <mat-form-field>
+                                                <input matInput type="number" appOnlyNumeric (keypress)="onKeypressEvent($event,11)"
+                                                    formControlName="iqacContactDetails" autocomplete="off">
+                                                <mat-hint class="err-msgs"
+                                                    *ngIf="infrastructure.controls['iqacContactDetails'].dirty || infrastructure.controls['iqacContactDetails'].value || infrastructure.controls['iqacContactDetails'].touched">
+                                                    <span *ngIf="infrastructure.controls['iqacContactDetails'].hasError('pattern')"
+                                                        class="errorMessage">Incorrect contact details of IQAC.</span>
+                                                </mat-hint>
+            
+                                            </mat-form-field>
+            
+                                        </td>
+            
+                                    </tr> -->
+                                </table>
+                            </div>
+                            <!-- <div class="text-center" >
+                                <button type="submit" class="btn btn-success btn-sm mr-1"
+                                    >
+                                    <i class="fa fa-floppy-o"></i>&nbsp;{{incomeSurveyYear ===
+                                    currentSurveyYear?'Update':'Save'}}</button>
+                               
+                                <button class="btn btn-danger btn-sm ml-1" (click)="lockTab('Infrastructure')"
+                                    [disabled]="this.incomeSurveyYear !== currentSurveyYear" *ngIf="!constitutedColleges">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Lock</button>
+                                <button class="btn btn-danger btn-sm ml-1" (click)="lockTab('Infrastructure')"
+                                    *ngIf="constitutedColleges">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Lock</button>
+                            </div> -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </mat-tab>
+         
+            
+          </mat-tab-group>
+
+    </div>
+</div>
+</div>

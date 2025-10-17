@@ -1,0 +1,57 @@
+    <div
+    class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+    *ngIf="Showdata12"
+   >
+<table
+class="table  showReportDataChild" >
+<thead class="childTableStickyHeader">
+
+<tr>
+  <th colspan="1" rowspan="2" class="text-center table-success">State</th>
+  <th colspan="8" class="text-center table-secondary">Category</th>
+  </tr>
+<tr>
+<th colspan="1" class="text-center table-light">All</th>
+<th colspan="1" class="text-center table-secondary">Scheduled Caste(SC)</th>
+<th colspan="1" class="text-center table-tertiary">Scheduled Tribe(ST)</th>
+<th colspan="1" class="text-center table-light">Other Backward Classes(OBC)</th>
+<th colspan="1" class="text-center table-secondary">Person with Disability(PWD)</th>
+<th colspan="1" class="text-center table-tertiary">Muslim</th>
+<th colspan="1" class="text-center table-light">Other Minority Communities</th>
+<th colspan="1" class="text-center table-secondary">Foreign Students</th>
+
+</tr>
+
+</thead>
+<tbody>
+<tr *ngFor="let row of reportTableData">
+  <td
+    *ngFor="let col of tableColumns; let i = index"
+    class="text-center"
+    [ngClass]="[
+              i>=0 && i<1 ?'table-success':'', i>=1 && i<2 ?'table-light':'',i>=2 && i<3 ?'table-secondary':'', i>=3 && i<4 ? 'table-tertiary': '',i>=4 && i<5 ? 'table-light': '',i>=5 && i<6 ? 'table-secondary': '',
+          i>=6 && i<7 ? 'table-tertiary': '',i>=7 && i<8 ? 'table-light': '',i>=8 && i<9 ? 'table-secondary': '',
+          i>=9 && i<10 ? 'table-tertiary': '',i>=10 && i<11 ? 'table-light': '',i>=11 && i<12 ? 'table-secondary': '',i>=12 && i<13 ? 'table-tertiary': '',i>=13 && i<14 ? 'table-light': '',
+
+          ]"
+  >
+    {{ row[col] }}
+  </td>
+</tr>
+<tr>
+  <!-- <td colspan="1" class="text-center table-success">
+    All State
+  </td> -->
+  <td
+    *ngFor="let summary of summaryColumns; let i = index"
+    class="text-center" [ngClass]="[
+            i>=0 && i<1 ?'table-success':'', i>=1 && i<9 ?'table-secondary':'',]"
+  >
+    {{ summaryData[summary] }}
+  </td>
+</tr>
+
+
+</tbody>
+</table>
+</div>

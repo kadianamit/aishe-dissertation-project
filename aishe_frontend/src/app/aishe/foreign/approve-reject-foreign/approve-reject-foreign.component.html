@@ -1,0 +1,209 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+  <div class="row col-md-12 overflow-hidden pt-4">
+    <div class="col-md-2">
+      <label>Show</label>&nbsp;
+      <select [(ngModel)]="shared.pageSize" (ngModelChange)="onChange($event)">
+        <option *ngFor="let data of shared.pageSizeOptions" [value]="data">{{data}}</option>
+      </select>
+      entries
+    </div>
+    <div class="col-md-3">
+      <mat-form-field class="d-block">
+        <mat-label>Select Country</mat-label>
+        <mat-select placeholder="--Select Country--" [disableOptionCentering]="true" #select1
+          (selectionChange)="onSelectionCountry($event)">
+          <mat-select-filter *ngIf="select1.focused" [array]="countryArr" (filteredReturn)="filterCountryArr =$event"
+            [displayMember]="'name'"></mat-select-filter>
+          <mat-option [value]="0">--ALL--</mat-option>
+          <mat-option [value]="country.id" *ngFor="let country of filterCountryArr">{{country.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-5">
+      <label>Search:</label>&nbsp;
+      <input type="text" size="40" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+        [(ngModel)]="searchText">
+    </div>
+  </div>
+  <div class="row col-md-12 table-responsive">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>S.No.</th>
+          <th>Foreign Institution</th>
+          <th>Website URL</th>
+          <th>Country Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <ng-container>
+        <tbody>
+          <tr
+            *ngFor="let item of alldata | paginate : { itemsPerPage: shared.pageSize, currentPage: shared.page }; let i = index">
+            <td>{{i+shared.StartLimit+1}}</td>
+            <td>{{item.name}}</td>
+            <td><a href="{{item.website}}" target="_blank" title="Click here to open link">{{item.website}}</a></td>
+            <td>{{item.country?.name}}</td>
+            <td><mat-icon matTooltip="Click here for Approve/Reject" (click)="openDialog(item)"
+                class="pointer">trending_up</mat-icon></td>
+          </tr>
+        </tbody>
+      </ng-container>
+    </table>
+  </div>
+  <div class="row col-12 overflow-hidden">
+    <div class="col-12 col-md-3">
+      Showing {{shared.StartLimit + 1}} to {{shared.pageData === -1?0:shared.pageData}} Of {{tempList.length}} entries
+    </div>
+    <div class="col-md-3"></div>
+    <div class="col-12 col-md-6" *ngIf="alldata.length !== 0">
+      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+        screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+        screenReaderCurrentLabel="You're on page"></pagination-controls>
+    </div>
+  </div>
+</div>
+<!-- <div class="container-fluid reg-page-bg pl-4 pr-4" *ngIf="isEdit">
+  <div class="animated fadeInDown card mb-2 mt-2 pb-1 bg-light overflow-hidden">
+    <form [formGroup]="myForm" (ngSubmit)="save()">
+      <div class="row col-md-12 pt-2">
+        <div class="col-md-3">
+          <mat-form-field class="d-block">
+            <mat-label>Country</mat-label>
+            <mat-select placeholder="Select Country" formControlName="countryId" [errorStateMatcher]="errorMatcher"
+              required>
+              <mat-select-filter [array]="countryArr" (filteredReturn)="filterCountryArr =$event"
+                [displayMember]="'name'"></mat-select-filter>
+              <mat-option *ngFor="let country of filterCountryArr" [value]=country.id>{{country.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-hint class="err-msgs"
+            *ngIf="myForm.controls['countryId'].dirty || myForm.controls['countryId'].value || myForm.controls['countryId'].touched || isFormInvalid ">
+            <span *ngIf="myForm.controls['countryId'].hasError('required')">Please select
+            </span>
+          </mat-hint>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field class="d-block">
+            <mat-label>Foreign Institute</mat-label>
+            <input matInput placeholder="Foreign Institute" formControlName="foreigninstitute"
+              [errorStateMatcher]="errorMatcher">
+          </mat-form-field>
+          <mat-hint class="err-msgs"
+            *ngIf="myForm.controls['foreigninstitute'].dirty || myForm.controls['foreigninstitute'].value || myForm.controls['foreigninstitute'].touched || isFormInvalid ">
+            <span *ngIf="myForm.controls['foreigninstitute'].hasError('required')">Please enter
+            </span>
+          </mat-hint>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="d-block">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput placeholder="Mobile Number" appNumeric
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value =  !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+              min="0" maxlength="10" type="number" formControlName="mobileNo" [errorStateMatcher]="errorMatcher">
+          </mat-form-field>
+          <mat-hint class="err-msgs"
+            *ngIf="myForm.controls['mobileNo'].dirty || myForm.controls['mobileNo'].value || myForm.controls['mobileNo'].touched || isFormInvalid ">
+            <span *ngIf="myForm.controls['mobileNo'].hasError('required')">Please enter
+            </span>
+            <span *ngIf="myForm.controls['mobileNo'].hasError('pattern')">Please enter a valid 10-digit mobile number.
+            </span>
+          </mat-hint>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="d-block">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="email" required [errorStateMatcher]="errorMatcher">
+          </mat-form-field>
+          <mat-hint class="err-msgs"
+            *ngIf="myForm.controls['email'].dirty || myForm.controls['email'].value || myForm.controls['email'].touched || isFormInvalid ">
+            <span *ngIf="myForm.controls['email'].hasError('required')">Please enter
+            </span>
+            <span *ngIf="myForm.controls['email'].hasError('email')">Please valid email
+            </span>
+          </mat-hint>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="d-block">
+            <mat-label>Website Url</mat-label>
+            <input matInput placeholder="Website Url" formControlName="webUrl" required
+              [errorStateMatcher]="errorMatcher">
+          </mat-form-field>
+          <mat-hint class="err-msgs"
+            *ngIf="myForm.controls['webUrl'].dirty || myForm.controls['webUrl'].value || myForm.controls['webUrl'].touched || isFormInvalid ">
+            <span *ngIf="myForm.controls['webUrl'].hasError('required')">Please enter
+            </span>
+            <span *ngIf="myForm.controls['webUrl'].hasError('pattern')">Invalid website format</span>
+          </mat-hint>
+        </div>
+        <label class="col-md-4 pt-4"><span class="hyperlink" (click)="moreInfo('less')" *ngIf="more">+ More Additional
+            Information</span><span class="hyperlink" (click)="moreInfo('more')" *ngIf="!more">- Less
+            Information</span></label>
+      </div>
+      <div class="row col-md-12" *ngIf="!more">
+        <div class="col-md-3">
+          <mat-form-field class="d-block">
+            <mat-label>Premise Number/Name</mat-label>
+            <input matInput placeholder="Premise Number/Name" formControlName="premiseNumber">
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field class="d-block">
+            <mat-label>Address 1</mat-label>
+            <input matInput placeholder="Address 1" formControlName="address1">
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="d-block">
+            <mat-label>Address 2</mat-label>
+            <input matInput placeholder="Address 2" formControlName="address2">
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field class="d-block">
+            <mat-label>Locality/City/Village/Town</mat-label>
+            <input matInput placeholder="Locality/City/Village/Town" formControlName="locality">
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="d-block">
+            <mat-label>Sub-Locality</mat-label>
+            <input matInput placeholder="Sub-Locality" formControlName="subLocality">
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="d-block">
+            <mat-label>Areacode/Pincode</mat-label>
+            <input matInput placeholder="Areacode/Pincode" formControlName="pinCode"
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value =  !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+              min="0" maxlength="10" type="number">
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="d-block">
+            <mat-label>Telephone</mat-label>
+            <input matInput placeholder="Telephone" formControlName="telephone"
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value =  !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+              min="0" maxlength="10" type="number">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-group text-center">
+        <mat-radio-group formControlName="status">
+          <mat-radio-button value="3">Approve</mat-radio-button>
+          &nbsp;&nbsp;
+          <mat-radio-button value="4">Disapprove</mat-radio-button>
+      </mat-radio-group>
+      </div>
+
+      <div class="form-group text-center">
+        <button mat-raised-button type="submit" class="btn-success mr-1">Submit</button>
+        <button mat-raised-button type="button" class="btn-danger" (click)="back()">Back</button>
+      </div>
+    </form>
+
+  </div>
+
+
+</div> -->

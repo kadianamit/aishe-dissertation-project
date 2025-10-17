@@ -1,0 +1,251 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+  <div class="" *ngIf="showTable">
+    <div class="row justify-content-between">
+      <div class="col-auto show-button">
+        <label>Show</label>&nbsp;
+        <select (ngModelChange)="onChange($event)" [(ngModel)]="pageSize">
+          <option *ngFor="let data of tableSize" [value]="data">
+            {{ data }}
+          </option>
+        </select>
+        entries
+      </div>
+
+      <div class="col-auto ml-4">
+        <label>Search:</label>&nbsp;
+        <input id="myInput" type="text" [(ngModel)]="searchText" />
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table mt-2 text-left pe-2">
+        <thead>
+          <tr>
+            <th>AISHE Code</th>
+            <th>College Name</th>
+            <th>College District</th>
+            <th>College State</th>
+            <th>College Type</th>
+            <th>Deafiliation Reason</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="myTable">
+          <tr *ngFor="
+                  let data of userDataTable
+                    | searchFilter : searchText
+                    | paginate
+                      : {
+                          itemsPerPage: pageSize,
+                          currentPage: page
+                        };
+                  let i = index
+                ">
+            <td>C-{{ data.id }}</td>
+            <td style="width: 26%">{{ data.collegeName }}</td>
+            <td>{{ data.districtName}}</td>
+            <td>{{data.stateName}}</td>
+            <td>{{ data.collegeType }}</td>
+            <td>{{ data.reasonName }}</td>
+            <td>
+              <div class="piped d-flex">
+                <a matTooltip="Upgrade" style="cursor: pointer;" (click)="upgradeUniversity(data)"><i
+                    class="fa fa-level-up upgrade" aria-hidden="true"></i>
+
+
+                </a>
+
+                &nbsp;
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="col-md-3" *ngIf="showTable">
+      Showing {{ StartLimit + 1 }} to {{ pageData }} Of
+      {{ userDataTable.length }} entries
+    </div>
+    <div class="d-flex justify-content-center" *ngIf="showTable">
+      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)">
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid reg-page-bg pl-4 pr-4" *ngIf="UpgradeData" style="margin-top: 5%;">
+  <mat-card>
+    <div class="row">
+      <div class=" col-10">
+        <h1 class="insthead"><span>Upgrade to University</span></h1>
+
+      </div>
+      <div class=" col-2 d-flex justify-content-end mt-2 ml-auto">
+        <a (click)="back()" matTooltip="Back" style="cursor: pointer;" class="text-uppercase"><img
+            src="assets/img/table-back.svg" class="table-back me-2" />
+          Back
+        </a>
+      </div>
+    </div>
+    <mat-card-content>
+      <div class="row" style="margin-bottom: 2%; border-bottom: 3px solid #a7a79f;">
+        <div class="col-md-2"><label class="form-label editLabel">Survey Year</label>
+          <p>{{surveyY}}</p>
+        </div>
+        <div class="col-md-2"><label class="form-label editLabel">Aishe Code</label>
+          <p>C-{{id }}</p>
+        </div>
+        <div class="col-md-2"><label class="form-label editLabel">College Name </label>
+          <p>{{collegeName}}</p>
+        </div>
+        <div class="col-md-2"><label class="form-label editLabel">State Name</label>
+          <p>{{stateName }}</p>
+        </div>
+        <div class="col-md-2"><label class="form-label editLabel">District Name</label>
+          <p>{{districtName }}</p>
+        </div>
+        <div class="col-md-2"><label class="form-label editLabel">College Type</label>
+          <p>{{ collegeType}}</p>
+        </div>
+        <div class="col-md-2"><label class="form-label editLabel">Deafiliation Reason</label>
+          <p>{{reasonName}}</p>
+        </div>
+
+
+      </div>
+      <form [formGroup]="form" autocomplete="off" (ngSubmit)="update()">
+        <div class="animated fadeIn">
+
+          <div class="row">
+            <div class="col-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Survey Year</mat-label>
+                <mat-select formControlName="surveyYear" (selectionChange)="getState()">
+                  <mat-option *ngFor="let year of surveyYearList" [value]="year">{{year}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-error *ngIf="(form.controls['surveyYear'].hasError('required')&& submitted)">It is required
+                field</mat-error>
+            </div>
+            <div class="col-3">
+
+              <mat-form-field appearance="fill">
+                <mat-label>State</mat-label>
+                <mat-select [disableOptionCentering]="true" #select1 placeholder="State" [compareWith]="compareFn"
+                  formControlName="stateName" (selectionChange)="getdistrictName()"
+                  [ngClass]="{ 'is-invalid': submitted && f['stateName'].errors }">
+                  <mat-select-filter *ngIf="select1.focused" [array]="userData" (filteredReturn)="filteredState =$event"
+                    [displayMember]="'name'"></mat-select-filter>
+                  <mat-option *ngFor="let item of filteredState " [value]="item">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+
+              </mat-form-field>
+              <mat-error *ngIf="(form.controls['stateName'].hasError('required')&& submitted)">It is required
+                field</mat-error>
+            </div>
+            <div class="col-3">
+              <mat-form-field appearance="fill">
+                <mat-label>District</mat-label>
+                <mat-select [disableOptionCentering]="true" #select2 placeholder="District" [compareWith]="compareFn"
+                  formControlName="districtName" (selectionChange)="loadUniversityType()"
+                  [ngClass]="{ 'is-invalid': submitted && f['districtName'].errors }">
+                  <mat-select-filter *ngIf="select2.focused" [array]="dataDistrict"
+                    (filteredReturn)="filteredDistrict =$event" [displayMember]="'name'"></mat-select-filter>
+                  <mat-option *ngFor="let item of filteredDistrict" [value]="item">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+
+              </mat-form-field>
+              <mat-error *ngIf="(form.controls['districtName'].hasError('required')&& submitted)">It is required
+                field</mat-error>
+            </div>
+
+            <div class="col-3">
+              <mat-form-field appearance="fill">
+                <mat-label>University Type</mat-label>
+                <mat-select [disableOptionCentering]="true" #select3 placeholder="University Type"
+                  formControlName="universityType">
+                  <mat-select-filter *ngIf="select3.focused" [array]="universityType"
+                    (filteredReturn)="universityTypefilter =$event" [displayMember]="'type'"></mat-select-filter>
+                  <mat-option *ngFor="let item of universityTypefilter" [value]="item">
+                    {{item.type}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-error
+                *ngIf="( (form.controls['universityType'].hasError('required') || form.controls['universityType'].hasError('whitespace') ) && submitted)">It
+                is required field</mat-error>
+            </div>
+            <div class="col-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Location</mat-label>
+                <mat-select [disableOptionCentering]="true" #select3 placeholder="Location" formControlName="location">
+                  <!-- <mat-select-filter *ngIf="select3.focused" [array]="universityType" (filteredReturn)="universityTypefilter =$event"
+                    [displayMember]="'type'"></mat-select-filter> -->
+                  <mat-option *ngFor="let item of locationData" [value]="item.id">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-error
+                *ngIf="( (form.controls['location'].hasError('required') || form.controls['location'].hasError('whitespace') ) && submitted)">It
+                is required field</mat-error>
+            </div>
+            <div class="col-4">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>University Name</mat-label>
+                <input matInput type="text" formControlName="universityName" (keypress)="alphaNumberOnly($event)"
+                  [ngClass]="{ 'is-invalid': submitted || f['universityName'].errors }" appearance="fill" />
+
+              </mat-form-field>
+              <mat-error
+                *ngIf="( (form.controls['universityName'].hasError('required') || form.controls['universityName'].hasError('whitespace') ) && submitted)">It
+                is required field</mat-error>
+            </div>
+            <div class="col-5">
+              <mat-form-field class="example-full-width">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput formControlName="remarks"
+                  [ngClass]="{ 'is-invalid': submitted || f['remarks'].errors }"></textarea>
+                <span *ngIf="(( submitted || f['remarks'].touched) && f['remarks'].errors)" class="invalid-feedback">
+                  <span class="validation"
+                    *ngIf="f['remarks'].errors['required']||f['remarks'].errors['whitespace']">Remarks is
+                    required</span>
+                  <span class="validation" *ngIf="f['remarks'].errors['maxlength']" style="color: #d50404;">Maximum
+                    length is 2000</span>
+                  <span class="validation" *ngIf="f['remarks'].errors['minlength']" style="color: #d50404;">Minimum
+                    length is 3</span>
+                </span>
+              </mat-form-field>
+              <!-- <mat-form-field class="example-full-width">
+                <mat-label> Remarks</mat-label>
+                <textarea matInput type="text" formControlName="remarks"
+                  [ngClass]="{ 'is-invalid': submitted || f['remarks'].errors }" ></textarea>
+
+              </mat-form-field>
+              <mat-error *ngIf="( (form.controls['remarks'].hasError('required') || form.controls['remarks'].hasError('whitespace') ) && submitted)">It is required field</mat-error> -->
+            </div>
+          </div>
+          <ng-container>
+            <mat-checkbox formControlName="isDCFApplicable" class="checkbox">Is DCF Applicable</mat-checkbox>
+            <!-- <mat-error *ngIf="(form.controls['isDCFApplicable'].hasError('required')&& submitted)">It is required field</mat-error> -->
+          </ng-container>
+        </div>
+
+        <div class="d-flex .justify-content-center" style="margin: 2% 0px;">
+          <button id="save" type="submit" class="btn1" style="margin: 1.0% 0; width:8%;">
+            SAVE
+          </button>
+          <button id="cancel" type="button" (click)="back()" class="btn2 btn1" style="margin: 1.0%;width: 8%;
+                background-color: #d50404;">Cancel</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+</div>

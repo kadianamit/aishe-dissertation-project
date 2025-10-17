@@ -1,0 +1,292 @@
+CREATE TABLE IF NOT EXISTS public.ref_country
+(
+    country_id integer NOT NULL,
+    country_code character(2) COLLATE pg_catalog."default" NOT NULL,
+    country_name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    isd_code character varying(10) COLLATE pg_catalog."default",
+    is_active boolean DEFAULT true,
+    CONSTRAINT ref_country_pkey PRIMARY KEY (country_id)
+)
+
+CREATE TABLE IF NOT EXISTS public.ref_state
+(
+    st_code character(2) COLLATE pg_catalog."default" NOT NULL,
+    name character varying(255) COLLATE pg_catalog."default",
+    lgd_code integer NOT NULL,
+    CONSTRAINT pk_st_code PRIMARY KEY (st_code)
+)
+
+CREATE TABLE IF NOT EXISTS public.ref_district
+(
+    dist_code character(3) COLLATE pg_catalog."default" NOT NULL,
+    st_code character(2) COLLATE pg_catalog."default" NOT NULL,
+    name character varying(255) COLLATE pg_catalog."default",
+    sno integer NOT NULL DEFAULT nextval('ref_district_sno_seq'::regclass),
+    lgd_district_code integer NOT NULL,
+    CONSTRAINT ref_district_pk_dist_code PRIMARY KEY (dist_code),
+    CONSTRAINT ref_district_unique_lgd_district_code UNIQUE (lgd_district_code),
+    CONSTRAINT ref_district_unique_st_code_district_code UNIQUE (st_code, dist_code)
+)
+
+
+CREATE TABLE IF NOT EXISTS public.user_master
+(
+    id integer NOT NULL DEFAULT nextval('user_master_id_seq'::regclass),
+    user_id character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    role_id integer,
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    first_name character varying(255) COLLATE pg_catalog."default",
+    middle_name character varying(255) COLLATE pg_catalog."default",
+    last_name character varying(255) COLLATE pg_catalog."default",
+    fathers_first_name character varying COLLATE pg_catalog."default",
+    fathers_middle_name character varying(255) COLLATE pg_catalog."default",
+    fathers_last_name character varying(255) COLLATE pg_catalog."default",
+    address_line1 character varying COLLATE pg_catalog."default",
+    address_line2 character varying COLLATE pg_catalog."default",
+    city character varying COLLATE pg_catalog."default",
+    state_code character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    phone_landline character varying(255) COLLATE pg_catalog."default",
+    phone_mobile character varying(255) COLLATE pg_catalog."default",
+    email_id character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    user_password character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    is_approved integer,
+    approved_datetime timestamp without time zone,
+    approved_by character varying(255) COLLATE pg_catalog."default",
+    modified_by character varying(255) COLLATE pg_catalog."default",
+    modified_datetime timestamp without time zone,
+    state_level_body character varying COLLATE pg_catalog."default",
+    state_level_body_institute character varying COLLATE pg_catalog."default",
+    body_type character varying COLLATE pg_catalog."default",
+    address_state_code character varying(20) COLLATE pg_catalog."default",
+    address_district_code character varying(20) COLLATE pg_catalog."default",
+    image_name character varying(255) COLLATE pg_catalog."default",
+    approv_letter bytea,
+    my_answer character varying(255) COLLATE pg_catalog."default",
+    security_question character varying(3) COLLATE pg_catalog."default",
+    std_code character varying(6) COLLATE pg_catalog."default",
+    registration_datetime timestamp without time zone,
+    ip_address character varying(15) COLLATE pg_catalog."default",
+    privilege_id integer,
+    approval_message character varying(255) COLLATE pg_catalog."default",
+    alt_email_id character varying(255) COLLATE pg_catalog."default",
+    status_id integer NOT NULL,
+    deo_user_type integer,
+    aishe_code character varying(255) COLLATE pg_catalog."default",
+    gender integer,
+    bcrypt_password character varying(255) COLLATE pg_catalog."default",
+    request_id integer,
+    document_pdf bytea,
+    document_name character varying(255) COLLATE pg_catalog."default",
+    is_moe_display_user boolean DEFAULT false,
+    is_password_change boolean DEFAULT false,
+    password_change_date timestamp with time zone,
+    title_id integer,
+    CONSTRAINT user_master_03may_pk_id PRIMARY KEY (id),
+    CONSTRAINT user_id_unique UNIQUE (user_id),
+    CONSTRAINT user_master_fk_gender_id FOREIGN KEY (gender)
+        REFERENCES public.ref_gender (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT user_master_fk_status_id FOREIGN KEY (status_id)
+        REFERENCES public.ref_user_status (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+
+CREATE TABLE IF NOT EXISTS public.user_master_log
+(
+    id integer NOT NULL DEFAULT nextval('user_master_log_id_seq'::regclass),
+    user_id character varying(45) COLLATE pg_catalog."default",
+    role_id integer,
+    name character varying(255) COLLATE pg_catalog."default",
+    first_name character varying(255) COLLATE pg_catalog."default",
+    middle_name character varying(255) COLLATE pg_catalog."default",
+    last_name character varying(255) COLLATE pg_catalog."default",
+    fathers_first_name character varying COLLATE pg_catalog."default",
+    fathers_middle_name character varying(255) COLLATE pg_catalog."default",
+    fathers_last_name character varying(255) COLLATE pg_catalog."default",
+    address_line1 character varying COLLATE pg_catalog."default",
+    address_line2 character varying COLLATE pg_catalog."default",
+    city character varying COLLATE pg_catalog."default",
+    state_code character varying(20) COLLATE pg_catalog."default",
+    phone_landline character varying(255) COLLATE pg_catalog."default",
+    phone_mobile character varying(255) COLLATE pg_catalog."default",
+    email_id character varying(255) COLLATE pg_catalog."default",
+    user_password character varying(255) COLLATE pg_catalog."default",
+    is_approved integer,
+    approved_datetime timestamp without time zone,
+    approved_by character varying(255) COLLATE pg_catalog."default",
+    modified_by character varying(255) COLLATE pg_catalog."default",
+    modified_datetime timestamp without time zone,
+    state_level_body character varying COLLATE pg_catalog."default",
+    state_level_body_institute character varying COLLATE pg_catalog."default",
+    body_type character varying COLLATE pg_catalog."default",
+    address_state_code character varying(20) COLLATE pg_catalog."default",
+    address_district_code character varying(20) COLLATE pg_catalog."default",
+    image_name character varying(255) COLLATE pg_catalog."default",
+    approv_letter bytea,
+    my_answer character varying(255) COLLATE pg_catalog."default",
+    security_question character varying(3) COLLATE pg_catalog."default",
+    std_code character varying(6) COLLATE pg_catalog."default",
+    registration_datetime timestamp without time zone,
+    ip_address character varying(15) COLLATE pg_catalog."default",
+    privilege_id integer,
+    approval_message character varying(255) COLLATE pg_catalog."default",
+    alt_email_id character varying(255) COLLATE pg_catalog."default",
+    status_id integer,
+    deo_user_type integer,
+    aishe_code character varying(255) COLLATE pg_catalog."default",
+    gender integer,
+    bcrypt_password character varying(255) COLLATE pg_catalog."default",
+    request_id integer,
+    document_pdf bytea,
+    document_name character varying(255) COLLATE pg_catalog."default",
+    is_moe_display_user boolean DEFAULT false,
+    is_password_change boolean DEFAULT false,
+    password_change_date timestamp with time zone,
+    title_id integer,
+    CONSTRAINT user_master_log_pkey PRIMARY KEY (id)
+)
+
+
+CREATE TABLE IF NOT EXISTS public.user_master_request
+(
+    id integer NOT NULL DEFAULT nextval('user_master_request_id_seq'::regclass),
+    user_id character varying(45) COLLATE pg_catalog."default",
+    role_id integer,
+    name character varying(255) COLLATE pg_catalog."default",
+    first_name character varying(255) COLLATE pg_catalog."default",
+    middle_name character varying(255) COLLATE pg_catalog."default",
+    last_name character varying(255) COLLATE pg_catalog."default",
+    fathers_first_name character varying COLLATE pg_catalog."default",
+    fathers_middle_name character varying(255) COLLATE pg_catalog."default",
+    fathers_last_name character varying(255) COLLATE pg_catalog."default",
+    address_line1 character varying COLLATE pg_catalog."default",
+    address_line2 character varying COLLATE pg_catalog."default",
+    city character varying COLLATE pg_catalog."default",
+    state_code character varying(20) COLLATE pg_catalog."default",
+    phone_landline character varying(255) COLLATE pg_catalog."default",
+    phone_mobile character varying(255) COLLATE pg_catalog."default",
+    email_id character varying(255) COLLATE pg_catalog."default",
+    user_password character varying(255) COLLATE pg_catalog."default",
+    is_approved integer,
+    approved_datetime timestamp without time zone,
+    approved_by character varying(255) COLLATE pg_catalog."default",
+    modified_by character varying(255) COLLATE pg_catalog."default",
+    modified_datetime timestamp without time zone,
+    state_level_body character varying COLLATE pg_catalog."default",
+    state_level_body_institute character varying COLLATE pg_catalog."default",
+    body_type character varying COLLATE pg_catalog."default",
+    address_state_code character varying(20) COLLATE pg_catalog."default",
+    address_district_code character varying(20) COLLATE pg_catalog."default",
+    image_name character varying(255) COLLATE pg_catalog."default",
+    approv_letter bytea,
+    my_answer character varying(255) COLLATE pg_catalog."default",
+    security_question character varying(3) COLLATE pg_catalog."default",
+    std_code character varying(6) COLLATE pg_catalog."default",
+    registration_datetime timestamp without time zone,
+    ip_address character varying(15) COLLATE pg_catalog."default",
+    privilege_id integer,
+    approval_message character varying(255) COLLATE pg_catalog."default",
+    alt_email_id character varying(255) COLLATE pg_catalog."default",
+    status_id integer,
+    deo_user_type integer,
+    aishe_code character varying(255) COLLATE pg_catalog."default",
+    gender integer,
+    bcrypt_password character varying(255) COLLATE pg_catalog."default",
+    request_id integer,
+    document_pdf bytea,
+    document_name character varying(255) COLLATE pg_catalog."default",
+    is_moe_display_user boolean DEFAULT false,
+    is_password_change boolean DEFAULT false,
+    password_change_date timestamp with time zone,
+    CONSTRAINT user_master_request_pkey PRIMARY KEY (id),
+    CONSTRAINT user_master_request_user_id UNIQUE (user_id)
+)
+
+
+CREATE TABLE IF NOT EXISTS public.college
+(
+    id integer NOT NULL,
+    name character varying(255) COLLATE pg_catalog."default",
+    university_id character(4) COLLATE pg_catalog."default",
+    district_code character varying(255) COLLATE pg_catalog."default",
+    state_code character varying(255) COLLATE pg_catalog."default",
+    type_id character(1) COLLATE pg_catalog."default" NOT NULL,
+    survey_year integer NOT NULL,
+    is_dcf_applicable boolean NOT NULL,
+    user_by character varying(50) COLLATE pg_catalog."default",
+    special_permission boolean,
+    permission_on_date date,
+    management_id character(1) COLLATE pg_catalog."default",
+    location character varying(1) COLLATE pg_catalog."default",
+    CONSTRAINT college_pk_id_survey_year PRIMARY KEY (id, survey_year),
+    CONSTRAINT college_fk_state_code_district_code FOREIGN KEY (district_code, state_code)
+        REFERENCES public.ref_district (dist_code, st_code) MATCH FULL
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT college_fk_university_college_type_id FOREIGN KEY (type_id)
+        REFERENCES public.ref_university_college_type (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT college_fk_university_id_survey_year FOREIGN KEY (survey_year, university_id)
+        REFERENCES public.ref_university (survey_year, id) MATCH FULL
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+
+CREATE TABLE IF NOT EXISTS public.ref_standalone_institution
+(
+    statecode character(2) COLLATE pg_catalog."default" NOT NULL,
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    id integer NOT NULL,
+    statebodyid integer NOT NULL,
+    survey_year integer NOT NULL,
+    district_code character(3) COLLATE pg_catalog."default",
+    user_by character varying(50) COLLATE pg_catalog."default",
+    special_permission boolean,
+    permission_on_date date,
+    management_id character(1) COLLATE pg_catalog."default",
+    location character varying(1) COLLATE pg_catalog."default",
+    CONSTRAINT ref_standalone_institution_pk_id_survey_year PRIMARY KEY (id, survey_year),
+    CONSTRAINT ref_institute_fk_statebodyid FOREIGN KEY (statebodyid)
+        REFERENCES public.ref_state_body (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT ref_standalone_institution_fk_ref_district FOREIGN KEY (district_code)
+        REFERENCES public.ref_district (dist_code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT ref_standalone_institution_fk_state_code FOREIGN KEY (statecode)
+        REFERENCES public.ref_state (st_code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.ref_university
+(
+    id character(4) COLLATE pg_catalog."default" NOT NULL,
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    statecode character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    survey_year integer NOT NULL,
+    is_dcf_applicable boolean,
+    type_id character(2) COLLATE pg_catalog."default" NOT NULL,
+    district_code character(3) COLLATE pg_catalog."default",
+    user_by character varying(50) COLLATE pg_catalog."default",
+    special_permission boolean,
+    permission_on_date date,
+    management_id character(1) COLLATE pg_catalog."default",
+    location character varying(1) COLLATE pg_catalog."default",
+    sub_type_id jsonb,
+    CONSTRAINT ref_university_pk_id_survey_year PRIMARY KEY (id, survey_year),
+    CONSTRAINT ref_university_fk_district_code FOREIGN KEY (district_code)
+        REFERENCES public.ref_district (dist_code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT ref_university_fk_statecode FOREIGN KEY (statecode)
+        REFERENCES public.ref_state (st_code) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)

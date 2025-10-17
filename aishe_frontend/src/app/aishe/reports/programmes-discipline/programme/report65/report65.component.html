@@ -1,0 +1,76 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"    *ngIf="Showdata12"
+>
+    <table class="table  showReportDataChild">
+        <thead class="childTableStickyHeader">
+            <tr>
+                <th rowspan="1" class="text-center table-success">Name of Institution</th>
+                <!-- <th colspan="1" class="text-center table-secondary">institutionCategory	</th> -->
+                <th colspan="1" class="text-center table-secondary">Name of Faculty</th>
+                <th colspan="1" class="text-center table-secondary">Name of Department</th>
+                <th colspan="1" class="text-center table-secondary">Level</th>
+                <th colspan="1" class="text-center table-secondary">Programme</th>
+                <th colspan="1" class="text-center table-secondary">Name of Discipline</th>
+                <th colspan="1" class="text-center table-secondary">Intake</th>
+                <th colspan="1" class="text-center table-secondary">Examination System</th>
+              </tr>
+
+             <!-- <tr>
+              <th
+                  *ngFor="let col of tableColumns; let i = index"
+                  [attr.style]=" (i ===0) ? 'display:none': ''
+                  "
+                  [ngClass]="[i==0?'table-success':  '',
+                  i>=1 && i<=8? 'table-secondary': '',i>=9 && i<18 ? 'table-tertiary': '',
+              ]"
+                  class="text-center"
+                >
+
+                    {{col
+                    .trim()
+                    .replace('SC','')
+
+                    }}
+                </th>
+             </tr> -->
+
+
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let row of reportTableData| paginate
+          : {
+              itemsPerPage: pageSize,
+              currentPage: page
+            }" >
+            <td
+              *ngFor="let col of tableColumns; let i = index"
+              class="text-center"
+              [ngClass]="[i==0?'table-success':  '',
+                            i>=1 && i<=9? 'table-secondary': '',
+                        ]"
+            >
+              {{ row[col] }}
+            </td>
+          </tr>
+          <tr>
+            <!-- <td colspan="1" class="text-center table-success">
+              All Programmes
+            </td> -->
+            <td
+              *ngFor="let summary of summaryColumns; let i = index"
+              class="text-center table-secondary"
+              [ngClass]="[i==0?'table-success': '',]"
+            >
+              {{ summaryData[summary] }}
+            </td>
+          </tr>
+          </tbody>
+    </table>
+    <pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+        </div>

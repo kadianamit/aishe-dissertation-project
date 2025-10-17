@@ -1,0 +1,565 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+  <div class="form-group">
+    <div class="form-row mr-0 ml-0">
+      <div class="col-md-12 mt-0 badges p-2 mt-3">
+        <div class="float-left">
+          <span class="font-weight-bold text-lg">Form Management</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-tab-group
+    animationDuration="0ms"
+    class="exam-tabing-steps"
+    [(selectedIndex)]="selectedIndex"
+    (selectedTabChange)="tabSelected($event)"
+  >
+    <mat-tab
+      label="Unlock Web-DCF"
+      *ngIf="
+        roleId === this.sharedService.role['State Nodal Officer'] ||
+        roleId === this.sharedService.role['Ministry of Education'] ||
+        roleId === this.sharedService.role['SysAdmin']
+      "
+    >
+      <div class="container-fluid reg-page-bg mt-2">
+        <mat-card class="bg-light matcard">
+          <form [formGroup]="unlockWebDCF">
+            <div class="col-md-12" *ngIf="showAisheCodeInputField">
+              <mat-form-field class="d-block">
+                <mat-label>Institution Type</mat-label>
+                <mat-select
+                  placeholder="Institution Type"
+                  formControlName="institutionType"
+                  [required]="showAisheCodeInputField"
+                >
+                  <mat-option
+                    *ngFor="let data of sharedService.institutionTypeList"
+                    [value]="data"
+                  >
+                    {{ data }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12" *ngIf="showAisheCodeInputField">
+              <mat-form-field class="d-block">
+                <mat-label>AISHE Code</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  autocomplete="off"
+                  placeholder="AISHE Code"
+                  [required]="showAisheCodeInputField"
+                  formControlName="aisheCode"
+                  (keypress)="restrictNumeric($event)"
+                  minlength="1"
+                  maxlength="7"
+                />
+              </mat-form-field>
+              <div
+                class="err-msgs"
+                *ngIf="
+                  unlockWebDCF.controls['aisheCode'].dirty ||
+                  unlockWebDCF.controls['aisheCode'].value ||
+                  unlockWebDCF.controls['aisheCode'].touched ||
+                  isFormInvalid
+                "
+              >
+                <span
+                  *ngIf="
+                    unlockWebDCF.controls['aisheCode'].hasError('required')
+                  "
+                  >Please enter</span
+                >
+                <span
+                  *ngIf="unlockWebDCF.controls['aisheCode'].hasError('pattern')"
+                  >Invalid AISHE Code</span
+                >
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>Survey Year</mat-label>
+                <mat-select formControlName="surveyYear" [required]="required">
+                  <!-- <mat-option value="2023">2023-24</mat-option> -->
+                  <mat-option [value]="sharedService.currentSurveyYear">{{sharedService.currentSurveyfiscal}}</mat-option>
+
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>Remarks</mat-label>
+                <textarea
+                  matInput
+                  rows="2"
+                  formControlName="remarks"
+                ></textarea>
+              </mat-form-field>
+            </div>
+            <div class="text-center" *ngIf="admin">
+              <button
+                class="btn btn-success btn-sm"
+                (click)="unlockWebDCFSave()"
+              >
+                Click Here to Unlock Web-DCF
+              </button>
+            </div>
+            <div class="text-center" *ngIf="!admin">
+              <button
+                class="btn btn-success btn-sm"
+                (click)="goToDCF(unlockWebDCF.value)"
+                [disabled]="isEligible"
+              >
+                Click Here to Unlock Web-DCF
+              </button>
+            </div>
+
+            <p *ngIf="messageEligible" style="color: red">
+              You are not Eligible for the survey year {{sharedService.currentSurveyfiscal}}
+            </p>
+          </form>
+        </mat-card>
+      </div>
+    </mat-tab>
+    <mat-tab
+      label="Assign Special Permission"
+      *ngIf="
+        roleId === this.sharedService.role['Ministry of Education'] ||
+        roleId === this.sharedService.role['SysAdmin']
+      "
+    >
+      <div class="container-fluid reg-page-bg mt-2">
+        <mat-card class="bg-light matcard">
+          <form [formGroup]="sepcialPermissionsForm">
+            <div class="col-md-12" *ngIf="showAisheCodeInputField">
+              <mat-form-field class="d-block">
+                <mat-label>Institution Type</mat-label>
+                <mat-select
+                  placeholder="Institution Type"
+                  formControlName="institutionTypeSP"
+                  [required]="showAisheCodeInputField"
+                >
+                  <mat-option
+                    *ngFor="let data of sharedService.institutionTypeList"
+                    [value]="data"
+                  >
+                    {{ data }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12" *ngIf="showAisheCodeInputField">
+              <mat-form-field class="d-block">
+                <mat-label>AISHE Code</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  autocomplete="off"
+                  placeholder="Aishe Code"
+                  [required]="showAisheCodeInputField"
+                  formControlName="aisheCode"
+                  (keypress)="restrictNumeric($event)"
+                  minlength="1"
+                  maxlength="5"
+                />
+              </mat-form-field>
+              <div
+                class="err-msgs"
+                *ngIf="
+                  sepcialPermissionsForm.controls['aisheCode'].dirty ||
+                  sepcialPermissionsForm.controls['aisheCode'].value ||
+                  sepcialPermissionsForm.controls['aisheCode'].touched ||
+                  isFormInvalid
+                "
+              >
+                <span
+                  *ngIf="
+                    sepcialPermissionsForm.controls['aisheCode'].hasError(
+                      'required'
+                    )
+                  "
+                  >Please enter</span
+                >
+                <span
+                  *ngIf="
+                    sepcialPermissionsForm.controls['aisheCode'].hasError(
+                      'pattern'
+                    )
+                  "
+                  >Invalid AISHE Code</span
+                >
+              </div>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>Survey Year</mat-label>
+                <mat-select formControlName="surveyYear" [required]="required">
+                  <!-- <mat-option value="SURVEY_YEAR_2021">2021-22</mat-option> -->
+                  <!-- <mat-option value="SURVEY_YEAR_2023">2023-24</mat-option> -->
+                  <mat-option value="SURVEY_YEAR_2024">{{sharedService.currentSurveyfiscal}}</mat-option>
+
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>Special Permission</mat-label>
+                <mat-select
+                  formControlName="specialPermission"
+                  [required]="required"
+                >
+                  <mat-option [value]="true">Yes</mat-option>
+                  <mat-option [value]="false">No</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>Remarks</mat-label>
+                <textarea
+                  matInput
+                  rows="2"
+                  formControlName="remarks"
+                ></textarea>
+              </mat-form-field>
+            </div>
+            <div class="text-center" *ngIf="admin">
+              <button
+                class="btn btn-success btn-sm"
+                (click)="sepcialPermissionsSave()"
+              >
+                Click Here to Special Permission
+              </button>
+            </div>
+            <div class="text-center" *ngIf="!admin">
+              <button
+                class="btn btn-success btn-sm"
+                (click)="goToDCF(unlockWebDCF.value)"
+                [disabled]="isEligible"
+              >
+                Click Here to Special Permission
+              </button>
+            </div>
+
+            <!-- <p *ngIf="messageEligible" style="color: red;">You are not Eligible for the survey year 2022-23</p> -->
+          </form>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Log Reports">
+      <div class="container-fluid reg-page-bg mt-2">
+        <mat-card class="bg-light matcard">
+          <form [formGroup]="reportLog">
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>Institution Type</mat-label>
+                <mat-select
+                  required
+                  placeholder="Institution Type"
+                  formControlName="institutionTypeR"
+                >
+                  <mat-option
+                    *ngFor="let data of institutionTypeUn"
+                    [value]="data"
+                  >
+                    {{ data }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div
+              class="col-md-12"
+              *ngIf="
+                this.roleId !== this.sharedService.role['State Nodal Officer']
+              "
+            >
+              <mat-form-field class="d-block">
+                <mat-label>State</mat-label>
+                <mat-select
+                  placeholder="--Select State--"
+                  required
+                  formControlName="stateCode"
+                >
+                  <mat-select-filter
+                    [array]="variables"
+                    [displayMember]="'name'"
+                    (filteredReturn)="stateList = $event"
+                  >
+                  </mat-select-filter>
+                  <mat-option
+                    *ngFor="let data of stateList"
+                    [value]="data.stateCode"
+                  >
+                    {{ data.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-hint
+                class="err-msgs"
+                *ngIf="
+                  reportLog.controls['stateCode'].dirty ||
+                  reportLog.controls['stateCode'].value ||
+                  reportLog.controls['stateCode'].touched ||
+                  isFormInvalid
+                "
+              >
+                <span
+                  *ngIf="reportLog.controls['stateCode'].hasError('required')"
+                  >Please select</span
+                >
+              </mat-hint>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>Survey Year</mat-label>
+                <mat-select formControlName="surveyYear" [required]="required">
+                  <mat-option value="2020">2020-21</mat-option>
+                  <mat-option value="2021">2021-22</mat-option>
+                  <mat-option value="2022">2022-23</mat-option>
+                  <mat-option value="2023">2023-24</mat-option>
+                  <mat-option value="2024">2024-25</mat-option>
+
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>Reports Type</mat-label>
+                <mat-select [required]="required" formControlName="logReport">
+                  <mat-option value="WEBDCF_UNLOCK">Web-DCF Unlock</mat-option>
+                  <mat-option
+                    value="SPECIAL_PERMISSION_GRANTED"
+                    *ngIf="
+                      this.roleId !==
+                      this.sharedService.role['State Nodal Officer']
+                    "
+                    >Special Permission Granted</mat-option
+                  >
+                  <mat-option
+                    value="SPECIAL_PERMISSION_REVOKED"
+                    *ngIf="
+                      this.roleId !==
+                      this.sharedService.role['State Nodal Officer']
+                    "
+                    >Special Permission Revoked</mat-option
+                  >
+                  <mat-option
+                    value="SPECIAL_PERMISSION_GRANT_REVOKED"
+                    *ngIf="
+                      this.roleId !==
+                      this.sharedService.role['State Nodal Officer']
+                    "
+                    >Special Permission Granted/Revoked</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>Order By</mat-label>
+                <mat-select formControlName="orderBy">
+                  <mat-option value="AISHE_CODE">Aishe Code</mat-option>
+                  <mat-option value="ACTION_TIME">Action Time</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="text-center" *ngIf="admin">
+              <button class="btn btn-success btn-sm" (click)="downloadLog()">
+                Click Here to download Report
+              </button>
+            </div>
+            <div class="text-center" *ngIf="!admin">
+              <button
+                class="btn btn-success btn-sm"
+                (click)="downloadLog()"
+                [disabled]="isEligible"
+              >
+                Click Here to download Report
+              </button>
+            </div>
+
+            <p *ngIf="messageEligible" style="color: red">
+              You are not Eligible for the survey year {{sharedService.currentSurveyfiscal}}
+
+            </p>
+          </form>
+        </mat-card>
+      </div>
+    </mat-tab>
+    <mat-tab
+      label="Delete Survey Year Data"
+      *ngIf="
+        roleId === this.sharedService.role['Ministry of Education'] ||
+        roleId === this.sharedService.role['SysAdmin']
+      "
+    >
+      <div class="container-fluid reg-page-bg mt-2">
+        <mat-card class="bg-light matcard">
+          <form [formGroup]="deleteSurveyYears">
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>Institution Type</mat-label>
+                <mat-select
+                  required
+                  placeholder="Institution Type"
+                  formControlName="institutionTypeDelete"
+                >
+                  <mat-option
+                    *ngFor="let data of institutionTypeDele"
+                    [value]="data"
+                  >
+                    {{ data }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-hint
+                class="err-msgs"
+                *ngIf="
+                  (deleteSurveyYears.controls['institutionTypeDelete']
+                    .touched &&
+                    deleteSurveyYears.controls[
+                      'institutionTypeDelete'
+                    ].hasError('required')) ||
+                  isFormInvalid
+                "
+              >
+                <span>Please select</span>
+              </mat-hint>
+              <!-- <mat-hint
+              class="err-msgs"
+              *ngIf="
+                deleteSurveyYears.controls['institutionTypeDelete'].value ||
+                deleteSurveyYears.controls['institutionTypeDelete'].touched ||
+                isFormInvalid
+              "
+            >
+              <span
+                *ngIf="deleteSurveyYears.controls['institutionTypeDelete'].hasError('required')"
+                >Please select</span
+              >
+            </mat-hint> -->
+            </div>
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>AISHE Code</mat-label>
+                <input
+                  matInput
+                  formControlName="aisheCodeDelete"
+                  (keypress)="restrictNumeric($event)"
+                />
+              </mat-form-field>
+              <mat-hint
+                class="err-msgs"
+                *ngIf="
+                  (deleteSurveyYears.controls['aisheCodeDelete']
+                    .touched &&
+                    deleteSurveyYears.controls[
+                      'aisheCodeDelete'
+                    ].hasError('required')) ||
+                  isFormInvalid
+                "
+              >
+                <span>Please select</span>
+              </mat-hint>
+              <!-- <mat-hint
+                class="err-msgs"
+                *ngIf="
+                  deleteSurveyYears.controls['aisheCodeDelete'].value ||
+                  deleteSurveyYears.controls['aisheCodeDelete'].touched ||
+                  isFormInvalid
+                "
+              >
+                <span
+                  *ngIf="
+                    deleteSurveyYears.controls['aisheCodeDelete'].hasError(
+                      'required'
+                    )
+                  "
+                  >Please enter</span
+                >
+              </mat-hint> -->
+            </div>
+            <div class="col-md-12">
+              <mat-form-field class="d-block">
+                <mat-label>Survey Year</mat-label>
+                <mat-select
+                  formControlName="surveyYearDelete"
+                  [required]="required"
+                >
+                  <!-- <mat-option value="2020">2020-21</mat-option>
+                  <mat-option value="2021">2021-22</mat-option>
+                  <mat-option value="2022">2022-23</mat-option> -->
+                  <mat-option
+                    *ngFor="let item of currentSurveyYears"
+                    [value]="item"
+                    >{{ item }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+              <mat-hint
+                class="err-msgs"
+                *ngIf="
+                  deleteSurveyYears.controls['surveyYearDelete'].dirty ||
+                  deleteSurveyYears.controls['surveyYearDelete'].value ||
+                  deleteSurveyYears.controls['surveyYearDelete'].touched ||
+                  isFormInvalid
+                "
+              >
+                <span
+                  *ngIf="
+                    deleteSurveyYears.controls['surveyYearDelete'].hasError(
+                      'required'
+                    )
+                  "
+                  >Please select</span
+                >
+              </mat-hint>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field class="d-block" >
+                <mat-label>Remarks</mat-label>
+                <textarea
+                  matInput
+                  formControlName="remarksDelete"
+                  rows="2"
+                  placeholder="Enter remarks here"
+                ></textarea>
+              </mat-form-field>
+              <mat-hint
+                class="err-msgs"
+                *ngIf="
+                  deleteSurveyYears.controls['remarksDelete'].dirty ||
+                  deleteSurveyYears.controls['remarksDelete'].value ||
+                  deleteSurveyYears.controls['remarksDelete'].touched ||
+                  isFormInvalid
+                "
+              >
+                <span
+                  *ngIf="
+                    deleteSurveyYears.controls['remarksDelete'].hasError(
+                      'required'
+                    )
+                  "
+                  >Please enter</span
+                >
+              </mat-hint>
+            </div>
+            <div class="text-center">
+              <button
+                class="btn btn-success btn-sm"
+                (click)="deleteSurveyYearsData()"
+              >
+                Click Here to Survey Year Data
+              </button>
+            </div>
+          </form>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

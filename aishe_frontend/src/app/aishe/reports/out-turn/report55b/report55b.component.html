@@ -1,0 +1,129 @@
+
+
+    <div
+    class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+  *ngIf="Showdata12">
+<table
+class="table  showReportDataChild"  style="width:100%;" [id]="reportInfoObj.reportNumber">
+<thead class="childTableStickyHeader">
+<tr *ngIf="is2020===false">
+    <th rowspan="3" class="text-center table-success">Programme</th>
+    <th colspan="6" class="text-center table-tertiary">Out - Turn</th>
+</tr>
+<tr *ngIf="is2020===false">
+  <th colspan="2" class="text-center table-light">Passed</th>
+  <th colspan="2" class="text-center table-secondary">Appeared</th>
+    <th colspan="2" class="text-center table-tertiary">Pass %</th>
+</tr>
+
+<!-- New 2020 data add -->
+<tr *ngIf="is2020">
+  <th rowspan="3" class="text-center table-success">Programme</th>
+  <th colspan="9" class="text-center table-tertiary">Out - Turn</th>
+</tr>
+<tr *ngIf="is2020">
+  <th colspan="3" class="text-center table-light">Appeared</th>
+  <th colspan="3" class="text-center table-secondary">Passed</th>
+  <th colspan="3" class="text-center table-tertiary">Pass %</th>
+</tr>
+<!-- <tr>
+
+
+  <th colspan="1" class="text-center table-tertiary">Male</th>
+  <th colspan="1" class="text-center table-light">Female</th>
+
+  <th colspan="1" class="text-center table-tertiary">Male</th>
+  <th colspan="1" class="text-center table-secondary">Female</th>
+
+  <th colspan="1" class="text-center table-light">Male</th>
+  <th colspan="1" class="text-center table-tertiary">Female</th>
+
+
+</tr> -->
+<tr *ngIf="is2020===false">
+  <th
+    *ngFor="let col of tableColumns; let i = index"
+    [attr.style]="
+    (i === 0)
+      ? 'display:none'
+      : ''
+  "
+  [ngClass]="[ i>1 && i<=1 ? 'table-success': '',i>=1 && i<3 ? 'table-light': '',i>=3 && i<5 ? 'table-secondary': '',i>=5 && i<7 ? 'table-tertiary': '', ]"
+    class="text-center"
+  >
+    {{
+      col
+        .trim()
+        .replace('Appeared', '')
+        .replace('Passed','')
+        .replace('Pass', '')
+        .replace('Percentage', '')
+      }}
+      <!-- .replace('Cert Female','Female')  -->
+      <!-- .replace('Total ', 'Female') -->
+  </th>
+</tr>
+<!-- new data 2020 -->
+<tr *ngIf="is2020">
+  <th
+    *ngFor="let col of tableColumns; let i = index"
+    [attr.style]="
+    (i === 0)
+      ? 'display:none'
+      : ''
+  "
+  [ngClass]="[ i>1 && i<=1 ? 'table-success': '',i>=1 && i<4 ? 'table-light': '',i>=4 && i<7 ? 'table-secondary': '',i>=7 && i<10 ? 'table-tertiary': '', ]"
+    class="text-center"
+  >
+    {{
+      col
+        .trim()
+        .replace('Appeared', '')
+        .replace('Passed','')
+        .replace('Pass', '')
+        .replace('Dip', '')
+        .replace('First Class', '')
+        .replace('Percentage', '')
+      }}
+      <!-- .replace('Cert Female','Female')  -->
+      <!-- .replace('Total ', 'Female') -->
+  </th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let row of reportTableData| paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }" [ngClass]="is2020?'d-none':''">
+  <td
+    *ngFor="let col of tableColumns; let i = index"
+    class="text-center"
+    [ngClass]="[ i>=0 && i<1 ? 'table-success': '',i>=1 && i<3 ? 'table-light': '',i>=3 && i<5 ? 'table-secondary': '',i>=5 && i<7 ? 'table-tertiary': '', ]" >
+   {{ row[col] }}
+  </td>
+</tr>
+
+<!-- new data 2020 -->
+<tr *ngFor="let row of reportTableData | paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }" [ngClass]="is2020?'':'d-none'">
+  <td
+    *ngFor="let col of tableColumns; let i = index"
+    class="text-center"
+    [ngClass]="[ i>=0 && i<1 ? 'table-success': '',i>=1 && i<4 ? 'table-light': '',i>=4 && i<7 ? 'table-secondary': '',i>=7 && i<10 ? 'table-tertiary': '', ]" >
+   {{ row[col] }}
+  </td>
+</tr>
+
+</tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

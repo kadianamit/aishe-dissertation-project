@@ -1,0 +1,425 @@
+<ul [ngClass]="{'toggled2': toggle === true}" class="navbar-nav sidebar maintogglebtn z-index-0 " id="accordionSidebar"
+  #navMenuElement>
+  <!-- <ng-container  *ngFor="let menu of sidebarList">
+  <li class="nav-item " (click)="newMenu()" >
+    <a class="nav-link" routerLink="{{menu.route}}" aria-expanded="true" routerLinkActive="active">
+      <i class="{{menu.icon}}"></i>
+      <span>{{menu.name}}</span></a>
+  </li>
+  </ng-container> -->
+
+
+  <li class="nav-item " (click)="toggleSidebarTab()">
+    <a class="nav-link" [routerLink]="routers.Home" aria-expanded="true" routerLinkActive="active">
+      <i class="{{sharedservice['menuList']['0'].icon}}"></i>
+      <span>{{loginMode === 'C' || loginMode === 'U' || loginMode ===
+        'S'?sharedservice['menuList']['0'].name:'Home'}}</span></a>
+  </li>
+
+  <!--Route EditRegistration -->
+  <li class="nav-item" *ngIf="loginMode === 'C' || loginMode === 'S' || loginMode === 'U'">
+    <a class="nav-link" aria-expanded="true" [routerLink]="routers.EditRegistration" (click)="toggleSidebarTab()"
+      routerLinkActive="active">
+      <i class="{{sharedservice['menuList']['4'].icon}}"></i>
+      <span>{{sharedservice['menuList']['4'].name}}</span></a>
+  </li>
+  <!-- <li (click)="toggleSidebarTab()" class="nav-item "
+    *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education']">
+    <a class="nav-link" [routerLink]="routers.Dashboard" aria-expanded="true" routerLinkActive="active">
+      <mat-icon>dashboard</mat-icon>
+      <span>{{sharedservice['menuList']['21'].name}}</span></a>
+  </li> -->
+
+  <!-- <li class="nav-item animated fadeInDown"
+    *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education']">
+    <a class="nav-link collapsed reportDE" (click)="toggleForAllUser('#collapseTwoDE','.reportDE')"
+      data-toggle="collapse" aria-controls="collapseTwoDE">
+      <i class="fa fa-database" aria-hidden="true"></i>
+      <span style="color: ghostwhite;">{{sharedservice['menuList']['28'].name}}</span>&nbsp;<img
+        src="assets/img/new.gif">
+    </a>
+    <div id="collapseTwoDE" class="collapse m-0 reportDE" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
+      style="background: rgb(4, 107, 169)">
+      <div class="m-0 p-0 collapse-inner">
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.dcfDemoBasic">
+          Basic Information</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.dcfDemoPrograme">Details
+          of Programme</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.dcfDemoEnrolment">Student
+          Enrolment</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;"
+          [routerLink]="routers.dcfDemoforeignEnrolment">Foreign Student Enrolment</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.dcfDemoteaching">Teaching
+          Staff Information</a>
+        
+      </div>
+    </div>
+  </li> -->
+
+  <li class="nav-item animated fadeInDown" *ngIf="!this.userData">
+    <a class="nav-link collapsed user" (click)="toggleForAllUser('#collapseUser','.user')" data-toggle="collapse"
+      aria-controls="collapseUser">
+      <i class="{{sharedservice['menuList']['1'].icon}}"></i>
+      <span style="color: ghostwhite;">{{sharedservice['menuList']['1'].name}}</span>
+    </a>
+    <div id="collapseUser" class="collapse m-0 userM" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
+      style="background: rgb(4, 107, 169)">
+      <div class="m-0 p-0 collapse-inner">
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.UserManagement">
+          <span>{{sharedservice['menuList']['1'].name}}</span>
+        </a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.NewRegistartion"
+          *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education']">{{sharedservice['menuList']['20'].name}}</a>
+      </div>
+    </div>
+  </li>
+
+
+
+  <!-- <li class="nav-item animated fadeInDown" *ngIf="!this.userData && showMenu">
+    <a class="nav-link collapsed dcf" (click)="toggleForAll('#collapseDCF','.dcf')" data-toggle="collapse"
+      aria-controls="collapseDCF">
+      <i class="{{sharedservice['menuList']['2'].icon}}"></i>
+      <span style="color: ghostwhite;">{{sharedservice['menuList']['2'].name}}</span>
+    </a>
+    <div id="collapseDCF" class="collapse webDCF m-0" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
+      style="background: rgb(4, 107, 169)">
+      <div class="m-0 p-0 collapse-inner">
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" (click)="getInstituteDetail()">
+          <span>{{sharedservice['menuList']['18'].name}}</span>
+        </a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.unlockWebDcf"
+          *ngIf="roleId === sharedservice.role['State Nodal Officer'] || roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']">
+          <span>{{sharedservice['menuList']['24'].name}}</span>
+        </a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;"
+          [routerLink]="routers.DOCUMENTDOWNLOAD">{{sharedservice['menuList']['19'].name}}</a>
+      </div>
+    </div>
+  </li> -->
+
+  <!-- <li class="nav-item animated fadeInDown"
+    *ngIf="roleId ==='7' || roleId === '26' || roleId ==='6' || roleId==='1' || roleId ==='9' || roleId==='8' || roleId==='10' || roleId === '22' || roleId==='11' || roleId === '12'">
+    <a class="nav-link collapsed reportM" (click)="toggleReportAccordianTwoM()" data-toggle="collapse"
+      aria-controls="collapseTwoM">
+      <i class="{{sharedservice['menuList']['3'].icon}}"></i>
+      <span style="color: ghostwhite;">{{sharedservice['menuList']['3'].name}}</span>
+    </a>
+    <div id="collapseTwoM" class="collapse m-0  hidedcf1" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
+      style="background: rgb(4, 107, 169)">
+      <div class="m-0 p-0 collapse-inner">
+        <a class="collapse-item m-0 rounded-0" (click)="hidedropdown()" *ngIf="umodule" style="cursor: pointer;"
+          [routerLink]="routers.university">
+          {{sharedservice['menuList']['17'].name}}</a>
+        <a class="collapse-item m-0 rounded-0" (click)="hidedropdown()" *ngIf="cmodule" style="cursor: pointer;"
+          [routerLink]="routers.InstitutionManagement">
+          <span>{{sharedservice['menuList']['16'].name}}</span>
+        </a>
+        <a class="collapse-item m-0 rounded-0" (click)="hidedropdown()" *ngIf="smodule" style="cursor: pointer;"
+          [routerLink]="routers.StandaloneInstitution">{{sharedservice['menuList']['15'].name}}</a>
+
+        <a class="collapse-item m-0 rounded-0" (click)="hidedropdown()"
+          *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']"
+          style="cursor: pointer;" [routerLink]="routers.ResearchDeveloment">R&D Institution Management</a>
+
+        <a class="collapse-item m-0 rounded-0" (click)="hidedropdown()"
+          *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']"
+          style="cursor: pointer;" [routerLink]="routers.SimilarInstitute">Check Similar Institute</a> -->
+
+        <!-- <a class="collapse-item m-0 rounded-0"  (click)="hidedropdown()" *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']"
+           style="cursor: pointer;" [routerLink]="routers.ResearchDeveloment">Add R&D Institute</a>
+           <a class="collapse-item m-0 rounded-0"  (click)="hidedropdown()" *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']"
+           style="cursor: pointer;" [routerLink]="routers.viewRND">View R&D Institute</a>
+
+           <a class="collapse-item m-0 rounded-0" *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']"
+           style="cursor: pointer;" [routerLink]="routers.approveRND">Approve R&D Institute</a> -->
+
+        <!-- <a class="collapse-item m-0 rounded-0" (click)="hidedropdown()"
+          *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']"
+          style="cursor: pointer;" [routerLink]="[routers.reportSummary1,'ApprovedReject']">Summary Report - HEI
+          Approved/Reject
+        </a>
+        <a class="collapse-item m-0 rounded-0" (click)="hidedropdown()"
+          *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']"
+          style="cursor: pointer;" [routerLink]="[routers.reportSummary,'Onboarding']">Summary Report - HEI Onboarding
+        </a>
+        <a class="collapse-item m-0 rounded-0" (click)="hidedropdown()" *ngIf="roleId === sharedservice.role['College']"
+          style="cursor: pointer;" [routerLink]="routers.requestShiftUnversity">Request for Shift University
+        </a>
+        <a class="collapse-item m-0 rounded-0" (click)="hidedropdown()"
+          *ngIf="roleId === sharedservice.role['University']" style="cursor: pointer;"
+          [routerLink]="routers.approveRejectUniversity">
+          Affiliate/Deaffiliate University
+        </a>
+
+      </div>
+    </div>
+  </li> -->
+
+
+  <!-- <li (click)="toggleSidebarTab()" class="nav-item "
+    *ngIf="!this.userData && (roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['State Nodal Officer'])">
+    <a class="nav-link" [routerLink]="routers.Suggestion" aria-expanded="true" routerLinkActive="active">
+      <mat-icon> comment</mat-icon>
+      <span>Feedback Form</span></a>
+  </li> -->
+
+
+
+
+
+
+  <!-- <li class="nav-item animated fadeInDown" *ngIf="datauser">
+    <a class="nav-link collapsed reportR" (click)="toggleForAllUser('#collapseTwoR','.reportR')" data-toggle="collapse"
+      aria-controls="collapseTwoR">
+      <i class="fa fa-tasks" aria-hidden="true"></i>
+      <span style="color: ghostwhite;">Reports</span>
+    </a>
+    <div id="collapseTwoR" class="collapse m-0 reportR" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
+      style="background: rgb(4, 107, 169)">
+      <div class="m-0 p-0 collapse-inner">
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.Reports">
+          Web DCF Report</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.Delete"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'])">
+          Inactive University</a> -->
+
+        <!-- <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.Merge"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'])">Merge Institution List</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.collegeToUniv"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'])">College to University</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.standaloneToCollege"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'])">Standalone to College</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.standaloneToUniv"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'])">Standalone to University</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.inactiveStandalone"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'])">Inactive Standalone</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.inactiveDeaffilliate"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'])">De-affiliate College</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.missingUser"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'])">Missing User in HEIs</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.ParticipatedSurvey"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'])">HEIs participated & Not participated</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.heiFeedback"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education'])">HEIs
+          Feedback</a> -->
+
+        <!-- <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.snoFeedback"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education'])">SNO
+          Feedback</a>
+
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.UniversityWiseCount"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education'])">University
+          Wise College</a> -->
+        <!-- University Wise Off campus -->
+        <!-- <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.UniversityWiseOffcampus"
+          *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education'])">University
+          Wise Off-Campus</a>
+      </div>
+    </div>
+  </li> -->
+
+  <!-- <li class="nav-item animated fadeInDown">
+    <a class="nav-link collapsed reportA" (click)="toggleReportAccordian()" (click)="toggleSidebarTab()"
+    data-toggle="collapse" aria-controls="collapseTwoR">
+      <i class="{{sharedservice['menuList']['6'].icon}}"></i>
+      <span style="color: ghostwhite;">{{sharedservice['menuList']['6'].name}}</span>
+    </a>
+      <div id="collapseTwoR" class="collapse m-0 reportR" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="m-0 p-0 collapse-inner">
+        <a class="collapse-item m-0 rounded-0"
+         style="cursor: pointer;" [routerLink]="routers.Reports">
+          <span>{{sharedservice['menuList']['7'].name}}</span></a>
+        <a class="collapse-item m-0 rounded-0"
+           style="cursor: pointer;" [routerLink]="routers.ReportsWebDCF">{{sharedservice['menuList']['8'].name}}</a>
+      </div>
+    </div>
+     </li>  -->
+
+  <!-- <li class="nav-item animated fadeInDown"
+    *ngIf="!this.userData && (roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['University'] || roleId === sharedservice.role['State Nodal Officer'] || roleId === sharedservice.role['Directorate of Technical Education'] || roleId === sharedservice.role['State Nursing Body/Council'] || roleId === sharedservice.role['State Council of Educational Research and Training'] || roleId === sharedservice.role['State Paramedical Council']) ">
+    <a class="nav-link collapsed reportC" (click)="toggleReportAccordianTwo()" data-toggle="collapse"
+      aria-controls="collapseTwo">
+      <i class="{{sharedservice['menuList']['9'].icon}}"></i>
+      <span style="color: ghostwhite;">{{sharedservice['menuList']['9'].name}}</span>
+    </a>
+    <div id="collapseTwo" class="collapse m-0 reportB" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
+      style="background: rgb(4, 107, 169)">
+      <div class="m-0 p-0 collapse-inner">
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.Monitering"
+          *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['University'] || roleId === sharedservice.role['State Nodal Officer'] || roleId === sharedservice.role['Directorate of Technical Education'] || roleId === sharedservice.role['State Nursing Body/Council'] || roleId === sharedservice.role['State Council of Educational Research and Training'] || roleId === sharedservice.role['State Paramedical Council']">
+          <span>{{sharedservice['menuList']['10'].name}}</span></a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.Summary"
+          *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education']">{{sharedservice['menuList']['11'].name}}</a>
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.DayWise"
+          *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education']">{{sharedservice['menuList']['12'].name}}</a>
+
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.stateWiseMonitoring1"
+          *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education']">{{sharedservice['menuList']['29'].name}}</a> -->
+        <!-- <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.upgradeInstitutes"
+          *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education']">Upgrade Institutes</a>  -->
+        <!-- <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.standaloneToUniv"
+          *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education']">Standalone to University</a>
+          <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.standaloneToCollege"
+          *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education']">Standalone to College</a> -->
+      <!-- </div>
+    </div>
+  </li> -->
+
+
+
+
+  <!-- <li class="nav-item " *ngIf="roleId === '26'">
+    <a class="nav-link"  aria-expanded="true" [routerLink]="routers.Monitering" routerLinkActive="active">
+      <i class="{{sharedservice['menuList']['9'].icon}}"></i>
+      <span>Progress Monitoring</span></a>
+  </li>    -->
+
+  <!-- <li class="nav-item"
+    *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']">
+    <a class="nav-link" aria-expanded="true" [routerLink]="routers.ProgrammeManagement" routerLinkActive="active"
+      (click)="toggleSidebarTab()">
+      <i class="fa fa-tasks" aria-hidden="true"></i>
+      <span>Programme Management</span></a>
+  </li> -->
+  <!-- <li class="nav-item" *ngIf="loginMode !== 'S' && userData !== 'true'">
+    <a class="nav-link" [routerLink]="routers.NTA" (click)="toggleSidebarTab()" aria-expanded="true"
+      routerLinkActive="active">
+      <mat-icon>question_answer</mat-icon>
+      <span>NTA Questionnaire</span>&nbsp;<img src="assets/img/new.gif"></a>
+  </li> -->
+  <!-- <li (click)="toggleSidebarTab()" class="nav-item"
+    *ngIf="loginMode === 'C' || loginMode === 'S' || loginMode === 'U' || roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active" [routerLink]="routers.remunerationManagement"
+      style="cursor: pointer;">
+      <i class="fa fa-tasks" aria-hidden="true"></i>
+      <span>Remuneration Management</span></a>
+  </li> -->
+
+  <!-- <li (click)="toggleSidebarTab()" class="nav-item"
+    *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active" [routerLink]="routers.ScholarShip"
+      style="cursor: pointer;">
+      <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+      <span>Scholarship Management</span></a>
+  </li> -->
+
+
+  <!-- <li class="nav-item animated fadeInDown"
+    *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['State Nodal Officer'] || roleId === sharedservice.role['University']">
+    <a class="nav-link collapsed " (click)="toggleReportAccordianF()" data-toggle="collapse"
+      aria-controls="collapseTwoF">
+      <i class="fa fa-tasks" aria-hidden="true"></i>
+      <span style="color: ghostwhite;">Foreign Institution Management</span>
+    </a>
+    <div id="collapseTwoF" class="collapse m-0 reportF" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
+      style="background: rgb(4, 107, 169)">
+      <div class="m-0 p-0 collapse-inner">
+        <a class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.ForeignIns">
+          Add Foreign Institution</a>
+        <a *ngIf="roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['Ministry of Education']"
+          class="collapse-item m-0 rounded-0" style="cursor: pointer;" [routerLink]="routers.ForeignInsApprove">Approve
+          Foreign Institution</a>
+      </div>
+    </div>
+  </li> -->
+
+  <!-- <li class="nav-item"
+    *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['State Nodal Officer'] || roleId === sharedservice.role['University']"
+    (click)="toggleSidebarTab()">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active" [routerLink]="routers.ForeignIns"
+      style="cursor: pointer;">
+      <i class="{{sharedservice['menuList']['3'].icon}}"></i>
+      <span>Foreign Institution Management</span></a>
+  </li> -->
+
+  <!-- <li class="nav-item"
+    *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']"
+    (click)="toggleSidebarTab()">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active" [routerLink]="routers.ENROLMENTESTIMATION"
+      style="cursor: pointer;">
+      <mat-icon>assignment</mat-icon>
+      <span>Enrolment Estimation</span></a>
+  </li> -->
+
+
+
+
+  <!-- <li class="nav-item" *ngIf="roleId === sharedservice.role['SysAdmin']">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active" [routerLink]="routers.MoEMang"
+      (click)="toggleSidebarTab()" style="cursor: pointer;">
+      <i class="{{sharedservice['menuList']['4'].icon}}"></i>
+      <span>MoE Management</span></a>
+  </li> -->
+
+  <!-- <li class="nav-item"
+    *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active" [routerLink]="routers.registration"
+      (click)="toggleSidebarTab()" style="cursor: pointer;">
+      <i class="{{sharedservice['menuList']['25'].icon}}"></i>
+      <span>{{sharedservice['menuList']['25'].name}}</span></a>
+  </li>
+
+  <li class="nav-item"
+    *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active" [routerLink]="routers.universalSearch"
+      (click)="toggleSidebarTab()" style="cursor: pointer;">
+      <mat-icon>search</mat-icon>
+      <span>Universal Search</span></a>
+  </li> -->
+  <!-- <li class="nav-item"
+    *ngIf="roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin'] || roleId === sharedservice.role['State Nodal Officer'] ">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active" [routerLink]="routers.emailManagement"
+      (click)="toggleSidebarTab()" style="cursor: pointer;">
+      <mat-icon> email</mat-icon>
+      <span>Email Management</span></a>
+  </li> -->
+
+
+
+
+  <!-- <li class="nav-item">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active"
+      (click)="toggleSidebarTab()" style="cursor: pointer;">
+      <i class="{{sharedservice['menuList']['22'].icon}}"></i>
+      <span>{{sharedservice['menuList']['22'].name}}</span></a>
+  </li> -->
+  <!-- <li class="nav-item " *ngIf="roleId === sharedservice.role['SysAdmin']">
+    <a class="nav-link" [routerLink]="routers.documentManagement" aria-expanded="true" routerLinkActive="active">
+      <mat-icon>description</mat-icon>
+      <span>Document Management</span>
+    </a>
+  </li>
+  <li class="nav-item " *ngIf="roleId === sharedservice.role['State Nodal Officer'] || roleId === sharedservice.role['Ministry of Education'] || roleId === sharedservice.role['SysAdmin']">
+    <a class="nav-link" [routerLink]="routers.detailUnitCell" aria-expanded="true" routerLinkActive="active">
+      <mat-icon>description</mat-icon>
+      <span>Details of AISHE Unit Cell</span>
+    </a>
+  </li> -->
+  <!-- <li class="nav-item " *ngIf="roleId === sharedservice.role['SysAdmin']">
+    <a class="nav-link" [routerLink]="routers.DataSharingRequest" aria-expanded="true" routerLinkActive="active">
+      <mat-icon>trending_up</mat-icon>
+      <span>Data Sharing Request</span>
+    </a>
+  </li> -->
+  <!-- <li class="nav-item" *ngIf="roleId === sharedservice.role['SysAdmin']">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active" [routerLink]="routers.geo"
+      (click)="toggleSidebarTab()" style="cursor: pointer;">
+      <mat-icon> location_on</mat-icon>
+      <span>Geo Location Verify</span></a>
+  </li> -->
+
+
+  <li class="nav-item">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active" (click)="changePassword()"
+      (click)="toggleSidebarTab()" style="cursor: pointer;">
+      <mat-icon>lock_open</mat-icon>
+      <span>{{sharedservice['menuList']['5'].name}}</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" aria-expanded="true" routerLinkActive="active" (click)="logout()" (click)="toggleSidebarTab()"
+      style="cursor: pointer;">
+      <i class="{{sharedservice['menuList']['23'].icon}}"></i>
+      <span>{{sharedservice['menuList']['23'].name}}</span></a>
+  </li>
+</ul>

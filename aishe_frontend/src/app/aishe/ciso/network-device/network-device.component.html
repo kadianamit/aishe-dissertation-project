@@ -1,0 +1,22 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+      <div class="form-row mr-0 ml-0">
+        <div class="col-md-12 mt-0 badges p-2 mt-3">
+          <div class="float-left">
+            <span class="font-weight-bold text-lg">Network Details</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <mat-tab-group animationDuration="0ms" class="exam-tabing-steps" [(selectedIndex)]="selectedIndex" (selectedTabChange)="tabSelected($event)">
+        <mat-tab label="Switch and Network Details">
+            <app-switch *ngIf="selectedIndex === 0"></app-switch>
+        </mat-tab>
+        <mat-tab label="Server Details">
+            <app-server *ngIf="selectedIndex === 1"></app-server>
+        </mat-tab>
+        <mat-tab label="System Details">
+            <app-system *ngIf="selectedIndex === 2"></app-system>
+        </mat-tab>
+    </mat-tab-group>

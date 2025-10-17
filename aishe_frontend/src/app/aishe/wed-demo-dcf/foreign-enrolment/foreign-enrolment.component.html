@@ -1,0 +1,207 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <h2 class="custom-header header-top">Common Data For One Nation One Data</h2>
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg font1">Foreign-Students-Enrolment</span>
+                </div>
+                <div class="float-right" *ngIf="instituteName">
+                  <span class="font-weight-bold text-lg font1">{{instituteName}} ({{aisheCode}})</span>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    
+  
+    <div class="animated fadeInDown card mb-2 pt-2 pb-1 bg-light overflow-hidden">
+        
+          <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-2 pt-4">
+              <label>Show</label>&nbsp;
+              <select [(ngModel)]="pageSizeF" (ngModelChange)="onChange($event)">
+                <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+              </select>
+              entries
+            </div>
+            
+           
+           
+           
+             <div class="col-md-4">
+            
+            </div> 
+            <div class="col-md-6 pt-4">
+              <label>Search:</label>&nbsp;
+              <input type="text" size="30" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+                [(ngModel)]="searchText">
+            </div>
+      
+      
+          </div>
+          <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-2">
+              <mat-form-field class="d-block">
+                <mat-label>Mode</mat-label>
+                <mat-select [(ngModel)]="modeId" (selectionChange)="getBoolean()">
+                  <mat-option *ngFor="let item of modeList;" [value]="item.id">{{item.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="d-block">
+                <mat-label>Faculty/School:</mat-label>
+                <mat-select (selectionChange)="allFilter($event)" [(ngModel)]="facultyName"
+                  [ngModelOptions]="{standalone: true}" placeholder="Faculty/School">
+                  <mat-select-filter [array]="variables4" [displayMember]="'facultyName'"
+                    (filteredReturn)="filterFacultyList = $event"></mat-select-filter>
+                  <mat-option *ngFor="let x of filterFacultyList" [value]=x.facultyName>
+                    {{x.facultyName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+      
+            <div class="col-md-3">
+              <mat-form-field class="d-block">
+                <mat-label>Department/Centre:</mat-label>
+                <mat-select (selectionChange)="allFilter($event)" [(ngModel)]="departmentName"
+                  [ngModelOptions]="{standalone: true}" placeholder="Department/Centre">
+                  <mat-select-filter [array]="variables5" [displayMember]="'departmentName'"
+                    (filteredReturn)="filterDepartmentList = $event"></mat-select-filter>
+                  <mat-option *ngFor="let x of filterDepartmentList" [value]=x.departmentName>
+                    {{x.departmentName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="d-block">
+                <mat-label>Level:</mat-label>
+                <mat-select (selectionChange)="allFilter($event.value)" [(ngModel)]="dropdownLevel"
+                  [ngModelOptions]="{standalone: true}" placeholder="Level">
+                  <mat-select-filter [array]="variables10" [displayMember]="'levelName'"
+                    (filteredReturn)="levelFilter = $event"></mat-select-filter>
+                  <mat-option *ngFor="let x of levelFilter" [value]=x.levelName>
+                    {{x.levelName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="d-block">
+                <mat-label>Programe:</mat-label>
+                <mat-select (selectionChange)="allFilter($event.value)" [(ngModel)]="dropdownProgramName"
+                  [ngModelOptions]="{standalone: true}" placeholder="Programe">
+                  <mat-select-filter [array]="variables7" [displayMember]="'programme'"
+                  (filteredReturn)="natureAppointmentListFilter = $event"></mat-select-filter>
+                  <mat-option *ngFor="let x of natureAppointmentListFilter" [value]=x.programme>
+                    {{x.programme}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="d-block">
+                <mat-label>Broad Discipline Group Category:</mat-label>
+                <mat-select (selectionChange)="allFilter($event.value)" [(ngModel)]="dropdownBoardCategory"
+                  [ngModelOptions]="{standalone: true}" placeholder="Broad Discipline Group Category">
+                  <mat-select-filter [array]="variables8" [displayMember]="'boardCategory'"
+                  (filteredReturn)="boardCatorgryFilter = $event"></mat-select-filter>
+                  <mat-option *ngFor="let x of boardCatorgryFilter" [value]=x.boardCategory>
+                    {{x.boardCategory}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="d-block">
+                <mat-label>Broad Discipline Group Name:</mat-label>
+                <mat-select (selectionChange)="allFilter($event.value)" [(ngModel)]="dropdownBoardName"
+                  [ngModelOptions]="{standalone: true}" placeholder="Broad Discipline Group Name">
+                  <mat-select-filter [array]="variables9" [displayMember]="'boardName'"
+                  (filteredReturn)="boardNameFilter = $event"></mat-select-filter>
+                  <mat-option *ngFor="let x of boardNameFilter" [value]=x.boardName>
+                    {{x.boardName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+      
+            <div class="col-md-1">
+              <button mat-button class="btn btn-sm btn-primary d-block mt-3" (click)="reload()" matTooltip="Refresh">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+              </button>
+            </div>
+        </div>
+        <div class="col-md-12 table-responsive">
+            <table class="table table-bordered table-sm foreign">
+                <tr>
+                    <th>S No.</th>
+                    <th>Update Status</th>
+                    <th>Country</th>
+                    <th *ngIf="whetherOffCampus && mode === 4">Off Campus Centre</th>
+                    <th *ngIf="showInUniv">Faculty/School</th>
+                    <th *ngIf="showInUniv">Department/Centre</th>
+                    <th>Level</th>
+                    <th>Name of the Programme</th>
+                    <th>Broad Discipline Group Category</th>
+                    <th>Broad Discipline Group Name</th>
+                    <th>Discipline</th>
+                    <th>No. Of Students Enrolled(Total)</th>
+                    <th>Action</th>
+  
+                </tr>
+                <ng-container *ngFor="let data of foreignData | paginate : {
+                                                                                itemsPerPage: pageSize,
+                                                                                currentPage: page
+                                                                                
+                                                                              };
+                                                                        let i = index
+                                                                      ">
+                    <tr>
+                        <td>{{i+StartLimitF+1}}</td>
+                        <td style="width: 0px;"><i class="fas fa-check-circle" aria-hidden="true"
+                                style="color: green;font-size: medium;" *ngIf="data.isUpdated"></i>
+                            <i class="fa fa-times-circle-o" aria-hidden="true" style="color: red;font-size: medium;"
+                                *ngIf="!data.isUpdated"></i>
+                        </td>
+                        <td>{{data.countryName}}</td>
+                        <td *ngIf="whetherOffCampus && mode === 4">{{data.offcampusName}}</td>
+                        <td *ngIf="showInUniv">{{data.facultyName?data.facultyName:'No Faculty'}}</td>
+                        <td *ngIf="showInUniv">{{data.deptName?data.deptName:'No Department'}}</td>
+                        <td>{{data.levelName}}</td>
+                        <td>{{data.programme}}</td>
+                        <td>{{data.disciplineGroupCategory}}</td>
+                        <td>{{data.disciplineGroupDiscipline}}</td>
+                        <td>{{data.discipline}}</td>
+                        <td style="width: 0px;">{{data.total}}</td>
+  
+                        <td class="actionHeader">
+                            
+  
+                            <mat-icon class="view_icon" matTooltip="View" (click)="viewProgram(data)">
+                                remove_red_eye</mat-icon>
+                        </td>
+                    </tr>
+                </ng-container>
+            </table>
+            <p *ngIf="tempRegularProgrammeData.length === 0" style="color: red;">No Records</p>
+        </div>
+        <div class="row col-md-12 overflow-hidden" *ngIf="tempRegularProgrammeData.length !== 0">
+          <div class="col-md-3">
+            Showing {{StartLimitF + 1}} to {{pageDataF === -1?0:pageDataF}} Of {{tempRegularProgrammeData.length}}
+            entries
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+              screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+              screenReaderCurrentLabel="You're on page"></pagination-controls>
+          </div>
+        </div>
+  
+    </div>
+    
+  </div>

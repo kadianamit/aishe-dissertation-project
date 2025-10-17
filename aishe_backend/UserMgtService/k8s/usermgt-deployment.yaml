@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usermgtservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: usermgtservice
+  template:
+    metadata:
+      labels:
+        app: usermgtservice
+    spec:
+      containers:
+        - name: usermgtservice
+          image: usermgtservice:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8995

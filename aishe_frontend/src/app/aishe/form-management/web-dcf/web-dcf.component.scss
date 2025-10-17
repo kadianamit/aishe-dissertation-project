@@ -1,0 +1,16 @@
+.note {
+    font-family: initial;
+    font-size: initial;
+}
+
+.mat-card {
+    width: 24%;
+    margin: inherit;
+}
+// @NP
+@media only screen and (max-width: 941px) {
+    .mat-card {
+        width: 100% !important;
+    }
+}
+

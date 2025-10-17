@@ -1,0 +1,119 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+
+  <div class="form-group">
+    <div class="form-row mr-0 ml-0">
+      <div class="col-md-12 mt-0 badges p-2 mt-3">
+        <div class="float-left">
+          <span class="font-weight-bold text-lg">Request for Shift University</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div><p style="color: red;text-align: justify;">Note: After submitting the request to shift university, please contact your Old University Nodal Officer (UNO) for de-affiliation.
+    Once the de-affiliation process is complete, contact the New University Nodal Officer (UNO) for affiliation with the new university.</p></div>
+  <div class="col-md-12 animated fadeInDown card shadow mb-4 pt-1 pb-2 pr-4 pl-4 bg-light">
+    <form [formGroup]="instiForm" (ngSubmit)="findOnData()">
+      <div class="row m-3 p-4">
+
+        <div class="col-md-3  text-center">
+          <mat-form-field style="width: 100%;">
+            <mat-label>Survey Year</mat-label>
+            <mat-select formControlName="surveyYearValue" required>
+              <mat-option *ngFor="let year of surveyYearList" [value]="year">{{ year }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="instiForm.controls['surveyYearValue'].hasError('required') || instiForm.controls['surveyYearValue'].dirty || instiForm.controls['surveyYearValue'].value || instiForm.controls['surveyYearValue'].touched">
+              Please select Survey Year
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+
+
+        <div class="col-auto col-md-3">
+          <mat-form-field>
+            <mat-label>AISHE CODE</mat-label>
+            <input matInput formControlName="aisheCodeValue" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-auto col-md-3">
+          <mat-form-field>
+            <mat-label>College Name</mat-label>
+            <input matInput formControlName="collegeName" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-auto col-md-3">
+          <mat-form-field>
+            <mat-label>State</mat-label>
+            <input matInput formControlName="stateValue" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-auto col-md-3">
+          <mat-form-field>
+            <mat-label>District Name</mat-label>
+            <input matInput formControlName="districtValue" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-auto col-md-3">
+          <mat-form-field>
+            <input matInput formControlName="reasonName" />
+          </mat-form-field>
+          <!-- <mat-form-field >
+              <mat-label>De-Affiated Reason</mat-label>
+              <mat-select  [disableOptionCentering]="true" #select1
+              formControlName="universityValue" (selectionChange)="instiForm.get('aisheCodeValue')?.setValue('')">
+                <mat-select-filter *ngIf="select1.focused"
+                  [array]="universityList"
+                  (filteredReturn)="filtereduniversityList = $event"
+                  [displayMember]="'name'"
+                ></mat-select-filter>
+                <mat-option [value]="' '">All</mat-option>
+                <mat-option
+                  *ngFor="let university of filtereduniversityList"
+                  [value]="university.id"
+                >
+                  {{ university.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+              *ngIf="instiForm.controls['universityValue'].hasError('required') || instiForm.controls['universityValue'].dirty || instiForm.controls['universityValue'].value || instiForm.controls['universityValue'].touched">
+              Please select University
+            </mat-error>
+            </mat-form-field> -->
+        </div>
+
+        <div class="col-auto col-md-3">
+          <mat-form-field>
+            <mat-label>Old Affiated University Name</mat-label>
+            <input matInput formControlName="oldAffiliatedUniversity" />
+
+          </mat-form-field>
+        </div>
+        <div class="col-auto col-md-3">
+          <mat-form-field>
+            <mat-label>New University Name</mat-label>
+            <mat-select [disableOptionCentering]="true" #select1 formControlName="universityValue">
+              <mat-select-filter *ngIf="select1.focused" [array]="universityList"
+                (filteredReturn)="filtereduniversityList = $event" [displayMember]="'name'"></mat-select-filter>
+              <mat-option *ngFor="let university of filtereduniversityList" [value]="university.id">
+                {{ university.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="instiForm.controls['universityValue'].hasError('required') || instiForm.controls['universityValue'].dirty || instiForm.controls['universityValue'].value || instiForm.controls['universityValue'].touched">
+              Please select University
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 text-center">
+          <button class="btn1 btn btn-sm btn-success" type="submit">Save</button>&nbsp;
+          <button class="btn1 btn btn-sm btn-danger">Reset</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

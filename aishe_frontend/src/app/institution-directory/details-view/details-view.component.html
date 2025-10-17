@@ -1,0 +1,507 @@
+<!--<mat-card class="shadow p-4">
+    <div style="text-align: center;" class="popup-head">
+        <div style=" float: right; color: #ffc107;margin-right: 10px; padding: -8px; font-size: 26px;">
+            <i  (click)="onConfirmClick()" class="fa fa-times-circle" aria-hidden="true"></i>
+        </div>
+        <h3><b>Institution’s Report Card</b></h3>  
+        <h4> <b>Survey Year: 2020-21 </b></h4>
+        
+    </div>
+    
+    <mat-card-content>
+        <table class="table table-striped striped"> 
+            <tr>
+                <td><b>AISHE Code</b></td>
+                <td *ngIf="userData==='isNationalImportance'">U-{{id}}</td>
+                <td *ngIf="userData==='University'">U-{{id}}</td>
+                <td *ngIf="userData==='College'">C-{{id}}</td>
+                <td *ngIf="userData==='Standalone'">S-{{id}}</td>
+            </tr>
+             <tr>
+                <td><b> Name of the Institution</b></td><td>{{name}}</td>
+            </tr>
+            <tr>
+                <td><b>Address</b></td>
+                <td>
+                    {{address1}}
+                </td>
+            </tr>
+            <tr>
+                <td><b>Website</b></td><td>{{website}}</td>
+            </tr>
+            <tr>
+                <td><b>Type of Institution</b> </td><td>{{type}}</td>
+            </tr>
+            <tr>
+                <td><b>Year of Establishment</b> </td><td>{{yearOfEstablishment}}</td>
+            </tr>
+            <tr>
+                <td><b>Location</b></td><td>{{location}}</td>
+            </tr>
+            <tr>
+                <td><b>Specialization</b></td><td>{{specialization}}</td>
+            </tr>
+            <tr *ngIf="userData==='College'">
+                <td>
+                    <b>Affiliated University</b>
+                
+                    </td>
+                    <td *ngIf="userData==='College'&& affiliatingUniversityName && affiliatingUniversityId">
+                        {{affiliatingUniversityName}}, (U-{{affiliatingUniversityId}})</td>
+            </tr>
+            <tr><td></td><td></td></tr>
+            <tr>
+                <td><b> No. of Staff Quarter</b></td>
+                <td>
+                    <tr>
+                        <td><b>Teaching staff</b></td><td><b>Non-Teaching staff</b></td> <td> <b>Total</b></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">{{staffQuarterTeaching}}</td> 
+                        <td style="text-align: center;">{{staffQuarterNonTeaching}}</td>
+                        <td style="text-align: center;">{{staffQuarterTotal}}</td>
+                    </tr>
+                </td>
+            </tr>
+            <tr>
+                <td><b>No. of Student Hostel</b></td>
+                <td>
+                    <tr>
+                        <td><b>No. of Boys Hostel</b></td><td><b>No. of Girls Hostel</b></td> <td> <b>Capacity</b></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">{{hostelBoys}}</td> 
+                        <td style="text-align: center;">{{hostelGirls}}</td>
+                        <td style="text-align: center;">{{hostelCapacity}}</td>
+                    </tr> 
+                </td>
+            </tr>
+            <tr>
+                <td><b>No. of Faculty/School of Studies</b></td><td>{{faculty}}</td>
+            </tr>
+            <tr>
+                <td><b>No. of Department</b></td><td>{{department}}</td>
+            </tr>
+            <tr>
+                <td><b>No. of Programmes</b> </td>
+                <td>
+                    <tr>
+                        <td><b>Regular Mode</b></td><td><b>Distance Mode</b></td><td><b>Private Mode</b></td> <td><b>Total</b></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">{{regularModeProg}}</td> 
+                        <td style="text-align: center;">{{distanceModeProg}}</td>
+                        <td style="text-align: center;">{{privateModeProg}}</td>
+                        <td style="text-align: center;">{{regularModeProg+distanceModeProg+privateModeProg}}</td>
+                    </tr> 
+                </td>
+            </tr>
+            <tr>
+                <td><b>Total Intake Capacity</b> </td><td>{{intake}}</td>
+            </tr>
+
+
+            <tr>
+                <td><b>No. of Enrolment</b> </td>
+                <td>
+                    <tr>
+                        <td><b>Regular Mode</b></td><td><b>Distance Mode</b></td><td><b>Private Mode</b></td> <td><b>Total</b></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">{{enrollmentRegular}}</td> 
+                        <td style="text-align: center;">{{enrollmentDistance}}</td>
+                        <td style="text-align: center;">{{enrollmentPrivate}}</td>
+                        <td style="text-align: center;">{{enrollmentRegular+enrollmentDistance+enrollmentPrivate}}</td>
+                    </tr>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Foreign Enrolment</b>  </td>
+                <td>
+                    <tr>
+                        <td><b>Male</b></td><td><b>Female</b></td> <td><b>Total</b></td>
+                    </tr>
+                    <tr  style="background-color: #f2f2f221;">
+                        <td style="text-align: center;">{{maleForeign}}</td>
+                         <td style="text-align: center;">{{femaleForeign}}</td>
+                        <td style="text-align: center;">{{maleForeign+femaleForeign}}</td>
+                    </tr> 
+                </td>
+            </tr>
+            <tr>
+                <td><b>Teaching Information</b> </td>
+                <td>
+                    <tr>
+                        <td><b>Sanctioned Strength</b></td><td><b>In-Position</b></td><td></td> 
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">{{teachingStaffSanctionedStrength}}</td> 
+                        <td style="text-align: center;">{{teachingStaffInPosition}}</td>
+                        <td></td>
+                    </tr>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Non-Teaching Information </b> </td>
+                <td>
+                    <tr>
+                        <td><b>Sanctioned Strength</b></td><td><b>In-Position</b></td><td></td> 
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">{{nonTeachingStaffSanctioned}}</td>
+                         <td style="text-align: center;">{{nonTeachingStaffInPosition}}</td>
+                        <td></td>
+                    </tr>
+                </td>
+            </tr>
+            <tr>
+                <td><b>No. of Placement</b> </td>
+                <td>
+                    <tr>
+                        <td><b>Male</b></td>
+                        <td><b>Female</b></td>
+                        <td><b>Total</b></td> 
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">{{placedMale}}</td>
+                         <td style="text-align: center;">{{placedFemale}}</td>
+                        <td style="text-align: center;">{{placedMale+placedFemale}}</td>
+                    </tr>
+                </td>
+            </tr>
+           
+          
+                    
+                <tr>
+                    <td><b>Infrastructure details</b> </td>
+                <td >
+                   
+                 
+                    <tr>
+                        
+                        <td><b>Facilities</b></td>
+                        <td><b>Availability</b></td>
+                        <td><b>Numbers</b></td> 
+                        
+                    </tr>
+                    
+                    <tr>
+                       
+                        <td>Playground</td>
+                         <td style="text-align: center;">{{universityList.playground === 'true'? 'YES':'NO'}}</td>
+                        <td style="text-align: center;">{{universityList.playgroundNumber}}</td>
+                    </tr>
+                    <tr>
+                       
+                        <td>Library</td>
+                         <td style="text-align: center;">{{universityList.Library === 'true'? 'YES':'NO'}}</td>
+                        <td style="text-align: center;">{{universityList.LibraryNumber}}</td>
+                    </tr>
+                    <tr>
+                        
+                        <td>Classrooms and Seminar Halls</td>
+                         <td style="text-align: center;"></td>
+                        <td style="text-align: center;">{{universityList.playgroundNumber}}</td>
+                    </tr>
+                    <tr>
+                       
+                        <td>Health Center</td>
+                         <td style="text-align: center;">{{universityList.healthCenter === 'true'? 'YES':'NO'}}</td>
+                        <td style="text-align: center;">{{universityList.healthCenterNumber}}</td>
+                    </tr>
+                    <tr>
+                       
+                        <td>Gymnasium/ Fitness Center</td>
+                         <td style="text-align: center;">{{universityList.gymnasium === 'true'? 'YES':'NO'}}</td>
+                        <td style="text-align: center;">{{universityList.gymnasiumNumber}}</td>
+                    </tr>
+                    <tr>
+                       
+                        <td>Computer Center</td>
+                         <td style="text-align: center;">{{universityList.computerCenter === 'true'? 'YES':'NO'}}</td>
+                        <td style="text-align: center;">{{universityList.computerCenterNumber}}</td>
+                    </tr>
+                    <tr>
+                      
+                        <td>Guest House</td>
+                         <td style="text-align: center;">{{universityList.guestHouse === 'true'? 'YES':'NO'}}</td>
+                        <td style="text-align: center;">{{universityList.guestHouseNumber}}</td>
+                    </tr>
+                    <tr>
+                      
+                        <td>Computers for Academic Work</td>
+                         <td style="text-align: center;"></td>
+                        <td style="text-align: center;">{{universityList.computersforAcademicWorkNumber}}</td>
+                    </tr>
+                    <tr>
+                      
+                        <td>Differently abled friendly Campus</td>
+                         <td style="text-align: center;">{{universityList.playground === 'true'? 'YES':'NO'}}</td>
+                        <td style="text-align: center;"></td>
+                    </tr>
+                    <tr>
+                      
+                        <td>Toilet for disabled Males</td>
+                         <td style="text-align: center;"></td>
+                        <td style="text-align: center;">{{universityList.toiletfordisabledMalesNumber}}</td>
+                    </tr>
+                    <tr>
+                       
+                        <td>Toilet for disabled FeMales</td>
+                         <td style="text-align: center;"></td>
+                        <td style="text-align: center;">{{universityList.toiletfordisabledFemalesNumber}}</td>
+                    </tr>
+                 
+                </td>
+            </tr>
+
+        </table>
+    </mat-card-content>
+</mat-card>-->
+<!-- Main Cotents -->
+<div class="container py-4" >
+    <div style="text-align: center;" class="popup-head">
+        <div style=" float: right; color: #ffc107;margin-right: 10px; padding: -8px; font-size: 26px;">
+            <i  (click)="onConfirmClick()" class="fa fa-times-circle" aria-hidden="true"></i>
+        </div>
+        <h3><b>Institution’s Report Card</b></h3>  
+        <h4> <b>Survey Year: 2020-21 </b></h4>
+        
+    </div>
+    <div class="card p-3" style="margin: 1% 0%;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table table-bordered rport">
+          <tr>
+            <th width="27%">AISHE Code</th>
+            <!-- <td colspan="4">U-0976</td> -->
+            <td colspan="4" *ngIf="userData==='isNationalImportance'">U-{{id}}</td>
+                <td colspan="4" *ngIf="userData==='University'">U-{{id}}</td>
+                <td colspan="4" *ngIf="userData==='College'">C-{{id}}</td>
+                <td colspan="4" *ngIf="userData==='Standalone'">S-{{id}}</td>
+          </tr>
+          <tr>
+            <th>Name of the Institution</th>
+            <td colspan="4">{{name}}</td>
+          </tr>
+          <tr>
+            <th>Address</th>
+            <td colspan="4">{{address1}}</td>
+          </tr>
+          <tr>
+            <th>Website</th>
+            <td colspan="4"><a href="{{website}}" title="{{website}}" target="_blank">{{website}}</a></td>
+          </tr>
+          <tr>
+            <th>Type of Institution</th>
+            <td colspan="4">{{type}}</td>
+          </tr>
+          <tr>
+            <th>Year of Establishment</th>
+            <td colspan="4">{{yearOfEstablishment}}</td>
+          </tr>
+          <tr>
+            <th>Location</th>
+            <td colspan="4">{{location}}</td>
+          </tr>
+          <tr>
+            <th>Specialization</th>
+            <td colspan="4">{{specialization}}</td>
+          </tr>
+          <tr *ngIf="userData==='College'">
+            <td>
+                <b>Affiliated University</b>
+            
+                </td>
+                <td  colspan="4" *ngIf="userData==='College'&& affiliatingUniversityName && affiliatingUniversityId">
+                    {{affiliatingUniversityName}}, (U-{{affiliatingUniversityId}})</td>
+        </tr>
+          <tr>
+            <th>No. of Staff Quarter</th>
+            <th width="18%">Teaching Staff</th>
+            <th width="18%">Non-Teaching Staff</th>
+            <th colspan="2">Total</th>
+          </tr>
+          <tr>
+
+            <td>&nbsp;</td>
+            <td>{{staffQuarterTeaching}}</td> 
+          <td>{{staffQuarterNonTeaching}}</td>
+            <td colspan="2">{{staffQuarterTotal}}</td>
+
+          </tr>
+          <tr>
+            <th>No. of Student Hostel</th>
+            <th>No. of Boys Hostel</th>
+            <th>No. of Girls Hostel</th>
+            <th colspan="2">Capacity</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>{{hostelBoys}}</td>
+            <td>{{hostelGirls}}</td>
+            <td colspan="2">{{hostelCapacity}}</td>
+          </tr>
+          <tr>
+            <th>No. of Faculty/School of Studies</th>
+            <td colspan="4">{{faculty}}</td>
+          </tr>
+          <tr>
+            <th>No. of Department</th>
+            <td colspan="4">{{department}}</td>
+          </tr>
+          <tr>
+            <th>No. of Programmes</th>
+            <th>Regular Mode</th>
+            <th>Distance Mode</th>
+            <th width="18%">Private Mode</th>
+            <th>Total</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>{{regularModeProg}}</td>
+            <td>{{distanceModeProg}}</td>
+            <td>{{privateModeProg}}</td>
+            <td>{{regularModeProg+distanceModeProg+privateModeProg}}</td>
+          </tr>
+          <tr>
+            <th>Total Intake Capacity</th>
+            <td colspan="4">{{intake}}</td>
+          </tr>
+          <tr>
+            <th>No. of Enrolment</th>
+            <th>Regular Mode</th>
+            <th>Distance Mode</th>
+            <th>Private Mode</th>
+            <th>Total</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>{{enrollmentRegular}}</td>
+            <td>{{enrollmentDistance}}</td>
+            <td>{{enrollmentPrivate}}</td>
+            <td>{{enrollmentRegular+enrollmentDistance+enrollmentPrivate}}</td>
+          </tr>
+          <tr>
+            <th>Foreign Enrolment</th>
+            <th>Male</th>
+            <th>Female</th>
+            <th colspan="2">Total</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>{{maleForeign}}</td>
+            <td>{{femaleForeign}}</td>
+            <td colspan="2">{{maleForeign+femaleForeign}}</td>
+          </tr>
+          <tr>
+            <th>Teaching Information</th>
+            <th>Sanctioned Strength</th>
+            <th colspan="3">In-Position</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>{{teachingStaffSanctionedStrength}}</td>
+            <td colspan="3">{{teachingStaffInPosition}}</td>
+          </tr>
+          <tr>
+            <th>Non-Teaching Information</th>
+            <th>Sanctioned Strength</th>
+            <th colspan="3">In-Position</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>{{nonTeachingStaffSanctioned}}</td>
+            <td colspan="3">{{nonTeachingStaffInPosition}}</td>
+          </tr>
+          <tr>
+            <th>No. of Placement</th>
+            <th>Male</th>
+            <th>Female</th>
+            <th colspan="2">Total</th>
+          </tr>
+          <tr>
+            <td></td>
+            <td>{{placedMale}}</td>
+            <td>{{placedFemale}}</td>
+            <td colspan="2">{{totalPlaced}}</td>
+          </tr>
+          <tr>
+            <th>Infrastructure details</th>
+            <th>Facilities</th>
+            <th>Availability</th>
+            <th colspan="2">Numbers</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Playground</td>
+            <td>{{universityList.playground === 'true'? 'YES':'NO'}}</td>
+           <td colspan="2">{{universityList.playgroundNumber}}</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Library</td>
+            <td>{{universityList.library === 'true'? 'YES':'NO'}}</td>
+             <td colspan="2">{{universityList.libraryNumber}}</td>
+        
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Classrooms and Seminar Halls</td>
+            <td>&nbsp;</td>
+            <td colspan="2">{{universityList.classroomsAndSeminarHallsNumber}}</td>
+        
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Health Center</td>
+            <td>{{universityList.healthCenter === 'true'? 'YES':'NO'}}</td>
+            <td colspan="2">{{universityList.healthCenterNumber}}</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Gymnasium/ Fitness Center</td>
+            <td >{{universityList.gymnasium === 'true'? 'YES':'NO'}}</td>
+            <td colspan="2">{{universityList.gymnasiumNumber}}</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Computer Center</td>
+            <td>{{universityList.computerCenter === 'true'? 'YES':'NO'}}</td>
+            <td colspan="2">{{universityList.computerCenterNumber}}</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Guest House</td>
+            <td>{{universityList.guestHouse === 'true'? 'YES':'NO'}}</td>
+            <td colspan="2">{{universityList.guestHouseNumber}}</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Computers for Academic Work</td>
+            <td>&nbsp;</td>
+          
+            <td colspan="2">{{universityList.computersforAcademicWorkNumber}}</td>
+        </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Differently abled friendly Campus</td>
+            <td>{{universityList.playground === 'true'? 'YES':'NO'}}</td>
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Toilet for disabled Males</td>
+            <td>&nbsp;</td>
+            <td colspan="2">{{universityList.toiletfordisabledMalesNumber}}</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Toilet for disabled Females</td>
+            <td></td>
+            <td colspan="2">{{universityList.toiletfordisabledFemalesNumber}}</td>
+          </tr>
+        </table>
+    </div>
+    
+    
+</div>
+<!-- /Main Cotents -->

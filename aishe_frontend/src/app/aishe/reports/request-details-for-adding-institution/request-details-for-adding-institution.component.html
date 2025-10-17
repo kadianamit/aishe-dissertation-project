@@ -1,0 +1,195 @@
+<a mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon>close</mat-icon>
+</a>
+<mat-card class="matCard">
+
+  <mat-card-content class="mt-4">
+    <form [formGroup]="reportFilterForm">
+      <div class="table-responsive-sm">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-10 table-responsive-sm">
+              <table class="table table-borderless">
+                <tr class="row">
+                  <!-- <td class="col-sm-3">
+                    <mat-form-field class="full-width-field">
+                      <mat-select
+                        placeholder="Select Year:"
+                        formControlName="surveyYear">
+                        <mat-select-filter
+                          [placeholder]="'Filter'"
+                          [displayMember]="'surveyYearValue'"
+                          [array]="surveyYearOption"
+                          (filteredReturn)="filterSurveyYearOption = $event"
+                        ></mat-select-filter>
+                        <mat-option
+                          *ngFor="let item of filterSurveyYearOption"
+                          [value]="item.surveyYear"
+                        >
+                          {{ item.surveyYearValue }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="submitted && f['surveyYear'].invalid"
+                        >Survey Year is required</mat-error
+                      >
+                    </mat-form-field>
+                  </td> -->
+                  <td class="col-sm-3">
+                    <mat-form-field class="full-width-field">
+                      <mat-select placeholder="State:" formControlName="addressStateCode">
+                        <mat-select-filter [placeholder]="'Filter'" [displayMember]="'stateName'"
+                          [array]="filterStatesOption" (filteredReturn)="filterdStates = $event"></mat-select-filter>
+                        <mat-option *ngFor="let item of filterdStates" [value]="item">
+                          {{ item.stateName }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="submitted && f['addressStateCode'].invalid">State is required</mat-error>
+                    </mat-form-field>
+                  </td>
+
+                  <td>
+                    <mat-form-field>
+                      <input matInput [matDatepicker]="dp" formControlName="datePickerStart"
+                        (dateChange)="onDateChange($event)" placeholder="Choose Start Date" [max]="tomorrow">
+                      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                      <mat-datepicker #dp></mat-datepicker>
+                      <mat-error *ngIf="submitted && f['datePickerStart'].invalid">Please Choose Date</mat-error>
+                    </mat-form-field>
+
+                  </td>
+                  <td class="col-sm-3">
+                    <mat-form-field>
+                      <input formControlName="datePickerEnd" matInput [matDatepicker]="datePickerEnd"
+                        (dateChange)="onDateChange($event)" [max]="maxDate" placeholder="Choose End Date">
+                      <mat-datepicker-toggle matSuffix [for]="datePickerEnd"></mat-datepicker-toggle>
+                      <mat-datepicker #datePickerEnd></mat-datepicker>
+                      <mat-error *ngIf="submitted && f['datePickerEnd'].invalid">Please Choose Date</mat-error>
+                    </mat-form-field>
+                  </td>
+                  <td class="col-sm-3">
+                    <mat-form-field class="full-width-field">
+                      <mat-select placeholder="Status:" formControlName="status">
+                        <mat-option value="ALL">
+                          ALL
+                        </mat-option>
+                        <mat-option value="1">
+                          Approved
+                        </mat-option>
+                        <mat-option value="2">
+                          Rejected
+                        </mat-option>
+                        <mat-option value="4">
+                          Pending
+                        </mat-option>
+
+                      </mat-select>
+                      <mat-error *ngIf="submitted && f['status'].invalid">Please Select Status</mat-error>
+                    </mat-form-field>
+                  </td>
+                  <td class="col-md-3" *ngIf=" reportInfoObj.reportNumber == 'Report 148'">
+                    <mat-form-field class="full-width-field" readonly="true">
+                      <mat-label>Select Institution:</mat-label>
+                      <input matInput disabled="" [readonly]="true" type="text" value="COLLEGE" />
+
+                    </mat-form-field>
+                  </td>
+                  <td class="col-md-3" *ngIf=" reportInfoObj.reportNumber == 'Report 149'">
+                    <mat-form-field class="full-width-field" readonly="true">
+                      <mat-label>Select Institution:</mat-label>
+                      <input matInput disabled="" [readonly]="true" type="text" value="STAND-ALONE" />
+
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </table>
+
+            </div>
+
+            <div class="col-sm-3 table-responsive-sm">
+              <table class="table table-borderless d-flex justify-content-end">
+                <tr class="row">
+                  <td>
+                    <div class="d-flex justify-content-end">
+                      <mat-card-actions>
+                        <button mat-raised-button color="primary" type="submit" (click)="submit()">
+                          Show
+                        </button>
+                        <span></span>
+                        <button mat-raised-button color="secondary" (click)="onReset()">
+                          Reset
+                        </button>
+                      </mat-card-actions>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="mat-elevation-z8 table-responsive-sm" style="height: 100%; width: 100%">
+      <table class="table table-bordered reportTableData">
+        <thead>
+          <tr>
+            <th colspan="2" class="table-primary">
+              <div class="d-flex justify-content-between">
+                <h4 class="text-center">
+                  {{ reportInfoObj.reportTitle.replace("Report", "") }} -
+                  {{ reportInfoObj.reportNumber }}
+                </h4>
+                <div class="justify-content-end" *ngIf="child?.showPdfButton">
+                  <a mat-button>
+                    <i class="material-icons">print</i>
+                  </a>
+                  <a mat-button (click)="child?.generatePDF()">
+                    <!-- <mat-icon style="color: red;">picture_as_pdf</mat-icon> -->
+                    <i class="fa fa-file-pdf-o" matTooltip="Download as Pdf" matTooltipPosition="above"
+                      matTooltipClass="blackTooltip" style="font-size: 24px"></i>
+                    <mat-icon style="color: red">
+                      vertical_align_bottom
+                    </mat-icon>
+                  </a>
+                  <a mat-button (click)="child?.exportAsXLSX()">
+                    <i class="fa fa-file-excel-o" matTooltip="Download as Excel" matTooltipPosition="above"
+                      matTooltipClass="blackTooltip" style="font-size: 24px"></i>
+                    <mat-icon style="color: green">
+                      vertical_align_bottom
+                    </mat-icon>
+                  </a>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <section [id]="reportInfoObj.reportNumber">
+
+      <table style="width: 100%;" class="d-none">
+        <tr>
+          <td [colSpan]="child?.tableColumns?.length">
+            {{ reportInfoObj.reportTitle.replace('Report', '') }} -
+            {{ reportInfoObj.reportNumber }}
+          </td>
+        </tr>
+        <tr *ngFor="let item of fieldsData">
+          <td colspan="1">{{item.label1}}</td>
+          <td colspan="1">{{item.value1}}</td>
+          <td colspan="2"></td>
+          <td colspan="1" style="text-align: right;">{{item.label2}}</td>
+          <td colspan="1">{{item.value2}}</td>
+
+        </tr>
+      </table>
+      <app-report148 #child [reportInfoObj]="reportInfoObj" [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber === 'Report 148'"></app-report148>
+
+      <app-report149 #child [reportInfoObj]="reportInfoObj" [reportFilterForm]="reportFilterForm"
+        *ngIf="reportInfoObj.reportNumber === 'Report 149'"></app-report149>
+
+    </section>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,272 @@
+
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="container-fluid reg-page-bg pl-4 pr-4" *ngIf="showTable">
+
+        <div class="row table-responsive-sm">
+          <div class="col-auto mr-auto" >
+            <label>Show &nbsp;</label>
+            <select (ngModelChange)="onChange($event)" [(ngModel)]="pageSize">
+              <option *ngFor="let data of tableSize" [value]="data">{{data}}</option>
+            </select>
+            entries
+          </div>
+          <div class="col-auto">
+            <label>Search:&nbsp;</label>
+            <input id='myInput' type='text' [(ngModel)]="searchText" >
+          </div>
+        </div>
+
+
+      <div class="table-responsive">
+        <table class="table text-left">
+          <thead>
+            <tr >
+              <th>AISHE Code </th>
+              <th>Institute Name</th>
+              <th>Standalone Type</th>
+              <th>State</th>
+              <th>District</th>
+              <th>Action</th>
+
+            </tr>
+          </thead>
+          <tbody id="myTable">
+            <tr *ngFor="let data of showDataTable | searchFilter: searchText  | paginate
+            : {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+              }; let i=index">
+
+              <td>S-{{data?.aishecode}}</td>
+              <td> {{ data?.name}}</td>
+              <td> {{ data?.bodyType}}</td>
+              <td> {{ data?.statename}}</td>
+              <td> {{ data?.districtname}}</td>
+              
+              <td (click)="clgUpgrade(data)"><i matTooltip="Upgrade" class="fa fa-level-up upgrade" aria-hidden="true"></i></td>
+
+
+            </tr>
+          </tbody>
+
+        </table>
+        <div class="col-md-3">
+          Showing {{StartLimit + 1}} to {{pageData}} Of {{showDataTable?.length}} entries
+        </div>
+        <div class="d-flex justify-content-center" >
+          <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)">
+          </pagination-controls>
+
+        </div>
+        <!-- <div class="d-flex justify-content-center" >
+          <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+          </pagination-controls>
+
+        </div> -->
+      </div>
+      </div>
+
+      <div class="container-fluid reg-page-bg pl-4 pr-4" *ngIf="isUpgradetoUniversity" style="margin-top: 5%;">
+        <mat-card>
+          <div class="row">
+
+            <div class="col-8 d-flex justify-content-between align-items-center">
+              <h1 class="insthead position-relative mb-md-4"><span> Upgrade to University</span></h1>
+
+
+            </div>
+
+            <div class="col-4 d-flex justify-content-end mt-2 ml-auto">
+              <a (click)="backClicked()" matTooltip="Back" style="cursor: pointer;" class="text-uppercase"><img src="assets/img/table-back.svg"
+                class="table-back me-2" />
+                Back
+              </a>
+            </div>
+          </div>
+          <div class="row" style="border-bottom: 2px solid #d4c8c8;">
+            <!-- <div class="col-1">
+              <label class="form-label editLabel">Survey Year</label>
+              <p style="width: max-content;">{{headerData.}}</p>
+            </div> -->
+            <div class="col-1">
+              <label class="form-label editLabel">AISHE Code</label>
+              <p>S-{{headerData.aishecode}}</p>
+            </div>
+            <div class="col-2">
+              <label class="form-label editLabel"> Institution Name</label>
+              <p>{{headerData.name}}</p>
+            </div>
+            <div class="col-2">
+              <label for="" class="form-label editLabel">Standalone Type</label>
+              <p>{{headerData.bodyType}}</p>
+            </div>
+
+
+            <div class="col-2">
+              <label class="form-label editLabel">State</label>
+              <p>{{headerData.statename}}</p>
+            </div>
+            <div class="col-2">
+              <label class="form-label editLabel">District</label>
+              <p>{{headerData.districtname}}</p>
+            </div>
+          </div>
+          <mat-card-content>
+
+            <form [formGroup]="form" (ngSubmit)="submit()" >
+
+              <div class="animated fadeIn">
+
+                <div class="row" style="margin-top: 2%;">
+                  <div class="col-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Survey Year</mat-label>
+                      <mat-select   formControlName="surveyYearValue" (selectionChange)="getState()">
+                        <mat-option *ngFor="let year of surveyYearList" [value]="year">{{year}}</mat-option>
+
+
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-error *ngIf="(form.controls['surveyYearValue'].hasError('required')&& submitted)">It is required field</mat-error>
+                  </div>
+
+                  <div class="col-3">
+
+                    <mat-form-field appearance="fill">
+                      <mat-label>University State</mat-label>
+                      <mat-select [disableOptionCentering]="true" #select1 placeholder="University State"   formControlName="stateName" (selectionChange)="getdistrictName()"  [ngClass]="{ 'is-invalid': submitted && f['stateName'].errors }">
+                        <mat-select-filter *ngIf="select1.focused" [array]="userData" (filteredReturn)="filteredState =$event" [displayMember]="'name'"></mat-select-filter>
+                        <mat-option *ngFor="let item of filteredState " [value]="item">
+                          {{item.name}}
+                        </mat-option>
+                      </mat-select>
+
+                    </mat-form-field>
+                    <mat-error *ngIf="(form.controls['stateName'].hasError('required')&& submitted)">It is required field</mat-error>
+                  </div>
+
+                  <div class="col-3">
+                    <mat-form-field appearance="fill">
+                      <mat-select [disableOptionCentering]="true" #select2 placeholder="District"   formControlName="districtName"  [ngClass]="{ 'is-invalid': submitted && f['districtName'].errors }">
+                        <mat-select-filter *ngIf="select2.focused" [array]="dataDistrict" (filteredReturn)="filteredDistrict =$event" [displayMember]="'name'"></mat-select-filter>
+                        <mat-option *ngFor="let item of filteredDistrict" [value]="item">
+                          {{item.name}}
+                        </mat-option>
+                      </mat-select>
+
+                    </mat-form-field>
+                    <mat-error *ngIf="(form.controls['districtName'].hasError('required')&& submitted)">It is required field</mat-error>
+                  </div>
+
+                  <div class="col-3" *ngIf="roleId === '26' || roleId==='1'">
+                    <mat-form-field appearance="fill">
+                      <mat-label>University Type</mat-label>
+                      <mat-select [disableOptionCentering]="true" #select3 formControlName="universityType">
+                        <mat-select-filter *ngIf="select3.focused"
+                          [array]="UniversityList"
+                          (filteredReturn)="filteredUniversityList = $event"
+                          [displayMember]="'name'"
+                        ></mat-select-filter>
+                        <mat-option
+                          *ngFor="let university of filteredUniversityList"
+                          [value]="university"
+                        >
+                          {{ university.type }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-error *ngIf="(form.controls['universityType'].hasError('required')&& submitted)">It is required field</mat-error>
+                  </div>
+
+
+                  <div class="col-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Location</mat-label>
+                      <mat-select  formControlName="location">
+                        <!-- <mat-select-filter *ngIf="select3.focused"
+                          [array]="UniversityList"
+                          (filteredReturn)="filteredUniversityList = $event"
+                          [displayMember]="'name'"
+                        ></mat-select-filter> -->
+                        <mat-option
+                          *ngFor="let data of locationData"
+                          [value]="data.id"
+                        >
+                          {{ data.name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-error *ngIf="(form.controls['location'].hasError('required')&& submitted)">It is required field</mat-error>
+                  </div>
+
+                    <!-- <div class="col-4">
+
+                      <mat-form-field appearance="fill">
+                        <mat-label>College State</mat-label>
+                        <mat-select placeholder="College State"   formControlName="collegeStateName" (ngModelChange)="getdistrictName()"  [ngClass]="{ 'is-invalid': submitted && f['stateName'].errors }">
+                          <mat-select-filter [array]="userData" (filteredReturn)="filteredState =$event" [displayMember]="'name'"></mat-select-filter>
+                          <mat-option *ngFor="let item of filteredState " [value]="item">
+                            {{item.name}}
+                          </mat-option>
+                        </mat-select>
+
+                      </mat-form-field>
+                      <mat-error *ngIf="(form.controls['stateName'].hasError('required')&& submitted)">It is required field</mat-error>
+                    </div>
+     -->
+
+
+
+
+
+                      <div class="col-3">
+                        <mat-form-field class="example-form-field" appearance="fill">
+                          <mat-label>University Name</mat-label>
+                          <input matInput type="text" formControlName="universityName"  [ngClass]="{ 'is-invalid': submitted && f['universityName'].errors }">
+
+                        </mat-form-field>
+                        <mat-error *ngIf="(form.controls['universityName'].hasError('required')&& submitted)">It is required field</mat-error>
+                      </div>
+
+                      <div class="col-6">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Remarks</mat-label>
+                          <textarea matInput formControlName="remarks"  [ngClass]="{ 'is-invalid': submitted || f['remarks'].errors }"></textarea>
+                          <span *ngIf="(( submitted || f['remarks'].touched) && f['remarks'].errors)" >
+                            <span class="validation" *ngIf="f['remarks'].errors['required'] ||f['remarks'].errors['whitespace']  ">Remarks is required</span>
+                            <span class="validation" *ngIf="f['remarks'].errors['maxlength']"  style="color: #d50404;">Maximum length is 2000</span>
+                            <span class="validation" *ngIf="f['remarks'].errors['minlength']"  style="color: #d50404;">Minimum length is 3</span>
+                          </span>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12">
+                        <ng-container>
+                          <mat-checkbox  formControlName="isDCFApplicable" class="checkbox">Is DCF Applicable</mat-checkbox>
+                          <mat-error *ngIf="(form.controls['isDCFApplicable'].hasError('required')&& submitted)">It is required field</mat-error>
+                        </ng-container>
+                      </div>
+                </div>
+              </div>
+
+
+              <!--26 Nov Start-->
+              <div class="d-flex .justify-content-center" style="margin: 2% 0px;">
+                <button id="save"  type="submit" class="btn1 btn btn-success btn-sm">
+                  SAVE
+                </button>&nbsp;
+                <button id="cancel" type="button" (click)="form.reset({});this.form.markAsPristine();
+                this.form.markAsUntouched();
+                this.form.updateValueAndValidity(); submitted = false" (click)="backClicked()" class="btn1 btn btn-danger btn-sm">Cancel</button>
+              </div>
+
+
+            </form>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+    </div>
+
+        <!--ALL Data View-->
+

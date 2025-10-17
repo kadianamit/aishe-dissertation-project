@@ -1,0 +1,21 @@
+.textcenter{
+  text-align: center;
+}
+
+.excel {
+  display: flex;
+  justify-content: flex-end; /* Aligns items to the right */
+  align-items: center; /* Ensures vertical alignment if needed */
+}
+.ta{
+  color: blue !important;
+ // color: #0680fb;
+  text-decoration: underline !important;
+  cursor: pointer;
+
+}
+// .ta {
+//   /* Your desired styles here */
+//   font-weight: bold;
+//   color: blue;
+// }

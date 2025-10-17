@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-mgt-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-mgt-service
+  template:
+    metadata:
+      labels:
+        app: user-mgt-service
+    spec:
+      containers:
+      - name: user-mgt-service
+        image: user-mgt-service:latest
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:postgresql://postgres:5432/aishe_db"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "aishe_user"
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "aishe_password"
+        ports:
+        - containerPort: 8080

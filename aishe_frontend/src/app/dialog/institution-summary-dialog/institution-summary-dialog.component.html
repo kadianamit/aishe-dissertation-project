@@ -1,0 +1,115 @@
+<div class="d-flex flex-row-reverse">
+  <!-- <div>
+    <a mat-icon-button class="close-button" [mat-dialog-close]="true">
+      <mat-icon>close</mat-icon>
+    </a>
+  </div> -->
+
+</div>
+
+
+
+  <h1 class="text-info font-weight-bolder text-center" >Summary Report - HEI {{element.urlData==='ApprovedReject'?'Approved/Reject': 'on Boarding'}}</h1>
+  <h2 class="font-weight-bolder text-center" style="border-bottom: 2px solid black;">{{message}}</h2>
+
+    <div class="row">
+        <div class="col-md-2">
+          <label>Show</label>&nbsp;
+          <select [(ngModel)]="sharedService.pageSize" (ngModelChange)="onChange($event)">
+            <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+          </select>
+          entries
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="d-block">
+            <mat-label>Institute Type</mat-label>
+            <mat-select [(ngModel)]="insTypeId" (selectionChange)="getFilterData($event.value)">
+              <mat-option *ngFor="let obj of instituteTypeList" [value]="obj.id">{{obj.type}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 mt-3">
+            <label>Search:</label>&nbsp;
+            <input type="text" size="40"  (change)="updateResults()" (keyup)="updateResults()"
+            [(ngModel)]="searchText">
+          </div>
+
+
+        <div class="col-md-2 mt-1">
+          <a mat-button (click)="downloadPDF()">
+              <i class="fa fa-file-pdf-o" matTooltip="Download as PDF" matTooltipPosition="above"
+                  matTooltipClass="downloadPDF" style="font-size: 24px;color: red;"></i>
+              <mat-icon style="color: red;">vertical_align_bottom</mat-icon>
+          </a>
+          <a mat-button (click)="exportAsXLSX()">
+              <i class="fa fa-file-excel-o" matTooltip="Download as Excel" matTooltipPosition="above"
+                  matTooltipClass="downloadExcel" style="font-size: 24px;color: green;"></i>
+              <mat-icon style="color: green;">vertical_align_bottom</mat-icon>
+          </a>
+      </div>
+        </div>
+
+       <div class="table-responsive"  style="height: 40em;">
+        <table class="table table-bordered table-sm scrolldown">
+          <thead class="header-fixed">
+            <tr>
+              <th>S.No.</th>
+              <th>Request Id</th>
+              <th *ngIf="element.listType === 'APPROVED'">AISHE Code</th>
+              <th>Institute Name</th>
+              <th>Institution Type</th>
+              <th>State</th>
+              <th *ngIf="element.type === 'COLLEGE'">University Name</th>
+
+          </tr>
+          </thead>
+        <tbody>
+          <ng-container *ngFor="let item of listData | paginate : {
+            itemsPerPage: sharedService.pageSize,
+            currentPage: sharedService.page
+          };
+    let i = index
+    ">
+            <tr>
+             
+                <td>{{i+sharedService.StartLimit+1}}</td>
+                <!-- <td *ngIf="element.listType=='MOE_PENDING' || element.listType=='APPROVING_AUTH_PENDING' || element.listType=='SNO_PENDING' || element.listType=='MOE_PENDING'"><a href="javascript:void(0)"  (click)="viewDetail(item.requestId,this.element.surveyYear,element.listType,i)">{{item.requestId}}</a></td>
+                <td *ngIf="element.listType=='APPROVED' "><a href="javascript:void(0)"  (click)="viewDetail(item.aisheCode,this.element.surveyYear,element.listType,i)">{{item.requestId}}</a></td>
+                <td *ngIf="element.listType=='REJECTED' "><a href="javascript:void(0)"  (click)="viewDetail(item.aisheCode,this.element.surveyYear,element.listType,i)">{{item.requestId}}</a></td> -->
+                <td *ngIf="element.listType=='MOE_PENDING' || element.listType=='APPROVING_AUTH_PENDING' || element.listType=='SNO_PENDING' || element.listType=='MOE_PENDING'"><a href="javascript:void(0)" (click)="viewDetail(item.requestId,element.surveyYear,element.listType,i)">{{item.requestId}}</a></td>
+                <td *ngIf="element.listType=='APPROVED' "><a href="javascript:void(0)" (click)="viewDetail(item.aisheCode,element.surveyYear,element.listType,i)">{{item.requestId}}</a></td>
+                <td *ngIf="element.listType=='REJECTED' "><a href="javascript:void(0)" (click)="viewDetail(item.requestId,element.surveyYear,element.listType,i)">{{item.requestId}}</a></td>
+                <td *ngIf="element.listType=='TOTAL'">{{item.requestId}}</td>
+                <td *ngIf="element.listType === 'APPROVED'">{{item.aisheCode}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.institutionTypeName}}</td>
+                <td>{{item.stateName}}</td>
+                <td *ngIf="element.type === 'COLLEGE'">{{item.universityName}} <br>(U-{{item.universityId}})</td>
+            </tr>
+        </ng-container>
+        </tbody>
+
+      </table>
+      <p *ngIf="listData?.length === 0" class="text-center" style="color: red;">No Record Found</p>
+       </div>
+
+    <div class="row col-md-12 overflow-hidden" *ngIf="listData && listData?.length">
+        <div class="col-md-3">
+            Showing {{sharedService.StartLimit + 1}} to {{sharedService.pageData === -1?0:sharedService.pageData}} Of
+            {{listData?.length}}
+            entries
+        </div>
+        <!-- <div class="col-md-3" *ngIf="list.length < 15">
+          Showing {{startLimit + 1}} to {{pageData === -1?0:pageData}} Of {{total}} entries
+        </div> -->
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+            screenReaderCurrentLabel="You're on page"></pagination-controls>
+        </div>
+      </div>
+
+<!-- <mat-dialog-actions align="center">
+    <button mat-raised-button mat-dialog-close color="warn" tabindex="-1">{{cancelButtonText}}</button>
+</mat-dialog-actions> -->

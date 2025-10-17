@@ -1,0 +1,74 @@
+<mat-dialog-content>
+    <h2 class="text-info font-weight-bolder text-lg" style="text-align: center;" *ngIf="!data.user">View Details</h2>
+    <p class="font-weight-bolder text-lg" style="text-align: center;" *ngIf="data.user">A user already exists in this organization and their status is <span style="color: red;font-weight: 500;">Active.</span> Before activating this user, please <span style="color: red;font-weight: 500;">deactivate </span>the existing user. At any given time, only one user will be active. </p>
+    <!-- <p class="font-weight-bolder text-lg" style="text-align: center;" *ngIf="data.newreg">User already exists this institute and status is <span style="color: red;font-weight: 600;">Active. </span>Before creating new user credential, Please <span style="color: red;font-weight: 600;">inactivate</span> this existing user</p> -->
+
+    <table class="table table-bordered table-sm" *ngIf="!data.user">
+        <tr>
+            <td class="viewProgramHeader">User Id</td>
+            <td>{{data.userId}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">User Type</td>
+            <td>{{data.roleName}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Name</td>
+            <td>{{data.name}}</td>
+        </tr>
+        <tr *ngIf="data.roleId === 7">
+            <td class="viewProgramHeader">AISHE Code</td>
+            <td>{{data.aisheCode}}</td>
+        </tr>
+        <tr *ngIf="data.roleId === 7">
+            <td class="viewProgramHeader">University</td>
+            <td>{{data.instituteName}}</td>
+        </tr>
+
+        <tr *ngIf="data.gender === '1'">
+            <td class="viewProgramHeader">Gender</td>
+            <td>Male</td>
+        </tr>
+        <tr *ngIf="data.gender === '2'">
+            <td class="viewProgramHeader">Gender</td>
+            <td>Female</td>
+        </tr>
+        <tr *ngIf="data.gender === '3'">
+            <td class="viewProgramHeader">Gender</td>
+            <td>Transgender</td>
+        </tr>
+
+        <tr>
+            <td class="viewProgramHeader">Email</td>
+            <td>{{data.email}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Mobile No</td>
+            <td>{{data.mobile}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Address Line1</td>
+            <td>{{data.addressLine1}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">Address Line2</td>
+            <td>{{data.addressLine2}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">City</td>
+            <td>{{data.city}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">State</td>
+            <td>{{data.stateName}}</td>
+        </tr>
+        <tr>
+            <td class="viewProgramHeader">District</td>
+            <td>{{data.districtName}}</td>
+        </tr>
+       
+        </table>
+        </mat-dialog-content>
+        <mat-dialog-actions align="center">
+            <button mat-raised-button mat-dialog-close color="warn" tabindex="1">Close</button>
+        </mat-dialog-actions>

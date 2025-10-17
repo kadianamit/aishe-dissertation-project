@@ -1,0 +1,65 @@
+.enrol tr:nth-child(even) {
+    background-color: #dee2e6;
+  }
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+-moz-appearance: textfield;
+}
+table tr td{
+  vertical-align: middle;
+}
+table.stable td .mat-form-field{
+  width: 50px;
+  text-align: center;
+}
+::ng-deep .popover-body {
+white-space: pre-wrap;    
+background-color: aliceblue;
+width: 250px;
+}
+::ng-deep .mat-form-field-appearance-legacy.matrix .mat-form-field-underline {
+    height: 0px;
+  }
+  .noborder, .noborder tr, .noborder th, .noborder td {
+    border: none;
+}
+.blue-icon{
+  color: blue;
+}
+.red-icon{
+  color: red;
+}
+
+// table td .mat-form-field{
+//   width: 50px;
+//   text-align: center;
+// }
+
+.breakupValidColor {
+    background-color: lightgrey !important;
+  }
+  
+  .seatEarmarked {
+    background-color: darkgray
+  }
+  
+  .disabledEnrolField {
+    background-color: lightgrey !important
+  }
+  .table tr:nth-child(odd) td{
+    background-color: #f9f9f9
+}
+.table tr:nth-child(even) td{
+    background-color: #ffffff;
+}
+.table th .changeBck{
+  background-color:#ffffff !important;
+}

@@ -1,0 +1,307 @@
+
+<mat-dialog-content style="height: 100%;">
+
+  <div *ngIf="data.message1==='edit'">
+    <P style="color: red;font-weight: 500;text-align: center;">
+      Institution's particulars (Name,Type,Management Type,State,District) can't be updated, because you have already
+      filled in the DCF for Survey Year {{data.surveyYear}}.
+    </P>
+
+  </div>
+  <div *ngIf="data.deAffiliate==='deAffiliate'">
+    <p style="color: red;font-weight: 500;text-align: center;">
+      {{data.message1}}
+    </p>
+  </div>
+  <div *ngIf="data.newAisheCode==='aisheCodeNow'">
+    <p style="color: red;font-weight: 500;text-align: center;">
+      {{data.message1}}
+    </p>
+    <h4><b>AISHE Code:</b> U-{{data.dataUniversity.AisheCode}}</h4>
+      <h4><b>University Name:</b> {{data.dataUniversity.Name}}</h4>
+  </div>
+  <div *ngIf="data.message1==='De-Affiliate'">
+    <P style="color: red;font-weight: 500;text-align: center;">
+      Institution's can't be de-affiliated, because you have already filled in the DCF for Survey Year
+      {{data.surveyYear}}.
+    </P>
+  </div>
+
+  <div *ngIf="data.Approved==='Approved1'">
+    <p *ngIf="data.message==='1'" style="color: red;font-weight: 500;text-align: center;">
+      Please confirm before approving this request!!!
+
+    </p>
+    <p *ngIf="data.message==='2'" style="color: red;font-weight: 500;text-align: center;">
+
+      Please confirm before rejecting this request!!!
+
+    </p>
+  </div>
+
+  <div *ngIf="data.showData==='approvalRejected'">
+    <p style="color: red;font-weight: 500;text-align: center;">
+      {{data.message1}}
+    </p>
+    <div *ngIf="roleId==='26' || roleId==='1'">
+      <h4 *ngIf="data.data1?.id"><b>AISHE Code:</b> C-{{data.data1?.id}}</h4>
+      <h4 *ngIf="data.data1?.name"><b>College Name:</b> {{data.data1?.name}}</h4>
+    </div>
+  </div>
+
+
+  <div *ngIf="data.showData==='approvalReject'">
+    <p style="color: red;font-weight: 500;text-align: center;">
+      {{data.message1}}
+    </p>
+    <div *ngIf="roleId==='26' || roleId==='1'">
+      <h4 *ngIf="data.data1?.id"><b>AISHE Code:</b> R-{{data.data1?.id}}</h4>
+      <h4 *ngIf="data.data1?.name && data.data1?.id !== 0"><b>Institute Name:</b> {{data.data1?.name}}</h4>
+    </div>
+  </div>
+
+
+
+      <div *ngIf="data.showData==='mergeCollege'">
+        <p style="color: red;font-weight: 500;text-align: center;">
+          {{data.message1}}
+          </p>
+        <div *ngIf="roleId==='26' || roleId==='1'">
+          <h4 *ngIf="data"><b>AISHE Code:</b> C-{{key(data)}}</h4>
+          <h4 *ngIf="data" ><b>College Name:</b> {{collegeName}}</h4>
+        </div>
+        </div>
+
+
+        <div *ngIf="data.showData==='upgradeCollege'">
+          <p style="color: red;font-weight: 500;text-align: center;">
+            {{data.message1}}
+            </p>
+          <div *ngIf="roleId==='26' || roleId==='1'">
+            <h4 *ngIf="data.data1"><b>AISHE Code:</b> C-{{data.data1.id}}</h4>
+            <h4 *ngIf="data.data1" ><b>College Name:</b> {{data.data1.name}}</h4>
+          </div>
+          </div>
+
+          <div *ngIf="data.showData==='upgradeUni12'">
+            <p style="color: red;font-weight: 500;text-align: center;">
+              {{data.message1}}
+              </p>
+            <div *ngIf="roleId==='26' || roleId==='1'">
+              <h4 *ngIf="data.data1"><b>AISHE Code:</b> {{data.data1.id}}</h4>
+              <h4 *ngIf="data.data1" ><b>University Name:</b> {{data.data1.name}}</h4>
+            </div>
+            </div>
+
+
+
+      <div *ngIf="data.showData==='approvalstandalone'">
+        <p style="color: red;font-weight: 500;text-align: center;">
+          {{data.message1}}
+          </p>
+          <div *ngIf="roleId==='26' || roleId==='1'">
+            <h4 *ngIf="data.data1?.id"><b>AISHE Code:</b> S-{{data.data1?.id}}</h4>
+            <h4 *ngIf="data.data1?.name" ><b>College Name:</b> {{data.data1?.name}}</h4>
+          </div>
+
+        </div>
+
+
+      <div *ngIf="data.showData==='standaloneUniversity'">
+        <p style="color: red;font-weight: 500;text-align: center;">
+          {{data.message1}}
+          </p>
+          <div *ngIf="roleId==='26' || roleId==='1'">
+            <h4 *ngIf="data.data1.id"><b>AISHE Code:</b>{{data.data1.id}}</h4>
+            <h4 *ngIf="data.data1.name" ><b>University Name:</b> {{data.data1.name}}</h4>
+          </div>
+
+        </div>
+
+        <div *ngIf="data.showData==='upgradeUniversity'">
+          <p style="color: red;font-weight: 500;text-align: center;">
+            {{data.message1}}
+            </p>
+            <div *ngIf="roleId==='26' || roleId==='1'">
+              <h4 *ngIf="data.data1.id"><b>AISHE Code:</b> S-{{data.data1.id}}</h4>
+              <h4 *ngIf="data.data1.name" ><b>College Name:</b> {{data.data1.name}}</h4>
+            </div>
+
+          </div>
+
+        <div *ngIf="data.s1==='12'">
+          <p style="color: red;font-weight: 500;text-align: center;">
+            {{data.message}}
+            </p>
+          </div>
+
+          <div *ngIf="data.s1==='UniversityDelete'">
+            <p style="color: red;font-weight: 500;text-align: center;">
+              {{data.message}}
+              </p>
+              <mat-card>
+                <div class="col-sm-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Remarks</mat-label>
+                        <textarea  matInput [maxLength]="100" [(ngModel)]="remarks" placeholder="Enter Remarks" required></textarea>
+                    </mat-form-field>
+                </div>
+              </mat-card>
+            </div>
+            <div *ngIf="data.s1==='standaloneStatus'" >
+              <form [formGroup]="formStatusData" (ngSubmit)="data.Deaffiliation? OnStatus1():OnStatus()">
+              <p style="color: red;font-weight: 500;text-align: center;">
+               {{data.message}}
+                </p>
+                <mat-card>
+                  <div class="col-sm-12" >
+                    <!-- <div class="col-auto"> -->
+                      <mat-form-field appearance="fill">
+                        <mat-label>Survey Year</mat-label>
+                        <mat-select formControlName="surveyYearValue">
+                          <mat-option *ngFor="let year of surveyYearList" [value]="year">{{year}}</mat-option>
+                        </mat-select>
+                        <mat-error
+                        *ngIf="formStatusData.controls['surveyYearValue'].hasError('required') || formStatusData.controls['surveyYearValue'].dirty || formStatusData.controls['surveyYearValue'].value || formStatusData.controls['surveyYearValue'].touched">
+                        Please select Survey Year
+                      </mat-error>
+                      </mat-form-field>
+
+                    <mat-form-field appearance="outline" *ngIf="data.Deaffiliation">
+                       <mat-label>Reason for Deactivation</mat-label>
+                       <mat-select formControlName="deaffiliation" required>
+                        <mat-option *ngFor="let data1 of data.Deaffiliation" [value]="data1.id">{{data1.name}}</mat-option>
+                       </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-12">
+                      <mat-form-field appearance="outline">
+                          <mat-label>Remarks</mat-label>
+                          <textarea  matInput [maxLength]="100" formControlName="remarks" placeholder="Enter Remarks"  required></textarea>
+                      </mat-form-field>
+                  </div>
+                  <div class="col-md-12 ml-1 mb-1" *ngIf="data.Deaffiliation">
+                    <label style="font-weight: 600;padding-left:4px">User ID Satus:</label>&nbsp;&nbsp;
+                    <mat-radio-group aria-label="Select an option" required formControlName="isInactiveUser">
+                        <mat-radio-button [value]="false">Active</mat-radio-button>&nbsp;&nbsp;
+                        <mat-radio-button [value]="true">Inactive</mat-radio-button>
+                    </mat-radio-group>
+                    </div>
+                  <div class="mt-2" style="text-align: center;">
+                     <button  mat-raised-button color="primary" tabindex="1">OK</button>
+                    <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">Cancel</button>
+                  </div>
+
+                </mat-card>
+
+              </form>
+              </div>
+
+
+  <div *ngIf="data.s==='1'">
+    <p style="color: red;font-weight: 500;text-align: center;">
+      {{data.message}}
+       </p>
+    <h4><b>College Name:</b> {{data.collegeName}}</h4>
+    <h4><b>Management Type:</b>{{data.managementType}}</h4>
+    <h4><b>College Type:</b> {{data.collegeType12}}</h4>
+      <h4><b>State Name:</b> {{data.state}}</h4>
+      <h4><b>District Name:</b> {{data.district}}</h4>
+      <h4><b>Is DCF Applicable?:</b> {{data.isDcfApplicable==="true"?'Yes':'No'}}</h4>
+      <!-- <h4><b>Location:</b> {{data.Location}}</h4> -->
+    </div>
+    <div *ngIf="data.standalone==='standalone'">
+      <p style="color: red;font-weight: 500;text-align: center;">
+        {{data.message}}
+         </p>
+      <h4><b>Name:</b> {{data.Name}}</h4>
+      <h4><b>Management Type:</b>{{data.managementType}}</h4>
+      <h4><b>Standalone Type:</b> {{data.collegeType12}}</h4>
+        <h4><b>State Name:</b> {{data.state}}</h4>
+        <h4><b>District Name:</b> {{data.district}}</h4>
+        <!-- <h4><b>Location:</b>{{data.Location}}</h4> -->
+      </div>
+      <div *ngIf="data.universityType==='universityType'">
+        <p style="color: red;font-weight: 500;text-align: center;">
+          {{data.message}}
+           </p>
+        <h4><b>Name:</b> {{data.Name}}</h4>
+        <h4><b>University Type:</b> {{data.collegeType12}}</h4>
+        <h4 *ngIf="data?.subtype?.length>0"><b>Sub Type:</b> {{data.subtype}}</h4>
+          <h4><b>State Name:</b> {{data.state}}</h4>
+          <h4><b>District Name:</b> {{data.district}}</h4>
+          <!-- <h4><b>Location:</b>{{data.Location}}</h4> -->
+        </div>
+
+        <div *ngIf="data.universityType==='addUniversityType'">
+          <p style="color: red;font-weight: 500;text-align: center;">
+            {{data.message}}
+             </p>
+          <h4><b>Survey Year:</b> {{data.surveyYear}}</h4>
+          <h4><b>Name:</b> {{data.Name}}</h4>
+          <h4><b>University Type:</b> {{data.university}}</h4>
+            <h4><b>State Name:</b> {{data.state}}</h4>
+            <h4><b>District Name:</b> {{data.district}}</h4>
+            <h4><b>Location:</b> {{data.Location}}</h4>
+            <h4><b>Is DCF Applicable:</b> {{data.isDCFApplicable}}</h4>
+          </div>
+
+          <div *ngIf="data.universityType==='mergeUniversityType'">
+            <p style="color: red;font-weight: 500;text-align: center;">{{data.message}}</p>
+            <h4><b>Survey Year:</b> {{data.surveyYear}}</h4>
+            <h4><b>Name:</b> {{data.Name}}</h4>
+            <h4><b>University Type:</b> {{data.university}}</h4>
+            <h4><b>College Type:</b> {{data.newCollegeType}}</h4>
+              <h4><b>State Name:</b> {{data.state}}</h4>
+              <h4><b>District Name:</b> {{data.district}}</h4>
+              <h4><b>ManagementType:</b> {{data.managementType}}</h4>
+              <h4><b>Location:</b> {{data.location}}</h4>
+              <h4><b>Is DCF Applicable:</b> {{data.isDCFApplicable}}</h4>
+            </div>
+
+<div *ngIf="data.universityType==='converttocollege'">
+  <p style="color: red;font-weight: 500;text-align: center;">{{data.message}}</p>
+  <h4><b>Survey Year:</b> {{data.surveyYear}}</h4>
+  <h4><b> College Name:</b> {{data.Name}}</h4>
+  <h4><b>University Name:</b> {{data.university}}</h4>
+  <h4><b>College Type:</b> {{data.newCollegeType}}</h4>
+    <h4><b>State Name:</b> {{data.state}}</h4>
+    <h4><b>District Name:</b> {{data.district}}</h4>
+    <h4><b>Management Type:</b> {{data.managementId}}</h4>
+    <h4><b>Location:</b> {{data.location}}</h4>
+    <h4><b>Is DCF Applicable:</b> {{data.isDCFApplicable}}</h4>
+  </div>
+
+            <div *ngIf="data.universityType==='upgradeUniversity'">
+              <h4><b>Survey Year:</b> {{data.surveyYear}}</h4>
+              <h4><b>Name:</b> {{data.Name}}</h4>
+              <h4><b>University Type:</b> {{data.universitytype}}</h4>
+            <h4><b>University Name:</b>{{data.universityName}}</h4>
+                <h4><b>State Name:</b> {{data.state}}</h4>
+                <h4><b>District Name:</b> {{data.district}}</h4>
+         <h4><b>Location:</b>{{data.location}}</h4>
+                <h4><b>Is DCF Applicable:</b> {{data.isDCFApplicable}}</h4>
+              </div>
+
+              <div *ngIf="data.universityType==='standaloneUniversity'">
+                <p style="color: red;font-weight: 500;text-align: center;">{{data.message}}</p>
+                <h4><b>Survey Year:</b> {{data.surveyYear}}</h4>
+                <h4><b>University Name:</b>{{data.Name}}</h4>
+                <h4><b>University Type:</b> {{data.university}}</h4>
+
+                  <h4><b>State Name:</b> {{data.state}}</h4>
+                  <h4><b>District Name:</b> {{data.district}}</h4>
+                   <h4><b>Location:</b> {{data.location}}</h4>
+                  <h4><b>Is DCF Applicable:</b> {{data.isDCFApplicable}}</h4>
+                </div>
+
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="center" >
+  <button *ngIf="data.deAffiliate==='deAffiliate'|| data.message1==='De-Affiliate' || data.newAisheCode==='aisheCodeNow'|| data.s==='1'|| data.standalone==='standalone' || data.universityType==='universityType' || data.universityType==='addUniversityType' || data.universityType==='mergeUniversityType'|| data.universityType ==='upgradeUniversity'|| data.universityType ==='standaloneUniversity' " mat-raised-button color="primary" tabindex="1" (click)="onConfirmClick()">OK</button>
+  <button *ngIf="data.action==='1' ||data.action==='1s' || data.s1==='12' || data.universityType==='converttocollege'" mat-raised-button color="primary" tabindex="1" (click)="onConfirmClick()">OK</button>
+  <button *ngIf=" data.s1==='UniversityDelete' ||  data.message1==='edit'" mat-raised-button color="primary" tabindex="1" (click)="data.message1==='edit'? onConfirm():onConfirmClickDelete()">OK</button>
+  <button  *ngIf="data.s1==='!standaloneStatus'||data.s==='1'|| data.s==='1' ||data.action==='1s'|| data.s1==='UniversityDelete' || data.showData==='upgradeUni12' || data.showData==='upgradeCollege'|| data.universityType ==='upgradeUniversity' " mat-raised-button color="warn" mat-dialog-close tabindex="-1">Cancel</button>
+  <button  *ngIf="data.deAffiliate==='deAffiliate'|| data.action==='!standaloneStatus'|| data.universityType==='converttocollege'|| data.universityType==='universityType'|| data.standalone==='standalone'|| data.universityType==='mergeUniversityType'|| data.universityType ==='standaloneUniversity' || data.universityType==='addUniversityType'" mat-raised-button color="warn" mat-dialog-close tabindex="-1">Cancel</button>
+</mat-dialog-actions>

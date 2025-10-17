@@ -1,0 +1,82 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"   
+*ngIf="Showdata12">
+<table class="table showReportDataChild"
+[attr.style]="[
+  reportDataForm.value.isUniversity == false &&
+  reportDataForm.value.isCollege == false
+    ? 'width: 15%;'
+    : ''
+]"
+>
+<thead class="childTableStickyHeader">
+  <tr *ngIf="is2019">
+    <th colspan="1" class=" text-center table-success" >State</th>
+    <th colspan="1" class=" text-center table-light">University Grants Commission</th>
+    <th colspan="1" class=" text-center table-secondary">Indian Nursing Council</th>
+    <th colspan="1" class=" text-center table-tertiary">National Council of Teacher Education</th>
+    <th colspan="1" class=" text-center table-light">Rehabilitati on Council of India</th>
+    <th colspan="1" class=" text-center table-secondary">Medical Council of India</th>
+    <th colspan="1" class=" text-center table-tertiary">All India Council for Technical Education</th>
+    <th colspan="1" class=" text-center table-light" >Dental Council of India</th>
+    <th colspan="1" class=" text-center table-secondary" >Council of Architecture</th>
+    <th colspan="1" class=" text-center table-tertiary" >Pharmacy Council of India</th>
+    <th colspan="1" class=" text-center table-light" >Bar Council  of India</th>
+    <th colspan="1" class=" text-center table-secondary" >Central Council of Indian Medicine</th>
+    <th colspan="1" class=" text-center table-tertiary" >Central Council of Homeopathy</th>
+    <th colspan="1" class=" text-center table-light" >Others</th>
+    <th colspan="1" class=" text-center table-secondary" >Total</th>
+  </tr>
+
+  <tr *ngIf="is2020">
+    <th colspan="1" class=" text-center table-success" >State</th>
+    <th colspan="1" class=" text-center table-light">University Grants Commission</th>
+    <th colspan="1" class=" text-center table-secondary">Indian Nursing Council</th>
+    <th colspan="1" class=" text-center table-tertiary">National Council of Teacher Education</th>
+    <th colspan="1" class=" text-center table-light">Rehabilitati on Council of India</th>
+    <th colspan="1" class=" text-center table-secondary">Medical Council of India</th>
+    <th colspan="1" class=" text-center table-tertiary">All India Council for Technical Education</th>
+    <th colspan="1" class=" text-center table-light" >Dental Council of India</th>
+    <th colspan="1" class=" text-center table-secondary" >Council of Architecture</th>
+    <th colspan="1" class=" text-center table-tertiary" >Pharmacy Council of India</th>
+    <th colspan="1" class=" text-center table-light" >Bar Council  of India</th>
+    <th colspan="1" class=" text-center table-secondary" >Central Council of Indian Medicine</th>
+    <th colspan="1" class=" text-center table-tertiary" >Central Council of Homeopathy</th>
+    <th colspan="1" class=" text-center table-light" >Institute of Charted Accountants</th>
+    <th colspan="1" class=" text-center table-secondary" >Institute of Company Secretaries</th>
+    <th colspan="1" class=" text-center table-tertiary" >Institute of Actuaries</th>
+    <th colspan="1" class=" text-center table-light" >National Council of Hotel Management and Catering</th>
+    <th colspan="1" class=" text-center table-secondary" >Indian Council of Agricultural Research</th>
+    <th colspan="1" class=" text-center table-tertiary" >Others</th>
+    <th colspan="1" class=" text-center table-light" >Total</th>
+  </tr>
+
+</thead>
+<tbody>
+  <tr *ngFor="let row of reportTableData">
+    <td
+    *ngFor="let col of tableColumns; let i = index"
+    class="text-center"
+    [ngClass]="[
+    i>=0 && i<1 ?'table-success':'',
+     i>=1 && i<2 ?'table-light':'',  i>=2 && i<3 ?'table-secondary':'',i>=3 && i<4 ? 'table-tertiary': '',
+      i>=4 && i<5 ? 'table-light': '',i>=5 && i<6 ? 'table-secondary': '',i>=6 && i<7 ? 'table-tertiary':'',
+    i>=7 && i<8 ? 'table-light': '',i>=8 && i<9 ? 'table-secondary': '',i>=9 && i<10  ?'table-tertiary': '',i>=10 && i<11 ? 'table-light': '',i>=11 && i<12 ? 'table-secondary': '', i>=12 && i<13 ?'table-tertiary':'', i>=13 && i<14 ? 'table-light':'', i>=14 && i<15 ? 'table-secondary':'', i>=15 && i<16 ?'table-tertiary':'',  i>=16 && i<17 ? 'table-light':'',  i>=17 && i<18 ? 'table-secondary':'', i>=18 && i<19 ? 'table-tertiary':'',  i>=19 && i<20 ? 'table-light':'',]"
+  >
+      {{ row[col] }}
+    </td>
+  </tr>
+  <tr>
+    <td class="text-center table-success">All India</td>
+    <td
+      *ngFor="let summary of summaryColumns; let i = index"
+      class="text-center table-secondary"
+
+    >
+      {{ summaryData[summary] }}
+    </td>
+  </tr>
+</tbody>
+</table>
+  </div>

@@ -1,0 +1,343 @@
+<!-- Banner -->
+<div>
+  <img src="assets/img/uniDirBanner.jpg" width="100%" alt="">
+</div>
+<!-- /Banner -->
+<div class="container-fluid py-4" style="background-color: aliceblue;">
+  <!--Search-->
+  <!-- <div class="row">
+    <div class="col-md-12 " style="text-align: end;">
+ <h2 class="pgtitle">(As per AISHE 2020-21)</h2> 
+      <label class="pgtitle">(As per AISHE)</label>&nbsp;
+      <select style="border-radius: 10px;">
+        <option [value]="2020">2020-21</option>
+      </select>
+    </div>
+  </div> -->
+  <!--/Search-->
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card shadow">
+        <div class="card-header">
+          <div class="d-flex">
+            <div><a [routerLink]="['universityDetails','U','ALL']" title="">University<br>
+                <!-- <span>{{count1 |async}}</span> -->
+                <span>{{count1 |async | number:'1.0' :'en_US'}}</span>
+              </a></div>
+            <div class="ms-auto"><img src="assets/img/university-icon.svg" alt=""></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group mt-3">
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  Central University
+                </div>
+                <a [routerLink]="['universityDetails','U','01']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.centralUniversity}}</a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-1 me-auto">
+                  Institute of National Importance
+                </div>
+                <a [routerLink]="['universityDetails','U','07']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.instituteOfNationalImp}}</a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  State Public University
+                </div>
+                <a [routerLink]="['universityDetails','U','02']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.statePublicUniversity}}</a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  State Private University
+                </div>
+                <a [routerLink]="['universityDetails','U','03']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.statePrivateUniversity}}</a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  State Open University
+                </div>
+                <a [routerLink]="['universityDetails','U','10']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.stateOpenUniversity}}</a>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  Deemed University - Government
+                </div>
+                <a [routerLink]="['universityDetails','U','04']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.deemedGovUniversity}}</a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  Deemed University – Private
+                </div>
+                <a [routerLink]="['universityDetails','U','06']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.deemedPrivateUniversity}}</a>
+              </li>
+
+            </ul>
+            <ul class="list-group mt-1 collapse" id="collapseExample">
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  Central Open University
+                </div>
+                <a [routerLink]="['universityDetails','U','09']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.centralOpenUniversity}}</a>
+                <!-- <a href="#" class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.centralOpenUniversity}}</a> -->
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  State Private Open University
+                </div>
+                <a [routerLink]="['universityDetails','U','11']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.statePrivateOpenUniversity}}</a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  Institute under State Legislature Act.
+                </div>
+                <a [routerLink]="['universityDetails','U','08']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.instituteUnderStateLegislature}}</a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  Deemed University – Government Aided
+                </div>
+                <a [routerLink]="['universityDetails','U','05']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.deemedGovAidedUniversity}}</a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  Others
+                </div>
+                <a [routerLink]="['universityDetails','U','19']"
+                  class="badge bg-secondary rounded-pill">{{obj?.universityTypeCount.otherUniversities}}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="text-end mt-3">
+            <span data-toggle="collapse" data-target="#collapseExample" class="more-collapse"></span>
+            <!-- <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" class="more-collapse">
+                          + More University
+                      </a> -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow">
+        <div class="card-header purple-head">
+          <div class="d-flex">
+            <div><a [routerLink]="['universityDetails','C','ALL']" title="">Colleges<br>
+                <!-- <span>{{count2 |async}}</span> -->
+                <span>{{count2 |async | number:'1.0' :'en_US'}}</span>
+              </a></div>
+            <div class="ms-auto"><img src="assets/img/university-icon.svg" alt=""></div>
+          </div>
+        </div>
+        <div class="card-body qual-col">
+          <ul class="list-group mt-3">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                Affiliated College
+              </div>
+              <a [routerLink]="['collegeDetails','C','1']"
+                class="badge bg-secondary rounded-pill">{{obj?.collegeTypeCount.affiliatedCollege}}</a>
+              <!-- <a href="#" class="badge bg-secondary rounded-pill">{{obj?.collegeTypeCount.affiliatedCollege}}</a> -->
+            </li>
+            <!-- <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                Autonomous College
+              </div>
+              <a [routerLink]="['collegeDetails','C','5']"
+                class="badge bg-secondary rounded-pill">{{obj?.collegeTypeCount.autonomousCollege}}</a>
+            </li> -->
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                Constituent / University College
+              </div>
+              <a [routerLink]="['collegeDetails','C','2']"
+                class="badge bg-secondary rounded-pill">{{obj?.collegeTypeCount.constituentCollege}}</a>
+            </li>
+            <li></li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                PG Centre / Off-Campus Centre
+              </div>
+              <a [routerLink]="['collegeDetails','C','4']"
+                class="badge bg-secondary rounded-pill">{{obj?.collegeTypeCount.pgcenter}}</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                Recognized Centre
+              </div>
+              <a [routerLink]="['collegeDetails','C','3']"
+                class="badge bg-secondary rounded-pill">{{obj?.collegeTypeCount.recognizedCenter}}</a>
+            </li>
+            <!-- <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                Others
+              </div>
+              <a [routerLink]="['collegeDetails','C','6']"
+                class="badge bg-secondary rounded-pill">{{obj?.collegeTypeCount.otherColleges}}</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow">
+        <div class="card-header yellow-head">
+          <div class="d-flex">
+            <div><a [routerLink]="['universityDetails','S','ALL']" title="">Standalone<br>
+                <!-- <span>{{count3 |async}}</span> -->
+                <span>{{count3 |async | number:'1.0' :'en_US'}}</span>
+              </a>
+            </div>
+            <div class="ms-auto"><img src="assets/img/university-icon.svg" alt=""></div>
+          </div>
+        </div>
+        <div class="card-body qual-col">
+          <ul class="list-group mt-3">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                Hotel Management and Catering
+              </div>
+              <a [routerLink]="['standaloneDetails','S','6']"
+                class="badge bg-secondary rounded-pill">{{obj?.standaloneTypeCount.hotelManagementAndCatering}}</a>
+              <!-- <a href="#" class="badge bg-secondary rounded-pill">{{obj?.standaloneTypeCount.hotelManagementAndCatering}}</a> -->
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                Institute under Ministries
+              </div>
+              <a [routerLink]="['standaloneDetails','S','5']"
+                class="badge bg-secondary rounded-pill">{{obj?.standaloneTypeCount.instUnderMimistry}}</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                Nursing
+              </div>
+              <a [routerLink]="['standaloneDetails','S','3']"
+                class="badge bg-secondary rounded-pill">{{obj?.standaloneTypeCount.nursing}}</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                Paramedical
+              </div>
+              <a [routerLink]="['standaloneDetails','S','1']"
+                class="badge bg-secondary rounded-pill">{{obj?.standaloneTypeCount.paramedical}}</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                PGDM Institute
+              </div>
+              <a [routerLink]="['standaloneDetails','S','7']"
+                class="badge bg-secondary rounded-pill">{{obj?.standaloneTypeCount.pgdmInstitutes}}</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                Teacher Training
+              </div>
+              <a [routerLink]="['standaloneDetails','S','4']"
+                class="badge bg-secondary rounded-pill">{{obj?.standaloneTypeCount.teacherTraining}}</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                Polytechnic
+              </div>
+              <a [routerLink]="['standaloneDetails','S','2']"
+                class="badge bg-secondary rounded-pill">{{obj?.standaloneTypeCount.polytechnic}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow p-4 mt-4">
+    <h5 class="fw-bold headingh5">Institute of National Importance ({{instituteOfNationalImportanceCount}})</h5>
+    <div class="row mt-3">
+      <div class="col-md-3">
+        <div class="imp-box shadow bgblue">AIIMS <br>
+          <a [routerLink]="['universityDetails','INI','all india institute of medical science']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.aiims}}</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="imp-box shadow bggreen">IIIT <br>
+          <a [routerLink]="['universityDetails','INI','indian institute of information technology']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.iiit}}</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="imp-box shadow bgblue">IIM <br>
+          <a [routerLink]="['universityDetails','INI','indian institute of management']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.iim}}</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="imp-box shadow bggreen">IISER <br>
+          <a [routerLink]="['universityDetails','INI','indian institute of engineering science and technology']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.iiser}}</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="imp-box shadow bggreen">IIT <br>
+          <a [routerLink]="['universityDetails','INI','indian institute of technology']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.iit}}</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="imp-box shadow bgblue">ISI <br>
+          <a [routerLink]="['universityDetails','INI','indian statistical institute']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.isi}}</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="imp-box shadow bggreen">NID <br>
+          <a [routerLink]="['universityDetails','INI','national institute of desig']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.nid}}</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="imp-box shadow bgblue">NIFT <br>
+          <a [routerLink]="['universityDetails','INI','national institute of fashion technology']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.nift}}</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="imp-box shadow bgblue">NIT <br>
+          <a [routerLink]="['universityDetails','INI','national institute of technology']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.nit}}</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="imp-box shadow bggreen">SPA <br>
+          <a [routerLink]="['universityDetails','INI','school of planning & architecture']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.spa}}</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="imp-box shadow bgblue">NIPER <br>
+          <a [routerLink]="['universityDetails','INI','national institute of pharmaceutical']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.niper}}</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="imp-box shadow bggreen">OTHERS <br>
+          <a [routerLink]="['universityDetails','INI','others']"
+            class="link">{{obj?.instituteOfNationalImportanceCount.others}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

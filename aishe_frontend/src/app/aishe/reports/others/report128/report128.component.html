@@ -1,0 +1,52 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div
+class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+*ngIf="Showdata12">
+<table
+class="table  showReportDataChild" >
+<thead class="childTableStickyHeader">
+<tr>
+  <th colspan="1" class="text-center table-success">Name of Institution</th>
+  <th colspan="1" class="text-center table-secondary">Accreditation Body</th>
+  <th colspan="1" class="text-center table-tertiary">Remarks Recorded</th>
+</tr>
+
+</thead>
+<tbody>
+<tr *ngFor="let row of reportTableData | paginate
+: {
+    itemsPerPage: pageSize,
+    currentPage: page
+  }">
+  <td
+    *ngFor="let col of tableColumns; let i = index"
+    class="text-center"
+    [ngClass]="[i==0?'table-success':  '',
+                i>0 && i<2? 'table-secondary': '',i>1 && i<3? 'table-tertiary': '',]"
+  >
+    {{ row[col] }}
+  </td>
+</tr>
+
+<tr>
+  <!-- <td colspan="1" class="text-center table-success">
+    All India
+  </td> -->
+  <td
+    *ngFor="let summary of summaryColumns; let i = index"
+    class="text-center table-secondary"
+    [ngClass]="[i==0?'table-success':  '',
+    i>0 && i<2? 'table-secondary': '',i>1 && i<3? 'table-tertiary': '',]"
+  >
+    {{ summaryData[summary] }}
+  </td>
+</tr>
+</tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

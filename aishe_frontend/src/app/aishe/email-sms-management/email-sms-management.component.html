@@ -1,0 +1,223 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">Email/SMS Management</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="animated fadeInDown card bg-light">
+        <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-2 pt-4">
+                <label>Show</label>
+                &nbsp;
+                <select [(ngModel)]="sharedService.pageSize" (ngModelChange)="onChange($event)">
+                    <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">
+                        {{data}}
+                    </option>
+                </select>
+                entries
+            </div>
+            <div class="col-md-5"></div>
+            <div class="col-md-5 pt-4">
+                <label>Search:</label>
+                &nbsp;
+                <input type="text" size="40" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+                    [(ngModel)]="searchText">
+            </div>
+
+            <div class="col-md-1 pt-4">
+                <mat-form-field class="d-block">
+                    <mat-label>Survey Year</mat-label>
+                    <mat-select [(ngModel)]="obj.surveyYear" [disabled]="disableForUniversity">
+                        <mat-option [value]="2022">2022-23</mat-option>
+                        <mat-option [value]="2023">2023-24</mat-option>
+                        <mat-option [value]="2024">2024-25</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2 pt-4">
+                <mat-form-field class="d-block">
+                    <mat-label>Institution Type</mat-label>
+                    <mat-select [(ngModel)]="obj.institutionType" (selectionChange)="getInstituteType($event.value)"
+                        [disabled]="disableForUniversity">
+                        <mat-option value='ALL'>ALL</mat-option>
+                        <mat-option *ngFor="let data of sharedService.institutionType" [value]="data.name">
+                            {{data.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col pt-4">
+                <mat-form-field class="d-block">
+                    <mat-label>Type of Institution:</mat-label>
+                    <mat-select [(ngModel)]="obj.subCategory"  [disabled]="obj.institutionType === 'ALL'" >
+                        <mat-option *ngFor="let data of instituteTypeList" [value]="data.id">
+                            {{data.type}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- <div class="col-md-2 pt-4">
+                <mat-form-field class="d-block">
+                    <mat-label>User Type:</mat-label>
+                    <mat-select [(ngModel)]="obj.userType">
+                        <mat-option value="NODAL_OFFICER">Nodal Officer</mat-option>
+                        <mat-option value="INSTITUTION_HEAD">Institution Head</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
+
+            <!-- <div class="col pt-4" *ngIf="!(disableForUniversity)">
+                <mat-form-field class="d-block">
+                    <mat-label>State</mat-label>
+                    <mat-select [(ngModel)]="obj.stateCode" (selectionChange)="getDistrictData($event.value)" [disabled]="disableForSNO">
+                        <mat-select-filter [array]="stateListArray" [displayMember]="'name'"
+                            (filteredReturn)="stateList = $event">
+                        </mat-select-filter>
+                        <mat-option [value]="'ALL'">ALL</mat-option>
+                        <mat-option *ngFor="let data of stateList" [value]="data.stateCode">
+                            {{data.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
+            <div class="col pt-4" *ngIf="!disableForUniversity">
+                <mat-form-field class="d-block">
+                    <mat-label>State</mat-label>
+                    <mat-select 
+                        [(ngModel)]="obj.stateCode" 
+                        name="stateCode" 
+                        (selectionChange)="getDistrictData($event.value)" 
+                        [disabled]="disableForSNO" 
+                        [required]="obj.institutionType === 'ALL'">
+                        <mat-select-filter 
+                            [array]="stateListArray" 
+                            [displayMember]="'name'" 
+                            (filteredReturn)="stateList = $event">
+                        </mat-select-filter>
+                        <mat-option [value]="'ALL'"  *ngIf="obj.institutionType !== 'ALL'" >ALL</mat-option>
+                        <mat-option 
+                            *ngFor="let data of stateList" 
+                            [value]="data.stateCode">
+                            {{data.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="stateIsRequired && !obj.stateCode">
+                        Please Select State
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col pt-4" *ngIf="!(disableForSNO || disableForUniversity)">
+                <mat-form-field class="d-block">
+                    <mat-label>District</mat-label>
+                    <mat-select [(ngModel)]="obj.districtCode">
+                        <mat-select-filter [array]="districtListArray" [displayMember]="'name'"
+                            (filteredReturn)="districtList = $event">
+                        </mat-select-filter>
+                        <mat-option *ngFor="let data of districtList" [value]="data.distCode">
+                            {{data.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col pt-4">
+                <mat-form-field class="d-block">
+                    <mat-label>Survey Participation Status:</mat-label>
+                    <mat-select [(ngModel)]="obj.participatedStatus">
+                        <mat-option value>ALL</mat-option>
+                        <mat-option value="PARTICIPATED">Participated</mat-option>
+                        <mat-option value="PENDING">Pending</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col pt-4 d-block" style="display: inline-block;">
+                <button mat-button class="btn btn-primary btn-sm  mt-2" matTooltip="Search" (click)="search()">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+                <button mat-button class="btn btn-danger btn-sm  mt-2 ml-1" matTooltip="reset" (click)="reset()">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <div class="row col-md-12 mt-2 ml-1 mb-2" style="font-size: 15px;font-weight:500;">
+            <input type="checkbox" class="larger-checkbox" [(ngModel)]="ccAllowed" (change)="togglePermission()">
+            &nbsp;
+            <span class="mt-1">
+                Also send email to Head of the Institution as CC?
+            </span>
+        </div>
+    </div>
+
+    <div class="animated fadeInDown card mb-2 pb-1 pt-1 bg-light overflow-hidden">
+        <div class="col-md-12 table-responsive">
+            <table class="table table-bordered table-sm">
+                <tbody>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>
+                            <input type="checkbox" [(ngModel)]="allSelected" (change)="toggleAllSelection()">
+                            Select All
+                        </th>
+                        <th>AISHE Code</th>
+                        <th>Institution Name</th>
+                        <th>Nodal Officer</th>
+                        <th>Head of the Institution</th>
+                    </tr>
+                    <ng-container *ngFor="let opt of listData | paginate : {
+                        itemsPerPage: sharedService.pageSize,
+                        currentPage: sharedService.page
+                      
+                      };
+                let i = index
+                ">
+                        <tr>
+                            <td>{{i+sharedService.StartLimit+1}}</td>
+                            <td>
+                                <input type="checkbox" [(ngModel)]="opt.selected" (change)="checkIfAllSelected()">
+                            </td>
+                            <td>{{opt.aisheCode}}</td>
+                            <td>{{opt.name}}</td>
+                            <td>{{opt.nodalOfficerName}}</td>
+                            <td>{{opt.institutionHeadName}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-3">
+                Showing {{sharedService.StartLimit + 1}} to {{sharedService.pageData === -1?0:sharedService.pageData}}
+                Of
+                {{listData.length}}
+                entries
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+                    screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                    screenReaderCurrentLabel="You're on page"></pagination-controls>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 d-flex justify-content-center">
+        <button mat-button class="btn btn-success btn-sm d-block mt-2" type="button" (click)="sendEmail()">
+            <i class="fa fa-envelope p-1 mr-1" aria-hidden="true"></i>
+            Send Email
+        </button>
+
+        <button mat-button (click)="downloadExcel()" class="btn btn-danger btn-sm d-block mt-2 ml-2">
+            <i class="fa fa-file-excel-o mr-1" matTooltip="Download as Excel" matTooltipPosition="above"
+                matTooltipClass="downloadExcel" style="font-size: 14px;color:#fff;"></i>
+            <!-- <mat-icon style="color: #fff;">vertical_align_bottom</mat-icon> -->
+            Download Excel
+        </button>
+
+    </div>
+</div>

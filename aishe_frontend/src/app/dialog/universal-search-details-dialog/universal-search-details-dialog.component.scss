@@ -1,0 +1,11 @@
+.fontSize{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.table tr:nth-child(odd) td{
+    background-color: #f5eded
+}
+.table tr:nth-child(even) td{
+    background-color: #ffffff;
+}

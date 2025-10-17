@@ -1,0 +1,41 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"   
+    *ngIf="Showdata12">
+    <table class="table showReportDataChild" >
+        <thead class="childTableStickyHeader">
+            <tr>
+                <th rowspan="2" class="text-center table-success">
+                    Name of Affiliating University
+                </th>
+                <th colspan="7" class="text-center table-light">
+                    Number of College/Recognised Institution
+                </th>
+            </tr>
+            <tr>
+                <th *ngFor="let col of tableColumns; let i = index" [attr.style]="
+                          i == 0 && col == 'University Name'
+                            ? 'display:none'
+                            : ''
+                        " class="text-center table-light">
+                    {{ col }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of reportTableData">
+                <td *ngFor="let col of tableColumns; let i = index" class="text-center" [ngClass]="[
+                          i == 0 ? 'table-success' : '',
+                          i > 0 ? 'table-light' : ''
+                        ]">
+                    {{ row[col] }}
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center table-success">All India</td>
+                <td *ngFor="let summary of summaryColumns; let i = index" class="text-center table-secondary">
+                    {{ summaryData[summary] }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

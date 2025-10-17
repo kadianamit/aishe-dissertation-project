@@ -1,0 +1,60 @@
+<div class="container-fluid reg-page-bg ">
+  <mat-card class="bg-light">
+    <h2 class="font-weight-bold text-lg">Fill Web-DCF</h2>
+    <form [formGroup]="webDCF">
+
+      <!-- <span class="note pb-3" *ngIf="!showAisheCodeInputField">In order to participate in AISHE Survey,please select
+        <b>'Survey Year'</b> and click the link
+        below.</span> -->
+      <div class="col-md-12" *ngIf="showAisheCodeInputField">
+        <mat-form-field class="d-block">
+          <mat-label>Institution Type</mat-label>
+          <mat-select placeholder="Institution Type" formControlName="institutionType"
+            [required]="showAisheCodeInputField">
+            <mat-option *ngFor="let data of sharedService.institutionTypeList" [value]="data">{{data}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12" *ngIf="showAisheCodeInputField">
+        <mat-form-field class="d-block">
+          <mat-label>AISHE Code</mat-label>
+          <input type="text" matInput autocomplete="off" placeholder="Aishe Code" [required]="showAisheCodeInputField"
+            formControlName="aisheCode" (keypress)="restrictNumeric($event)" minlength="1" maxlength="7">
+        </mat-form-field>
+        <div class="err-msgs"
+          *ngIf="webDCF.controls['aisheCode'].dirty || webDCF.controls['aisheCode'].value || webDCF.controls['aisheCode'].touched || isFormInvalid ">
+          <span *ngIf="webDCF.controls['aisheCode'].hasError('required')">Please enter
+          </span>
+          <span *ngIf="webDCF.controls['aisheCode'].hasError('pattern')">Invalid AISHE Code
+          </span>
+          <!-- <span *ngIf="webDCF.controls['aisheCode'].hasError('minlength')">Please enter minimum {{minlength}}
+        </span> -->
+        </div>
+      </div>
+
+      <div class="col-md-12" *ngIf="!showAisheCodeInputField">
+        <mat-form-field class="d-block">
+          <mat-label>Survey Year</mat-label>
+          <mat-select (selectionChange)="selectSurveyYear($event.value)" formControlName="surveyYear"
+            [required]="required">
+            <mat-option *ngFor="let data of surveyYear" [value]="sharedService.currentSurveyYear">{{data}}</mat-option>
+            <!-- <mat-option value="2021">2021-22</mat-option> -->
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="text-center" *ngIf="admin">
+        <button class="btn btn-success btn-sm" (click)="checkAisheCode(webDCF.value)">Click Here
+          to Fill Web-DCF</button>
+      </div>
+      <div class="text-center" *ngIf="!admin">
+        <button class="btn btn-success btn-sm" (click)="goToDCF(webDCF.value)" [disabled]="isEligible">Click Here to
+          Fill Web-DCF</button>
+      </div>
+
+      <p *ngIf="messageEligible" style="color: red;">You are not Eligible for the survey year {{sharedService.currentSurveyfiscal}}</p>
+
+
+    </form>
+  </mat-card>
+ 
+</div>

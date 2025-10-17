@@ -1,0 +1,79 @@
+
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="" *ngIf="showTable">
+      <div class="row justify-content-between">
+        <div class="col-auto show-button" >
+          <label>Show</label>&nbsp;
+          <select (ngModelChange)="onChange($event)" [(ngModel)]="pageSize">
+            <option *ngFor="let data of tableSize" [value]="data">
+              {{ data }}
+            </option>
+          </select>
+          entries
+        </div>
+
+        <div class="col-auto ml-4">
+          <label>Search:</label>&nbsp;
+          <input id="myInput" type="text" [(ngModel)]="searchText" (keyup)="applyFilter($any($event.target).value)"/>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table mt-2 text-left pe-2">
+
+          <thead>
+            <tr>
+              <th>AISHE Code</th>
+              <th>University Name</th>
+              <th>University Type</th>
+              <th>State</th>
+              <th>District</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="myInput">
+            <tr
+              *ngFor="
+                let data of userDataTable
+                  | searchFilter : searchText
+                  | paginate
+                    : {
+                        itemsPerPage: pageSize,
+                        currentPage: page
+                      };
+                let i = index
+              ">
+              <td>U-{{ data.aishecode }}</td>
+              <td>{{ data.name }}</td>
+              <td>{{ data.universityType }}</td>
+              <td>{{ data.statename }}</td>
+              <td>{{ data.districtname }}</td>
+              <td>
+                <div class="piped d-flex">
+                  <a  matTooltip="Delete" style="cursor:pointer;"
+                    (click)="deleteUser(data)">
+                  <mat-icon class="edit_icon1">delete</mat-icon>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-md-3" *ngIf="showTable">
+        Showing {{ StartLimit + 1 }} to {{ pageData }} Of
+        {{ userDataTable.length }} entries
+      </div>
+      <div class="d-flex justify-content-center" *ngIf="showTable">
+        <pagination-controls
+          previousLabel="Prev"
+          nextLabel="Next"
+          (pageChange)="handlePageChange($event)"
+        >
+      </pagination-controls>
+      </div>
+      <!--  -->
+    </div>
+  </div>
+

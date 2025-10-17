@@ -1,0 +1,276 @@
+<section class="trackDiv">
+    <div class="container animated fadeInDown card shadow mb-2 border">
+        <div class="row col-md-12 mt-3">
+            <div class="col-md-12 text-center">
+                <form [formGroup]="form">
+                    <div class="mt-5 mb-5">
+                        <div class="container">
+                            <div class="steps row" *ngIf="dataView">
+                                <div class="col-md-12 progress-bar" #progrssbar>
+                                    <span class="indicator" #curtain></span>
+                                </div>
+                                <!-- Requested on -->
+                                <div class="col-md-3">
+                                    <span class="circle active greenBg">
+                                        <img src="assets/img/approved.png" style="width:19px; filter: invert(1);"
+                                            alt="Pending">
+                                    </span>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <span class="text1">
+                                        <span class="greenColor">
+                                            Request Submitted On
+                                            <br>
+                                            {{createdDate}}
+                                        </span>
+                                    </span>
+                                </div>
+
+                                <div class="col-md-3 {{snohideClass}} {{snoSecondhideClass}}"
+                                    *ngIf="otherCase === 'true'">
+                                    <span
+                                        class=" circle {{snoactiveClass}} {{snohideClass}} {{snoStatus === 'Approved' ? 'greenBg' : ''}} {{snoStatus === 'Rejected' ? 'redBg' : ''}}">
+                                        <img *ngIf="snoStatus === 'Rejected'"
+                                            class="{{snoactiveClass === 'active'? 'bgWhite': ''}}"
+                                            src="assets/img/rejected.png" style="width:18px; filter: invert(1)"
+                                            title="Rejected" alt="Rejected">
+                                        <img *ngIf="snoStatus === 'Pending'" src="assets/img/pending.png"
+                                            style="width:24px" alt="Pending">
+                                        <img *ngIf="snoStatus === 'Approved'"
+                                            class="{{snoactiveClass === 'active'? 'bgWhite': ''}}"
+                                            src="assets/img/approved.png" style="width:19px" title="Approved"
+                                            alt="Approved">
+                                    </span>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <span class="text3">
+                                        <span *ngIf="snoStatus === 'Pending'">
+                                            SNO
+                                            <br>
+                                            <b>
+                                                <span
+                                                    [hidden]="unoStatus === 'Rejected' || snoStatus === 'Rejected' || moeStatus === 'Rejected' || moeStatus === 'Approved'">{{snoStatus}}</span>
+                                            </b>
+                                        </span>
+                                        <span *ngIf="snoStatus === 'Approved'" class="greenColor">
+                                            SNO
+                                            <br>
+                                            <b>{{snoStatus | uppercase}} ON</b>
+                                            <br>
+                                            {{snoApprovedDated}}
+                                        </span>
+                                        <span *ngIf="snoStatus === 'Rejected'" class="rejectColor">
+                                            SNO
+                                            <br>
+                                            <b>{{snoStatus | uppercase}} ON</b>
+                                            <br>
+                                            {{snoApprovedDated}}
+                                        </span>
+                                    </span>
+                                </div>
+                                <!-- Affiliating body -->
+                                <div class="col-md-3 {{unohideClass}} {{unoSecondHide}} {{unoSecondAppHide}}" *ngIf="stateBodyTypeName!='Other' && showAffiliatingBody && !pendingLevelBool">
+                                    <span
+                                        class="circle {{unoactiveClass}} {{unohideClass}} {{unoStatus === 'Approved' ? 'greenBg' : ''}} {{unoStatus === 'Rejected' ? 'redBg' : ''}}">
+                                        <img *ngIf="unoStatus === 'Rejected'"
+                                            class="{{unoactiveClass === 'active'? 'bgWhite': ''}}"
+                                            src="assets/img/rejected.png" style="width:18px; filter: invert(1);"
+                                            title="Rejected" alt="Rejected">
+                                        <img *ngIf="unoStatus === 'Pending'" src="assets/img/pending.png"
+                                            style="width:24px" alt="Pending">
+                                        <img *ngIf="unoStatus === 'Approved'" src="assets/img/approved.png"
+                                            style="width:19px" class="{{unoactiveClass === 'active'? 'bgWhite': ''}}"
+                                            title="Approved" alt="Approved">
+                                    </span>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <span class="text2">
+                                        <span *ngIf="unoStatus === 'Pending'">
+                                            Affiliating Body 
+                                            <br>
+                                            <b>
+                                                <span
+                                                    [hidden]="unoStatus === 'Rejected' || snoStatus === 'Rejected' || moeStatus === 'Rejected' || snoStatus === 'Approved' || moeStatus === 'Approved'">{{unoStatus}}</span>
+                                                    <span *ngIf="unoStatus==='Pending' && roleId==22">{{unoStatus}}</span>
+                                            </b>
+                                        </span>
+                                        <span *ngIf="unoStatus === 'Approved'" class="greenColor">
+                                            Affiliating Body
+                                            <br>
+                                            <b>{{unoStatus | uppercase}} ON</b>
+                                            <br>
+                                            {{unoApprovedDated}}
+                                        </span>
+                                        <span *ngIf="unoStatus === 'Rejected'" class="rejectColor">
+                                            Affiliating Body
+                                            <br>
+                                            <b>{{unoStatus | uppercase}} ON</b>
+                                            <br>
+                                            {{unoApprovedDated}}
+                                        </span>
+                                    </span>
+                                </div>
+                                <!-- SNO -->
+                                <ng-container  *ngIf="stateBodyTypeName!='NCHMCT'">
+                                <div class="col-md-3 {{snohideClass}} {{snoSecondhideClass}}"
+                                    *ngIf="otherCase === 'false'" >
+                                    <span
+                                        class=" circle {{snoactiveClass}} {{snohideClass}} {{snoStatus === 'Approved' ? 'greenBg' : ''}} {{snoStatus === 'Rejected' ? 'redBg' : ''}}">
+                                        <img *ngIf="snoStatus === 'Rejected'"
+                                            class="{{snoactiveClass === 'active'? 'bgWhite': ''}}"
+                                            src="assets/img/rejected.png" style="width:18px; filter: invert(1)"
+                                            title="Rejected" alt="Rejected">
+                                        <img *ngIf="snoStatus === 'Pending'" src="assets/img/pending.png"
+                                            style="width:24px" alt="Pending">
+                                        <img *ngIf="snoStatus === 'Approved'"
+                                            class="{{snoactiveClass === 'active'? 'bgWhite': ''}}"
+                                            src="assets/img/approved.png" style="width:19px" title="Approved"
+                                            alt="Approved">
+                                    </span>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <span class="text3">
+                                        <span *ngIf="snoStatus === 'Pending'">
+                                            SNO
+                                            <br>
+                                            <b>
+                                                <span
+                                                    [hidden]="unoStatus === 'Rejected' || snoStatus === 'Rejected' || moeStatus === 'Rejected' || moeStatus === 'Approved' || unoStatus === 'Pending'">{{snoStatus}}</span>
+                                            </b>
+                                        </span>
+                                        <span *ngIf="snoStatus === 'Approved'" class="greenColor">
+                                            SNO
+                                            <br>
+                                            <b>{{snoStatus | uppercase}} ON</b>
+                                            <br>
+                                            {{snoApprovedDated}}
+                                        </span>
+                                        <span *ngIf="snoStatus === 'Rejected'" class="rejectColor">
+                                            SNO
+                                            <br>
+                                            <b>{{snoStatus | uppercase}} ON</b>
+                                            <br>
+                                            {{snoApprovedDated}}
+                                        </span>
+                                    </span>
+                                </div>
+                                </ng-container>
+                                <!-- MOE -->
+                                <div class="col-md-3 {{moeSecondHide}} {{snoSecondhideClass}}">
+                                    <span
+                                        class=" circle {{moeactiveClass}} {{moeStatus === 'Approved' ? 'greenBg' : ''}} {{moeStatus === 'Rejected' ? 'redBg' : ''}}">
+                                        <img *ngIf="moeStatus === 'Rejected'"
+                                            class="{{unoStatus === 'Rejected' ? 'bgWhite': ''}}"
+                                            src="assets/img/rejected.png" style="width:18px;  filter: invert(1)"
+                                            title="Rejected" alt="Rejected">
+                                        <img *ngIf="moeStatus === 'Pending'" src="assets/img/pending.png"
+                                            style="width:24px" alt="Pending">
+                                        <img *ngIf="moeStatus === 'Approved'"
+                                            class="{{moeactiveClass === 'active'? 'bgWhite': ''}}"
+                                            src="assets/img/approved.png" style="width:19px" title="Approved"
+                                            alt="Approved">
+                                    </span>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <span class="text4">
+                                        <span *ngIf="moeStatus === 'Pending'">
+                                            MOE
+                                            <br>
+                                            <b>
+                                                <span
+                                                    [hidden]="unoStatus === 'Rejected' || snoStatus === 'Rejected' || moeStatus === 'Rejected' || snoStatus === 'Pending'">{{moeStatus}}</span>
+                                            </b>
+                                        </span>
+                                        <span *ngIf="moeStatus === 'Approved'" class="greenColor">
+                                            MOE
+                                            <br>
+                                            <b>{{moeStatus | uppercase}} ON</b>
+                                            <br>
+                                            {{moeApprovedDated}}
+                                        </span>
+                                        <span *ngIf="moeStatus === 'Rejected'" class="rejectColor">
+                                            MOE
+                                            <br>
+                                            <b>{{moeStatus | uppercase}} ON</b>
+                                            <br>
+                                            {{moeApprovedDated}}
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <table class="table table-light mt-5 border" *ngIf="arrayMap && !pendingLevelBool">
+                        <thead class="text-left">
+                            <tr>
+                                <th>Approving Authority</th>
+                                <th>Status</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{userRole}}</td>
+                                <td>Pending</td>
+                                <td>{{userName}}</td>
+                                <td>{{emailId}}</td>
+                                <td>{{mobileNo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="mt-5" *ngIf="dataView && rejectedBy !== null">
+                        <span style="font-weight: 300;">
+                            Your request has been rejected by
+                            <span style="font-weight: 600;">{{rejectedBy}}</span>
+                            with remarks:
+                        </span>
+                        <span class="ml-1 rejectColor">
+                            <span *ngIf="snoRemarks !== null">{{snoRemarks}}</span>
+                            <span *ngIf="moeRemarks !== null">{{moeRemarks}}</span>
+                            <span *ngIf="unoRemarks !== null">{{unoRemarks}}</span>
+                        </span>
+                    </p>
+                    <p class="mt-5" *ngIf="dataView && aisheCode !== null">
+                        <span style="font-weight: 600;">
+                            Request has been approved and alloted AISHE Code is:
+                        </span>
+                        <span class="ml-1" style="color:blue; font-weight: 600;">
+                            {{aisheCode}}
+                        </span>
+                    </p>
+                    <h4 class="mt-5 mb-0 pb-1 text-left" style="font-weight: 600;" *ngIf="unoRemarks || snoRemarks || moeRemarks">Remarks</h4>
+                    <p class=" text-left">
+                        <span style="font-weight: 600;" *ngIf="unoStatus=='Approved' && stateBodyTypeName!='Other'">
+                            Affiliate Body :
+                         </span>
+                         <span *ngIf="unoStatus=='Approved'">
+                             {{unoRemarks}}
+                         </span>
+                         <br>
+                        <span style="font-weight: 600;" *ngIf="snoStatus=='Approved' && snoRemarks">
+                           SNO Remarks :
+                        </span>
+                        <span *ngIf="snoStatus=='Approved'">
+                            {{snoRemarks}}
+                        </span>
+                         <br>
+                         <span style="font-weight: 600;" *ngIf="moeStatus=='Approved'">
+                            MoE Remarks :
+                         </span>
+                         <span *ngIf="moeStatus=='Approved'">
+                             {{moeRemarks}}
+                         </span>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

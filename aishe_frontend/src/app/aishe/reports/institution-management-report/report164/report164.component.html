@@ -1,0 +1,49 @@
+
+
+
+<div
+class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+*ngIf="Showdata12"
+>
+<table
+class="table  showReportDataChild" >
+<thead class="childTableStickyHeader">
+<tr>
+<th rowspan="2" class="text-center table-success">Sr. No.</th>
+<th rowspan="2"class="text-center table-light">De-Active Institutione Name</th>
+<th rowspan="2" class="text-center table-secondary">Institution Management</th>
+<th rowspan="2" class="text-center table-tertiary">Institution State</th>
+<th rowspan="2" class="text-center table-light">Institution District</th>
+<th rowspan="2" class="text-center table-secondary">De-affiliation Reason</th>
+<th rowspan="2" class="text-center table-tertiary">De-Active By</th>
+<th rowspan="2" class="text-center table-light">De-Active Time	</th>
+
+</tr> 
+</thead>
+
+<tbody>
+<tr *ngFor="let row of reportTableData | paginate
+: {
+itemsPerPage: pageSize,
+currentPage: page
+} let i=index" >
+<td  class="text-center table-success">{{i+1}}</td>
+<td class="text-center table-light">{{row.name}}</td>
+<td class="text-center table-secondary">{{row.management}}</td>
+<td class="text-center table-tertiary">{{row.state_name}}</td>
+<td class="text-center table-light">{{row.district_name}}</td>
+<td class="text-center table-secondary">{{row.reason}}</td>
+<td class="text-center table-tertiary">{{row.deactive_by}}</td>
+<td class="text-center table-light">{{row.actionTime}}</td>
+
+</tr>
+
+</tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

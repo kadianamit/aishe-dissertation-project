@@ -1,0 +1,249 @@
+.card {
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 0.5rem;
+}
+.more-collapse{
+color: blue;
+cursor: pointer;
+}
+.ms-auto {
+margin-left: auto!important;
+}
+
+.text-end {
+text-align: right!important;
+}
+h2.pgtitle {
+	font-size:15px;
+	text-align:right;
+  margin-right: 18px;
+}
+
+span.pgtitle {
+  font-size: 24px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+  // font-family: emoji;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+.serch {
+width:80%;
+}
+.serch-btn {
+width:80%;
+}
+.btn-blue1 {
+  // color: #fff;
+  // background-color: #0E5799;
+  background-color: #ee7e00;
+    border-color: #ee7e00;
+  border-color:none;
+}
+.btn-blue1:hover {
+  color: #fff;
+}
+.fa-search:before {
+font-size:20px;
+color:#3F3F3F;
+}
+.form-control {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #3F3F3F;
+  background-color: #F2F4F8;
+  border: none;
+padding:10px;
+}
+
+.card-header {
+  padding: 10px 20px;
+  margin-bottom: 0;
+  background-color: #39BCF5;
+  border-bottom: none;
+}
+.purple-head {
+background-color: #A597FF;
+}
+.yellow-head {
+background-color: #FCBE45;
+}
+.card-header img {
+width:50px;
+height:50px;
+margin-top:5px;
+}
+.card-header a {
+font-size:24px;
+line-height:32px;
+color:#fff;
+text-decoration:none;
+text-transform:uppercase;
+font-weight:500;
+}
+.card-header a span {
+font-size:28px;
+font-weight:800;
+color:#232323;
+}
+.card-header a:hover {
+color:#fff;
+}
+.card-header a span {
+color:#232323;
+}
+
+.card-body {
+  padding: 10px 20px !important;
+}
+.card-body {
+flex: 1 1 auto !important;
+padding: 1rem 1rem !important;
+}
+
+// old css
+mat-header-cell{
+  background-color: #337ab7;
+  color: #fff;
+}
+
+mat-table mat-cell,
+mat-table mat-header-cell{
+  padding: 5px;
+  display: grid;
+  width: max-content;
+  text-align: center;
+  // border: solid 1px;
+}
+mat-table mat-row{
+  border: solid 0px !important;
+  margin: 1px !important;
+}
+
+mat-table{
+  display: grid;
+}
+
+
+
+.mat-header-cell{
+  text-transform: uppercase;
+}
+
+
+mat-row:nth-child(even){
+ // background:#d6e1f7;
+  background:fff;
+}
+
+mat-row:nth-child(odd){
+  background:#e4f0f5;
+}
+.mat-header-cell {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+mat-row:nth-child(even):hover{
+  background:#eee;
+}
+
+mat-row:nth-child(odd):hover{
+  background:#eee;
+}
+
+.btn1{
+background-color:  #3e6b85;
+    border: none;
+    padding: 0.9rem 1.5rem;
+    /* min-width: 122px; */
+    color: aliceblue;
+    font-size: 20px;
+    font-family: Roboto, "Helvetica Neue", sans-serif !important;
+    border-radius: 10px;
+
+}
+  .page-title.h2, h2.page-title {
+	font-size:28px;
+	font-weight:800;
+	text-transform:uppercase;
+}
+mat-form-field{
+  display:block !important;
+  }
+
+  a.link{
+    color: blue;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+
+.universityTable{
+  .mat-column-aisheCode{flex: 0 0 7.11% !important;}
+  .mat-column-name{flex: 0 0 13.11% !important;}
+  .mat-column-address1{flex: 0 0 17.11% !important}
+  .mat-column-stateName{flex: 0 0 11.11% !important;}
+  .mat-column-districtName{flex: 0 0 11.11%!important;}
+  .mat-column-webSite{flex: 0 0 15.11% !important;}
+  .mat-column-yearOfEstablishment{flex: 0 0 7.11% !important;}
+  // .mat-column-location{flex: 0 0 7.11% !important;}
+  // .mat-column-specializedIn{flex: 0 0 11.11% !important;}
+  }
+
+  .collegeTable{
+    .mat-column-aisheCode{flex: 0 0 5.33% !important;}
+    .mat-column-name{flex: 0 0 11.33% !important;}
+    .mat-column-address1{flex: 0 0 11.33%  !important;}
+    .mat-column-stateName{flex: 0 0 8.33% !important;}
+    .mat-column-districtName{flex: 0 0 8.33% !important;}
+    .mat-column-webSite{flex: 0 0 11.33% !important;}
+    .mat-column-yearOfEstablishment{flex: 0 0 5.33% !important;}
+    .mat-column-location{flex: 0 0 5.33% !important;}
+    .mat-column-manegement{flex: 0 0 8.33% !important;}
+  //  .mat-column-specializedIn{flex: 0 0 8.33% !important;}
+    .mat-column-universityName{flex: 0 0 8.33% !important;}
+    // .mat-column-universityType{flex: 0 0 8.33% !important;}
+  }
+
+.standTable{
+  .mat-column-aisheCode{flex: 0 0 7.11% !important;}
+  .mat-column-name{flex: 0 0 20.11% !important;}
+  .mat-column-address1{flex: 0 0 17.11% !important}
+  .mat-column-stateName{flex: 0 0 11.11% !important;}
+  .mat-column-districtName{flex: 0 0 11.11%!important;}
+  .mat-column-yearOfEstablishment{flex: 0 0 7.11% !important;}
+  .mat-column-location{flex: 0 0 7.11% !important;}
+  // .mat-column-manegement{flex: 0 0 8.09% !important;}
+  // .mat-column-specializedIn{flex: 0 0 11.11% !important;}
+}
+
+
+.nationalImportance{
+  .mat-column-aisheCode{flex: 0 0 6.11% !important;}
+  .mat-column-name{flex: 0 0 16.11% !important;}
+  .mat-column-address1{flex: 0 0 17.11% !important}
+  .mat-column-stateName{flex: 0 0 11.11% !important;}
+  .mat-column-districtName{flex: 0 0 11.11%!important;}
+  .mat-column-webSite{flex: 0 0 15.11% !important;}
+  .mat-column-yearOfEstablishment{flex: 0 0 7.11% !important;}
+  // .mat-column-location{flex: 0 0 7.11% !important;}
+  // .mat-column-specializedIn{flex: 0 0 9.11% !important;}
+  }

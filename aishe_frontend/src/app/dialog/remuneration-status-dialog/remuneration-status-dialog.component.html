@@ -1,0 +1,79 @@
+<mat-dialog-content>
+    <form [formGroup]="formdataRemuneration">
+        <div class="col-md-12">
+            <mat-form-field style="width: 100%;">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option
+                        *ngFor="let item of this.statusfilter"
+                        [value]=item.id
+                    >
+                        {{item.status}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <!-- Error messages for invalid passwords -->
+            <div
+                *ngIf="formdataRemuneration.controls['status'].invalid && (formdataRemuneration.controls['status'].dirty || formdataRemuneration.controls['status'].touched)"
+                >
+
+                <div *ngIf="formdataRemuneration.controls['status'].errors?.['required']" ><span style="color:red">This field is required.</span> </div>
+                
+
+            </div>
+        </div>
+        <div class="col-md-12">
+         
+            <mat-form-field class="example-full-width">
+              <mat-label>Remarks, If Any</mat-label>
+                <!-- <mat-label>Leave a comment</mat-label> -->
+                <textarea
+                    formControlName="remarks"
+                    matInput
+                    placeholder="Ex. It makes me feel..."
+                ></textarea>
+            </mat-form-field>
+            <div
+                class="err-msgs"
+                *ngIf="formdataRemuneration.controls['remarks'].dirty || formdataRemuneration.controls['remarks'].value || formdataRemuneration.controls['remarks'].touched || isFormInvalid "
+            >
+                <span *ngIf="formdataRemuneration.controls['remarks'].hasError('required')">Please enter</span>
+                <span *ngIf="formdataRemuneration.controls['remarks'].hasError('pattern')">Invalid Password</span>
+            </div>
+        </div>
+        <!-- <div class="col-md-12">
+        <mat-form-field class="d-block">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput formControlName="confirmPassword" type="password" placeholder="Confirm Password" (paste)="false" (draggable)="false"
+          (drop)="false" (dragover)="false" autocomplete="conf">
+        </mat-form-field>
+        <div class="err-msgs"
+          *ngIf="password.controls['confirmPassword'].dirty || password.controls['confirmPassword'].value || password.controls['confirmPassword'].touched || isFormInvalid ">
+          <span *ngIf="password.controls['confirmPassword'].hasError('required')">Please enter
+          </span>
+          <span *ngIf="password.controls['confirmPassword'].hasError('mustMatch')">Passwords do not match
+          </span>
+        </div>
+      </div> -->
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button
+        mat-raised-button
+        color="primary"
+        tabindex="1"
+        (click)="Save()"
+    >
+        {{confirmButtonText}}
+    </button>
+    <button
+        mat-raised-button
+        mat-dialog-close
+        color="warn"
+        tabindex="-1"
+        (click)="onCancel()"
+    >
+        {{cancelButtonText}}
+    </button>
+</mat-dialog-actions>

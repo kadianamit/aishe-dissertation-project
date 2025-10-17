@@ -1,0 +1,146 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"    *ngIf="Showdata12">
+  <table class="table  showReportDataChild">
+      <thead class="childTableStickyHeader">
+          <tr *ngIf="is2020==false">
+              <th rowspan="2"  class="text-center table-success">Programme</th>
+              <th colspan="3" class="text-center table-tertiary">1st Year Enrolment</th>
+              <th colspan="3" class="text-center table-secondary">2st Year Enrolment</th>
+              <th colspan="3" class="text-center table-tertiary">3st Year Enrolment</th>
+              <th colspan="3" class="text-center table-secondary">4st Year Enrolment</th>
+              <th colspan="3" class="text-center table-tertiary">5st Year Enrolment</th>
+              <th colspan="3" class="text-center table-secondary">6st Year Enrolment</th>
+              <th colspan="3" class="text-center table-tertiary">7st Year Enrolment</th>
+              <th colspan="3" class="text-center table-secondary">8st Year Enrolment</th>
+
+            </tr>
+            <tr *ngIf="is2020">
+              <th rowspan="2"  class="text-center table-success">Programme</th>
+              <th colspan="4" class="text-center table-tertiary">1st Year Enrolment</th>
+              <th colspan="4" class="text-center table-secondary">2st Year Enrolment</th>
+              <th colspan="4" class="text-center table-tertiary">3st Year Enrolment</th>
+              <th colspan="4" class="text-center table-secondary">4st Year Enrolment</th>
+              <th colspan="4" class="text-center table-tertiary">5st Year Enrolment</th>
+              <th colspan="4" class="text-center table-secondary">6st Year Enrolment</th>
+              <th colspan="4" class="text-center table-tertiary">7st Year Enrolment</th>
+              <th colspan="4" class="text-center table-secondary">8st Year Enrolment</th>
+
+            </tr>
+            <tr *ngIf="is2020==false">
+            <th
+            *ngFor="let col of tableColumns; let i = index"
+            [attr.style]=" (i ===0) ? 'display:none': ''
+            "
+            [ngClass]="[i==0?'table-success':  '',
+            i>0 && i<=3? 'table-tertiary': '',i>3 && i<=6 ? 'table-secondary': '',
+            i>6 && i<=9? 'table-tertiary': '',i>9 && i<=12 ? 'table-secondary': '',
+            i>12 && i<=15? 'table-tertiary': '',i>15 && i<=18 ? 'table-secondary': '',
+            i>18 && i<=21? 'table-tertiary': '',i>21 && i<=24 ? 'table-secondary': '',
+            i>24 && i<=27? 'table-tertiary': '',i>27 && i<=30 ? 'table-secondary': '',
+        ]"
+            class="text-center"
+          >
+
+              {{col
+              .trim()
+              .replace('1st Year','')
+              .replace('2nd Year','')
+              .replace('3rd Year','')
+              .replace('4th Year','')
+              .replace('5th Year','')
+              .replace('6th Year','')
+              .replace('7th Year','')
+              .replace('8th Year','')
+              .replace('Dip','')
+              }}
+          </th>
+        </tr>
+        <tr *ngIf="is2020">
+          <th
+          *ngFor="let col of tableColumns; let i = index"
+          [attr.style]=" (i ===0) ? 'display:none': ''
+          "
+          [ngClass]="[i==0?'table-success':  '',
+          i>0 && i<=4? 'table-tertiary': '',i>4 && i<=8 ? 'table-secondary': '',
+          i>8 && i<=12? 'table-tertiary': '',i>12 && i<=16 ? 'table-secondary': '',
+          i>16 && i<=20? 'table-tertiary': '',i>20 && i<=24 ? 'table-secondary': '',
+          i>24 && i<=28? 'table-tertiary': '',i>28 && i<=32 ? 'table-secondary': '',
+          i>32 && i<=36? 'table-tertiary': '',i>36 && i<=40 ? 'table-secondary': '',
+      ]"
+          class="text-center"
+        >
+            {{col
+            .trim()
+            .replace('1st Year','')
+            .replace('2nd Year','')
+            .replace('3rd Year','')
+            .replace('4th Year','')
+            .replace('5th Year','')
+            .replace('6th Year','')
+            .replace('7th Year','')
+            .replace('8th Year','')
+            .replace('Dip','')
+            }}
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let row of reportTableData | paginate
+          : {
+              itemsPerPage: pageSize,
+              currentPage: page
+            };" [ngClass]="is2020?'d-none':''">
+        <td
+            *ngFor="let col of tableColumns; let i = index"
+            class="text-center"
+            [ngClass]="[i==0?'table-success': '',
+                          i>0 && i<=3? 'table-tertiary': '',i>3 && i<=6 ? 'table-secondary': '',
+                          i>6 && i<=9? 'table-tertiary': '',i>9 && i<=12 ? 'table-secondary': '',
+                          i>12 && i<=15? 'table-tertiary': '',i>15 && i<=18 ? 'table-secondary': '',
+                          i>18 && i<=21? 'table-tertiary': '',i>21 && i<=24 ? 'table-secondary': '',
+                          i>24 && i<=27? 'table-tertiary': '',i>27 && i<=30 ? 'table-secondary': '',
+
+                      ]"
+          >
+            {{ row[col] }}
+          </td>
+        </tr>
+        <tr *ngFor="let row of reportTableData | paginate
+        : {
+            itemsPerPage: pageSize,
+            currentPage: page
+          };" [ngClass]="is2020?'':'d-none'">
+          <td
+              *ngFor="let col of tableColumns; let i = index"
+              class="text-center"
+              [ngClass]="[i==0?'table-success': '',
+                            i>0 && i<=4? 'table-tertiary': '',i>4 && i<=8 ? 'table-secondary': '',
+                            i>8 && i<=12? 'table-tertiary': '',i>12 && i<=16 ? 'table-secondary': '',
+                            i>16 && i<=20? 'table-tertiary': '',i>20 && i<=24 ? 'table-secondary': '',
+                            i>24 && i<=28? 'table-tertiary': '',i>28 && i<=32 ? 'table-secondary': '',
+                            i>32 && i<=36? 'table-tertiary': '',i>36 && i<=40 ? 'table-secondary': '',
+                        ]"
+            >
+              {{ row[col] }}
+            </td>
+          </tr>
+        <tr>
+          <td colspan="1" class="text-center table-success">
+            All Programmes
+          </td>
+          <td
+            *ngFor="let summary of summaryColumns; let i = index"  [attr.style]=" (i ===0) ? 'display:none': ''"
+            class="text-center table-secondary"
+          >
+            {{ summaryData[summary] }}
+          </td>
+        </tr>
+        </tbody>
+  </table>
+  <pagination-controls
+  previousLabel="Prev"
+  nextLabel="Next"
+  (pageChange)="handlePageChange($event)"
+  >
+  </pagination-controls>
+      </div>

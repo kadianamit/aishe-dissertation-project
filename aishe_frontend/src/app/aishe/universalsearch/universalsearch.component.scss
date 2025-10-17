@@ -1,0 +1,24 @@
+.mat-card{
+    max-width: 700px;
+    margin: 4em auto;
+    text-align: center;
+    border-top: 0.10rem solid #0061a2 !important;
+    border-bottom: 0.10rem solid #0061a2 !important;
+    border-left: 0.10rem solid #0061a2 !important;
+    border-right: 0.10rem solid #0061a2 !important;
+  }
+  
+
+
+
+.col-form-label {
+  font-weight: 500;
+}
+
+.table tr:nth-child(odd) td {
+  background-color: #f8f9fa;
+}
+
+.table tr:nth-child(even) td {
+  background-color: #f8f9fa;
+}

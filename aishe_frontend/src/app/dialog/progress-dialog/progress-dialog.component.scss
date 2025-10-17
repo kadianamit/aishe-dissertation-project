@@ -1,0 +1,27 @@
+// tr:nth-child(even){
+//     background:#d6e1f7;
+//   }
+//   tr:nth-child(odd){
+//     background:#bfe1ef;
+//   }
+//   tr:nth-child(even):hover{
+//     background:#aec1e7;
+//   }
+  
+//   tr:nth-child(odd):hover{
+//     background:#91b3c3;
+//   }
+.table tr:nth-child(odd) td{
+  background-color: #f5eded
+}
+.table tr:nth-child(even) td{
+  background-color: #ffffff;
+}
+// .mat-dialog-content {
+//   display: contents !important;
+// }
+// .excel {
+//   display: flex;
+//   justify-content: flex-end; /* Aligns items to the right */
+//   align-items: center; /* Ensures vertical alignment if needed */
+// }

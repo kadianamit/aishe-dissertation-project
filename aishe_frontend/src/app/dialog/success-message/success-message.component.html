@@ -1,0 +1,113 @@
+<mat-dialog-content *ngIf="element.confirm">
+  <p style="color: red;font-weight: 500;text-align: center;">
+    Do you like to Final Submit?
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="center" *ngIf="element.confirm">
+  <button mat-raised-button color="primary" tabindex="1" (click)="save()">{{confirmButtonText}}</button>
+  <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+</mat-dialog-actions>
+<mat-dialog-content *ngIf="element.success">
+  <p style="font-weight: 500;text-align: center;">
+    Thank You for submitting request on AISHE Portal.</p>
+  <span style="font-weight: 500">You have successfully submitted. <b style="color: green;">Your Request Id</b> is <b
+      style="color: green;">{{element.requestId}}</b> and is <b style="color: green;">Under Process.</b></span><br>
+  <span style="font-weight: 500">Once approved, a confirmation email will be sent at your registered email id.</span>
+
+</mat-dialog-content>
+
+
+<mat-dialog-content *ngIf="element.research">
+  
+  <span style="font-weight: 500;font-size: large;">Your request for adding R & D Institute has been successfully submitted.<br><p class="research">Your AISHE Code is R-{{element.aisheCode}}</p></span>
+  
+
+</mat-dialog-content>
+
+<mat-dialog-content *ngIf="element.researchReq">
+  <span style="font-weight: 500;text-align: center;">Your request for adding R & D Institute has been successfully submitted.</span><br><span><b>Your Request Id</b> is <b
+      style="color: red;text-align: center;">{{element.requestId}}</b> and is <b style="color: red;">Under Process.</b></span><br>
+  <span style="font-weight: 500">Once approved, a confirmation email will be sent at your registered email id.</span>
+
+</mat-dialog-content>
+
+
+<mat-dialog-content *ngIf="element.registrationSuccess || element.newRegister">
+  <p style="font-weight: 500;text-align: center;">
+
+    Your request for <b>User Registration</b> has been saved successfully !!! <a href="https://dcf.aishe.nic.in/aishenew/#/details/approvingAuthority">For approval, contact to your approving authority.</a></p>
+  <!-- <span style="font-weight: 500;color: green;">Once approved, a confirmation email will be sent at your registered email
+    id.</span> -->
+
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.eligible">
+
+  <span style="font-weight: 500;color: red;">Your Institution is not active.Please contact your approving authority/State Nodal Officer(SNO) !!!.</span>
+
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.isApproved">
+  <span style="font-weight: 500;color: red;">This User Id is Disapproved.Please contact to your Approving Authority/State Nodal Officer(SNO)
+    !!!.</span>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.isInactive">
+  <span style="font-weight: 500;color: red;">This User Id is Inactive.Please contact to your Approving Authority/State Nodal Officer(SNO)
+    !!!.</span>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.isRegistarion">
+  <span style="font-weight: 500;color: red;">This User Id is not Approved.Please contact to your Approving Authority/State Nodal Officer(SNO)
+    !!!.</span>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.dataUserRegistation">
+  <p style="font-weight: 500;text-align: center;">
+    Your request for <b>Data User Registration</b> has been saved successfully !!!</p>
+  <!-- <span style="font-weight: 500;color: green;">User Activation link will be sent at your registered email
+    id.</span> -->
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.forgotPass">
+  <p style="font-weight: 500;color: green;">The reset password link has been sent to your registered email id, Please
+    check your email to reset the password.
+  </p>
+
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.resetPass">
+  <p style="font-weight: 500;color: green;">Your Password has been reset successfully.
+  </p>
+
+</mat-dialog-content>
+<mat-dialog-content *ngIf="element.nta">
+  <p style="font-weight: 500;color: red;">Your institution has not participated in the survey year (2021-22)
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-content *ngIf="element.foreigninstitute">
+  <p style="font-weight: 500;color: green;">This record has been {{element.status === '3' ? 'Approved' : 'Disapproved'}} Successfully !!!`.</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center"
+  *ngIf="element.research">
+  <button mat-raised-button color="warn" mat-dialog-close tabindex="-1" (click)="closeResearch()">Close</button>
+</mat-dialog-actions>
+
+<mat-dialog-actions align="center"
+  *ngIf="element.success || element.isApproved || element.isInactive || element.isRegistarion">
+  <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">Close</button>
+</mat-dialog-actions>
+<mat-dialog-actions align="center"
+  *ngIf="element.registrationSuccess || element.eligible || element.forgotPass || element.resetPass">
+  <button mat-raised-button color="warn" tabindex="-1" (click)="close()">Close</button>
+</mat-dialog-actions>
+<mat-dialog-actions align="center" *ngIf="element.dataUserRegistation">
+  <button mat-raised-button color="warn" tabindex="-1" (click)="dataUser()">Close</button>
+</mat-dialog-actions>
+<mat-dialog-actions align="center" *ngIf="element.newRegister">
+  <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">Close</button>
+</mat-dialog-actions>
+<mat-dialog-actions align="center" *ngIf="element.nta">
+  <button mat-raised-button color="warn" (click)="ntaClosed()">Close</button>
+</mat-dialog-actions>
+<mat-dialog-actions align="center" *ngIf="element.researchReq">
+  <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">Close</button>
+</mat-dialog-actions>
+<mat-dialog-actions align="center" *ngIf="element.foreigninstitute">
+  <button mat-raised-button color="warn" (click)="closeResearch()">Close</button>
+</mat-dialog-actions>

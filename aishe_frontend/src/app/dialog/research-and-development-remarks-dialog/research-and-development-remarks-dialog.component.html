@@ -1,0 +1,292 @@
+<mat-dialog-content style="max-height: 80vh;">
+<h1 class="text-center" style="font-weight: 500;">R&D Institute Details</h1>
+<table class="table table-bordered table-sm">
+    <!-- <tr>
+        <td>Aishe Code</td>
+        {{dataArray?.aisheCode}}
+    </tr> -->
+    <tr>
+        <td>Request Id</td>
+        <td>{{dataArray?.requestId}}</td>
+
+    </tr>
+    <tr>
+        <td>Request Submitted Date & Time</td>
+        <td>{{dataArray?.createdDate}}</td>
+
+    </tr>
+    
+    <tr>
+        <td>Institution Name</td>
+        <td>{{dataArray?.name}}</td>
+
+    </tr>
+    <tr>
+        <td>Administrative Ministry</td>
+        <td>{{dataArray?.ministryOnosName}}</td>
+
+    </tr>
+
+    <tr>
+        <td>State Name</td>
+        <td>{{dataArray?.stateName}}</td>
+
+    </tr>
+    <tr>
+        <td>District Name</td>
+        <td>{{dataArray?.districtName}}</td>
+
+    </tr>
+    <th colspan="2" style="font-size: 17px !important;">Nodal Officer Details</th>
+    <tr>
+        <td>Name</td>
+        <td>{{dataArray?.nodalOfficerName}}</td>
+
+    </tr>
+    <tr>
+        <td>Gender</td>
+        <td>{{dataArray?.nodalOfficerGender  === 1 ? 'Male' : 'Female'}}</td>
+
+    </tr>
+    <tr>
+        <td>Designation</td>
+        <td>{{dataArray?.nodalOfficerDesignation}}</td>
+
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{{dataArray?.nodalOfficerEmail}}</td>
+
+    </tr>
+
+    <tr>
+        <td>Mobile</td>
+        <td>{{dataArray?.nodalOfficerMobile}}</td>
+
+    </tr>
+    <tr>
+        <td>Telephone</td>
+        <td>{{dataArray?.nodalOfficerTelephone}}</td>
+
+    </tr>
+    <tr>
+        <td>Complete Address</td>
+        <td>{{dataArray?.addressLine1}}</td>
+
+    </tr>
+    <tr>
+        <td>Pin Code</td>
+        <td>{{dataArray?.pinCode}}</td>
+
+    </tr>
+
+
+
+    <th colspan="2" style="font-size: 17px !important;">Institutional Head Details</th>
+    <tr>
+        <td>Name</td>
+        <td>{{dataArray?.headOfficerName}}</td>
+
+    </tr>
+    <tr>
+        <td>Gender</td>
+        <td>{{dataArray?.headOfficerGender === 1 ? 'Male' : 'Female'}}</td>
+
+    </tr>
+    <tr>
+        <td>Designation</td>
+        <td>{{dataArray?.headOfficerDesignation}}</td>
+
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>{{dataArray?.headOfficerEmail}}</td>
+
+    </tr>
+
+    <tr>
+        <td>Mobile</td>
+        <td>{{dataArray?.headOfficerMobile}}</td>
+    </tr>
+    <!-- <tr>
+        <td>HeadOfficer Telephone</td>
+        <td>{{dataArray?.headOfficerTelephone}}</td>
+
+    </tr> -->
+
+
+    <!-- <tr>
+        <td>Location Name</td>
+        <td>{{dataArray?.locationName}}</td>
+
+    </tr> -->
+
+    <!-- <tr>
+        <td>Address Line2</td>
+        <td>{{dataArray?.addressLine2}}</td>
+
+    </tr> -->
+    <!-- <tr>
+        <td>City</td>
+        <td>{{dataArray?.city}}</td>
+
+    </tr> -->
+
+    <tr>
+        <td>Submitted Date & Time</td>
+        <td>{{dataArray?.createdDate}}</td>
+
+    </tr>
+    <!-- <tr>
+        <td>Document File</td>
+        <td><a (click)="downloadPdf(dataArray?.documentFile)" style="cursor: pointer; color: blue">
+            Click here to view
+        </a></td>
+    </tr> -->
+</table>
+<div class="ml-1">Document :- <a href="javascript:void(0)" matTooltip="view document" (click)="downloadPdf(dataArray?.documentFile)">Click here to view Document</a></div>
+
+    <div class="table-responsive-sm mt-4">
+        <form [formGroup]="userForm">
+        <div class="row">
+            <div class="col-md-12 table-responsive-sm">
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <b>Action</b>
+                        <span style="color: red">*</span>
+                        <span style="float: right;">:</span>
+                    </div>
+                    <div class="col-md-3">
+                        <!-- <mat-radio-group aria-label="Select an option" formControlName="approveR" required (change)="statusId($event.value)">
+                            <mat-radio-button value="1">Approve</mat-radio-button>
+                            <mat-radio-button value="2" class="ml-2">
+                                Reject
+                            </mat-radio-button>
+                        </mat-radio-group> -->
+                    <mat-form-field class="d-block" style="margin-top:-20px;">
+                          <mat-select formControlName="approveR" required (selectionChange)="statusCheck($event)">
+                            <mat-option
+                              *ngFor="let item of approveList"
+                              [value]="item.id"
+                              >{{ item.name }}</mat-option
+                            >
+                          </mat-select>
+                        </mat-form-field>
+
+
+
+
+
+
+                    </div>
+
+
+                    <div class="col-md-3"></div>
+                    <div class="col-md-4"></div>
+
+                </div><br>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <mat-hint class="err-msgs">
+                    <span *ngIf="userForm.controls['approveR'].value === 0 && isFormInvalid"
+                        class="errorMessage">Please Select approve/reject
+                    </span>
+                </mat-hint>
+                <div class="col-md-3"></div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-2">
+                        <b>Remarks</b>
+                        <span style="color: red;">*</span>
+                        <span style="float: right;">:</span>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width" style="margin-top:-20px;">
+                            <!-- <mat-label>Remarks</mat-label> -->
+                            <textarea formControlName="aRemarks" required matInput style="margin: -20px -20px -20px 0px;"
+                                ></textarea>
+
+                        </mat-form-field>
+                        <mat-hint class="err-msgs"
+                        *ngIf="userForm.controls['aRemarks'].dirty || userForm.controls['aRemarks'].value || userForm.controls['aRemarks'].touched || isFormInvalid">
+                        <span *ngIf="userForm.controls['aRemarks'].hasError('required')"
+                            class="errorMessage">Please enter
+                        </span>
+                    </mat-hint>
+                        <!-- <span style="color: #d50404;" *ngIf="isRemarksErrorVisisble">This field is required.</span> -->
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-3">
+                        <!-- <mat-form-field appearance="fill">
+                          <mat-label>Survey Year</mat-label>
+                          <mat-select formControlName="surveyYear" required>
+                            <mat-option
+                              *ngFor="let year of surveyYearList"
+                              [value]="year"
+                              >{{ year }}</mat-option
+                            >
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-hint class="err-msgs"
+                        *ngIf="userForm.controls['surveyYear'].dirty || userForm.controls['surveyYear'].value || userForm.controls['surveyYear'].touched || isFormInvalid">
+                        <span *ngIf="userForm.controls['surveyYear'].hasError('required')"
+                            class="errorMessage">Please Select
+                        </span>
+                    </mat-hint> -->
+                      </div>
+                </div>
+                <br>
+                <div class="row">
+
+                    <div class="col-md-2" style="text-align: right;">
+
+                    </div>
+                    <div class="col-md-5" *ngIf="isDocVisisble || userForm.controls['approveR'].value !==2">
+                        <input class="form-check-input" type="checkbox"
+                        formControlName="alldocumentsvalid" required style="width: 15px;">
+                        <label for="inlineCheckbox1">
+                            &nbsp;All of the documents are valid and institution is verified.
+                            <span style="color: red">*</span>
+                        </label>
+                        <br>
+                        <br>
+                        <mat-hint class="err-msgs"
+                        *ngIf="userForm.controls['alldocumentsvalid'].dirty || userForm.controls['alldocumentsvalid'].value || userForm.controls['alldocumentsvalid'].touched || isFormInvalid">
+                        <span *ngIf="userForm.controls['alldocumentsvalid'].hasError('required')"
+                            class="errorMessage">Please Select
+                        </span>
+                    </mat-hint>
+                        <!-- <mat-error
+                        *ngIf="userForm.controls['alldocumentsvalid'].hasError('required') || userForm.controls['alldocumentsvalid'].dirty || userForm.controls['alldocumentsvalid'].value || userForm.controls['alldocumentsvalid'].touched">
+                        Please select Survey Year
+                      </mat-error>  -->
+
+                        <!-- <span style="color: #d50404;" *ngIf="isDocErrorVisisble">This field is required.</span> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</mat-dialog-content>
+
+<!-- <div class="col-md-6">
+    <mat-form-field  class="example-full-width">
+    <mat-label>Remarks</mat-label>
+        <input matInput />
+        </mat-form-field>
+</div> -->
+<div class="row" style="margin-top: 4px;">
+    <div class="row col-md-12">
+        <div class="mx-auto">
+        <button id="approve"  type="submit" class="btn1 btn btn-sm btn-success" (click)="save()">
+          Submit
+        </button>&nbsp;
+        <button type="button" (click)="onCancel()" class="btn1 btn btn-sm btn-danger">Close</button>
+        </div>
+      </div>
+</div>
+
+

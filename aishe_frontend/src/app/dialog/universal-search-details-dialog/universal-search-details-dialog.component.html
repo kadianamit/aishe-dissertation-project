@@ -1,0 +1,172 @@
+<mat-dialog-content  style="height: auto;">
+     <h1 class="text-center" style="font-weight: 500;">{{heading}}</h1>
+    <table class="table table-bordered table-sm" *ngIf="heading==='Institution Details'">
+        <tr>
+            <td>AISHE Code</td>
+            <td>{{allData?.aisheCode}}</td>
+        </tr>
+        <tr>
+            <td>Institution Name</td>
+            <td>{{allData?.name}}</td>
+        </tr>
+        <tr>
+            <td>Affiliating Body</td>
+            <td>{{allData?.universityName}}</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>{{allData?.addressLine1}} {{allData?.addressLine2}}</td>
+        </tr>
+        <tr>
+            <td>State</td>
+            <td>{{allData?.state?.name}}</td>
+        </tr>
+        <tr>
+            <td>District</td>
+            <td>{{allData?.district?.name}}</td>
+        </tr>
+        <tr>
+            <td>Pincode</td>
+            <td>{{allData?.pinCode}}</td>
+        </tr>
+
+
+
+        <tr>
+            <td>Institute Head Email Id</td>
+            <td>{{allData?.headOfficerEmail}}</td>
+        </tr>
+        <tr>
+            <td>Institute Head Phone Number</td>
+            <td>{{allData?.headOfficerMobile}}</td>
+        </tr>
+        <tr>
+            <td>Action Date</td>
+            <td>{{allData?.actionDate}}</td>
+        </tr>
+
+    </table>
+    <table class="table table-bordered table-sm" *ngIf="heading==='Current Status'">
+        <tr>
+            <td>Status</td>
+            <td>{{allData.currentStatus}}</td>
+        </tr>
+
+        <tr>
+            <td>Date</td>
+            <td>{{allData?.currentStatusDate}}</td>
+        </tr>
+        <tr>
+            <td>Action By</td>
+            <td>{{allData?.actionBy}}</td>
+        </tr>
+
+        <tr *ngIf="allData.currentStatus === 'College Merged'">
+            <td>New AISHE Code</td>
+            <td>{{allData?.institutionDetail?.newAisheCode}}</td>
+        </tr>
+        <tr *ngIf="allData.currentStatus === 'College Merged'">
+            <td>New Institution</td>
+            <td>{{allData?.institutionDetail?.newCollegeName}}</td>
+        </tr>
+        <tr *ngIf="allData.currentStatus === 'College Merged'">
+            <td>State</td>
+            <td>{{allData?.institutionDetail?.stateName}}</td>
+        </tr>
+        <tr *ngIf="allData.currentStatus === 'College Upgrade To University' || allData.currentStatus === 'Standalone Upgrade to University'">
+            <td>New AISHE Code</td>
+            <td>{{allData?.institutionDetail?.universityAisheCode}}</td>
+        </tr>
+        <tr *ngIf="allData.currentStatus === 'College Upgrade To University' || allData.currentStatus === 'Standalone Upgrade to University'">
+            <td>New Institution</td>
+            <td>{{allData?.institutionDetail?.universityName}}</td>
+        </tr>
+        <tr *ngIf="allData.currentStatus === 'College Upgrade To University' || allData.currentStatus === 'Standalone Upgrade to University'">
+            <td>State</td>
+            <td>{{allData?.institutionDetail?.stateName}}</td>
+        </tr>
+
+        <tr *ngIf="allData.currentStatus === 'Standalone Upgrade to College'">
+            <td>New AISHE Code</td>
+            <td>{{allData?.institutionDetail?.collegeAisheCode}}</td>
+        </tr>
+        <tr *ngIf="allData.currentStatus === 'Standalone Upgrade to College'">
+            <td>New Institution</td>
+            <td>{{allData?.institutionDetail?.collegeName}}</td>
+        </tr>
+        <tr *ngIf="allData.currentStatus === 'Standalone Upgrade to College'">
+            <td>State</td>
+            <td>{{allData?.institutionDetail?.stateName}}</td>
+        </tr>
+
+    </table>
+    <table class="table table-bordered table-sm" *ngIf="heading==='Last Updated'">
+        <tr>
+            <td>Name/Address Updation</td>
+            <td>{{allData?.lastUpdated?.actionTimeString}}</td>
+        </tr>
+        <tr>
+            <td>University Updation/Transferred To/Upgraded To</td>
+            <td>{{allData?.lastUpdated?.action?.actionName}}</td>
+        </tr>
+        <tr>
+            <td>Remarks</td>
+            <td>{{allData?.lastUpdated?.remarks}}</td>
+        </tr>
+        <tr>
+            <td>Done By</td>
+            <td>{{allData?.lastUpdated?.userId}}</td>
+        </tr>
+        <tr>
+            <td>Action Performed</td>
+            <td>{{allData?.lastUpdated?.action?.actionName}}</td>
+        </tr>
+    </table>
+    <table class="table table-bordered table-sm" *ngIf="heading==='User Details'">
+        <tr>
+            <td>Nodal Officer Name</td>
+            <td>{{allData.nodalOfficerName}}</td>
+        </tr>
+        <tr>
+            <td>Nodal Officer Designation</td>
+            <td>{{allData?.nodalOfficerDesignation}}</td>
+        </tr>
+        <tr>
+            <td>Nodal Officer Email</td>
+            <td>{{allData?.nodalOfficerEmail}}</td>
+        </tr>
+        <tr>
+            <td>Nodal Officer Gender</td>
+            <td>{{allData?.nodalOfficerGender?.name}}</td>
+        </tr>
+        <tr>
+            <td>Nodal Officer Mobile</td>
+            <td>{{allData?.nodalOfficerMobile}}</td>
+        </tr>
+        <tr>
+            <td>Nodal Officer Telephone</td>
+            <td>{{allData?.nodalOfficerTelephone}}</td>
+        </tr>
+    </table>
+    <table class="table table-bordered table-sm" *ngIf="this.data.surveyYears || ((heading==='User Last Uploaded DCF Details') && lastUpdatedDcfDetails.length>0)">
+        <tr>
+            <th>DCF Ref. number</th>
+            <th>Survey Year</th>
+            <th>Uploaded By</th>
+            <th>Uploaded Date</th>
+            <th *ngIf="!data.surveyYears">Approved By</th>
+            <th *ngIf="!data.surveyYears">Approved Date</th>
+        </tr>
+        <tr *ngFor="let updatedRecord of lastUpdatedDcfDetails">
+            <td>{{updatedRecord?.aisheCode}}-{{updatedRecord?.surveyYear}}</td>
+            <td>{{updatedRecord.surveyYear}}</td>
+            <td>{{updatedRecord.uploaderId}}</td>
+            <td >{{updatedRecord.uploadDateTime}}</td>
+            <td *ngIf="!data.surveyYears">{{updatedRecord.approverId}}</td>
+            <td *ngIf="!data.surveyYears">{{updatedRecord.approveDateTime}}</td>
+        </tr>
+    </table>
+    <mat-dialog-actions align="center" class="mb-1">
+        <button mat-raised-button mat-dialog-close color="warn" tabindex="-1">{{cancelButtonText}}</button>
+    </mat-dialog-actions>
+</mat-dialog-content>

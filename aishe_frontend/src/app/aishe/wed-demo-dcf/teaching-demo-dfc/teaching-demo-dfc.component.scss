@@ -1,0 +1,64 @@
+table th{
+    vertical-align: top;
+    /* text-align: center; */
+}
+/* table td .mat-form-field{
+     width: 80px; 
+    text-align: center;
+} */
+/* table tr td{
+    vertical-align: middle;
+} */
+table{
+    /* display: block; */
+    overflow-x: auto;
+}
+.noborder, .noborder tr, .noborder th, .noborder td { 
+    border: none;
+    overflow-y: hidden;
+}
+.blue-icon{
+    color: blue;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.red-icon{
+    color: red;
+}
+.blue-icon{
+    color: blue;
+}
+.effect-2 {
+    font: 15px/24px "Lato", Arial, sans-serif !important;
+    color: #333 !important;
+    width: 75% !important;
+    box-sizing: border-box !important;
+    letter-spacing: 1px !important;
+    border: 0 !important;
+    padding: 0px 0 !important;
+    border-bottom: 1px solid #949494 !important;
+    text-align: center !important;
+    margin-left: 20px !important;
+  }
+  .icon-display{
+    font-size: 15px;
+  }
+  .staff tr:nth-child(even) {
+    background-color: #dee2e6;
+  }
+  .table tr:nth-child(odd) td{
+    background-color: #f9f9f9
+}
+.table tr:nth-child(even) td{
+    background-color: #ffffff;
+}
+  

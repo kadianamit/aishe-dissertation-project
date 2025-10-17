@@ -1,0 +1,208 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<a mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon>close</mat-icon>
+</a>
+<mat-card class="matCard">
+  <div *ngIf="child?.isDataLoading" class="progress-bar">
+    <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+  </div>
+  <mat-card-content class="mt-4">
+    <!--filter table-->
+    <form [formGroup]="reportFilterForm">
+      <div class="table-responsive-sm">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 table-responsive-sm">
+              <table class="table table-borderless">
+                <tr class="row">
+                  <td class="col-md-3">
+                    <mat-form-field class="full-width-field">
+                      <mat-label>Select year</mat-label>
+
+                      <mat-select formControlName="surveyYear" >
+                        <mat-select-filter [placeholder]="'Filter'" [displayMember]="'surveyYearValue'"
+                          [array]="surveyYearOption"
+                          (filteredReturn)="filterSurveyYearOption =$event"></mat-select-filter>
+                        <mat-option *ngFor="let item of filterSurveyYearOption" [value]="item.surveyYear">
+                          {{item.surveyYearValue}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="submitted && f['surveyYear'].invalid">Survey Year is required</mat-error>
+                    </mat-form-field>
+                  </td>
+                  <td class="col-md-3"
+                    *ngIf="['Report 13','Report 12','Report 6','Report 7','Report 8','Report 9','Report 10','Report 14'].includes(reportInfoObj.reportNumber.trim())">
+
+                    <mat-form-field class="full-width-field">
+                      <mat-select placeholder="State:" formControlName="addressStateCode" >
+                        <!-- Show filter only if dropdown is enabled -->
+                        <mat-select-filter  [placeholder]="'Filter'" [displayMember]="'stateName'"
+                          [array]="filterStatesOption" (filteredReturn)="filterdStates = $event"></mat-select-filter>
+
+                        <mat-option *ngFor="let item of filterdStates" [value]="item">
+                          {{ item.stateName }}
+                        </mat-option>
+                      </mat-select>
+
+                      <mat-error *ngIf="submitted && f['addressStateCode'].invalid">
+                        State is required
+                      </mat-error>
+                    </mat-form-field>
+                  </td>
+
+                </tr>
+              </table>
+            </div>
+            <div class="col-md-3 table-responsive-sm">
+              <table class="table table-borderless d-flex justify-content-end">
+                <tr class="row">
+                  <td>
+                    <div class="d-flex justify-content-end">
+                      <mat-card-actions>
+                        <!-- <a mat-raised-button color="primary" (click)="child?.getReportDataTable();generateFieldsTableForExcel()"> -->
+                        <button mat-raised-button color="primary" type="submit" (click)="submit()">
+                          Show
+                        </button>
+                        <span></span>
+                        <button mat-raised-button color="secondary" (click)="onReset()">
+                          Reset
+                        </button>
+                      </mat-card-actions>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+    <div class="mat-elevation-z8 table-responsive-sm" style="height: 100%; width: 100%;">
+      <table class="table table-bordered reportTableData">
+        <thead>
+          <tr>
+            <th colspan="2" class="table-primary">
+              <div class="d-flex justify-content-between">
+                <h4 class="text-center">
+                  {{ reportInfoObj.reportTitle.replace('Report', '') }} -
+                  {{ reportInfoObj.reportNumber }}
+                </h4>
+                <div class="justify-content-end" *ngIf="child?.showPdfButton">
+                  <a mat-button>
+                    <i class="material-icons">print</i>
+                  </a>
+                  <a mat-button (click)="child?.generatePDF()">
+                    <!-- <mat-icon style="color: red;">picture_as_pdf</mat-icon> -->
+                    <i class="fa fa-file-pdf-o" matTooltip="Download as Pdf" matTooltipPosition="above"
+                      matTooltipClass="blackTooltip" style="font-size: 24px;"></i>
+                    <mat-icon style="color: red;">
+                      vertical_align_bottom
+                    </mat-icon>
+                  </a>
+                  <a mat-button (click)="child?.exportAsXLSX()">
+                    <i class="fa fa-file-excel-o" matTooltip="Download as Excel" matTooltipPosition="above"
+                      matTooltipClass="blackTooltip" style="font-size: 24px;"></i>
+                    <mat-icon style="color: green;">
+                      vertical_align_bottom
+                    </mat-icon>
+                  </a>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    <table class="table reportTableData" *ngIf="(reportInfoObj.reportNumber=='Report 6'
+      ||reportInfoObj.reportNumber=='Report 7'
+      ||reportInfoObj.reportNumber=='Report 8'
+      ||reportInfoObj.reportNumber=='Report 9') && child?.Showdata12 ">
+      <thead style="position: sticky; top: -1px;">
+        <tr>
+          <th class="table-primary">
+            <div class="d-flex justify-content-between">
+              <section [formGroup]="reportDataForm" class="justify-content-between">
+                <div [ngClass]="
+                    reportInfoObj.reportTitle ==
+                        'Management-Wise Number Of Institutions Attached With University' ||
+                      reportInfoObj.reportTitle ==
+                        'State-Wise Number Of University Offering Education Through Distance Mode' ||
+                      reportInfoObj.reportParentTitle == 'Teaching Staff'? 'd-none': '' || reportInfoObj.reportParentTitle == 'Non Teaching Staff' ? 'd-none': ''
+                    ">
+                  <mat-checkbox formControlName="isUniversity">
+                    University
+                  </mat-checkbox>
+                  <mat-checkbox formControlName="isCollege">
+                    College/Recognised Institution
+                  </mat-checkbox>
+                  <mat-checkbox formControlName="isStandalone" [ngClass]="
+                        reportInfoObj.reportTitle ==
+                        'State & Specialisation - Wise Number Of Institutions'
+                          ? 'd-none'
+                          : ''
+                      ">
+                    Standalone Institution
+                  </mat-checkbox>
+                  <mat-error *ngIf="
+                        (reportDataForm.value.isUniversity == false &&
+                          reportDataForm.value.isCollege == false &&
+                          reportDataForm.value.isStandalone == false) ||
+                        (reportDataForm.value.isUniversity == false &&
+                          reportDataForm.value.isCollege == false &&
+                          reportInfoObj.reportTitle ==
+                            'State & Specialisation - Wise Number Of Institutions')
+                      ">
+                    Please select the option to show table
+                  </mat-error>
+                </div>
+              </section>
+            </div>
+          </th>
+        </tr>
+      </thead>
+    </table>
+
+    <section [id]="reportInfoObj.reportNumber">
+      <!-- to hide filter in data table -->
+      <table style="width: 100%;" class="d-none">
+        <tr>
+          <td [colSpan]="child?.tableColumns?.length">
+            {{ reportInfoObj.reportTitle.replace('Report', '') }} -
+            {{ reportInfoObj.reportNumber }}
+          </td>
+        </tr>
+        <tr *ngFor="let item of fieldsData">
+          <td colspan="1">{{item.label1}}</td>
+          <td colspan="1">{{item.value1}}</td>
+          <td colspan="2"></td>
+          <td colspan="1" style="text-align: right;">{{item.label2}}</td>
+          <td colspan="1">{{item.value2}}</td>
+
+        </tr>
+        <tr></tr>
+      </table>
+
+      <app-report6 #child [reportInfoObj]="reportInfoObj" [reportFilterForm]="reportFilterForm"
+        [reportDataForm]="reportDataForm" *ngIf="reportInfoObj.reportNumber=='Report 6'"></app-report6>
+      <app-report7 #child [reportInfoObj]="reportInfoObj" [reportFilterForm]="reportFilterForm"
+        [reportDataForm]="reportDataForm" *ngIf="reportInfoObj.reportNumber=='Report 7'"></app-report7>
+      <app-report8 #child [reportInfoObj]="reportInfoObj" [reportFilterForm]="reportFilterForm"
+        [reportDataForm]="reportDataForm" *ngIf="reportInfoObj.reportNumber=='Report 8'"></app-report8>
+      <app-report9 #child [reportInfoObj]="reportInfoObj" [reportFilterForm]="reportFilterForm"
+        [reportDataForm]="reportDataForm" *ngIf="reportInfoObj.reportNumber=='Report 9'"></app-report9>
+      <app-report10 #child [reportInfoObj]="reportInfoObj" [reportFilterForm]="reportFilterForm"
+        [reportDataForm]="reportDataForm" *ngIf="reportInfoObj.reportNumber=='Report 10'"></app-report10>
+      <app-report12 #child [reportInfoObj]="reportInfoObj" [reportFilterForm]="reportFilterForm"
+        [reportDataForm]="reportDataForm" *ngIf="reportInfoObj.reportNumber=='Report 12'"></app-report12>
+      <app-report13 #child [reportInfoObj]="reportInfoObj" [reportFilterForm]="reportFilterForm"
+        [reportDataForm]="reportDataForm" *ngIf="reportInfoObj.reportNumber=='Report 13'"></app-report13>
+      <app-report14 #child [reportInfoObj]="reportInfoObj" [reportFilterForm]="reportFilterForm"
+        [reportDataForm]="reportDataForm" *ngIf="reportInfoObj.reportNumber=='Report 14'"></app-report14>
+
+
+    </section>
+  </mat-card-content>
+</mat-card>

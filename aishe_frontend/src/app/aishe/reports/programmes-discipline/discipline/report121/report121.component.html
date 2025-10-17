@@ -1,0 +1,86 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"  *ngIf="Showdata12" >
+    <table class="table  showReportDataChild">
+        <thead class="childTableStickyHeader">
+            <tr>
+                <th rowspan="3" class="text-center table-success">Country</th>
+                <th rowspan="3" class="text-center table-light">Discipline Group Name</th>
+                <th colspan="18" class="text-center table-secondary">Level</th>
+                <th rowspan="2" class="text-center table-tertiary">Grand Total</th>
+              </tr>
+              <tr>
+                <th colspan="2" class="text-center table-tertiary">Ph.D</th>
+                <th colspan="2" class="text-center table-secondary">M.Phil</th>
+                <th colspan="2" class="text-center table-light">Post Graduate</th>
+                <th colspan="2" class="text-center table-tertiary">Under Graduate</th>
+                <th colspan="2" class="text-center table-secondary">PG Diploma</th>
+                <th colspan="2" class="text-center table-light">Diploma</th>
+                <th colspan="2" class="text-center table-tertiary">Certificate</th>
+                <th colspan="2" class="text-center table-secondary">Integrated</th>
+                <th colspan="2" class="text-center table-light">Total</th>
+              </tr>
+              <tr>
+                <th class="text-center table-tertiary">Male</th>
+                <th class="text-center table-tertiary">Female</th>
+                <th class="text-center table-secondary">Male</th>
+                <th class="text-center table-secondary">Female</th>
+                <th class="text-center table-light">Male</th>
+                <th class="text-center table-light">Female</th>
+                <th class="text-center table-tertiary">Male</th>
+                <th class="text-center table-tertiary">Female</th>
+                <th class="text-center table-secondary">Male</th>
+                <th class="text-center table-secondary">Female</th>
+                <th class="text-center table-light">Male</th>
+                <th class="text-center table-light">Female</th>
+                <th class="text-center table-tertiary">Male</th>
+                <th class="text-center table-tertiary">Female</th>
+                <th class="text-center table-secondary">Male</th>
+                <th class="text-center table-secondary">Female</th>
+                <th class="text-center table-light">Male</th>
+                <th class="text-center table-light">Female</th>
+                <th class="text-center table-tertiary">Total</th>
+
+              </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of reportTableData | paginate
+          : {
+              itemsPerPage: pageSize,
+              currentPage: page
+            }; let i=index">
+            <td
+              *ngFor="let col of tableColumns; let i = index"
+              class="text-center"
+              [ngClass]="[i==0?'table-success':  '',i==1?'table-light':  '',
+              i>=2 && i<4 ?'table-tertiary':'', i>=4 && i<6 ? 'table-secondary': '',i>=6 && i<8 ? 'table-light': '',
+                i>=8 && i<10 ? 'table-tertiary': '',i>=10 && i<12 ? 'table-secondary': '',i>=12 && i<14 ? 'table-light': '',
+                i>=14 && i<16 ? 'table-tertiary': '',i>=16 && i<18 ? 'table-secondary': '',i>=18 && i<20 ? 'table-light': '',
+                i>=20 && i<22 ? 'table-tertiary': '',i>=22 && i<24 ? 'table-secondary': '',
+                    ]"
+            >
+              {{ row[col] }}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="1" class="text-center table-success">
+              All Countries
+            </td>
+            <td colspan="1" class="text-center table-success">
+              All Disciplines
+            </td>
+            <td
+              *ngFor="let summary of summaryColumns; let i = index"
+              class="text-center table-secondary " [attr.style]="i >= 0 && i < 2? 'display:none' : ''"
+            >
+              {{ summaryData[summary] }}
+            </td>
+          </tr>
+          </tbody>
+    </table>
+    <pagination-controls
+    previousLabel="Prev"
+    nextLabel="Next"
+    (pageChange)="handlePageChange($event)"
+    >
+    </pagination-controls>
+        </div>

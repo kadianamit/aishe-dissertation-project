@@ -1,0 +1,308 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+  <div class="form-group">
+    <div class="form-row mr-0 ml-0">
+      <div class="col-md-12 mt-0 badges p-2 mt-3">
+        <div class="float-left">
+          <span class="font-weight-bold text-lg">Summary Report - {{urlData === 'ApprovedReject'?'Approved/Reject':'HEI
+            Onboarding'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="animated fadeInDown card mb-2 pt-2 pb-1 bg-light overflow-hidden">
+    <div class="row col-md-12 overflow-hidden">
+      <div class="col-md-2 pt-2">
+        <mat-form-field class="d-block">
+          <mat-label>Survey Year</mat-label>
+          <mat-select [(ngModel)]="surveyYear" (selectionChange)="yearChange($event.value)">
+            <mat-option *ngFor="let item of surveyYearList" [value]="item.surveyYearValue">{{ item.surveyYearValue}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- [multiple]="urlData === 'ApprovedReject'" -->
+      <ng-container *ngIf="urlData === 'Onboarding'">
+        <div class="col-md-2 pt-2">
+          <mat-form-field class="d-block">
+            <mat-label>Choose Start Date</mat-label>
+            <input matInput [matDatepicker]="dp" [(ngModel)]="startDate" (dateChange)="onDateChange($event)"
+              placeholder="Choose Start Date" [min]="firstDate" [max]="lastDate" />
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2 pt-2">
+          <mat-form-field class="d-block">
+            <mat-label>Choose End Date</mat-label>
+            <input [(ngModel)]="endDate" matInput [matDatepicker]="datePickerEnd" [min]="startDate" [max]="lastDate"
+              placeholder="Choose End Date" />
+            <mat-datepicker-toggle matSuffix [for]="datePickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #datePickerEnd></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="urlData === 'ApprovedReject'">
+        <div class="col-md-2">
+          <mat-form-field class="d-block">
+            <mat-label>Start Approved/Reject Date</mat-label>
+            <input matInput [matDatepicker]="dp1" [(ngModel)]="startApprovedDate" (dateChange)="onDateChangeA($event)"
+              placeholder=" Start Approved/Reject Date"/>
+            <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+            <mat-datepicker #dp1></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field class="d-block">
+            <mat-label>End Approved/Reject Date</mat-label>
+            <input [(ngModel)]="endApprovedDate" matInput [matDatepicker]="datePickerEnd1" [min]="startApprovedDate"
+               placeholder=" End Approved/Reject Date" />
+            <mat-datepicker-toggle matSuffix [for]="datePickerEnd1"></mat-datepicker-toggle>
+            <mat-datepicker #datePickerEnd1></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <div class="col-md-2">
+        <mat-card-actions>
+          <button mat-raised-button color="primary" class="mt-3 mr-2 btn-sm" type="submit"
+            (click)="submit('TOTAL', 'COUNT', 'COLLEGE',urlData)">
+            Find
+          </button>
+          <span></span>
+          <button mat-raised-button color="warn" class="btn-sm" (click)="onReset()">
+            Reset
+          </button>
+        </mat-card-actions>
+      </div>
+    </div>
+    <div class="col-md-12 table-responsive" *ngIf="urlData === 'Onboarding'">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th rowspan="2">Institution Type</th>
+            <th rowspan="2">Total Request</th>
+            <th rowspan="2">Approved</th>
+            <th colspan="4" class="text-center">Pending</th>
+            <th rowspan="2">Reject</th>
+          </tr>
+          <tr>
+            <td style="background-color: #337ab7; color: #fff">MoE</td>
+            <td style="background-color: #337ab7; color: #fff">UNO</td>
+            <td style="background-color: #337ab7; color: #fff">SNO</td>
+            <td style="background-color: #337ab7; color: #fff">Sectorial</td>
+          </tr>
+        </thead>
+
+        <ng-container>
+          <tr>
+            <td>College</td>
+            <td>
+              <p [ngClass]="{ hyperlink: listData.totalCollegeRequest !== 0 }"
+                (click)="listData.totalCollegeRequest?getInstitutionSummary('TOTAL', 'LIST', 'COLLEGE'):''">
+                {{ listData.totalCollegeRequest }}
+              </p>
+            </td>
+            <td>
+              <p [ngClass]="{ hyperlink: listData.collegeApprovedRequest !== 0 }"
+                (click)="listData.collegeApprovedRequest?getInstitutionSummary('APPROVED', 'LIST', 'COLLEGE'):''">
+                {{ listData.collegeApprovedRequest }}
+              </p>
+
+            </td>
+            <!-- <td *ngIf="urlData !== 'Onboarding'">
+              <p [ngClass]="{ hyperlink: listData.collegeApprovedByMoe !== 0 }"
+                (click)="listData.collegeApprovedByMoe?getInstitutionSummary('APPROVED', 'LIST', 'COLLEGE'):''">
+                {{ listData.collegeApprovedByMoe }}
+              </p>
+
+            </td> -->
+            <td>
+              <p [ngClass]="{
+                  hyperlink: listData.collegePendingRequestForMoe !== 0
+                }" (click)="
+                 listData.collegePendingRequestForMoe?getInstitutionSummary('MOE_PENDING', 'LIST', 'COLLEGE'):''
+                ">
+                {{ listData.collegePendingRequestForMoe }}
+              </p>
+            </td>
+            <td>
+              <p [ngClass]="{
+                  hyperlink: listData.collegePendingRequestForUno !== 0
+                }" (click)="
+                  listData.collegePendingRequestForUno?getInstitutionSummary(
+                    'APPROVING_AUTH_PENDING',
+                    'LIST',
+                    'COLLEGE'
+                  ):''
+                ">
+                {{ listData.collegePendingRequestForUno }}
+              </p>
+            </td>
+            <td>
+              <p [ngClass]="{
+                  hyperlink: listData.collegePendingRequestForSno !== 0
+                }" (click)="
+                  listData.collegePendingRequestForSno?getInstitutionSummary('SNO_PENDING', 'LIST', 'COLLEGE'):''
+                ">
+                {{ listData.collegePendingRequestForSno }}
+              </p>
+            </td>
+            <td>-</td>
+
+            <td>
+              <p [ngClass]="{ hyperlink: listData.collegeRejectedRequest !== 0 }"
+                (click)="listData.collegeRejectedRequest?getInstitutionSummary('REJECTED', 'LIST', 'COLLEGE'):''">
+                {{ listData.collegeRejectedRequest }}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>Standalone</td>
+            <td>
+              <p [ngClass]="{ hyperlink: listData.totalStandaloneRequest !== 0 }"
+                (click)="listData.totalStandaloneRequest?getInstitutionSummary('TOTAL', 'LIST', 'STANDALONE'):''">
+                {{ listData.totalStandaloneRequest }}
+              </p>
+            </td>
+            <td>
+              <p [ngClass]="{
+                  hyperlink: listData.approvedStandaloneRequest !== 0
+                }" (click)="
+                  listData.approvedStandaloneRequest?getInstitutionSummary('APPROVED', 'LIST', 'STANDALONE'):''
+                ">
+                {{ listData.approvedStandaloneRequest }}
+              </p>
+            </td>
+            <!-- <td *ngIf="urlData !== 'Onboarding'">
+              <p [ngClass]="{
+                  hyperlink: listData.standaloneApprovedByMoe !== 0
+                }" (click)="
+                  listData.standaloneApprovedByMoe?getInstitutionSummary('APPROVED', 'LIST', 'STANDALONE'):''
+                ">
+                {{ listData.standaloneApprovedByMoe }}
+              </p>
+            </td> -->
+
+            <td>
+              <p [ngClass]="{
+                  hyperlink: listData.standalonePendingRequestForMoe !== 0
+                }" (click)="
+                  listData.standalonePendingRequestForMoe?getInstitutionSummary('MOE_PENDING', 'LIST', 'STANDALONE'):''
+                ">
+                {{ listData.standalonePendingRequestForMoe }}
+              </p>
+            </td>
+            <td>-</td>
+            <td>
+              <p [ngClass]="{
+                  hyperlink: listData.standalonePendingRequestForSno !== 0
+                }" (click)="
+                  listData.standalonePendingRequestForSno?getInstitutionSummary('SNO_PENDING', 'LIST', 'STANDALONE'):''
+                ">
+                {{ listData.standalonePendingRequestForSno }}
+              </p>
+            </td>
+
+            <td>
+              <p [ngClass]="{
+                  hyperlink: listData.standalonePendingRequestForSectorial !== 0
+                }" (click)="
+                  listData.standalonePendingRequestForSectorial?getInstitutionSummary(
+                    'APPROVING_AUTH_PENDING',
+                    'LIST',
+                    'STANDALONE'
+                  ):''
+                ">
+                {{ listData.standalonePendingRequestForSectorial }}
+              </p>
+            </td>
+
+            <td>
+              <p [ngClass]="{
+                  hyperlink: listData.rejectedStandaloneRequest !== 0
+                }" (click)="
+                  listData.rejectedStandaloneRequest?getInstitutionSummary('REJECTED', 'LIST', 'STANDALONE'):''
+                ">
+                {{ listData.rejectedStandaloneRequest }}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td class="total">Total</td>
+            <td class="total">
+              {{ totalCollegeRequest }}
+            </td>
+            <td class="total">
+              {{ totaleApprovedRequest }}
+            </td>
+            <td class="total text-center" colspan="4">
+              {{ totalPendingRequest }}
+            </td>
+            <td class="total">
+              {{ totalRejectedRequest }}
+            </td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+    <div class="col-md-12 table-responsive" *ngIf="urlData !== 'Onboarding'">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>Instititions Type</th>
+            <!-- <th>Survey Year</th> -->
+            <th>Approved</th>
+            <th>Reject</th>
+          </tr>
+        </thead>
+
+        <ng-container>
+          <tr>
+            <td>College</td>
+            <!-- <td>{{e.surveyYear}}</td> -->
+            <td>{{listData.collegeApprovedByMoe}}</td>
+            <td>{{listData.collegeRejectedRequest}}</td>  
+          </tr>
+          <tr>
+            <td>Standalone</td>
+            <!-- <td>{{e.surveyYear}}</td> -->
+            <td>{{listData.standaloneApprovedByMoe}}</td>
+            <td>{{listData.rejectedStandaloneRequest}}</td>  
+          </tr>
+          <!-- <tr>
+            <td>Standalone</td>
+            <td>{{e.surveyYear}}</td>
+            <td>{{e.standaloneApprovedByMoe}}</td>
+            <td>{{e.rejectedStandaloneRequest}}</td>  
+          </tr> -->
+          <!-- <tr>
+            <td class="total">Total</td>
+            <td class="total">
+              {{ totalCollegeRequest }}
+            </td>
+            <td class="total">
+              {{ totaleApprovedRequest }}
+            </td>
+            <td class="total text-center" colspan="4">
+              {{ totalPendingRequest }}
+            </td>
+            <td class="total">
+              {{ totalRejectedRequest }}
+            </td>
+          </tr> -->
+        </ng-container>
+        <!-- <ng-container *ngFor="let e of array1;let i=index">
+          <tr>
+            <td>{{i=== 0?'Standalone':''}}</td>
+            <td>{{e.surveyYear}}</td>
+            <td>{{e.standaloneApprovedByMoe}}</td>
+            <td>{{e.rejectedStandaloneRequest}}</td>  
+          </tr>
+        </ng-container> -->
+      </table>
+    </div>
+  </div>
+
+  <div class="animated fadeInDown card mb-2 pl-2 pr-2 pt-2 pb-1 bg-light overflow-hidden" *ngIf="parentData">
+    <app-institution-summary-dialog [element]="parentData" *ngIf="parentData"></app-institution-summary-dialog>
+  </div>
+</div>
+

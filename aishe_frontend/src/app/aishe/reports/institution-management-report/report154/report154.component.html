@@ -1,0 +1,49 @@
+
+
+<div
+class="mat-elevation-z8 table-responsive-sm overflow-auto showReportDataParent reportTableData"
+*ngIf="Showdata12"
+>
+<table
+class="table  showReportDataChild" >
+<thead class="childTableStickyHeader">
+
+<tr>
+<th rowspan="2"  class="text-center table-success">Sr. No.</th>
+<th colspan="1" class="text-center table-light">De-affiliated College Name</th>
+<th colspan="1" class="text-center table-secondary">De-affiliated University</th>
+<th colspan="1" class="text-center table-tertiary">College State</th>
+<th colspan="1" class="text-center table-light">College Type</th>
+<th colspan="1" class="text-center table-secondary">College District</th>
+<th colspan="1" class="text-center table-tertiary">De-affiliation Reason</th>
+<th colspan="1" class="text-center table-light">De-affiliated By</th>
+<th colspan="1" class="text-center table-secondary">De-affiliated Time</th>
+</tr>
+
+</thead>
+<tbody>
+<tr *ngFor="let row of reportTableData | paginate
+: {
+itemsPerPage: pageSize,
+currentPage: page
+} let i=index">
+<td rowspan="1" class="text-center table-success">{{i+1}}</td>
+    <td colspan="1" class="text-center table-light">{{row.college_name}}</td>
+    <td colspan="1" class="text-center table-secondary">{{row.university_name}}</td>
+    <td colspan="1" class="text-center table-tertiary">{{row.state}}</td>
+    <td colspan="1" class="text-center table-light">{{row.type}}</td>
+    <td colspan="1" class="text-center table-secondary">{{row.district}}</td>
+    <td colspan="1" class="text-center table-tertiary">{{row.reason}}</td>
+    <td colspan="1" class="text-center table-light">{{row.user_id}}</td>
+    <td colspan="1" class="text-center table-secondary">{{row.actionTime}}</td>
+</tr>
+
+</tbody>
+</table>
+<pagination-controls
+previousLabel="Prev"
+nextLabel="Next"
+(pageChange)="handlePageChange($event)"
+>
+</pagination-controls>
+</div>

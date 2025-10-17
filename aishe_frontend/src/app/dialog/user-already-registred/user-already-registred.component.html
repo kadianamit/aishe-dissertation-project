@@ -1,0 +1,18 @@
+<div class="text-center">
+    <p style="font-size: 16px;line-height: 1.4;text-align: justify; word-spacing: normal; margin: 0;
+  padding: 0;">A user request (userId:<span style="font-weight: 500;">{{data.data[0]?.userId}}</span>, username: <span style="font-weight: 500;">{{data.data[0]?.name}}</span>, email: <span style="font-weight: 500;">{{maskEmail(data.data[0]?.emailId)}}</span>, mobile: <span style="font-weight: 500;">{{maskMobileNumber(data.data[0]?.phoneMobile)}}</span>) is already pending. 
+        Please contact ur approving authority(UNO/SNO/MoE) to approve it. 
+        Another request is not permitted until action is taken by approving authority for this request.
+
+    </p>
+</div>
+<div class="row mt-4 mb-0 pb-0">
+    <div class="row col-md-12">
+        <div class="mx-auto">
+        <!-- <button id="approve"  type="submit" class="btn1 btn btn-sm btn-success" (click)="save()">
+          Submit
+        </button>&nbsp; -->
+        <button type="button" (click)="onCancel()" class="btn1 btn btn-sm btn-danger btn-lg">Close</button>
+        </div>
+      </div>
+</div>

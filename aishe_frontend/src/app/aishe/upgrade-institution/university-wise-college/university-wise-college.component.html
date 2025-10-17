@@ -1,0 +1,79 @@
+<div class="container-fluid reg-page-bg pl-4 pr-4">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="float-left">
+                    <span class="font-weight-bold text-lg">University Wise College Report</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="animated fadeInDown card bg-light">
+        <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-2 pt-4">
+                <label>Show</label>&nbsp;
+                <select (ngModelChange)="onChange($event)" [(ngModel)]="pageSize">
+                    <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+                </select>
+                entries
+            </div>
+            <!-- <div class="col-md-2 pt-3"> -->
+                <!-- <mat-form-field class="d-block">
+                    <mat-label>Survey Year:</mat-label>
+                    <mat-select [(ngModel)]="surveyYear" (selectionChange)="getUniversityList($event.value)">
+                        <mat-option *ngFor="let item of surveyYearList"
+                            [value]="item.id">{{item.surveyYear}}</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+            <!-- </div> -->
+            <div class="col-md-3"></div>
+            <div class="col-md-5 pt-4">
+                <label>Search:</label>&nbsp;
+                <input type="text" size="40" id='myInput' (change)="updateResults()" (keyup)="updateResults()"
+                    [(ngModel)]="searchText">
+            </div>
+            <div class="col-md-2 pt-4">
+                <label class="download" matTooltip="Download as PDF" (click)="download()">Download:-
+                  <i class="fa fa-file-pdf-o downloadPDF"></i></label>
+              </div>
+        </div>
+    </div>
+    <div class="animated fadeInDown card mb-2 pb-1 bg-light overflow-hidden">
+        <table class="table table-striped table-bordered table-sm row-border hover">
+            <tr>
+                <th>S.No.</th>
+                <th>AISHE Code</th>
+                <th>University Name</th>
+                <th>State</th>
+                <th>College Count</th>
+            </tr>
+            <ng-container *ngFor="let item of universityList | paginate : {
+                itemsPerPage: pageSize,
+                currentPage: page
+              
+              };
+        let i = index
+        ">
+                <tr>
+                    <td>{{i+StartLimit+1}}</td>
+                    <td>{{item.universityId}}</td>
+                    <td>{{item.universityName}}</td>
+                    <td>{{item.stateName}}</td>
+                    <td [ngClass]="{hyperlink:item.collegeCount !== 0}" (click)="openCollegeDetails(item)">{{item.collegeCount}}</td>
+                </tr>
+            </ng-container>
+        </table>
+        <div class="row col-md-12 overflow-hidden">
+            <div class="col-md-3">
+                Showing {{StartLimit + 1}} to {{pageData === -1?0:pageData}} Of {{universityList.length}}
+                entries
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-6" *ngIf="universityList.length !== 0">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+                    screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                    screenReaderCurrentLabel="You're on page"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

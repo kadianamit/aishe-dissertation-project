@@ -1,0 +1,809 @@
+<div class="container-fluid" *ngIf="!showForAllUser">
+    <div class="form-group">
+        <div class="form-row mr-0 ml-0">
+            <div class="col-md-12 mt-0 badges p-2 mt-3">
+                <div class="text-center">
+                    <span class="font-weight-bolder text-lg">
+                        User Registration for Nodal Officer of a College
+                        or Standalone Institute
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <mat-card>
+        <form [formGroup]="registation" autocomplete="off">
+            <div class="form-group row">
+                <label class="col-md-1 col-form-label">
+                    AISHE Code
+                    <span class="asterisk">*</span>
+                </label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control form-control-sm" autocomplete="off"
+                        formControlName="aisheCode" required maxlength="8" required>
+                    <mat-hint *ngIf="inValidAishe">You may contact Ministry of Education for new user creation.</mat-hint>
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="registation.controls['aisheCode'].dirty ||registation.controls['aisheCode'].value || registation.controls['aisheCode'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['aisheCode'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">
+                            Please enter.
+                        </span>
+
+                    </mat-hint>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-warning btn-sm" (click)="checkforRequest()"
+                        matTooltip="Get Details">
+                        Get Details
+                    </button>
+                </div>
+                <div class="col-md-7"></div>
+            </div>
+            <h3 class="heading" *ngIf="showDetails">
+                Institute Detail & Address
+            </h3>
+            <div class="form-group row" *ngIf="showDetails">
+                <label class="col-md-1 col-form-label">User Type<span class="asterisk">*</span></label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control form-control-sm" formControlName="roleName">
+                </div>
+                <label class="col-md-1 col-form-label">AISHE Code<span class="asterisk">*</span></label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control form-control-sm" formControlName="aisheCode1">
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="showDetails">
+                <label class="col-md-1 col-form-label">Institute Name<span class="asterisk">*</span></label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control form-control-sm" formControlName="instituteName">
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="isUniversity && showDetails">
+                <label class="col-sm-1 col-form-label">University<span class="asterisk">*</span></label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" formControlName="universityName">
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="showDetails">
+                <label class="col-sm-1 col-form-label">Address Line 1<span class="asterisk">*</span></label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" formControlName="addressLine1">
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="registation.controls['addressLine1'].dirty ||registation.controls['addressLine1'].value || registation.controls['addressLine1'].touched || isFormInvalid">
+                        <span *ngIf="
+                            registation.controls['addressLine1'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">
+                            Please enter.
+                        </span>
+                    </mat-hint>
+                </div>
+                <label class="col-sm-1 col-form-label">Address Line 2</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" formControlName="addressLine2">
+                    <!-- <mat-hint class="err-msgs mt-3"
+                    *ngIf="registation.controls['addressLine2'].dirty ||registation.controls['addressLine2'].value || registation.controls['addressLine2'].touched || isFormInvalid">
+                    <span *ngIf="
+                            registation.controls['addressLine2'].hasError(
+                              'required'
+                            )
+                          " class="errorMessage">Please enter.</span>
+                </mat-hint> -->
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="showDetails">
+                <label class="col-sm-1 col-form-label">City</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" formControlName="cityName">
+                </div>
+                <label class="col-sm-1 col-form-label">State</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" formControlName="stateName">
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="showDetails">
+                <label class="col-sm-1 col-form-label">District</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" formControlName="districtName">
+                </div>
+            </div>
+            <h3 class="heading" *ngIf="showDetails">
+                Nodal Officers Details
+            </h3>
+            <div class="form-group row" *ngIf="showDetails">
+                <label class="col-md-1 col-form-label">
+                    Full Name
+                    <span class="asterisk">*</span>
+                </label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control form-control-sm" formControlName="firstNameUser"
+                        (keypress)="onKeypressEvent($event, 255)" appAlphabet>
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="registation.controls['firstNameUser'].dirty ||registation.controls['firstNameUser'].value || registation.controls['firstNameUser'].touched || isFormInvalid">
+                        <span *ngIf="
+                                registation.controls['firstNameUser'].hasError(
+                                  'required'
+                                )
+                              " class="errorMessage">
+                            Please enter.
+                        </span>
+                    </mat-hint>
+                </div>
+
+                <!-- <label class="col-md-1 col-form-label">MiddleName</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control form-control-sm" formControlName="middleNameUser">
+                </div>
+                <label class="col-md-1 col-form-label">LastName</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control form-control-sm" formControlName="lastNameUser">
+                </div> -->
+                <label class="col-md-1 col-form-label">
+                    Gender
+                    <span style="color: red;">*</span>
+                </label>
+                <div class="col-md-3 mt-2">
+                    <mat-radio-group aria-label="Select an option" required formControlName="genderId">
+                        <mat-radio-button value="1">Male</mat-radio-button>
+                        &nbsp;&nbsp;
+                        <mat-radio-button value="2">Female</mat-radio-button>
+                        &nbsp;&nbsp;
+                        <mat-radio-button value="3">Transgender</mat-radio-button>
+                    </mat-radio-group>
+
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="showDetails">
+
+            </div>
+            <h3 class="heading" *ngIf="showDetails">
+                Contact Details
+            </h3>
+            <div class="form-group row" *ngIf="showDetails">
+                <label class="col-md-1 col-form-label">
+                    Email
+                    <span style="color: red;">*</span>
+                </label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control form-control-sm" formControlName="emailId"
+                        (keypress)="onKeypressEvent($event, 255)">
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="registation.controls['emailId'].dirty ||registation.controls['emailId'].value || registation.controls['emailId'].touched || isFormInvalid">
+                        <span *ngIf="
+                                registation.controls['emailId'].hasError(
+                                  'required'
+                                )
+                              " class="errorMessage">
+                            Please enter.
+                        </span>
+                        <span *ngIf="
+                                registation.controls['emailId'].hasError(
+                                  'pattern'
+                                )
+                              " class="errorMessage">
+                            Invalid Email.
+                        </span>
+                    </mat-hint>
+                </div>
+
+                <div class="col-md-2" *ngIf="!emailOtp">
+                    <!-- <button
+                        class="btn btn-danger btn-sm"
+                        (click)="sendEmailOTP()"
+                    >
+                        Send Email OTP
+                    </button> -->
+                </div>
+                <label class="col-md-1 col-form-label" *ngIf="hideE">
+                    Email OTP
+                    <span class="asterisk">*</span>
+                </label>
+                <div class="col-md-2" *ngIf="hideE">
+                    <input type="text" class="form-control form-control-sm" formControlName="emailOtp" required>
+                    <span class="timer mt-1" *ngIf="displayE !== '00:00' && hideVerify">
+                        {{displayE}}
+                    </span>
+                    <span class="mt-1" *ngIf="displayE === '00:00' && hideVerify" style="cursor: pointer;"
+                        (click)="sendEmailOTP()">
+                        Click here to
+                        Resend OTP
+                    </span>
+                </div>
+                <i class="fa-solid fa-circle-check text-lg" style="margin-top: 5px;
+                    color: green;
+                    float: left;" *ngIf="successVerifyOTP"></i>
+
+                <div class="col-md-2 mt-1" *ngIf="hideVerify">
+                    <button class="btn btn-success btn-sm" (click)="verifyEmailOTP()">
+                        Verify Email OTP
+                    </button>
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="showDetails">
+                <label class="col-md-1 col-form-label">Alternate Email</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control form-control-sm" formControlName="alternateEmail">
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="registation.controls['alternateEmail'].dirty ||registation.controls['alternateEmail'].value || registation.controls['alternateEmail'].touched || isFormInvalid">
+
+                        <span *ngIf="
+                                registation.controls['alternateEmail'].hasError(
+                                  'pattern'
+                                )
+                              " class="errorMessage">
+                            Invalid Email.
+                        </span>
+                    </mat-hint>
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="showDetails">
+                <label class="col-md-1 col-form-label">
+                    Mobile
+                    <span style="color: red;">*</span>
+                </label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control form-control-sm" formControlName="mobileNo" required
+                        (keypress)="onKeypressEvent($event,10)" appOnlyNumeric>
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="registation.controls['mobileNo'].dirty ||registation.controls['mobileNo'].value || registation.controls['mobileNo'].touched || isFormInvalid">
+                        <span *ngIf="
+                                registation.controls['mobileNo'].hasError(
+                                  'required'
+                                )
+                              " class="errorMessage">
+                            Please enter.
+                        </span>
+                        <span *ngIf="
+                              registation.controls['mobileNo'].hasError(
+                                'pattern'
+                              )
+                            " class="errorMessage">
+                            Invalid.
+                        </span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-2" *ngIf="!mobileOtp">
+                    <button class="btn btn-danger btn-sm" (click)="sendMobileOTP()">
+                        Send Mobile OTP
+                    </button>
+                </div>
+                <label class="col-md-1 col-form-label" *ngIf="mobileOtp">
+                    Mobile OTP
+                    <span class="asterisk">*</span>
+                </label>
+                <div class="col-md-2" *ngIf="hide">
+                    <input type="text" class="form-control form-control-sm" formControlName="mobileOtp" required>
+                    <span class="timer mt-1" *ngIf="display !== '00:00' && hideVerifyM">
+                        {{display}}
+                    </span>
+                    <span class="mt-1" *ngIf="display === '00:00' && hideVerifyM" style="cursor: pointer;"
+                        (click)="sendMobileOTP()">
+                        Click here to
+                        Resend OTP
+                    </span>
+                </div>
+                <i class="fa-solid fa-circle-check text-lg" style="margin-top: 5px;
+                    color: green;
+                    float: left;" *ngIf="successVerifyMobileOTP"></i>
+
+                <div class="col-md-2 mt-1" *ngIf="hideVerifyM">
+                    <button class="btn btn-success btn-sm" (click)="verifyMobileOTP()">
+                        Verify Mobile OTP
+                    </button>
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="showDetails">
+                <label class="col-md-1 col-form-label">Alternate Mobile</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control form-control-sm" formControlName="alternateMobile"
+                        (keypress)="onKeypressEvent($event,10)" appOnlyNumeric>
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="registation.controls['alternateMobile'].dirty ||registation.controls['alternateMobile'].value || registation.controls['alternateMobile'].touched || isFormInvalid">
+
+                        <span *ngIf="
+                              registation.controls['alternateMobile'].hasError(
+                                'pattern'
+                              )
+                            " class="errorMessage">
+                            Invalid.
+                        </span>
+                    </mat-hint>
+                </div>
+            </div>
+        </form>
+        <form [formGroup]="loginForm" *ngIf="showDetails">
+            <h3 class="heading">Please Choose Login Credential</h3>
+            <div class="form-group row">
+                <label class="col-md-1 col-form-label">
+                    User Id
+                    <span class="asterisk">*</span>
+                </label>
+                <div class="col-md-2" [ngClass]="{disabledDiv:registation.invalid}">
+                    <input type="text" class="form-control form-control-sm" formControlName="userId" required
+                        [ngbTooltip]="userMsg" triggers="hover" placement="right" autocomplete="u"
+                        style="text-transform: lowercase;">
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="loginForm.controls['userId'].dirty || loginForm.controls['userId'].value || loginForm.controls['userId'].touched || isFormInvalid ">
+                        <span *ngIf="loginForm.controls['userId'].hasError('required')">Please enter</span>
+                        <span *ngIf="loginForm.controls['userId'].hasError('pattern')">Invalid UserId</span>
+                    </mat-hint>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{disabledDiv:registation.invalid}">
+                <label class="col-md-1 col-form-label">
+                    Password
+                    <span class="asterisk">*</span>
+                </label>
+                <div class="col-md-2">
+                    <input [type]="show ? 'text' : 'password'" class="form-control form-control-sm"
+                        formControlName="password" required (paste)="false" (draggable)="false" (drop)="false"
+                        (dragover)="false" [ngbTooltip]="passwordMessage" triggers="hover" placement="right"
+                        autocomplete="new-auto">
+                    <span class="loginshoweyecls">
+                        <i (click)="password()" class="fa" [ngClass]="{'fa-eye-slash': !show, 'fa-eye': show}"
+                            aria-hidden="true"></i>
+                    </span>
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="loginForm.controls['password'].dirty || loginForm.controls['password'].value || loginForm.controls['password'].touched || isFormInvalid ">
+                        <span *ngIf="loginForm.controls['password'].hasError('required')">Please enter</span>
+                        <span *ngIf="loginForm.controls['password'].hasError('pattern')">Invalid Password</span>
+                    </mat-hint>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{disabledDiv:registation.invalid}">
+                <label class="col-md-1 col-form-label">
+                    Confirm Password
+                    <span class="asterisk">*</span>
+                </label>
+                <div class="col-md-2">
+                    <input type="password" class="form-control form-control-sm" formControlName="confirmPassword"
+                        (paste)="false" (draggable)="false" (drop)="false" (dragover)="false" required
+                        autocomplete="off">
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="loginForm.controls['confirmPassword'].dirty || loginForm.controls['confirmPassword'].value || loginForm.controls['confirmPassword'].touched || isFormInvalid ">
+                        <span *ngIf="loginForm.controls['confirmPassword'].hasError('required')">Please enter</span>
+                        <span *ngIf="loginForm.controls['confirmPassword'].hasError('mustMatch')">Passwords do not
+                            match</span>
+                    </mat-hint>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-1 col-form-label">
+                    Upload Document
+                    <span class="asterisk">*</span>
+                </label>
+                <div class="col-md-3">
+                    <input type="file" id="myfile" name="myfile" class="mt-2" (change)="getFileDetails($event)"
+                        accept="application/pdf">
+                        <p style="color: red;font-size: small;">
+                            Note* :- Upload the undertaking by the Head of the Institution consisting the details of the nominated official.
+                        </p>
+                    <p style="color: red;font-size: small;">
+                        File should be in pdf format only & less than 2MB.
+                    </p>
+                    
+                </div>
+                <div class="col-md-2" style="padding-top: 30px;">
+                    <table class="media-upload-table table table-borderless">
+                        <tbody>
+                            <tr *ngFor="let media of uploadedMedia; let i = index">
+                                <td style="vertical-align:middle;">
+                                    <div class="d-flex flex-column" style="margin-top: 18px;">
+                                        <div>
+                                            <div class="first-progress">
+                                                <div [ngStyle]="{ 'width.%': media.FileProgress }"
+                                                    class="second-progress"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            {{ media.FileProgessSize }} of {{ media.FileSize }}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group row" [ngClass]="{disabledDiv:registation.invalid}">
+                <label class="col-md-1 col-form-label">
+                    Verification
+                    <span class="asterisk">*</span>
+                </label>
+                <div class="col-md-1">
+                    <input type="text" class="form-control form-control-sm" formControlName="captcha" (paste)="false"
+                        (draggable)="false" (drop)="false" (dragover)="false" required autocomplete="off" required>
+                    <mat-hint class="err-msgs mt-3"
+                        *ngIf="loginForm.controls['captcha'].dirty || loginForm.controls['captcha'].value || loginForm.controls['captcha'].touched || isFormInvalid ">
+                        <span *ngIf="loginForm.controls['captcha'].hasError('required')">Please enter</span>
+
+                    </mat-hint>
+                </div>
+                <div class="col-md-3">
+                    <img [src]="captchaText" alt class="captcha">
+                    <a class="btn btn-link" (click)="getCaptcha()">
+                        <i tabindex="0" class="fa fa-refresh captcha-refresh ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+
+    <div class="form-group text-center mt-2" *ngIf="showDetails">
+        <button class="btn btn-success btn-sm mr-2" type="button" (click)="verifyCaptcha()">
+            Submit
+        </button>
+        <a [routerLink]="routers.INSTITUTIONALLOGIN" class="btn btn-danger btn-sm mr-2">
+            Back
+        </a>
+    </div>
+</div>
+<section class="p-3 bg-gray-400" *ngIf="showForAllUser">
+    <div class="container">
+        <mat-card class="border-radius: 10px shadow bg-white border">
+            <div class="border-bottom-dark col-md-12 mb-2 text-center">
+                <h5 style="font-weight: 500; font-size: 18px;">Data User Registration</h5>
+            </div>
+            <form [formGroup]="dataUserRegistation">
+                <h3 class="heading">Personal Details</h3>
+                <div class="col-md-12">
+                    <mat-form-field class="d-block">
+                        <mat-label>Full Name</mat-label>
+                        <input matInput type="text" formControlName="firstName" placeholder="First Name" required>
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="dataUserRegistation.controls['firstName'].dirty || dataUserRegistation.controls['firstName'].value || dataUserRegistation.controls['firstName'].touched || isFormInvalid ">
+                        <span *ngIf="dataUserRegistation.controls['firstName'].hasError('required')">Please enter</span>
+                    </mat-hint>
+                </div>
+
+                <!-- <div class="col-md-12">
+                    <mat-form-field class="d-block">
+                        <mat-label>Last Name</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            formControlName="lastName"
+                            placeholder="Last Name"
+                            autocomplete="off"
+                            required
+                        >
+                    </mat-form-field>
+                    <mat-hint
+                        class="err-msgs"
+                        *ngIf="dataUserRegistation.controls['lastName'].dirty || dataUserRegistation.controls['lastName'].value || dataUserRegistation.controls['lastName'].touched || isFormInvalid "
+                    >
+                        <span *ngIf="dataUserRegistation.controls['lastName'].hasError('required')">Please enter</span>
+                    </mat-hint>
+                </div> -->
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field class="d-block">
+                                <mat-label>User Type</mat-label>
+                                <mat-select formControlName="userType" placeholder="User Type" autocomplete="off"
+                                    required>
+                                    <mat-select-filter [array]="usertype" [displayMember]="'userType'"
+                                        (filteredReturn)="filteredList1 = $event"></mat-select-filter>
+                                    <mat-option *ngFor="let utype of filteredList1  " [value]="utype">
+                                        {{utype.userType}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-hint class="err-msgs"
+                                *ngIf="dataUserRegistation.controls['userType'].dirty || dataUserRegistation.controls['userType'].value || dataUserRegistation.controls['userType'].touched || isFormInvalid ">
+                                <span *ngIf="dataUserRegistation.controls['userType'].hasError('required')">Please
+                                    select</span>
+                            </mat-hint>
+                        </div>
+                        <div class="col-md-6 d-flex mt-3">
+                            <label class="col-md-2 col-form-label d-flex">
+                                Gender
+                                <span style="color: red;">*</span>
+                            </label>
+                            <div class="col-md-4 mt-2 justify-content-end">
+                                <mat-radio-group aria-label="Select an option" required
+                                    formControlName="genderIddataUser" class="d-flex">
+                                    <mat-radio-button value="1">Male</mat-radio-button>
+                                    &nbsp;&nbsp;
+                                    <mat-radio-button value="2">Female</mat-radio-button>
+                                    &nbsp;&nbsp;
+                                    <mat-radio-button value="3">Transgender</mat-radio-button>
+                                </mat-radio-group>
+
+                                <mat-hint class="err-msgs"
+                                    *ngIf="dataUserRegistation.controls['genderIddataUser'].dirty || dataUserRegistation.controls['genderIddataUser'].value || dataUserRegistation.controls['genderIddataUser'].touched || isFormInvalid ">
+                                    <span
+                                        *ngIf="dataUserRegistation.controls['genderIddataUser'].hasError('required')">Please
+                                        select</span>
+                                </mat-hint>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="d-block">
+                        <mat-label>Country</mat-label>
+                        <mat-select formControlName="country" (selectionChange)="loadStates($event.value)" required>
+                            <mat-select-filter [array]="country" [displayMember]="'name'"
+                                (filteredReturn)="filterdCountry = $event"></mat-select-filter>
+                            <mat-option *ngFor="let countryObj of filterdCountry" [value]="countryObj">
+                                {{countryObj.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="dataUserRegistation.controls['country'].dirty || dataUserRegistation.controls['country'].value || dataUserRegistation.controls['country'].touched || isFormInvalid ">
+                        <span *ngIf="dataUserRegistation.controls['country'].hasError('required')">Please select</span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-2 mt-2">
+                        <mat-form-field class="countryCode" style="border-right: 1px;">
+                            <mat-label>Country Code</mat-label>
+                            <input matInput type="text" formControlName="stdCode" readonly placeholder="Country Code">
+                        </mat-form-field>
+                        <span style="margin-right: 4px;"></span>
+                    </div>
+
+                    <div class="col-md-4 mt-2">
+                        <mat-form-field class="mobileNumber">
+                            <mat-label>Mobile Number</mat-label>
+                            <input matInput formControlName="phoneMobile" placeholder="Mobile number" type="text"
+                                appInputNumbersOnly (keypress)="onKeypressEvent($event,10)">
+                        </mat-form-field>
+                        <mat-hint class="err-msgs mt-3 pr-4"
+                            *ngIf="dataUserRegistation.controls['phoneMobile'].dirty ||dataUserRegistation.controls['phoneMobile'].value || dataUserRegistation.controls['phoneMobile'].touched || isFormInvalid">
+                            <span *ngIf="
+                                    dataUserRegistation.controls['phoneMobile'].hasError(
+                                    'required'
+                                    )
+                                " class="errorMessage">
+                                Please enter.
+                            </span>
+                            <span *ngIf="
+                                dataUserRegistation.controls['phoneMobile'].hasError(
+                                    'pattern'
+                                )
+                                " class="errorMessage">
+                                Invalid.
+                            </span>
+                        </mat-hint>
+                    </div>
+                    <div class="col-md-2 mt-4" *ngIf="!mobileOtp">
+                        <button class="btn btn-danger btn-sm mt-2" (click)="sendMobileOTPUpdate()">
+                            Send Mobile OTP
+                        </button>
+                    </div>
+                    <label class="col-md-2 mt-4 col-form-label" *ngIf="mobileOtp">
+                        Mobile OTP
+                        <span class="asterisk">*</span>
+                    </label>
+                    <div class="col-md-2 mt-4" *ngIf="hide">
+                        <input type="text" class="form-control form-control-sm" formControlName="mobileOtp" required>
+                        <span class="timer mt-1" *ngIf="display !== '00:00' && hideVerifyM">
+                            {{display}}
+                        </span>
+                        <span class="mt-1" *ngIf="display === '00:00' && hideVerifyM" style="cursor: pointer;"
+                            (click)="sendMobileOTPUpdate()">
+                            Click here to
+                            Resend OTP
+                        </span>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-lg mt-4" style="margin-top: 28px !important;
+                        color: green;
+                        float: left;" *ngIf="successVerifyMobileOTP"></i>
+
+                    <div class="col-md-2 mt-4" *ngIf="hideVerifyM">
+                        <button class="btn btn-success btn-sm" (click)="verifyMobileOTPUpdate()">
+                            Verify Mobile OTP
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="d-block">
+                        <mat-label>State</mat-label>
+                        <mat-select formControlName="addressStateCode" (selectionChange)="loadDistricts($event.value)"
+                            required>
+                            <mat-select-filter [array]="state" [displayMember]="'name'"
+                                (filteredReturn)="filterdState = $event"></mat-select-filter>
+                            <mat-option *ngFor="let stateObj of filterdState " [value]="stateObj.stateCode">
+                                {{stateObj.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="dataUserRegistation.controls['addressStateCode'].dirty || dataUserRegistation.controls['addressStateCode'].value || dataUserRegistation.controls['addressStateCode'].touched || isFormInvalid ">
+                        <span *ngIf="dataUserRegistation.controls['addressStateCode'].hasError('required')">
+                            Please
+                            select
+                        </span>
+                    </mat-hint>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="d-block">
+                        <mat-label>District</mat-label>
+                        <mat-select matInput formControlName="addressDistrictCode" required>
+                            <mat-select-filter [array]="district" [displayMember]="'name'"
+                                (filteredReturn)="filterdDistrict = $event"></mat-select-filter>
+                            <mat-option *ngFor="let districtObj of filterdDistrict " [value]="districtObj.distCode">
+                                {{districtObj.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="dataUserRegistation.controls['addressDistrictCode'].dirty || dataUserRegistation.controls['addressDistrictCode'].value || dataUserRegistation.controls['addressDistrictCode'].touched || isFormInvalid ">
+                        <span *ngIf="dataUserRegistation.controls['addressDistrictCode'].hasError('required')">
+                            Please
+                            select
+                        </span>
+                    </mat-hint>
+                </div>
+                <h3 class="heading">Please Choose Login Credential</h3>
+                <div class="col-md-12 row">
+                    <div class="col-md-5 mt-3">
+                        <mat-form-field class="d-block">
+                            <mat-label>Email</mat-label>
+                            <input
+                                matInput
+                                type="text"
+                                autocomplete="off"
+                                matTooltipPosition="above"
+                                matTooltipClass="blackTooltip"
+                                formControlName="emailId"
+                                placeholder="Email"
+                                (change)="onKeyUpEvent($event)"
+                                required
+                            >
+                <!-- <mat-hint>E.g. user123@xyz.com</mat-hint> -->
+     </mat-form-field>
+     
+                    <!-- </div>
+                   <div
+                        class="col-md-2 mt-4"
+                        *ngIf="!emailOtp"
+                    >
+                        <button
+                            class="btn btn-danger btn-sm mt-3"
+                            (click)="sendEmailOTPUpdate()"
+                        >
+                            Send Email OTP
+                        </button>
+                    </div>
+                    <label
+                        class="col-md-2 col-form-label mt-5"
+                        *ngIf="hideE"
+                    >
+                        Email OTP
+                        <span class="asterisk">*</span>
+                    </label>
+                    <div
+                        class="col-md-2 mt-4"
+                        *ngIf="hideE"
+                    >
+                        <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            style="margin-top:15px;"
+                            formControlName="emailOtp"
+                            required
+                        >
+                        <span
+                            class="timer mt-1"
+                            *ngIf="displayE !== '00:00' && hideVerify"
+                        >
+                            {{displayE}}
+                        </span>
+                        <span
+                            class="mt-1"
+                            *ngIf="displayE === '00:00' && hideVerify"
+                            style="cursor: pointer;"
+                            (click)="sendEmailOTPUpdate()"
+                        >
+                            Click here to
+                            Resend OTP
+                        </span>
+                    </div>
+                    <i
+                        class="fa-solid fa-circle-check text-lg"
+                        style="margin-top: 44px !important;
+                        color: green;
+                        float: left;"
+                        *ngIf="successVerifyOTP"
+                    ></i>
+
+                    <div
+                        class="col-md-2 mt-4"
+                        *ngIf="hideVerify"
+                    >
+                        <button
+                            class="btn btn-success btn-sm"
+                            style="margin-top:15px;"
+                            (click)="verifyEmailOTPUpdate()"
+                        >
+                            Verify Email OTP
+                        </button>
+                    </div> -->
+</div>
+                </div> 
+
+                <div class="col-md-12 mt-1">
+                    <mat-form-field class="d-block">
+                        <mat-label>Password</mat-label>
+                        <input matInput autocomplete="new" [type]="show ? 'text' : 'password'"
+                            formControlName="userPassword" placeholder="Password" required (paste)="false"
+                            (draggable)="false" (drop)="false" (dragover)="false" [ngbTooltip]="passwordMessage"
+                            triggers="hover" placement="right">
+                        <span class="loginshoweyecls">
+                            <i (click)="password()" class="fa" [ngClass]="{'fa-eye-slash': !show, 'fa-eye': show}"
+                                aria-hidden="true"></i>
+                        </span>
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="dataUserRegistation.controls['userPassword'].dirty || dataUserRegistation.controls['userPassword'].value || dataUserRegistation.controls['userPassword'].touched || isFormInvalid ">
+                        <span *ngIf="dataUserRegistation.controls['userPassword'].hasError('required')">Please
+                            enter</span>
+                        <span *ngIf="dataUserRegistation.controls['userPassword'].hasError('pattern')">Invalid
+                            Password</span>
+                    </mat-hint>
+                </div>
+
+                <div class="col-md-12">
+                    <mat-form-field class="d-block">
+                        <mat-label>Confirm Password</mat-label>
+                        <input type="password" matInput formControlName="conf_password" (paste)="false"
+                            (draggable)="false" (drop)="false" (dragover)="false" required autocomplete="newauto">
+                    </mat-form-field>
+                    <mat-hint class="err-msgs"
+                        *ngIf="dataUserRegistation.controls['conf_password'].dirty || dataUserRegistation.controls['conf_password'].value || dataUserRegistation.controls['conf_password'].touched || isFormInvalid ">
+                        <span *ngIf="dataUserRegistation.controls['conf_password'].hasError('required')">Please
+                            enter</span>
+                        <span *ngIf="dataUserRegistation.controls['conf_password'].hasError('mustMatch')">
+                            Passwords do
+                            not match
+                        </span>
+                    </mat-hint>
+                </div>
+                <div class="row pl-1">
+                    <div class="col-md-6">
+                        <mat-form-field class="d-block">
+                            <mat-label>Enter Below Verfication Code</mat-label>
+                            <input matInput autocomplete="off" maxlength="15" (paste)="false" (draggable)="false"
+                                (drop)="false" (dragover)="false" formControlName="captcha"
+                                placeholder="Enter Below Verfication Code" class="textTransform" required>
+                        </mat-form-field>
+                        <mat-hint class="err-msgs"
+                            *ngIf="dataUserRegistation.controls['captcha'].dirty || dataUserRegistation.controls['captcha'].value || dataUserRegistation.controls['captcha'].touched || isFormInvalid ">
+                            <span *ngIf="dataUserRegistation.controls['captcha'].hasError('required')">Please
+                                enter</span>
+                        </mat-hint>
+                    </div>
+                    <div class="col-md-6">
+                        <img [src]="captchaText" alt class="captcha1">
+                        <a class="btn btn-link" (click)="getCaptcha()">
+                            <i tabindex="0" class="fa fa-refresh captcha-refresh ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </form>
+            <div class="form-group text-center mt-2">
+                <button class="btn btn-success btn-sm mr-2" type="button" (click)="verifyCaptcha()">
+                    Submit
+                </button>
+                <a [routerLink]="routers.DATAUSERLOGIN" class="btn btn-danger btn-sm mr-2">
+                    Back
+                </a>
+            </div>
+        </mat-card>
+    </div>
+</section>

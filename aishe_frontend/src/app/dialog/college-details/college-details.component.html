@@ -1,0 +1,71 @@
+<a mat-icon-button class="close" [mat-dialog-close]="true">
+    <mat-icon matTooltip="Close">close</mat-icon>
+  </a>
+<mat-dialog-content>
+    <span class="font-weight-bold text-lg" *ngIf="offCampus !=='offcampus1'">{{element['0'].universityName}} Affliated College List</span>
+    <span class="font-weight-bold text-lg" *ngIf="offCampus==='offcampus1'">{{collegeList['0']['universityName']}} Off Campus List</span>
+    <div class="row">
+        <div class="col-md-2 pt-4">
+            <label>Show</label>&nbsp;
+            <select [(ngModel)]="pageSize" (ngModelChange)="onChange($event)">
+                <option *ngFor="let data of sharedService.pageSizeOptions" [value]="data">{{data}}</option>
+            </select>
+            entries
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-6 pt-4">
+            <label>Search:</label>&nbsp;
+            <input type="text" size="40" id='myInput' (change)="updateResults(offCampus)" (keyup)="updateResults(offCampus)"
+                [(ngModel)]="searchText">
+        </div>
+        <div class="col-md-3 pt-4">
+          <label class="download" matTooltip="Download as PDF" (click)="download()">Download:-
+            <i class="fa fa-file-pdf-o downloadPDF"></i></label>
+        </div>
+    </div>
+    <table class="table table-bordered table-sm">
+        <tr>
+            <th>S.No.</th>
+            <th>AISHE Code</th>
+            <th>Institution Name</th>
+            <th>Institution Type</th>
+            <th>State</th>
+            <th>District</th>
+            <th>Whether filling up data</th>
+        </tr>
+
+        <ng-container *ngFor="let item of collegeList | paginate : {
+            itemsPerPage: pageSize,
+            currentPage: page
+
+          };
+    let i = index
+    ">
+            <tr>
+                <td>{{i+StartLimit+1}}</td>
+                <td>{{offCampus==='offcampus1'?item.offCampusAisheCode:item.aisheCode}}</td>
+                <td>{{offCampus==='offcampus1'?item.offCampusName:item.collegeName?item.collegeName:''}}</td>
+                <td>{{offCampus==='offcampus1'?item.type:item.collegeType}}</td>
+                <td>{{item.state}}</td>
+                <td>{{item.district}}</td>
+                <td>{{item.isApplicable?'YES':'NO'}}</td>
+            </tr>
+        </ng-container>
+
+    </table>
+    <div class="row col-md-12 overflow-hidden">
+        <div class="col-md-3">
+            Showing {{StartLimit + 1}} to {{pageData === -1?0:pageData}} Of {{this.collegeList.length}}
+            entries
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-6" *ngIf="collegeList.length !== 0">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)"
+                screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                screenReaderCurrentLabel="You're on page"></pagination-controls>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="warn" mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+</mat-dialog-actions>
