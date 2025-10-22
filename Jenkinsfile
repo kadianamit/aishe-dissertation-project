@@ -11,7 +11,11 @@ pipeline {
             parallel {
 
                 stage('Build AisheMasterService') {
-                    agent { docker { image 'maven:3.8.6-jdk-11' } }
+                    agent {
+                        docker {
+                            image 'maven:3.8.6-jdk-11'
+                        }
+                    }
                     steps {
                         dir('aishe_backend/AisheMasterService') {
                             sh 'mvn -DskipTests clean package'
@@ -20,7 +24,11 @@ pipeline {
                 }
 
                 stage('Build UserMgtService') {
-                    agent { docker { image 'maven:3.8.6-jdk-11' } }
+                    agent {
+                        docker {
+                            image 'maven:3.8.6-jdk-11'
+                        }
+                    }
                     steps {
                         dir('aishe_backend/UserMgtService') {
                             sh 'mvn -DskipTests clean package'
@@ -29,7 +37,12 @@ pipeline {
                 }
 
                 stage('Build Frontend') {
-                    agent { docker { image 'node:18' args '--ulimit nofile=65536:65536' } }
+                    agent {
+                        docker {
+                            image 'node:18'
+                            args '--ulimit nofile=65536:65536'
+                        }
+                    }
                     steps {
                         dir('aishe_frontend') {
                             sh '''
@@ -49,14 +62,14 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     script {
-                        // Backend analysis
+                        // Backend scan
                         sh '''
                             mvn -f aishe_backend/pom.xml -DskipTests sonar:sonar \
                             -Dsonar.host.url=$SONAR_HOST_URL \
                             -Dsonar.login=$SONAR_AUTH_TOKEN
                         '''
 
-                        // Frontend analysis
+                        // Frontend scan
                         sh '''
                             docker run --rm \
                             -v "$WORKSPACE/aishe_frontend":/usr/src \
@@ -74,7 +87,7 @@ pipeline {
 
     post {
         always {
-            echo "Pipeline completed — cleaning workspace."
+            echo "✅ Pipeline completed — cleaning up workspace."
             cleanWs()
         }
     }
