@@ -1,123 +1,100 @@
 pipeline {
-  agent none
-
+  agent any
   environment {
-    PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-    SONAR_HOST_URL = "http://localhost:9001"
-    SONAR_AUTH_TOKEN = credentials('sonarqube-token1') // use your Jenkins credential ID here
+    // Bind your Sonar token credential (create a Secret Text with id 'sonarqube-token1')
+    SONAR_AUTH_TOKEN = credentials('sonarqube-token1')
+    SONAR_HOST_URL = 'http://localhost:9001' // adjust if different
+    // Ensure workspace is available for docker mount
+    WORKSPACE_DIR = "${env.WORKSPACE}"
   }
 
   stages {
-
-    stage('Build All (parallel)') {
+    stage('Build All') {
       parallel {
-
         stage('Build AisheMasterService') {
-          agent any
           steps {
             dir('aishe_backend/AisheMasterService') {
-              echo "Building AisheMasterService..."
-              sh '''
-                docker run --rm \
-                  -v "$PWD":/workspace \
-                  -w /workspace \
+              // run maven inside a maven container with DNS override
+              sh """
+                docker run --rm --dns 8.8.8.8 \
+                  -v "${WORKSPACE_DIR}/aishe_backend/AisheMasterService":/work \
+                  -w /work \
                   maven:3.8.6-jdk-11 \
                   mvn -DskipTests -e clean package
-              '''
+              """
             }
           }
           post {
             success {
-              archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+              archiveArtifacts artifacts: 'aishe_backend/AisheMasterService/target/*.jar', followSymlinks: false
             }
           }
         }
 
         stage('Build UserMgtService') {
-          agent any
           steps {
             dir('aishe_backend/UserMgtService') {
-              echo "Building UserMgtService..."
-              sh '''
-                docker run --rm \
-                  -v "$PWD":/workspace \
-                  -w /workspace \
+              sh """
+                docker run --rm --dns 8.8.8.8 \
+                  -v "${WORKSPACE_DIR}/aishe_backend/UserMgtService":/work \
+                  -w /work \
                   maven:3.8.6-jdk-11 \
                   mvn -DskipTests -e clean package
-              '''
+              """
             }
           }
           post {
             success {
-              archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+              archiveArtifacts artifacts: 'aishe_backend/UserMgtService/target/*.jar', followSymlinks: false
             }
           }
         }
 
         stage('Build Frontend') {
-          agent any
           steps {
             dir('aishe_frontend') {
-              echo "Building Frontend..."
+              // run node build inside node container with DNS override, use local tmp inside container to avoid macOS ENFILE issues
               sh '''
-                docker run --rm \
-                  --ulimit nofile=65536:65536 \
-                  -v "$PWD":/workspace \
-                  -w /workspace \
+                docker run --rm --dns 8.8.8.8 \
+                  -v "${WORKSPACE_DIR}/aishe_frontend":/usr/src/app \
+                  -w /usr/src/app \
                   node:18 \
-                  /bin/sh -c "npm install --legacy-peer-deps && npm run build"
+                  /bin/sh -c "ulimit -n 65536 && export NODE_OPTIONS=--max-old-space-size=4096 && mkdir -p /tmp/.npm && npm_config_cache=/tmp/.npm npm ci --legacy-peer-deps && npm_config_cache=/tmp/.npm npm run build"
               '''
             }
           }
           post {
             success {
-              archiveArtifacts artifacts: 'dist/**', followSymlinks: false
+              archiveArtifacts artifacts: 'aishe_frontend/dist/**', followSymlinks: false
             }
           }
         }
 
         stage('SonarQube Analysis') {
-          agent any
           steps {
-            echo "Running SonarQube analysis for backend and frontend..."
+            dir('aishe_backend') {
+              // run backend sonar analysis via maven inside docker
+              sh """
+                docker run --rm --dns 8.8.8.8 \
+                  -v "${WORKSPACE_DIR}/aishe_backend":/work \
+                  -w /work \
+                  maven:3.8.6-jdk-11 \
+                  mvn -DskipTests -e sonar:sonar -Dsonar.login=${SONAR_AUTH_TOKEN} -Dsonar.host.url=${SONAR_HOST_URL}
+              """
+            }
 
-            // Backend Sonar analysis
-            sh '''
-              docker run --rm \
-                -v "$WORKSPACE/aishe_backend":/workspace \
-                -w /workspace/AisheMasterService \
-                -e SONAR_HOST_URL=$SONAR_HOST_URL \
-                -e SONAR_AUTH_TOKEN=$SONAR_AUTH_TOKEN \
-                maven:3.8.6-jdk-11 \
-                mvn -DskipTests -e sonar:sonar \
-                -Dsonar.login=$SONAR_AUTH_TOKEN \
-                -Dsonar.host.url=$SONAR_HOST_URL
-            '''
-
-            // Frontend Sonar analysis
-            sh '''
-              docker run --rm \
-                -v "$WORKSPACE/aishe_frontend":/usr/src \
-                -w /usr/src \
-                -e SONAR_HOST_URL=$SONAR_HOST_URL \
-                -e SONAR_AUTH_TOKEN=$SONAR_AUTH_TOKEN \
-                sonarsource/sonar-scanner-cli \
-                -Dsonar.projectKey=aishe-frontend \
-                -Dsonar.sources=. \
-                -Dsonar.login=$SONAR_AUTH_TOKEN \
-                -Dsonar.host.url=$SONAR_HOST_URL
-            '''
-          }
-          post {
-            always {
-              echo "Checking Sonar report file (if exists)..."
-              sh '''
-                if [ -f report-task.txt ]; then
-                  echo "report-task.txt found:"; cat report-task.txt
-                else
-                  echo "report-task.txt not found"
-                fi
-              '''
+            dir('aishe_frontend') {
+              // run sonar-scanner inside docker; using sonar-scanner-cli from Docker Hub
+              sh """
+                docker run --rm --dns 8.8.8.8 \
+                  -v "${WORKSPACE_DIR}/aishe_frontend":/usr/src \
+                  -w /usr/src \
+                  sonarsource/sonar-scanner-cli \
+                  -Dsonar.projectKey=aishe-frontend \
+                  -Dsonar.sources=. \
+                  -Dsonar.login=${SONAR_AUTH_TOKEN} \
+                  -Dsonar.host.url=${SONAR_HOST_URL}
+              """
             }
           }
         }
@@ -128,8 +105,7 @@ pipeline {
 
   post {
     always {
-      echo "Pipeline finished - cleaning workspace..."
-      script { deleteDir() }
+      echo "Pipeline finished"
     }
   }
 }
