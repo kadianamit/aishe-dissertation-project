@@ -1,9 +1,10 @@
 pipeline {
-    agent none // Specify agent per stage
+    agent none // We will specify the agent for each stage
 
     stages {
         stage('Build All') {
             parallel {
+
                 stage('Build AisheMasterService') {
                     agent {
                         docker { image 'maven:3.8.6-jdk-11' }
@@ -45,25 +46,24 @@ pipeline {
                     }
                     steps {
                         dir('aishe_frontend') {
-                            // Copy project into a container-local temp dir, build there, then copy dist back
                             sh '''
-                                # create a container-local temp dir and copy sources into it
+                                # Create a container-local temp directory and copy project (excluding node_modules)
                                 TMPDIR=$(mktemp -d)
-                                cp -R . "$TMPDIR"
+                                tar -cf - --exclude=node_modules . | (cd "$TMPDIR" && tar -xf -)
                                 cd "$TMPDIR"
 
-                                # increase fd limit inside container
+                                # Raise file descriptor limit inside container
                                 ulimit -n 65536
                                 export NODE_OPTIONS="--max-old-space-size=4096"
 
-                                # use a local cache within the container's tmp dir
+                                # Use container-local npm cache
                                 mkdir -p .npm
                                 npm_config_cache=$PWD/.npm npm ci --legacy-peer-deps
 
-                                # build (no unsupported flags)
+                                # Build the Angular project
                                 npm_config_cache=$PWD/.npm npm run build
 
-                                # copy built artifacts back to the mounted workspace so Jenkins can archive them
+                                # Copy the built artifacts back to the Jenkins workspace
                                 mkdir -p "$WORKSPACE/aishe_frontend/dist"
                                 cp -R dist/* "$WORKSPACE/aishe_frontend/dist/" || true
                             '''
@@ -75,7 +75,8 @@ pipeline {
                         }
                     }
                 }
-            }
-        }
-    }
-}
+
+            } // end parallel
+        } // end stage
+    } // end stages
+} // end pipeline
