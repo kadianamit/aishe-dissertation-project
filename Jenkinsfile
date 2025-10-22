@@ -36,11 +36,11 @@ pipeline {
                 }
                 stage('Build Frontend') {
                     agent {
-                        docker { image 'node:18' }
+                        docker { image 'node:18' args '--ulimit nofile=65536:65536' }
                     }
                     steps {
                         dir('aishe_frontend') {
-                            sh "mkdir -p $WORKSPACE/.npm && npm_config_cache=$WORKSPACE/.npm npm ci --legacy-peer-deps && npm_config_cache=$WORKSPACE/.npm npm run build"
+                            sh "export NODE_OPTIONS=\"--max-old-space-size=4096\" && mkdir -p $WORKSPACE/.npm && npm_config_cache=$WORKSPACE/.npm npm ci --legacy-peer-deps && npm_config_cache=$WORKSPACE/.npm npm run build"
                         }
                     }
                     post {
