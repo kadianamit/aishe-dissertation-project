@@ -1,42 +1,49 @@
 pipeline {
-    agent any
-
-    tools {
-        maven 'Maven'
-    }
+    agent none // We will specify the agent for each stage
 
     stages {
         stage('Build AisheMasterService') {
+            agent {
+                docker { image 'maven:3.8.6-jdk-11' }
+            }
             steps {
                 dir('aishe_backend/AisheMasterService') {
-                    script {
-                        if (isUnix()) {
-                            sh 'mvn clean install'
-                        } else {
-                            bat 'mvn clean install'
-                        }
-                    }
+                    sh 'mvn -DskipTests -e clean package'
+                }
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'aishe_backend/AisheMasterService/target/*.jar', followSymlinks: false
                 }
             }
         }
         stage('Build UserMgtService') {
+            agent {
+                docker { image 'maven:3.8.6-jdk-11' }
+            }
             steps {
                 dir('aishe_backend/UserMgtService') {
-                    script {
-                        if (isUnix()) {
-                            sh 'mvn clean install'
-                        } else {
-                            bat 'mvn clean install'
-                        }
-                    }
+                    sh 'mvn -DskipTests -e clean package'
+                }
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'aishe_backend/UserMgtService/target/*.jar', followSymlinks: false
                 }
             }
         }
         stage('Build Frontend') {
+            agent {
+                docker { image 'node:18' }
+            }
             steps {
                 dir('aishe_frontend') {
-                    sh 'npm install'
-                    sh 'npm run build'
+                    sh 'npm ci && npm run build'
+                }
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'aishe_frontend/dist/**', followSymlinks: false
                 }
             }
         }
