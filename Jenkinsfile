@@ -21,8 +21,7 @@ pipeline {
                 }
 
                 stage('SonarQube Analysis') {
-                  agent { label 'master' } // run on controller where Sonar env is configured
-                  steps {
+                  agent any // changed from label 'master' to any
                     withSonarQubeEnv('SonarQube-Local') { // <-- use the exact Sonar name you configured in Jenkins
                       script {
                         // Backend: run mvn from the backend folder so POM is found inside the container/agent workspace
