@@ -1,56 +1,94 @@
 pipeline {
-    agent none
+    agent any
 
     environment {
-        PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+        // Make sure PATH includes Docker & Maven (from macOS Homebrew)
+        PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+        SONAR_HOST_URL = "http://localhost:9001"
+    }
+
+    options {
+        timestamps()
+        ansiColor('xterm')
+        buildDiscarder(logRotator(numToKeepStr: '15'))
     }
 
     stages {
+        stage('Checkout Code') {
+            steps {
+                echo "Checking out code from GitHub..."
+                checkout scm
+            }
+        }
+
+        stage('Verify Tools') {
+            steps {
+                sh '''
+                    echo "---- Verifying Docker and Maven paths ----"
+                    echo "PATH: $PATH"
+                    which docker || echo "Docker not found"
+                    docker --version || echo "Docker version failed"
+                    which mvn || echo "Maven not found"
+                    mvn -v || echo "Maven version failed"
+                '''
+            }
+        }
 
         stage('Build All') {
             parallel {
-
                 stage('Build AisheMasterService') {
-                    agent {
-                        docker {
-                            image 'maven:3.8.6-jdk-11'
-                        }
-                    }
                     steps {
-                        dir('aishe_backend/AisheMasterService') {
-                            sh 'mvn -DskipTests clean package'
+                        sh '''
+                            echo "=== Building AisheMasterService ==="
+                            docker run --rm \
+                                -v "$WORKSPACE":/workspace \
+                                -w /workspace/aishe_backend/AisheMasterService \
+                                maven:3.8.6-jdk-11 mvn -DskipTests -e clean package
+                        '''
+                    }
+                    post {
+                        success {
+                            archiveArtifacts artifacts: 'aishe_backend/AisheMasterService/target/*.jar', allowEmptyArchive: true
                         }
                     }
                 }
 
                 stage('Build UserMgtService') {
-                    agent {
-                        docker {
-                            image 'maven:3.8.6-jdk-11'
-                        }
-                    }
                     steps {
-                        dir('aishe_backend/UserMgtService') {
-                            sh 'mvn -DskipTests clean package'
+                        sh '''
+                            echo "=== Building UserMgtService ==="
+                            docker run --rm \
+                                -v "$WORKSPACE":/workspace \
+                                -w /workspace/aishe_backend/UserMgtService \
+                                maven:3.8.6-jdk-11 mvn -DskipTests -e clean package
+                        '''
+                    }
+                    post {
+                        success {
+                            archiveArtifacts artifacts: 'aishe_backend/UserMgtService/target/*.jar', allowEmptyArchive: true
                         }
                     }
                 }
 
                 stage('Build Frontend') {
-                    agent {
-                        docker {
-                            image 'node:18'
-                            args '--ulimit nofile=65536:65536'
-                        }
-                    }
                     steps {
-                        dir('aishe_frontend') {
-                            sh '''
-                                export NODE_OPTIONS="--max-old-space-size=4096"
-                                mkdir -p $WORKSPACE/.npm
-                                npm_config_cache=$WORKSPACE/.npm npm ci --legacy-peer-deps
-                                npm_config_cache=$WORKSPACE/.npm npm run build
-                            '''
+                        sh '''
+                            echo "=== Building Angular Frontend ==="
+                            mkdir -p "$WORKSPACE/.npm"
+                            docker run --rm \
+                                -v "$WORKSPACE/aishe_frontend":/usr/src \
+                                -v "$WORKSPACE/.npm":/root/.npm \
+                                -w /usr/src \
+                                node:18 bash -c "
+                                    export NODE_OPTIONS=--max-old-space-size=4096
+                                    npm_config_cache=/root/.npm npm ci --legacy-peer-deps
+                                    npm run build
+                                "
+                        '''
+                    }
+                    post {
+                        success {
+                            archiveArtifacts artifacts: 'aishe_frontend/dist/**', allowEmptyArchive: true
                         }
                     }
                 }
@@ -58,37 +96,31 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            agent any
+            agent { label 'any' }  // no master label required
             steps {
+                echo "=== Running SonarQube Analysis ==="
                 withSonarQubeEnv('SonarQube') {
-                    script {
-                        // Backend scan
-                        sh '''
-                            mvn -f aishe_backend/pom.xml -DskipTests sonar:sonar \
+                    sh '''
+                        echo "Running SonarQube Maven scanner..."
+                        cd aishe_backend
+                        mvn -DskipTests -e sonar:sonar \
                             -Dsonar.host.url=$SONAR_HOST_URL \
                             -Dsonar.login=$SONAR_AUTH_TOKEN
-                        '''
-
-                        // Frontend scan
-                        sh '''
-                            docker run --rm \
-                            -v "$WORKSPACE/aishe_frontend":/usr/src \
-                            -w /usr/src sonarsource/sonar-scanner-cli \
-                            -Dsonar.projectKey=aishe-frontend \
-                            -Dsonar.sources=. \
-                            -Dsonar.host.url=$SONAR_HOST_URL \
-                            -Dsonar.login=$SONAR_AUTH_TOKEN
-                        '''
-                    }
+                    '''
                 }
             }
         }
     }
 
     post {
+        success {
+            echo "✅ Pipeline completed successfully! Artifacts archived and SonarQube scan done."
+        }
+        failure {
+            echo "❌ Pipeline failed — check console output for details."
+        }
         always {
-            echo "✅ Pipeline completed — cleaning up workspace."
-            cleanWs()
+            echo "Cleaning up workspace..."
         }
     }
 }
