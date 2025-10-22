@@ -2,8 +2,10 @@ pipeline {
   agent none
 
   stages {
+
     stage('Build All') {
       parallel {
+
         stage('Build AisheMasterService') {
           agent {
             docker { image 'maven:3.8.6-jdk-11' }
@@ -38,12 +40,12 @@ pipeline {
 
         stage('Build Frontend') {
           agent {
-            docker { image 'node:18' args '--ulimit nofile=65536:65536' }
+            docker { image 'node:18' }
           }
           steps {
             dir('aishe_frontend') {
-              // Use workspace-local npm cache and reasonable Node memory
               sh '''
+                echo "Building Angular Frontend..."
                 ulimit -n 65536
                 export NODE_OPTIONS="--max-old-space-size=4096"
                 mkdir -p "$WORKSPACE/.npm"
@@ -58,26 +60,31 @@ pipeline {
             }
           }
         }
+
       } // end parallel
     } // end Build All
 
     stage('SonarQube Analysis') {
       agent any
       steps {
-        // Make sure this name exactly matches your Sonar config in Jenkins
         withSonarQubeEnv('SonarQube-Local') {
           script {
-            // Backend (run mvn from the backend folder so POM is found)
+            echo "🔍 Starting SonarQube Analysis..."
+
+            // Backend analysis
             dir('aishe_backend') {
               sh '''
-                echo "Running Sonar for backend in: $PWD"
-                mvn -DskipTests -e sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=$SONAR_HOST_URL
+                echo "Running Sonar for backend..."
+                mvn -DskipTests -e sonar:sonar \
+                  -Dsonar.projectKey=aishe-backend \
+                  -Dsonar.login=$SONAR_AUTH_TOKEN \
+                  -Dsonar.host.url=$SONAR_HOST_URL
               '''
             }
 
-            // Frontend: use sonar-scanner CLI in Docker and mount frontend workspace
+            // Frontend analysis
             sh '''
-              echo "Running Sonar for frontend using sonar-scanner docker image"
+              echo "Running Sonar for frontend..."
               docker run --rm \
                 -v "$WORKSPACE/aishe_frontend":/usr/src/app \
                 -w /usr/src/app \
@@ -87,14 +94,15 @@ pipeline {
                 -Dsonar.login=$SONAR_AUTH_TOKEN \
                 -Dsonar.host.url=$SONAR_HOST_URL
             '''
-          } // end script
-        } // end withSonarQubeEnv
-      } // end steps
+          }
+        }
+      }
       post {
         always {
-          sh 'test -f ${WORKSPACE}/report-task.txt && echo "report-task.txt exists" || echo "report-task.txt NOT found"'
+          echo "✅ SonarQube analysis completed (check in Sonar dashboard)."
         }
       }
     } // end SonarQube Analysis
+
   } // end stages
 } // end pipeline
