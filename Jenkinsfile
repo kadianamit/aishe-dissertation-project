@@ -21,27 +21,39 @@ pipeline {
                 }
 
                 stage('SonarQube Analysis') {
-                    agent any
-                    steps {
-                        withSonarQubeEnv('SonarQube') {
-                            script {
-                                // Backend (Maven multi-module scan). Adjust projectKey if needed.
-                                sh "mvn -f aishe_backend/pom.xml -DskipTests -e sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=$SONAR_HOST_URL"
-
-                                // Frontend: run sonar-scanner CLI inside Docker (uses workspace sources)
-                                sh """
-                                    docker run --rm \
-                                        -v "$WORKSPACE/aishe_frontend":/usr/src \
-                                        -w /usr/src \
-                                        sonarsource/sonar-scanner-cli \
-                                        -Dsonar.projectKey=aishe-frontend \
-                                        -Dsonar.sources=. \
-                                        -Dsonar.login=$SONAR_AUTH_TOKEN \
-                                        -Dsonar.host.url=$SONAR_HOST_URL
-                                """
-                            }
+                  agent { label 'master' } // run on controller where Sonar env is configured
+                  steps {
+                    withSonarQubeEnv('SonarQube-Local') { // <-- use the exact Sonar name you configured in Jenkins
+                      script {
+                        // Backend: run mvn from the backend folder so POM is found inside the container/agent workspace
+                        dir('aishe_backend') {
+                          sh '''
+                            echo "Running Sonar for backend in: $PWD"
+                            mvn -DskipTests -e sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=$SONAR_HOST_URL
+                          '''
                         }
+
+                        // Frontend: run sonar-scanner CLI inside Docker but mount the workspace and run from the frontend folder
+                        sh '''
+                          echo "Running Sonar for frontend using sonar-scanner docker image"
+                          docker run --rm \
+                            -v "$WORKSPACE/aishe_frontend":/usr/src/app \
+                            -w /usr/src/app \
+                            sonarsource/sonar-scanner-cli \
+                            -Dsonar.projectKey=aishe-frontend \
+                            -Dsonar.sources=. \
+                            -Dsonar.login=$SONAR_AUTH_TOKEN \
+                            -Dsonar.host.url=$SONAR_HOST_URL
+                        '''
+                      }
                     }
+                  }
+                  post {
+                    always {
+                      // show a short message if file missing
+                      sh 'test -f ${WORKSPACE}/report-task.txt && echo "report-task.txt exists" || echo "report-task.txt NOT found"'
+                    }
+                  }
                 }
 
                 stage('Build UserMgtService') {
