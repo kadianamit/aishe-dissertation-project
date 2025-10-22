@@ -38,7 +38,7 @@ pipeline {
             }
             steps {
                 dir('aishe_frontend') {
-                    sh 'npm ci && npm run build'
+                    sh "mkdir -p $WORKSPACE/.npm && npm_config_cache=$WORKSPACE/.npm npm ci --legacy-peer-deps && npm_config_cache=$WORKSPACE/.npm npm run build"
                 }
             }
             post {
