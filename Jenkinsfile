@@ -36,7 +36,10 @@ pipeline {
                 }
                 stage('Build Frontend') {
                     agent {
-                        docker { image 'node:18' args '--ulimit nofile=65536:65536' }
+                      docker {
+                        image 'node:18'
+                        args  '--ulimit nofile=65536:65536'
+                      }
                     }
                     steps {
                         dir('aishe_frontend') {
