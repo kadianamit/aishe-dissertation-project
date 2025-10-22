@@ -4,7 +4,6 @@ pipeline {
     stages {
         stage('Build All') {
             parallel {
-
                 stage('Build AisheMasterService') {
                     agent {
                         docker { image 'maven:3.8.6-jdk-11' }
@@ -17,6 +16,36 @@ pipeline {
                     post {
                         success {
                             archiveArtifacts artifacts: 'aishe_backend/AisheMasterService/target/*.jar', followSymlinks: false
+                        }
+                    }
+                }
+
+                stage('SonarQube Analysis') {
+                    agent { label 'master' } // runs on the controller where Sonar env is available; change if you prefer an agent
+                    steps {
+                        withSonarQubeEnv('SonarQube') {
+                            script {
+                                // Backend (Maven multi-module scan). Adjust -Dsonar.projectKey values if you want separate projects.
+                                sh "mvn -f aishe_backend/pom.xml -DskipTests -e sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN"
+
+                                // Frontend: run sonar-scanner CLI inside Docker (uses workspace sources)
+                                sh """
+                                    docker run --rm \
+                                        -v "$WORKSPACE/aishe_frontend":/usr/src \
+                                        -w /usr/src \
+                                        sonarsource/sonar-scanner-cli \
+                                        -Dsonar.projectKey=aishe-frontend \
+                                        -Dsonar.sources=. \
+                                        -Dsonar.login=$SONAR_AUTH_TOKEN \
+                                        -Dsonar.host.url=$SONAR_HOST_URL
+                                """
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            // optional: publish scanner report location or archive scanner logs
+                            archiveArtifacts artifacts: '**/sonar-report*.xml', allowEmptyArchive: true
                         }
                     }
                 }
@@ -41,7 +70,7 @@ pipeline {
                     agent {
                         docker {
                             image 'node:18'
-                            args  '--ulimit nofile=65536:65536'
+                            args '--ulimit nofile=65536:65536'
                         }
                     }
                     steps {
@@ -75,8 +104,8 @@ pipeline {
                         }
                     }
                 }
-
             } // end parallel
         } // end stage
     } // end stages
 } // end pipeline
+
