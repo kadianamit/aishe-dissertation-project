@@ -1,11 +1,15 @@
 pipeline {
   agent none
 
-  stages {
+  /* Ensure Jenkins can find docker/mvn on macOS (Homebrew paths) */
+  environment {
+    PATH = "/usr/local/bin:/opt/homebrew/bin:${env.PATH}"
+    // If you set SONAR credentials as env or credentialsId, keep them here or use withCredentials in stages.
+  }
 
+  stages {
     stage('Build All') {
       parallel {
-
         stage('Build AisheMasterService') {
           agent {
             docker { image 'maven:3.8.6-jdk-11' }
@@ -44,13 +48,14 @@ pipeline {
           }
           steps {
             dir('aishe_frontend') {
+              // use workspace-local npm cache to avoid permission/ENFILE issues on macOS mounts
               sh '''
-                echo "Building Angular Frontend..."
                 ulimit -n 65536
                 export NODE_OPTIONS="--max-old-space-size=4096"
-                mkdir -p "$WORKSPACE/.npm"
-                npm_config_cache="$WORKSPACE/.npm" npm ci --legacy-peer-deps
-                npm_config_cache="$WORKSPACE/.npm" npm run build
+                TMP_NPM_CACHE="$WORKSPACE/.npm"
+                mkdir -p "$TMP_NPM_CACHE"
+                npm_config_cache="$TMP_NPM_CACHE" npm ci --legacy-peer-deps
+                npm_config_cache="$TMP_NPM_CACHE" npm run build
               '''
             }
           }
@@ -61,48 +66,39 @@ pipeline {
           }
         }
 
-      } // end parallel
-    } // end Build All
+        stage('SonarQube Analysis') {
+          agent { label 'master' } // or an agent where sonar env and docker are available
+          steps {
+            withSonarQubeEnv('SonarQube-Local') {
+              script {
+                // Backend Maven analysis
+                dir('aishe_backend') {
+                  sh "mvn -DskipTests -e sonar:sonar -Dsonar.login=${SONAR_AUTH_TOKEN} -Dsonar.host.url=${SONAR_HOST_URL}"
+                }
 
-    stage('SonarQube Analysis') {
-      agent any
-      steps {
-        withSonarQubeEnv('SonarQube-Local') {
-          script {
-            echo "🔍 Starting SonarQube Analysis..."
-
-            // Backend analysis
-            dir('aishe_backend') {
-              sh '''
-                echo "Running Sonar for backend..."
-                mvn -DskipTests -e sonar:sonar \
-                  -Dsonar.projectKey=aishe-backend \
-                  -Dsonar.login=$SONAR_AUTH_TOKEN \
-                  -Dsonar.host.url=$SONAR_HOST_URL
-              '''
+                // Frontend analysis using workspace-mounted scanner image (requires docker CLI)
+                sh """
+                  docker run --rm \
+                    -v "$WORKSPACE/aishe_frontend":/usr/src \
+                    -w /usr/src \
+                    sonarsource/sonar-scanner-cli \
+                    -Dsonar.projectKey=aishe-frontend \
+                    -Dsonar.sources=. \
+                    -Dsonar.login=${SONAR_AUTH_TOKEN} \
+                    -Dsonar.host.url=${SONAR_HOST_URL}
+                """
+              }
             }
-
-            // Frontend analysis
-            sh '''
-              echo "Running Sonar for frontend..."
-              docker run --rm \
-                -v "$WORKSPACE/aishe_frontend":/usr/src/app \
-                -w /usr/src/app \
-                sonarsource/sonar-scanner-cli \
-                -Dsonar.projectKey=aishe-frontend \
-                -Dsonar.sources=. \
-                -Dsonar.login=$SONAR_AUTH_TOKEN \
-                -Dsonar.host.url=$SONAR_HOST_URL
-            '''
           }
         }
-      }
-      post {
-        always {
-          echo "✅ SonarQube analysis completed (check in Sonar dashboard)."
-        }
-      }
-    } // end SonarQube Analysis
 
+      } // end parallel
+    } // end Build All
   } // end stages
+
+  post {
+    always {
+      echo "Pipeline finished. Check console for details."
+    }
+  }
 } // end pipeline
