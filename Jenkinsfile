@@ -21,12 +21,12 @@ pipeline {
                 }
 
                 stage('SonarQube Analysis') {
-                    agent { label 'master' } // runs on the controller where Sonar env is available; change if you prefer an agent
+                    agent any
                     steps {
-                        withSonarQubeEnv('SonarQube-Local') {
+                        withSonarQubeEnv('SonarQube') {
                             script {
-                                // Backend (Maven multi-module scan). Adjust -Dsonar.projectKey values if you want separate projects.
-                                sh "mvn -f aishe_backend/pom.xml -DskipTests -e sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN"
+                                // Backend (Maven multi-module scan). Adjust projectKey if needed.
+                                sh "mvn -f aishe_backend/pom.xml -DskipTests -e sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=$SONAR_HOST_URL"
 
                                 // Frontend: run sonar-scanner CLI inside Docker (uses workspace sources)
                                 sh """
@@ -40,12 +40,6 @@ pipeline {
                                         -Dsonar.host.url=$SONAR_HOST_URL
                                 """
                             }
-                        }
-                    }
-                    post {
-                        always {
-                            // optional: publish scanner report location or archive scanner logs
-                            archiveArtifacts artifacts: '**/sonar-report*.xml', allowEmptyArchive: true
                         }
                     }
                 }
