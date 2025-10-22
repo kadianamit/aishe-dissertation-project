@@ -23,7 +23,7 @@ pipeline {
                 stage('SonarQube Analysis') {
                     agent { label 'master' } // runs on the controller where Sonar env is available; change if you prefer an agent
                     steps {
-                        withSonarQubeEnv('SonarQube') {
+                        withSonarQubeEnv('SonarQube-Local') {
                             script {
                                 // Backend (Maven multi-module scan). Adjust -Dsonar.projectKey values if you want separate projects.
                                 sh "mvn -f aishe_backend/pom.xml -DskipTests -e sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN"
