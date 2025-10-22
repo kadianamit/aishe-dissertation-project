@@ -1,5 +1,5 @@
 pipeline {
-    agent none // We will specify the agent for each stage
+    agent none // Specify agent per stage
 
     stages {
         stage('Build All') {
@@ -19,6 +19,7 @@ pipeline {
                         }
                     }
                 }
+
                 stage('Build UserMgtService') {
                     agent {
                         docker { image 'maven:3.8.6-jdk-11' }
@@ -34,15 +35,23 @@ pipeline {
                         }
                     }
                 }
+
                 stage('Build Frontend') {
                     agent {
-                      docker {
-                        image 'node:18'
-                      }
+                        docker {
+                            image 'node:18'
+                            args  '--ulimit nofile=65536:65536'
+                        }
                     }
                     steps {
                         dir('aishe_frontend') {
-                            sh "ulimit -n 65536 && export NODE_OPTIONS=\"--max-old-space-size=4096\" && mkdir -p $WORKSPACE/.npm && npm_config_cache=$WORKSPACE/.npm npm ci --legacy-peer-deps && npm_config_cache=$WORKSPACE/.npm npm run build -- --max-workers=2"
+                            sh '''
+                                ulimit -n 65536
+                                export NODE_OPTIONS="--max-old-space-size=4096"
+                                mkdir -p $WORKSPACE/.npm
+                                npm_config_cache=$WORKSPACE/.npm npm ci --legacy-peer-deps
+                                npm_config_cache=$WORKSPACE/.npm npm run build
+                            '''
                         }
                     }
                     post {
