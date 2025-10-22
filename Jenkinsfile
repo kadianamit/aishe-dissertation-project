@@ -38,12 +38,11 @@ pipeline {
                     agent {
                       docker {
                         image 'node:18'
-                        args  '--ulimit nofile=65536:65536'
                       }
                     }
                     steps {
                         dir('aishe_frontend') {
-                            sh "export NODE_OPTIONS=\"--max-old-space-size=4096\" && mkdir -p $WORKSPACE/.npm && npm_config_cache=$WORKSPACE/.npm npm ci --legacy-peer-deps && npm_config_cache=$WORKSPACE/.npm npm run build -- --max-workers=2"
+                            sh "ulimit -n 65536 && export NODE_OPTIONS=\"--max-old-space-size=4096\" && mkdir -p $WORKSPACE/.npm && npm_config_cache=$WORKSPACE/.npm npm ci --legacy-peer-deps && npm_config_cache=$WORKSPACE/.npm npm run build -- --max-workers=2"
                         }
                     }
                     post {
