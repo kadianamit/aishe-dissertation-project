@@ -72,19 +72,55 @@ pipeline {
 
         stage('SonarQube Analysis') {
           steps {
-            dir('aishe_backend') {
-              // run backend sonar analysis via maven inside docker
+            // Backend: run sonar for each module where pom.xml exists
+            // AisheMasterService
+            dir("${WORKSPACE_DIR}/aishe_backend/AisheMasterService") {
               sh """
                 docker run --rm --dns 8.8.8.8 \
-                  -v "${WORKSPACE_DIR}/aishe_backend":/work \
+                  -v "${WORKSPACE_DIR}/aishe_backend/AisheMasterService":/work \
                   -w /work \
                   maven:3.8.6-jdk-11 \
-                  mvn -DskipTests -e sonar:sonar -Dsonar.login=${SONAR_AUTH_TOKEN} -Dsonar.host.url=${SONAR_HOST_URL}
+                  mvn -DskipTests -e -f pom.xml sonar:sonar \
+                    -Dsonar.projectKey=aishe-AisheMasterService \
+                    -Dsonar.login=${SONAR_AUTH_TOKEN} \
+                    -Dsonar.host.url=${SONAR_HOST_URL}
               """
             }
 
-            dir('aishe_frontend') {
-              // run sonar-scanner inside docker; using sonar-scanner-cli from Docker Hub
+            // UserMgtService (top-level)
+            dir("${WORKSPACE_DIR}/aishe_backend/UserMgtService") {
+              sh """
+                docker run --rm --dns 8.8.8.8 \
+                  -v "${WORKSPACE_DIR}/aishe_backend/UserMgtService":/work \
+                  -w /work \
+                  maven:3.8.6-jdk-11 \
+                  mvn -DskipTests -e -f pom.xml sonar:sonar \
+                    -Dsonar.projectKey=aishe-UserMgtService \
+                    -Dsonar.login=${SONAR_AUTH_TOKEN} \
+                    -Dsonar.host.url=${SONAR_HOST_URL}
+              """
+            }
+
+            // WebdcfUnlock nested POM inside UserMgtService resources (if present)
+            dir("${WORKSPACE_DIR}/aishe_backend/UserMgtService/src/main/resources/WebdcfUnlock/Authorization") {
+              sh """
+                if [ -f pom.xml ]; then
+                  docker run --rm --dns 8.8.8.8 \
+                    -v "${WORKSPACE_DIR}/aishe_backend/UserMgtService/src/main/resources/WebdcfUnlock/Authorization":/work \
+                    -w /work \
+                    maven:3.8.6-jdk-11 \
+                    mvn -DskipTests -e -f pom.xml sonar:sonar \
+                      -Dsonar.projectKey=aishe-UserMgtService-WebdcfUnlock-Authorization \
+                      -Dsonar.login=${SONAR_AUTH_TOKEN} \
+                      -Dsonar.host.url=${SONAR_HOST_URL}
+                else
+                  echo "No nested pom in WebdcfUnlock/Authorization — skipping."
+                fi
+              """
+            }
+
+            // Frontend: sonar-scanner using sonar-scanner-cli docker image
+            dir("${WORKSPACE_DIR}/aishe_frontend") {
               sh """
                 docker run --rm --dns 8.8.8.8 \
                   -v "${WORKSPACE_DIR}/aishe_frontend":/usr/src \
