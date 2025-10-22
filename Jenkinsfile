@@ -45,12 +45,27 @@ pipeline {
                     }
                     steps {
                         dir('aishe_frontend') {
+                            // Copy project into a container-local temp dir, build there, then copy dist back
                             sh '''
+                                # create a container-local temp dir and copy sources into it
+                                TMPDIR=$(mktemp -d)
+                                cp -R . "$TMPDIR"
+                                cd "$TMPDIR"
+
+                                # increase fd limit inside container
                                 ulimit -n 65536
                                 export NODE_OPTIONS="--max-old-space-size=4096"
-                                mkdir -p $WORKSPACE/.npm
-                                npm_config_cache=$WORKSPACE/.npm npm ci --legacy-peer-deps
-                                npm_config_cache=$WORKSPACE/.npm npm run build
+
+                                # use a local cache within the container's tmp dir
+                                mkdir -p .npm
+                                npm_config_cache=$PWD/.npm npm ci --legacy-peer-deps
+
+                                # build (no unsupported flags)
+                                npm_config_cache=$PWD/.npm npm run build
+
+                                # copy built artifacts back to the mounted workspace so Jenkins can archive them
+                                mkdir -p "$WORKSPACE/aishe_frontend/dist"
+                                cp -R dist/* "$WORKSPACE/aishe_frontend/dist/" || true
                             '''
                         }
                     }
