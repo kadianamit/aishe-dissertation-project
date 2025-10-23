@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        HTTP_PROXY = System.getenv('HTTP_PROXY') ?: ''
-        HTTPS_PROXY = System.getenv('HTTPS_PROXY') ?: ''
-        NO_PROXY = System.getenv('NO_PROXY') ?: ''
+        HTTP_PROXY = "${System.getenv('HTTP_PROXY') ?: ''}"
+        HTTPS_PROXY = "${System.getenv('HTTPS_PROXY') ?: ''}"
+        NO_PROXY = "${System.getenv('NO_PROXY') ?: ''}"
         WORKSPACE_DIR = "${env.WORKSPACE}"
     }
 
