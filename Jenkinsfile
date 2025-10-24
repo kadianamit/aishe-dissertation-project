@@ -1,5 +1,5 @@
 pipeline {
-    agent none // We will specify the agent for each stage
+    agent any // We will specify the agent for each stage
 
     stages {
         stage('Build All') {
