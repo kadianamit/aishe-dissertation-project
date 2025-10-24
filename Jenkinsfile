@@ -11,7 +11,7 @@ pipeline {
                     }
                     steps {
                         dir('aishe_backend/AisheMasterService') {
-                            sh 'bash -c "mvn -DskipTests -e clean package"'
+                            sh "/bin/bash" 'bash "/bin/bash" -c "mvn -DskipTests -e clean package"'
                         }
                     }
                     post {
@@ -27,7 +27,7 @@ pipeline {
                     }
                     steps {
                         dir('aishe_backend/UserMgtService') {
-                            sh 'bash -c "mvn -DskipTests -e clean package"'
+                            sh "/bin/bash" 'bash "/bin/bash" -c "mvn -DskipTests -e clean package"'
                         }
                     }
                     post {
@@ -46,7 +46,7 @@ pipeline {
                     }
                     steps {
                         dir('aishe_frontend') {
-                            sh '''
+                            sh "/bin/bash" '''
 #!/bin/bash
                                 # Create a container-local temp directory and copy project (excluding node_modules)
                                 TMPDIR=$(mktemp -d)
