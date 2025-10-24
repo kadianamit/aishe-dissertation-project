@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Oct 23 10:37:03 UTC 2025
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1761215823618
+http\://0.0.0.0/.error=Could not transfer artifact org.springframework.boot\:spring-boot-starter-parent\:pom\:2.1.6.RELEASE from/to maven-default-http-blocker (http\://0.0.0.0/)\: Blocked mirror for repositories\: [jaspersoft-third-party-ce (http\://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/, default, releases+snapshots)]
+@default-maven-default-http-blocker-http\://0.0.0.0/.lastUpdated=1761215812904
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact org.springframework.boot\:spring-boot-starter-parent\:pom\:2.1.6.RELEASE from/to central (https\://repo.maven.apache.org/maven2)\: transfer failed for https\://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-parent/2.1.6.RELEASE/spring-boot-starter-parent-2.1.6.RELEASE.pom
