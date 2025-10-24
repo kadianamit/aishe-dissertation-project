@@ -11,7 +11,7 @@ pipeline {
                     }
                     steps {
                         dir('aishe_backend/AisheMasterService') {
-                            sh 'mvn -DskipTests -e clean package'
+                            sh 'bash -c "mvn -DskipTests -e clean package"'
                         }
                     }
                     post {
@@ -27,7 +27,7 @@ pipeline {
                     }
                     steps {
                         dir('aishe_backend/UserMgtService') {
-                            sh 'mvn -DskipTests -e clean package'
+                            sh 'bash -c "mvn -DskipTests -e clean package"'
                         }
                     }
                     post {
