@@ -61,17 +61,15 @@ pipeline {
         stage('Build UserMgtService') {
           steps {
             dir("${WORKSPACE_DIR}/aishe_backend/UserMgtService") {
-              sh """
-                docker run --rm \
-                  --dns 8.8.8.8 \
-                  --add-host=host.docker.internal:host-gateway \
-                  --ulimit nofile=65536:65536 \
-                  -v "${WORKSPACE_DIR}:${WORKSPACE_DIR}" \
-                  -v "${MAVEN_REPO}:/root/.m2/repository" \
-                  -w "${WORKSPACE_DIR}/aishe_backend/UserMgtService" \
-                  maven:3.8.6-jdk-11 \
-                  mvn -B -Dmaven.repo.local=/root/.m2/repository -DskipTests -e clean package
-              """
+              sh '''
+                docker run --rm --dns 8.8.8.8 --add-host=host.docker.internal:host-gateway \
+                  --ulimit nofile=131072:131072 \
+                  -v ${WORKSPACE}:/workspace \
+                  -v ${WORKSPACE}/.m2/repository:/root/.m2/repository \
+                  -w /workspace/aishe_backend/UserMgtService \
+                  -e MAVEN_OPTS="-Xms256m -Xmx1024m" \
+                  maven:3.8.6-jdk-11 /bin/sh -lc 'ulimit -n 131072 && mvn -B -Dmaven.repo.local=/root/.m2/repository -DskipTests package'
+              '''
             }
           }
           post {
