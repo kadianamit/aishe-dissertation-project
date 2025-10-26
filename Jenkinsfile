@@ -121,6 +121,8 @@ pipeline {
                   --dns 8.8.8.8 \
                   --add-host=host.docker.internal:host-gateway \
                   --ulimit nofile=65536:65536 \
+                  -e SONAR_AUTH_TOKEN \
+                  -e SONAR_HOST_URL \
                   -v "${WORKSPACE_DIR}:${WORKSPACE_DIR}" \
                   -v "${MAVEN_REPO}:/root/.m2/repository" \
                   -w "${WORKSPACE_DIR}/aishe_backend" \
@@ -135,6 +137,8 @@ pipeline {
                 docker run --rm \
                   --dns 8.8.8.8 \
                   --add-host=host.docker.internal:host-gateway \
+                  -e SONAR_AUTH_TOKEN \
+                  -e SONAR_HOST_URL \
                   -v "${WORKSPACE_DIR}:${WORKSPACE_DIR}" \
                   -w "${WORKSPACE_DIR}/aishe_frontend" \
                   sonarsource/sonar-scanner-cli \
