@@ -152,15 +152,13 @@ pipeline {
                 docker run --rm \
                   --dns 8.8.8.8 \
                   --add-host=host.docker.internal:host-gateway \
-                  -e SONAR_HOST_URL=${SONAR_HOST_URL} \
-                  -e SONAR_AUTH_TOKEN=${SONAR_AUTH_TOKEN} \
-                  -v "${WORKSPACE_DIR}:${WORKSPACE_DIR}" \
-                  -w "${WORKSPACE_DIR}/aishe_frontend" \
-                  sonarsource/sonar-scanner-cli \
+                  -e SONAR_HOST_URL=$SONAR_HOST_URL -e SONAR_AUTH_TOKEN=$SONAR_AUTH_TOKEN \
+                  -v ${WORKSPACE}:/workspace -w /workspace/aishe_frontend \
+                  sonarsource/sonar-scanner-cli:latest \
                   -Dsonar.projectKey=aishe-frontend \
                   -Dsonar.sources=. \
-                  -Dsonar.host.url=${SONAR_HOST_URL} \
-                  -Dsonar.login=${SONAR_AUTH_TOKEN}
+                  -Dsonar.host.url=$SONAR_HOST_URL \
+                  -Dsonar.login=$SONAR_AUTH_TOKEN
               """
             }
           }
