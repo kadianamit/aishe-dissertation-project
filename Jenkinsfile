@@ -90,7 +90,7 @@ pipeline {
                   -v "${WORKSPACE_DIR}/.npm-cache":/tmp/.npm \
                   -w "${WORKSPACE_DIR}/aishe_frontend" \
                   node:18 \
-                  /bin/sh -c "ulimit -n 65536 && export NODE_OPTIONS=--max-old-space-size=4096 && mkdir -p /tmp/.npm && npm_config_cache=/tmp/.npm npm_config_maxsockets=1 npm_config_cache_min=999999 npm install --prefer-offline --no-audit --legacy-peer-deps && npm run build"
+                  /bin/sh -c "ulimit -n 65536 && export NODE_OPTIONS=--max-old-space-size=4096 && mkdir -p /tmp/.npm && npm_config_cache=/tmp/.npm npm_config_maxsockets=1 npm_config_cache_min=999999 rm -rf node_modules && npm cache clean --force && npm ci --no-audit --legacy-peer-deps || (echo 'npm ci failed' && exit 1) && npm run build"
               '''
             }
           }
