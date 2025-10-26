@@ -154,8 +154,9 @@ pipeline {
                   -Dsonar.projectKey=aishe-frontend \
                   -Dsonar.projectBaseDir=/workspace/aishe_frontend \
                   -Dsonar.sources=src \
-                  -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/*.spec.ts,**/*.min.js \
-                  -Dsonar.scm.exclusions.disabled=true \
+                  -Dsonar.inclusions=src/**/*.ts,src/**/*.html,src/**/*.css \
+                  -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/*.spec.ts,**/*.min.js,**/*.map,**/coverage/** \
+                  -Dsonar.scm.disabled=true \
                   -Dsonar.host.url=$SONAR_HOST_URL \
                   -Dsonar.login=$SONAR_AUTH_TOKEN
               """
