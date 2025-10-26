@@ -5,11 +5,12 @@ pipeline {
     PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin:${env.PATH}"
     // Sonar token stored in Jenkins credentials (type: Secret text, id: sonarqube-token1)
     SONAR_AUTH_TOKEN = credentials('sonarqube-token1')
-    SONAR_HOST_URL    = 'http://host.docker.internal:9001'   // rely on add-host for container reachability
+    SONAR_HOST_URL   = 'http://host.docker.internal:9001'   // rely on add-host for container reachability
     // Use the Jenkins workspace absolute path so containers see the same paths as the host
     WORKSPACE_DIR = "${env.WORKSPACE}"
     // local maven repo inside workspace to reduce permission/lock issues
     MAVEN_REPO = "${env.WORKSPACE}/.m2/repository"
+    ENABLE_SONAR = 'true' // Added: Enable SonarQube analysis
   }
 
   stages {
@@ -91,7 +92,7 @@ pipeline {
                   -v "${WORKSPACE_DIR}/.npm-cache":/tmp/.npm \
                   -w "${WORKSPACE_DIR}/aishe_frontend" \
                   node:18 \
-                  /bin/sh -c "ulimit -n 65536 && export NODE_OPTIONS=--max-old-space-size=4096 && mkdir -p /tmp/.npm && npm_config_cache=/tmp/.npm npm install --prefer-offline --no-audit --legacy-peer-deps && npm run build"
+                  /bin/sh -c "ulimit -n 65536 && export NODE_OPTIONS=--max-old-space-size=4096 && mkdir -p /tmp/.npm && npm_config_cache=/tmp/.npm npm_config_maxsockets=1 npm_config_cache_min=999999 npm install --prefer-offline --no-audit --legacy-peer-deps && npm run build"
               '''
             }
           }
@@ -99,12 +100,22 @@ pipeline {
             success { archiveArtifacts artifacts: 'aishe_frontend/dist/**', followSymlinks: false }
           }
         }
+      } // parallel
+    } // Build All
 
-        // Run Sonar analysis in parallel after successful builds of the modules (but keep it separate)
-        stage('SonarQube Analysis') {
-          steps {
-            script {
-              // backend (multi-module) - run sonar from root of backend so maven picks up modules
+    // New SonarQube Analysis stage
+    stage('SonarQube Analysis') {
+      when {
+        allOf {
+          expression { env.ENABLE_SONAR == 'true' }
+          expression { currentBuild.currentResult == 'SUCCESS' }
+        }
+      }
+      steps {
+        script {
+          withSonarQubeEnv('SonarLocal') {
+            // Backend (multi-module) - run sonar from root of backend so maven picks up modules
+            dir("${WORKSPACE_DIR}/aishe_backend") {
               sh """
                 docker run --rm \
                   --dns 8.8.8.8 \
@@ -116,8 +127,10 @@ pipeline {
                   maven:3.8.6-jdk-11 \
                   mvn -B -Dmaven.repo.local=/root/.m2/repository -DskipTests -e sonar:sonar -Dsonar.login=${SONAR_AUTH_TOKEN} -Dsonar.host.url=${SONAR_HOST_URL}
               """
+            }
 
-              // frontend - use sonar-scanner-cli container and point to frontend sources
+            // Frontend - use sonar-scanner-cli container and point to frontend sources
+            dir("${WORKSPACE_DIR}/aishe_frontend") {
               sh """
                 docker run --rm \
                   --dns 8.8.8.8 \
@@ -133,14 +146,27 @@ pipeline {
             }
           }
         }
-
-      } // parallel
-    } // Build All
+      }
+    }
   }
 
   post {
     always {
       echo "Pipeline finished"
+      // Wrap waitForQualityGate in a try-catch block
+      script {
+        if (env.ENABLE_SONAR == 'true' && currentBuild.currentResult == 'SUCCESS') {
+          try {
+            timeout(time: 1, unit: 'HOURS') { // Adjust timeout as needed
+              waitForQualityGate abortPipeline: false
+            }
+          } catch (Exception e) {
+            echo "SonarQube Quality Gate check failed or timed out: ${e.getMessage()}"
+            // Optionally, mark the build as UNSTABLE here if the quality gate fails
+            // currentBuild.result = 'UNSTABLE'
+          }
+        }
+      }
     }
     success {
       echo "Success!"
