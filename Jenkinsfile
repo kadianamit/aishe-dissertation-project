@@ -29,6 +29,7 @@ pipeline {
           echo "${WORKSPACE_DIR}"
           which docker || (echo "docker not found in PATH" && exit 1)
         '''
+        sh "mkdir -p ${MAVEN_REPO}"
       }
     }
 
