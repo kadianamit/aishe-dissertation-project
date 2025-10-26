@@ -116,37 +116,33 @@ pipeline {
           withSonarQubeEnv('SonarLocal') {
             // Backend (multi-module) - run sonar from root of backend so maven picks up modules
             dir("${WORKSPACE_DIR}/aishe_backend") {
-              sh """
+              sh '''
                 docker run --rm \
                   --dns 8.8.8.8 \
                   --add-host=host.docker.internal:host-gateway \
                   --ulimit nofile=65536:65536 \
-                  -e SONAR_AUTH_TOKEN \
-                  -e SONAR_HOST_URL \
                   -v "${WORKSPACE_DIR}:${WORKSPACE_DIR}" \
                   -v "${MAVEN_REPO}:/root/.m2/repository" \
                   -w "${WORKSPACE_DIR}/aishe_backend" \
                   maven:3.8.6-jdk-11 \
-                  mvn -B -Dmaven.repo.local=/root/.m2/repository -DskipTests -e sonar:sonar -Dsonar.login=${SONAR_AUTH_TOKEN} -Dsonar.host.url=${SONAR_HOST_URL}
-              """
+                  mvn -B -Dmaven.repo.local=/root/.m2/repository -DskipTests sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=$SONAR_HOST_URL
+              '''
             }
 
             // Frontend - use sonar-scanner-cli container and point to frontend sources
             dir("${WORKSPACE_DIR}/aishe_frontend") {
-              sh """
+              sh '''
                 docker run --rm \
                   --dns 8.8.8.8 \
                   --add-host=host.docker.internal:host-gateway \
-                  -e SONAR_AUTH_TOKEN \
-                  -e SONAR_HOST_URL \
                   -v "${WORKSPACE_DIR}:${WORKSPACE_DIR}" \
                   -w "${WORKSPACE_DIR}/aishe_frontend" \
                   sonarsource/sonar-scanner-cli \
                   -Dsonar.projectKey=aishe-frontend \
                   -Dsonar.sources=. \
-                  -Dsonar.host.url=${SONAR_HOST_URL} \
-                  -Dsonar.login=${SONAR_AUTH_TOKEN}
-              """
+                  -Dsonar.host.url=$SONAR_HOST_URL \
+                  -Dsonar.login=$SONAR_AUTH_TOKEN
+              '''
             }
           }
         }
