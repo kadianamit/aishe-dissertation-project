@@ -147,7 +147,7 @@ pipeline {
             // Frontend - use sonar-scanner-cli container and point to frontend sources
             dir("${WORKSPACE_DIR}/aishe_frontend") {
               sh """
-                docker run --rm --platform linux/arm64 --ulimit nofile=262144:262144 \
+                docker run --rm --ulimit nofile=262144:262144 \
                   -e SONAR_HOST_URL=$SONAR_HOST_URL -e SONAR_AUTH_TOKEN=$SONAR_AUTH_TOKEN \
                   -v ${WORKSPACE}:/workspace -w /workspace/aishe_frontend \
                   sonarsource/sonar-scanner-cli:latest \
