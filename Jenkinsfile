@@ -115,7 +115,7 @@ pipeline {
         script {
           withSonarQubeEnv('SonarLocal') {
             // Backend (multi-module) - run sonar from root of backend so maven picks up modules
-            dir("${WORKSPACE_DIR}/aishe_backend") {
+            dir("${WORKSPACE_DIR}/aishe_backend/AisheMasterService") {
               sh '''
                 docker run --rm \
                   --dns 8.8.8.8 \
@@ -123,7 +123,23 @@ pipeline {
                   --ulimit nofile=65536:65536 \
                   -v "${WORKSPACE_DIR}:${WORKSPACE_DIR}" \
                   -v "${MAVEN_REPO}:/root/.m2/repository" \
-                  -w "${WORKSPACE_DIR}/aishe_backend" \
+                  -w "${WORKSPACE_DIR}/aishe_backend/AisheMasterService" \
+                  maven:3.8.6-jdk-11 \
+                  mvn -B -Dmaven.repo.local=/root/.m2/repository -DskipTests \
+                    org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                    -Dsonar.host.url=$SONAR_HOST_URL \
+                    -Dsonar.token=$SONAR_AUTH_TOKEN
+              '''
+            }
+            dir("${WORKSPACE_DIR}/aishe_backend/UserMgtService") {
+              sh '''
+                docker run --rm \
+                  --dns 8.8.8.8 \
+                  --add-host=host.docker.internal:host-gateway \
+                  --ulimit nofile=65536:65536 \
+                  -v "${WORKSPACE_DIR}:${WORKSPACE_DIR}" \
+                  -v "${MAVEN_REPO}:/root/.m2/repository" \
+                  -w "${WORKSPACE_DIR}/aishe_backend/UserMgtService" \
                   maven:3.8.6-jdk-11 \
                   mvn -B -Dmaven.repo.local=/root/.m2/repository -DskipTests \
                     org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
