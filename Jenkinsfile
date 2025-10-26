@@ -5,7 +5,7 @@ pipeline {
     PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin:${env.PATH}"
     // Sonar token stored in Jenkins credentials (type: Secret text, id: sonarqube-token1)
     SONAR_AUTH_TOKEN = credentials('sonarqube-token1')
-    SONAR_HOST_URL   = 'http://host.docker.internal:9001'   // rely on add-host for container reachability
+    SONAR_HOST_URL    = 'http://host.docker.internal:9001'   // rely on add-host for container reachability
     // Use the Jenkins workspace absolute path so containers see the same paths as the host
     WORKSPACE_DIR = "${env.WORKSPACE}"
     // local maven repo inside workspace to reduce permission/lock issues
@@ -86,12 +86,12 @@ pipeline {
                 docker run --rm \
                   --dns 8.8.8.8 \
                   --add-host=host.docker.internal:host-gateway \
-                  --ulimit nofile=65536:65536 \
+                  --ulimit nofile=131072:131072 \
                   -v "${WORKSPACE_DIR}:${WORKSPACE_DIR}" \
                   -v "${WORKSPACE_DIR}/.npm-cache":/tmp/.npm \
                   -w "${WORKSPACE_DIR}/aishe_frontend" \
                   node:18 \
-                  /bin/sh -c "ulimit -n 65536 && export NODE_OPTIONS=--max-old-space-size=4096 && mkdir -p /tmp/.npm && npm_config_cache=/tmp/.npm npm ci --legacy-peer-deps --no-audit && npm run build"
+                  /bin/sh -c "ulimit -n 65536 && export NODE_OPTIONS=--max-old-space-size=4096 && mkdir -p /tmp/.npm && npm_config_cache=/tmp/.npm npm install --prefer-offline --no-audit --legacy-peer-deps && npm run build"
               '''
             }
           }
