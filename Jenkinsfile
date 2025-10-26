@@ -2,6 +2,7 @@ pipeline {
   agent any
 
   environment {
+    PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin:${env.PATH}"
     // Sonar token stored in Jenkins credentials (type: Secret text, id: sonarqube-token1)
     SONAR_AUTH_TOKEN = credentials('sonarqube-token1')
     SONAR_HOST_URL   = 'http://host.docker.internal:9001'   // rely on add-host for container reachability
@@ -12,6 +13,12 @@ pipeline {
   }
 
   stages {
+
+    stage('Check Docker') {
+      steps {
+        sh 'which docker && docker version'
+      }
+    }
 
     stage('Check prerequisites') {
       steps {
