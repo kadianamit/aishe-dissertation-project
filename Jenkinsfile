@@ -125,7 +125,10 @@ pipeline {
                   -v "${MAVEN_REPO}:/root/.m2/repository" \
                   -w "${WORKSPACE_DIR}/aishe_backend" \
                   maven:3.8.6-jdk-11 \
-                  mvn -B -Dmaven.repo.local=/root/.m2/repository -DskipTests sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=$SONAR_HOST_URL
+                  mvn -B -Dmaven.repo.local=/root/.m2/repository -DskipTests \
+                    org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                    -Dsonar.host.url=$SONAR_HOST_URL \
+                    -Dsonar.token=$SONAR_AUTH_TOKEN
               '''
             }
 
@@ -141,7 +144,7 @@ pipeline {
                   -Dsonar.projectKey=aishe-frontend \
                   -Dsonar.sources=. \
                   -Dsonar.host.url=$SONAR_HOST_URL \
-                  -Dsonar.login=$SONAR_AUTH_TOKEN
+                  -Dsonar.token=$SONAR_AUTH_TOKEN
               '''
             }
           }
