@@ -147,14 +147,15 @@ pipeline {
             // Frontend - use sonar-scanner-cli container and point to frontend sources
             dir("${WORKSPACE_DIR}/aishe_frontend") {
               sh """
-                docker run --rm \
-                  --dns 8.8.8.8 \
-                  --add-host=host.docker.internal:host-gateway \
+                docker run --rm --platform linux/arm64 --ulimit nofile=262144:262144 \
                   -e SONAR_HOST_URL=$SONAR_HOST_URL -e SONAR_AUTH_TOKEN=$SONAR_AUTH_TOKEN \
                   -v ${WORKSPACE}:/workspace -w /workspace/aishe_frontend \
                   sonarsource/sonar-scanner-cli:latest \
                   -Dsonar.projectKey=aishe-frontend \
-                  -Dsonar.sources=. \
+                  -Dsonar.projectBaseDir=/workspace/aishe_frontend \
+                  -Dsonar.sources=src \
+                  -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/*.spec.ts,**/*.min.js \
+                  -Dsonar.scm.exclusions.disabled=true \
                   -Dsonar.host.url=$SONAR_HOST_URL \
                   -Dsonar.login=$SONAR_AUTH_TOKEN
               """
