@@ -15,6 +15,25 @@ pipeline {
 
   stages {
 
+    stage('Check Docker') {
+      steps {
+        sh 'which docker && docker version'
+      }
+    }
+
+    stage('Check prerequisites') {
+      steps {
+        sh '''
+          echo "---- PATH ----"
+          echo "$PATH"
+          echo "---- WORKSPACE ----"
+          echo "${WORKSPACE_DIR}"
+          which docker || (echo "docker not found in PATH" && exit 1)
+        '''
+        sh "mkdir -p ${MAVEN_REPO}"
+      }
+    }
+
     stage('Build All') {
       parallel {
 
@@ -174,14 +193,49 @@ pipeline {
               
               	stage('Deploy to Kubernetes') {
               	  steps {
-              	    dir("aishe_backend/k8s") {
-              	      sh "kubectl apply -f aishe-master-deployment.yaml"
-              	      sh "kubectl apply -f user-mgt-deployment.yaml"
-              	    }
-              	    dir("aishe_frontend/k8s") {
-              	      sh "kubectl apply -f frontend-deployment.yaml"
-              	      sh "kubectl apply -f frontend-service.yaml"
-              	    }
+              		dir("aishe_backend/k8s") {
+              		  sh 'ls -la master-deployment.yaml'
+              		  sh 'ls -la master-service.yaml'
+              		  sh 'ls -la user-mgt-deployment.yaml'
+              		  sh 'ls -la user-mgt-service.yaml'
+              		  sh 'kubectl apply -f master-deployment.yaml'
+              		  sh 'kubectl apply -f master-service.yaml'
+              		  sh 'kubectl apply -f user-mgt-deployment.yaml'
+              		  sh 'kubectl apply -f user-mgt-service.yaml'
+              		}
+              		dir("aishe_frontend/k8s") {
+              		  sh 'ls -la frontend-deployment.yaml'
+              		  sh 'ls -la frontend-service.yaml'
+              		  sh 'kubectl apply -f frontend-deployment.yaml'
+              		  sh 'kubectl apply -f frontend-service.yaml'
+              		}
               	  }
               	}
-                }}
+                }
+              
+                post {
+              	always {
+              	  echo "Pipeline finished"
+              	  // Wrap waitForQualityGate in a try-catch block
+              	  script {
+              		if (env.ENABLE_SONAR == 'true' && currentBuild.currentResult == 'SUCCESS') {
+              		  try {
+              			timeout(time: 1, unit: 'HOURS') { // Adjust timeout as needed
+              			  waitForQualityGate abortPipeline: false
+              			}
+              		  } catch (Exception e) {
+              			echo "SonarQube Quality Gate check failed or timed out: ${e.getMessage()}"
+              			// Optionally, mark the build as UNSTABLE here if the quality gate fails
+              			// currentBuild.result = 'UNSTABLE'
+              		  }
+              		}
+              	  }
+              	}
+              	success {
+              	  echo "Success!"
+              	}
+              	failure {
+              	  echo "One or more stages failed - inspect console log."
+              	}
+                }
+              }
