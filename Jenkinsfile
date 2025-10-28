@@ -193,22 +193,14 @@ pipeline {
               
               	stage('Deploy to Kubernetes') {
               	  steps {
-              		dir("aishe_backend/k8s") {
-              		  sh 'ls -la master-deployment.yaml'
-              		  sh 'ls -la master-service.yaml'
-              		  sh 'ls -la user-mgt-deployment.yaml'
-              		  sh 'ls -la user-mgt-service.yaml'
-              		  sh 'kubectl apply -f master-deployment.yaml'
-              		  sh 'kubectl apply -f master-service.yaml'
-              		  sh 'kubectl apply -f user-mgt-deployment.yaml'
-              		  sh 'kubectl apply -f user-mgt-service.yaml'
-              		}
-              		dir("aishe_frontend/k8s") {
-              		  sh 'ls -la frontend-deployment.yaml'
-              		  sh 'ls -la frontend-service.yaml'
-              		  sh 'kubectl apply -f frontend-deployment.yaml'
-              		  sh 'kubectl apply -f frontend-service.yaml'
-              		}
+              	    dir("aishe_backend/k8s") {
+              	      sh "kubectl apply -f aishe-master-deployment.yaml"
+              	      sh "kubectl apply -f user-mgt-deployment.yaml"
+              	    }
+              	    dir("aishe_frontend/k8s") {
+              	      sh "kubectl apply -f frontend-deployment.yaml"
+              	      sh "kubectl apply -f frontend-service.yaml"
+              	    }
               	  }
               	}
                 }
