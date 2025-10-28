@@ -87,10 +87,10 @@ pipeline {
                   --add-host=host.docker.internal:host-gateway \
                   --ulimit nofile=131072:131072 \
                   -v "${WORKSPACE_DIR}:${WORKSPACE_DIR}" \
-                  -v "${WORKSPACE_DIR}/.npm-cache":/tmp/.npm \
+                  -v "${WORKSPACE_DIR}/.npm-cache":/root/.npm \
                   -w "${WORKSPACE_DIR}/aishe_frontend" \
                   node:18 \
-                  /bin/sh -c "ulimit -n 65536 && export NODE_OPTIONS=--max-old-space-size=4096 && mkdir -p /tmp/.npm && npm cache clean --force && npm install @angular/cli --no-save && npm ci --no-audit --legacy-peer-deps || npm install --no-audit --legacy-peer-deps && npm run build"
+                  /bin/sh -c "for i in 1 2 3; do npm install --no-audit --legacy-peer-deps && npm run build && break || sleep 15; done"
               '''
             }
           }
