@@ -174,9 +174,14 @@ pipeline {
               
               	stage('Deploy to Kubernetes') {
               	  steps {
-              		dir("aishe_backend/k8s") {
-              		  sh "kubectl apply -f aishe-master-deployment.yaml"
-              		}
+              	    dir("aishe_backend/k8s") {
+              	      sh "kubectl apply -f aishe-master-deployment.yaml"
+              	      sh "kubectl apply -f user-mgt-deployment.yaml"
+              	    }
+              	    dir("aishe_frontend/k8s") {
+              	      sh "kubectl apply -f frontend-deployment.yaml"
+              	      sh "kubectl apply -f frontend-service.yaml"
+              	    }
               	  }
               	}
                 }}
